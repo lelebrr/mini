@@ -1,0 +1,5 @@
+{
+    "platformio.projectType": "arduino",
+    "platformio.homeDir": null,
+    "platformio.iniPath": "${workspaceFolder}/platformio.ini"
+}
