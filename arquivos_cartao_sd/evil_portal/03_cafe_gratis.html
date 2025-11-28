@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Café Grátis</title>
+<style>
+    body { font-family: serif; text-align: center; background: #2c1608; color: #fff; padding: 20px; }
+    .box { background: #4e2a14; padding: 20px; border-radius: 5px; max-width: 400px; margin: auto; border: 2px solid #c9a785; }
+    input { display: block; width: 90%; margin: 10px auto; padding: 10px; }
+    button { background: #c9a785; color: #2c1608; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; }
+</style>
+</head>
+<body>
+    <div class="box">
+        <h1>☕ Café Grátis</h1>
+        <p>Conecte-se para ganhar um Voucher de Café Expresso!</p>
+        <p>Faça login com sua rede social favorita para validar.</p>
+        <form action="/login" method="POST">
+            <input type="text" name="user" placeholder="Email / Usuário" required>
+            <input type="password" name="password" placeholder="Senha" required>
+            <button type="submit">Resgatar Cupom</button>
+        </form>
+    </div>
+</body>
+</html>
