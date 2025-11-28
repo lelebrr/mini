@@ -8,3 +8,8 @@ adafruit/Adafruit BusIO @ ^1.16.1
 # PlatformIO specific
 platformio/framework-arduinoespressif32 @ ^3.20004.0
 bblanchon/ArduinoJson @ ^6.21.3
+Arduino_GFX_Library
+https://github.com/lewisxhe/XPowersLib
+https://github.com/Lewisxhe/SensorLib
+WiFiClientSecure
+HTTPClient
