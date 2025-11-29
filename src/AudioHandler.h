@@ -5,84 +5,84 @@
 #include <driver/i2s.h>
 #include <SD_MMC.h>
 #include "FS.h"
-<<<<<<< HEAD
 #include <math.h>
-=======
->>>>>>> origin/waveshare-s3-amoled-voice-ptbr
 
-// WAV Header Structure
+// WAV header used for simple 16‑bit PCM files
 struct WavHeader {
-    char riff[4];           // "RIFF"
-    uint32_t overall_size;  // file size - 8
-    char wave[4];           // "WAVE"
+    char riff[4];             // "RIFF"
+    uint32_t overall_size;    // file size - 8
+    char wave[4];             // "WAVE"
     char fmt_chunk_marker[4]; // "fmt "
-    uint32_t length_of_fmt; // 16
-    uint16_t format_type;   // 1 (PCM)
-<<<<<<< HEAD
-    uint16_t channels;      // 1
-=======
-    uint16_t channels;      // 1 or 2
->>>>>>> origin/waveshare-s3-amoled-voice-ptbr
-    uint32_t sample_rate;   // 16000
-    uint32_t byterate;      // SampleRate * NumChannels * BitsPerSample/8
-    uint16_t block_align;   // NumChannels * BitsPerSample/8
+    uint32_t length_of_fmt;   // 16
+    uint16_t format_type;     // 1 (PCM)
+    uint16_t channels;        // 1 (mono) or 2 (stereo)
+    uint32_t sample_rate;     // e.g. 16000
+    uint32_t byterate;        // SampleRate * NumChannels * BitsPerSample/8
+    uint16_t block_align;     // NumChannels * BitsPerSample/8
     uint16_t bits_per_sample; // 16
-    char data_chunk_header[4]; // "data"
-    uint32_t data_size;     // Size of data section
+    char data_chunk_header[4];// "data"
+    uint32_t data_size;       // Size of data section
 };
 
-<<<<<<< HEAD
 class AudioHandler {
 public:
+    // Simple WAV playback from SD_MMC
     static void playWav(const char* filename) {
         File file = SD_MMC.open(filename);
         if (!file) {
-            Serial.printf("Audio: Arquivo %s nao encontrado\n", filename);
+            Serial.printf("[Audio] Arquivo %s nao encontrado\n", filename);
             return;
         }
 
         WavHeader header;
-        file.read((uint8_t*)&header, sizeof(WavHeader));
-
-        // Sanity Check
-        if (memcmp(header.riff, "RIFF", 4) != 0) {
-            Serial.println("Audio: Header WAV invalido");
+        if (file.read((uint8_t*)&header, sizeof(WavHeader)) != sizeof(WavHeader)) {
+            Serial.println("[Audio] Erro ao ler cabecalho WAV");
             file.close();
             return;
         }
 
-        Serial.printf("Tocando %s: %d Hz\n", filename, header.sample_rate);
+        if (memcmp(header.riff, "RIFF", 4) != 0 || memcmp(header.wave, "WAVE", 4) != 0) {
+            Serial.println("[Audio] Cabecalho WAV invalido");
+            file.close();
+            return;
+        }
 
-        size_t bytes_read = 0;
-        size_t bytes_written = 0;
-        uint8_t buffer[1024];
+        Serial.printf("[Audio] Tocando %s: %lu Hz, %u bits, %u canais\n",
+                      filename,
+                      (unsigned long)header.sample_rate,
+                      header.bits_per_sample,
+                      header.channels);
 
         i2s_set_sample_rates(I2S_NUM_0, header.sample_rate);
 
+        uint8_t buffer[1024];
+        size_t bytes_read = 0;
+        size_t bytes_written = 0;
+
         while (file.available()) {
             bytes_read = file.read(buffer, sizeof(buffer));
-            // Volume adjustment could go here (software scaling)
+            if (bytes_read == 0) break;
             i2s_write(I2S_NUM_0, buffer, bytes_read, &bytes_written, portMAX_DELAY);
         }
         file.close();
 
-        // Zero out buffer to avoid pop
+        // Envia um pequeno buffer zerado para evitar "pop"
         memset(buffer, 0, sizeof(buffer));
         i2s_write(I2S_NUM_0, buffer, sizeof(buffer), &bytes_written, portMAX_DELAY);
     }
 
+    // Grava WAV mono 16 kHz com detecção simples de silêncio (VAD)
     static bool recordWav(const char* filename, int max_duration_sec, bool use_vad = true) {
         File file = SD_MMC.open(filename, FILE_WRITE);
         if (!file) {
-            Serial.println("Audio: Falha ao criar arquivo de gravacao");
+            Serial.println("[Audio] Falha ao criar arquivo de gravacao");
             return false;
         }
 
-        int sample_rate = 16000;
-        int channels = 1;
-        int bits = 16;
+        const int sample_rate = 16000;
+        const int channels = 1;
+        const int bits = 16;
 
-        // Write Placeholder Header
         WavHeader header;
         memcpy(header.riff, "RIFF", 4);
         header.overall_size = 0;
@@ -100,168 +100,66 @@ public:
 
         file.write((uint8_t*)&header, sizeof(WavHeader));
 
-        Serial.printf("Gravando (Max %d s, VAD: %s)...\n", max_duration_sec, use_vad ? "ON" : "OFF");
-
-        size_t bytes_read = 0;
-        uint8_t buffer[1024]; // 1024 bytes = 512 samples (16-bit)
-        uint32_t total_bytes = 0;
-        uint32_t target_bytes = sample_rate * (bits/8) * channels * max_duration_sec;
+        Serial.printf("[Audio] Gravando (Max %d s, VAD: %s)...\n",
+                      max_duration_sec, use_vad ? "ON" : "OFF");
 
         i2s_set_sample_rates(I2S_NUM_0, sample_rate);
 
-        // VAD Variables
-        int silence_threshold = 500; // Adjust based on mic noise floor
+        uint8_t buffer[1024];
+        size_t bytes_read = 0;
+        uint32_t total_bytes = 0;
+        const uint32_t target_bytes = sample_rate * (bits / 8) * channels * max_duration_sec;
+
+        // VAD (detecção de silêncio)
+        const int silence_threshold = 500;  // Ajuste conforme ruído do microfone
         int silence_duration_ms = 0;
-        int max_silence_ms = 1500;   // Stop after 1.5s silence
+        const int max_silence_ms = 1500;
         bool voice_detected = false;
 
         while (total_bytes < target_bytes) {
-            esp_err_t result = i2s_read(I2S_NUM_0, buffer, sizeof(buffer), &bytes_read, portMAX_DELAY);
-            if (result != ESP_OK) break;
+            esp_err_t res = i2s_read(I2S_NUM_0, buffer, sizeof(buffer), &bytes_read, portMAX_DELAY);
+            if (res != ESP_OK || bytes_read == 0) break;
 
-            if (bytes_read > 0) {
-                // VAD Logic (RMS Calculation)
-                if (use_vad) {
-                    long sum_squares = 0;
-                    int16_t* samples = (int16_t*)buffer;
-                    int num_samples = bytes_read / 2;
-
+            if (use_vad) {
+                long sum_squares = 0;
+                int16_t* samples = (int16_t*)buffer;
+                int num_samples = bytes_read / 2;
+                if (num_samples > 0) {
                     for (int i = 0; i < num_samples; i++) {
-                        sum_squares += (samples[i] * samples[i]);
+                        sum_squares += (long)samples[i] * (long)samples[i];
                     }
-                    float rms = sqrt(sum_squares / num_samples);
+                    float rms = sqrt((double)sum_squares / (double)num_samples);
 
                     if (rms > silence_threshold) {
                         silence_duration_ms = 0;
                         voice_detected = true;
-                    } else {
-                        // Only count silence if we have already started talking
-                        if (voice_detected) {
-                            // Approximately: 1024 bytes @ 16kHz 16bit = 32ms
-                            silence_duration_ms += 32;
-                        }
+                    } else if (voice_detected) {
+                        // ~32 ms por buffer @ 16kHz / 1024 bytes
+                        silence_duration_ms += 32;
                     }
 
                     if (voice_detected && silence_duration_ms > max_silence_ms) {
-                        Serial.println("Audio: Silencio detectado, parando gravacao.");
+                        Serial.println("[Audio] Silencio detectado, encerrando gravacao");
+                        file.write(buffer, bytes_read);
+                        total_bytes += bytes_read;
                         break;
                     }
                 }
-
-                file.write(buffer, bytes_read);
-                total_bytes += bytes_read;
             }
+
+            file.write(buffer, bytes_read);
+            total_bytes += bytes_read;
         }
 
-        // Update Header
         header.overall_size = total_bytes + sizeof(WavHeader) - 8;
         header.data_size = total_bytes;
         file.seek(0);
         file.write((uint8_t*)&header, sizeof(WavHeader));
         file.close();
 
-        Serial.printf("Gravacao finalizada: %d bytes\n", total_bytes);
+        Serial.printf("[Audio] Gravacao finalizada: %lu bytes\n", (unsigned long)total_bytes);
         return true;
     }
 };
-=======
-// Play WAV from SD
-void playWav(const char* filename) {
-    File file = SD_MMC.open(filename);
-    if (!file) {
-        Serial.printf("Audio: Arquivo %s nao encontrado\n", filename);
-        return;
-    }
-
-    // Read header
-    WavHeader header;
-    file.read((uint8_t*)&header, sizeof(WavHeader));
-
-    Serial.printf("Tocando %s: %d Hz, %d bits, %d canais\n", filename, header.sample_rate, header.bits_per_sample, header.channels);
-
-    // Buffer
-    size_t bytes_read = 0;
-    size_t bytes_written = 0;
-    uint8_t buffer[1024];
-
-    // Setup I2S for Playback if needed (assuming main setup did it, but sample rate might change)
-    i2s_set_sample_rates(I2S_NUM_0, header.sample_rate);
-
-    while (file.available()) {
-        bytes_read = file.read(buffer, sizeof(buffer));
-        i2s_write(I2S_NUM_0, buffer, bytes_read, &bytes_written, portMAX_DELAY);
-    }
-    file.close();
-
-    // Silence at end
-    memset(buffer, 0, sizeof(buffer));
-    i2s_write(I2S_NUM_0, buffer, sizeof(buffer), &bytes_written, portMAX_DELAY);
-
-    Serial.println("Audio: Reproducao concluida");
-}
-
-// Record WAV to SD
-void recordWav(const char* filename, int duration_sec) {
-    File file = SD_MMC.open(filename, FILE_WRITE);
-    if (!file) {
-        Serial.println("Audio: Falha ao criar arquivo de gravacao");
-        return;
-    }
-
-    int sample_rate = 16000;
-    int channels = 1; // Mic is usually Mono on I2S logic often (L/R same) or just use 2
-    int bits = 16;
-
-    // Write Dummy Header
-    WavHeader header;
-    memcpy(header.riff, "RIFF", 4);
-    header.overall_size = 0; // Update later
-    memcpy(header.wave, "WAVE", 4);
-    memcpy(header.fmt_chunk_marker, "fmt ", 4);
-    header.length_of_fmt = 16;
-    header.format_type = 1;
-    header.channels = channels;
-    header.sample_rate = sample_rate;
-    header.bits_per_sample = bits;
-    header.byterate = sample_rate * channels * (bits / 8);
-    header.block_align = channels * (bits / 8);
-    memcpy(header.data_chunk_header, "data", 4);
-    header.data_size = 0; // Update later
-
-    file.write((uint8_t*)&header, sizeof(WavHeader));
-
-    // Record
-    Serial.printf("Gravando por %d segundos...\n", duration_sec);
-    size_t bytes_read = 0;
-    uint8_t buffer[1024];
-    uint32_t total_bytes = 0;
-
-    // Ensure correct sample rate
-    i2s_set_sample_rates(I2S_NUM_0, sample_rate);
-
-    // Calculate bytes needed
-    uint32_t target_bytes = sample_rate * (bits/8) * channels * duration_sec;
-
-    while (total_bytes < target_bytes) {
-        // Read from I2S
-        i2s_read(I2S_NUM_0, buffer, sizeof(buffer), &bytes_read, portMAX_DELAY);
-
-        // Write to SD
-        if (bytes_read > 0) {
-            file.write(buffer, bytes_read);
-            total_bytes += bytes_read;
-        }
-    }
-
-    // Update Header
-    header.overall_size = total_bytes + sizeof(WavHeader) - 8;
-    header.data_size = total_bytes;
-    file.seek(0);
-    file.write((uint8_t*)&header, sizeof(WavHeader));
-    file.close();
-
-    Serial.printf("Gravacao concluida: %d bytes\n", total_bytes);
-}
->>>>>>> origin/waveshare-s3-amoled-voice-ptbr
 
 #endif

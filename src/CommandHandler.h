@@ -4,100 +4,46 @@
 #include <Arduino.h>
 #include <XPowersLib.h>
 #include "AudioHandler.h"
-<<<<<<< HEAD
-<<<<<<< HEAD
 #include "FaceHandler.h"
-=======
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
-#include "FaceHandler.h"
->>>>>>> origin/waveshare-s3-amoled-review-complete
 
-extern XPowersPMU power; // From main.cpp
-extern Arduino_GFX *gfx; // From main.cpp
+extern XPowersPMU power;      // definido em main.cpp
+extern Arduino_GFX *gfx;      // definido em main.cpp
 
 class CommandHandler {
 public:
+    // Mapeia quantidade de sílabas para ações simples
     static void processSyllables(int count) {
-        Serial.printf("Processando Comando por Silabas: %d\n", count);
+        Serial.printf("[Voice] Silabas detectadas: %d\n", count);
 
         switch (count) {
             case 1:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/waveshare-s3-amoled-review-complete
-                // "Luz" -> COOL face
-                Serial.println("CMD: [1] Alternar Luz");
+                // Ex.: "Luz" – força brilho máximo e face "cool"
+                Serial.println("[CMD] 1 -> Luz / Destaque");
                 gfx->Display_Brightness(255);
                 FaceHandler::setFace(FACE_COOL);
-<<<<<<< HEAD
-=======
-                // "Luz" / "Som" / "Sim"
-                // Toggle Brightness
-                Serial.println("CMD: [1] Alternar Luz");
-                // Check current brightness via a static var or just toggle
-                // Since we don't have read-back easily on GFX without tracking:
-                gfx->Display_Brightness(255); // Just force High for demo
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
->>>>>>> origin/waveshare-s3-amoled-review-complete
                 AudioHandler::playWav("/success_pt.wav");
                 break;
 
             case 2:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/waveshare-s3-amoled-review-complete
-                // "Status" -> HAPPY
-                Serial.println("CMD: [2] Status");
+                // Ex.: "Status" – som de boot e face feliz
+                Serial.println("[CMD] 2 -> Status");
                 FaceHandler::setFace(FACE_HAPPY);
                 AudioHandler::playWav("/boot_pt.wav");
                 break;
 
-            case 3:
-                // "Bateria" -> MOTIVATED
-                Serial.println("CMD: [3] Bateria");
+            case 3: {
+                // Ex.: "Bateria" – mostra no log e face motivada
+                Serial.println("[CMD] 3 -> Bateria");
                 FaceHandler::setFace(FACE_MOTIVATED);
-                {
-                    int pct = power.getBatteryPercent();
-                    Serial.printf("Bateria: %d%%\n", pct);
-<<<<<<< HEAD
-=======
-                // "Status" / "Liga"
-                Serial.println("CMD: [2] Status");
-                AudioHandler::playWav("/boot_pt.wav"); // Play boot status
-                break;
-
-            case 3:
-                // "Bateria" / "Energia"
-                Serial.println("CMD: [3] Bateria");
-                {
-                    int pct = power.getBatteryPercent();
-                    Serial.printf("Bateria: %d%%\n", pct);
-                    // In a real scenario, we'd play number WAVs here
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
->>>>>>> origin/waveshare-s3-amoled-review-complete
-                }
+                int pct = power.getBatteryPercent();
+                Serial.printf("[CMD] Bateria: %d%%\n", pct);
                 AudioHandler::playWav("/success_pt.wav");
                 break;
+            }
 
             default:
-<<<<<<< HEAD
-<<<<<<< HEAD
-                // Error -> CONFUSED/SAD
-                Serial.println("CMD: Desconhecido");
+                Serial.println("[CMD] Desconhecido / ruido");
                 FaceHandler::setFace(FACE_SAD);
-=======
-                Serial.println("CMD: Desconhecido / Ruido");
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
-                // Error -> CONFUSED/SAD
-                Serial.println("CMD: Desconhecido");
-                FaceHandler::setFace(FACE_SAD);
->>>>>>> origin/waveshare-s3-amoled-review-complete
                 AudioHandler::playWav("/error_pt.wav");
                 break;
         }
