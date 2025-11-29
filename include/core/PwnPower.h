@@ -8,6 +8,7 @@
 #include <soc/rtc_cntl_reg.h>
 #include <esp_pm.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "pin_config.h"
 
 // Definições de Pinos do PMU AXP2101
@@ -15,6 +16,13 @@
 #define PMU_SDA 15
 #define PMU_SCL 14
 #define TOUCH_INT_PIN 21 // FT3168 INT
+=======
+
+// Definições de Pinos (Reuso)
+#define PMU_SDA 38
+#define PMU_SCL 39
+#define TOUCH_INT_PIN -1 // Definir pino real se disponível no hardware (GPIO 3?)
+>>>>>>> origin/merge-ready-mini-lele-v2
 
 // RTC Memory para Modo Zumbi
 struct RTC_SaveData {
@@ -43,12 +51,15 @@ public:
             pmu.enableBattVoltageMeasure();
             pmu.enableSystemVoltageMeasure();
 
+<<<<<<< HEAD
             // Configurar voltagens específicas (ALDO1=AMOLED Logic, BLDO1=Backlight, etc)
             pmu.setALDO1Voltage(1800); pmu.enableALDO1();
             pmu.setALDO2Voltage(2800); pmu.enableALDO2(); // Touch
             pmu.setALDO3Voltage(3000); pmu.enableALDO3(); // Audio
             pmu.setALDO4Voltage(3300); pmu.enableALDO4(); // Mic Bias
             pmu.setBLDO1Voltage(3300); pmu.enableBLDO1(); // AMOLED Power
+=======
+>>>>>>> origin/merge-ready-mini-lele-v2
             // Otimização 24: Monitoramento de Corrente (Configuração)
             // pmu.setTSPinMode(XPOWERS_TS_PIN_OFF); // Economia
         }
@@ -78,6 +89,7 @@ public:
         }
     }
 
+<<<<<<< HEAD
 	    // Otimização 1: Deep Sleep Total
 	    static void enterDeepSleep() {
 	        Serial.println("[Power] Entrando em Deep Sleep...");
@@ -95,11 +107,37 @@ public:
 	            // Otimização 29: Modo Zumbi
 	            rtc_save.magic = 0xDEADBEEF;
 	            // rtc_save.xp = PwnPet::getXP(); ...
+=======
+    // Otimização 1: Deep Sleep Total
+    static void enterDeepSleep() {
+        Serial.println("[Power] Entrando em Deep Sleep...");
+
+        // Otimização 4: Desliga Display/Backlight
+        // (Assumindo controle via Expander/PMU no main)
+
+        // Otimização 5: Desliga Audio
+        // es8311_voice_mute(true);
+
+        // Otimização 22: QMI Low Power (Feito no driver)
+
+        // Salva estado crítico se necessário
+        if (getBatteryPercent() < 3) {
+            // Otimização 29: Modo Zumbi
+            rtc_save.magic = 0xDEADBEEF;
+            // rtc_save.xp = PwnPet::getXP(); ...
+>>>>>>> origin/merge-ready-mini-lele-v2
             Serial.println("[Power] MODO ZUMBI ATIVADO");
         }
 
         esp_deep_sleep_start();
+<<<<<<< HEAD
     	    // Otimização 2: Light Sleep entre scans    static void lightSleep(uint64_t time_us) {
+=======
+    }
+
+    // Otimização 2: Light Sleep entre scans
+    static void lightSleep(uint64_t time_us) {
+>>>>>>> origin/merge-ready-mini-lele-v2
         esp_sleep_enable_timer_wakeup(time_us);
         esp_light_sleep_start();
     }
@@ -113,14 +151,23 @@ public:
     }
 
     static float getSystemCurrent() {
+<<<<<<< HEAD
 	        // AXP2101 pode não ter getSystemCurrent direto, usar discharge ou Vbus
 	        return pmu.isDischarge() ? pmu.getBattDischargeCurrent() : 0;
+=======
+        // Otimização 24: Monitoramento
+        return pmu.getSystemVoltage(); // AXP2101 pode não ter getSystemCurrent direto na lib, usar discharge
+>>>>>>> origin/merge-ready-mini-lele-v2
     }
 
     static String getPowerStatus() {
         float ma = pmu.isDischarge() ? pmu.getBattDischargeCurrent() : 0;
         int pct = pmu.getBatteryPercent();
+<<<<<<< HEAD
 	        // Estimativa (Bat 1000mAh ex)
+=======
+        // Estimativa (Bat 1000mAh ex)
+>>>>>>> origin/merge-ready-mini-lele-v2
         float hours = (pct > 0 && ma > 0) ? (1000.0 * (pct/100.0)) / ma : 0;
 
         char buf[64];
@@ -130,6 +177,7 @@ public:
 
     static void checkCritical() {
         if (getBatteryPercent() < 10 && !is_critical) {
+<<<<<<< HEAD
 	            // Otimização 13: Modo Crítico
 	            is_critical = true;
 	            Serial.println("[Power] BATERIA CRITICA (<10%)");
@@ -138,6 +186,16 @@ public:
 	            // Reduz Clock
 	            setPerformanceMode(0);
 	            // UI deve atualizar para relógio monocromático
+=======
+            // Otimização 13: Modo Crítico
+            is_critical = true;
+            Serial.println("[Power] BATERIA CRITICA (<10%)");
+            // Desliga WiFi
+            WiFi.mode(WIFI_OFF);
+            // Reduz Clock
+            setPerformanceMode(0);
+            // UI deve atualizar para relógio monocromático
+>>>>>>> origin/merge-ready-mini-lele-v2
         }
     }
 

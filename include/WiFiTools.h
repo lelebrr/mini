@@ -12,6 +12,7 @@
 #include <SD_MMC.h>
 #include "FS.h"
 #include <vector>
+<<<<<<< HEAD
 #include "core/PwnPet.h"
 #include "core/Gamification.h"
 
@@ -20,10 +21,18 @@
 struct WiFiDevice {
     String mac;
     String vendor; // Placeholder
+=======
+
+#define MAX_SNIFFED 10
+
+struct SniffedDevice {
+    String mac;
+>>>>>>> origin/merge-ready-mini-lele-v2
     int rssi;
     unsigned long last_seen;
 };
 
+<<<<<<< HEAD
 class WiFiTools {
 public:
     static std::vector<WiFiDevice> nearby_devices;
@@ -100,12 +109,59 @@ public:
                     Gamification::registerHandshake();
 
                     // TODO: Salvar PCAP
+=======
+std::vector<SniffedDevice> nearby_devices;
+
+class WiFiTools {
+public:
+    static void promiscuous_rx_cb(void* buf, wifi_promiscuous_pkt_type_t type) {
+        if (type != WIFI_PKT_MGMT) return;
+
+        wifi_promiscuous_pkt_t* packet = (wifi_promiscuous_pkt_t*)buf;
+        uint8_t* payload = packet->payload;
+        uint8_t frame_type = (payload[0] & 0x0C) >> 2;
+        uint8_t frame_subtype = (payload[0] & 0xF0) >> 4;
+
+        if (frame_type == 0 && frame_subtype == 4) {
+            char macStr[18];
+            snprintf(macStr, sizeof(macStr), "%02X:%02X:%02X:%02X:%02X:%02X",
+                     payload[10], payload[11], payload[12], payload[13], payload[14], payload[15]);
+
+            String mac = String(macStr);
+            int rssi = packet->rx_ctrl.rssi;
+
+            bool found = false;
+            for (auto &dev : nearby_devices) {
+                if (dev.mac == mac) {
+                    dev.rssi = rssi;
+                    dev.last_seen = millis();
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                SniffedDevice newDev = {mac, rssi, millis()};
+                if (nearby_devices.size() >= MAX_SNIFFED) nearby_devices.erase(nearby_devices.begin());
+                nearby_devices.push_back(newDev);
+
+                // Log em /arquivos_cartao_sd/macs_detectados.txt
+                File f = SD_MMC.open("/arquivos_cartao_sd/macs_detectados.txt", FILE_APPEND);
+                if (f) {
+                    f.printf("%s,%d,%lu\n", mac.c_str(), rssi, millis());
+                    f.close();
+>>>>>>> origin/merge-ready-mini-lele-v2
                 }
             }
         }
     }
+<<<<<<< HEAD
     static void startSniffer() {
         WiFi.mode(WIFI_MODE_APSTA); // APSTA permite injeção + WebUI
+=======
+
+    static void startSniffer() {
+        WiFi.disconnect();
+>>>>>>> origin/merge-ready-mini-lele-v2
         esp_wifi_set_promiscuous(true);
         esp_wifi_set_promiscuous_rx_cb(&promiscuous_rx_cb);
     }
@@ -145,6 +201,10 @@ public:
     }
 };
 
+<<<<<<< HEAD
 std::vector<WiFiDevice> WiFiTools::nearby_devices;
 
 #endif
+=======
+#endif
+>>>>>>> origin/merge-ready-mini-lele-v2

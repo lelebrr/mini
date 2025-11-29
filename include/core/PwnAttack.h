@@ -8,7 +8,10 @@
 #include "core/PwnPower.h"
 #include "core/Gamification.h"
 #include "WiFiTools.h"
+<<<<<<< HEAD
 #include "../EvilPortal.h" // Integration
+=======
+>>>>>>> origin/merge-ready-mini-lele-v2
 
 // Deauth Frame Structure
 const uint8_t deauthPacket[] = {
@@ -33,6 +36,7 @@ private:
     static bool scan_active;
     static unsigned long last_scan_time;
 
+<<<<<<< HEAD
     static void macStringToBytes(String mac, uint8_t* bytes) {
         // Ex: "AA:BB:CC:DD:EE:FF" -> [0xAA, 0xBB, ...]
         int values[6];
@@ -42,17 +46,23 @@ private:
         }
     }
 
+=======
+>>>>>>> origin/merge-ready-mini-lele-v2
 public:
     static void init() {
         stats.aps_scanned = 0;
         stats.handshakes_captured = 0;
         last_scan_time = millis();
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/merge-ready-mini-lele-v2
         if (PwnPet::getStats().energy_mode > 0) {
             WiFiTools::startSniffer();
         }
     }
 
+<<<<<<< HEAD
     static void start() {
         scan_active = true;
         WiFiTools::startSniffer();
@@ -67,6 +77,11 @@ public:
             return;
         }
 
+=======
+    static bool isRunning() { return scan_active; }
+
+    static void tick() {
+>>>>>>> origin/merge-ready-mini-lele-v2
         if (PwnPower::isCritical()) {
             if (scan_active) {
                 esp_wifi_stop();
@@ -84,6 +99,7 @@ public:
         last_tick = millis();
 
         // Otimização 3: Duty Cycle do Marauder
+<<<<<<< HEAD
         if (PwnPet::getHunger() > 80 && scan_active) {
              // Modo agressivo: Tenta deauth em APs próximos aleatoriamente
              static unsigned long last_attack = 0;
@@ -99,6 +115,18 @@ public:
                      macStringToBytes(targetMacStr, targetBytes);
 
                      deauthTarget(targetBytes);
+=======
+        if (PwnPet::getHunger() > 80) {
+             // Modo agressivo: Tenta deauth em APs próximos aleatoriamente
+             // Nota: Isso é apenas para fins educacionais e teste em laboratório
+             static unsigned long last_attack = 0;
+             if (millis() - last_attack > 5000) {
+                 last_attack = millis();
+                 // Pega um alvo aleatório da lista do WiFiTools
+                 if (WiFiTools::nearby_devices.size() > 0) {
+                     int idx = random(0, WiFiTools::nearby_devices.size());
+                     // deauthTarget(WiFiTools::nearby_devices[idx].mac); // Implementação real abaixo
+>>>>>>> origin/merge-ready-mini-lele-v2
                  }
              }
         }
@@ -123,17 +151,30 @@ public:
         }
 
         // Gamification Reward (Simulado o sucesso do handshake capture após ataque)
+<<<<<<< HEAD
         // Na pratica real, o Sniffer detectaria o EAPOL. Aqui simulamos para o jogo fluir se nao houver trafego real.
         if (random(0, 100) < 10) { // 10% chance simulada se nao capturar real
             // PwnPet::addHandshake(false);
             // Gamification::registerHandshake();
         }
+=======
+        if (random(0, 100) < 30) { // 30% chance
+            Serial.println("[Attack] Handshake Capturado!");
+            PwnPet::addHandshake(false);
+            Gamification::registerHandshake();
+>>>>>>> origin/merge-ready-mini-lele-v2
         }
     }
 
     static void evilTwin(String ssid) {
+<<<<<<< HEAD
         // Inicia Evil Portal
         EvilPortal::start(ssid.c_str(), "/evil_portal/01_wifi_update.html");
+=======
+        WiFi.softAP(ssid.c_str());
+        // Inicia DNS Server para redirecionar tudo para o Portal
+        // Feito no EvilPortal.h
+>>>>>>> origin/merge-ready-mini-lele-v2
     }
 };
 
