@@ -37,6 +37,7 @@ platformio/framework-arduinoespressif32 @ ^3.20004.0
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 Arduino_GFX_Library
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
@@ -105,10 +106,13 @@ Arduino_GFX_Library
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
 =======
 >>>>>>> origin/waveshare-s3-amoled-offline-voice
+=======
+>>>>>>> origin/waveshare-s3-amoled-ptbr-final
 bblanchon/ArduinoJson @ ^6.21.3
 Arduino_GFX_Library
 https://github.com/lewisxhe/XPowersLib
 https://github.com/Lewisxhe/SensorLib
+<<<<<<< HEAD
 WiFiClientSecure
 HTTPClient
 <<<<<<< HEAD
@@ -137,3 +141,5 @@ https://github.com/lewisxhe/XPowersLib
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
 =======
 >>>>>>> origin/waveshare-s3-amoled-offline-voice
+=======
+>>>>>>> origin/waveshare-s3-amoled-ptbr-final
