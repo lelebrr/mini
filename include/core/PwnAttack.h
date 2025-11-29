@@ -10,6 +10,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "core/PwnPower.h"
 #include "core/Gamification.h"
 #include "WiFiTools.h"
@@ -63,6 +64,11 @@
 #include "core/Gamification.h"
 #include "WiFiTools.h"
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
+=======
+#include "core/PwnPower.h"
+#include "core/Gamification.h"
+#include "WiFiTools.h"
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
 
 // Deauth Frame Structure
 const uint8_t deauthPacket[] = {
@@ -73,6 +79,7 @@ const uint8_t deauthPacket[] = {
     0x00, 0x00,                         // Sequence
     0x07, 0x00                          // Reason code (7 = Class 3 frame received from nonassociated STA)
 };
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -89,6 +96,8 @@ const uint8_t deauthPacket[] = {
 >>>>>>> origin/pwntamagotchi-br-final-90-features
 =======
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
+=======
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
 
 struct AttackStats {
     int aps_scanned;
@@ -101,6 +110,7 @@ class PwnAttack {
 private:
     static AttackStats stats;
     static bool scan_active;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -198,10 +208,15 @@ private:
     static unsigned long last_scan_time;
 
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
+=======
+    static unsigned long last_scan_time;
+
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
 public:
     static void init() {
         stats.aps_scanned = 0;
         stats.handshakes_captured = 0;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -250,11 +265,15 @@ public:
 =======
         last_scan_time = millis();
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
+=======
+        last_scan_time = millis();
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
         if (PwnPet::getStats().energy_mode > 0) {
             WiFiTools::startSniffer();
         }
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -385,6 +404,11 @@ public:
 
     static void tick() {
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
+=======
+    static bool isRunning() { return scan_active; }
+
+    static void tick() {
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
         if (PwnPower::isCritical()) {
             if (scan_active) {
                 esp_wifi_stop();
@@ -394,6 +418,7 @@ public:
             return;
         }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         int energy = PwnPet::getStats().energy_mode;
@@ -407,11 +432,16 @@ public:
         int energy = PwnPet::getStats().energy_mode;
         int interval = (energy == 2) ? 100 : (energy == 1 ? 500 : 2000);
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
+=======
+        int energy = PwnPet::getStats().energy_mode;
+        int interval = (energy == 2) ? 100 : (energy == 1 ? 500 : 2000);
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
 
         static unsigned long last_tick = 0;
         if (millis() - last_tick < interval) return;
         last_tick = millis();
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         // Otimização 3: Duty Cycle do Marauder
@@ -506,6 +536,9 @@ public:
 =======
         // Otimização 3: Duty Cycle do Marauder
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
+=======
+        // Otimização 3: Duty Cycle do Marauder
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
         if (PwnPet::getHunger() > 80) {
              // Modo agressivo: Tenta deauth em APs próximos aleatoriamente
              // Nota: Isso é apenas para fins educacionais e teste em laboratório
@@ -516,6 +549,7 @@ public:
                  if (WiFiTools::nearby_devices.size() > 0) {
                      int idx = random(0, WiFiTools::nearby_devices.size());
                      // deauthTarget(WiFiTools::nearby_devices[idx].mac); // Implementação real abaixo
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> origin/merge-ready-mini-lele-v2
@@ -541,6 +575,8 @@ public:
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 =======
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
+=======
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
                  }
              }
         }
@@ -557,15 +593,19 @@ public:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/mini-lele-v2-rebrand
 =======
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
+=======
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
         // Constrói pacote
         uint8_t packet[26];
         memcpy(packet, deauthPacket, 26);
 
         // Copia BSSID para Source e BSSID fields
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -604,6 +644,8 @@ public:
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 =======
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
+=======
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
         memcpy(&packet[10], bssid, 6);
         memcpy(&packet[16], bssid, 6);
 
@@ -620,6 +662,7 @@ public:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         // Envia frames raw
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
@@ -643,11 +686,15 @@ public:
 =======
         // Envia frames raw
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
+=======
+        // Envia frames raw
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
         for (int i = 0; i < 3; i++) {
              esp_wifi_80211_tx(WIFI_IF_AP, packet, sizeof(packet), true);
              delay(10);
         }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -673,10 +720,14 @@ public:
 =======
         // Gamification Reward (Simulado o sucesso do handshake capture após ataque)
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
+=======
+        // Gamification Reward (Simulado o sucesso do handshake capture após ataque)
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
         if (random(0, 100) < 30) { // 30% chance
             Serial.println("[Attack] Handshake Capturado!");
             PwnPet::addHandshake(false);
             Gamification::registerHandshake();
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> origin/merge-ready-mini-lele-v2
@@ -724,10 +775,13 @@ public:
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 =======
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
+=======
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
         }
     }
 
     static void evilTwin(String ssid) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -873,10 +927,16 @@ public:
         // Inicia DNS Server para redirecionar tudo para o Portal
         // Feito no EvilPortal.h
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
+=======
+        WiFi.softAP(ssid.c_str());
+        // Inicia DNS Server para redirecionar tudo para o Portal
+        // Feito no EvilPortal.h
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
     }
 };
 
 AttackStats PwnAttack::stats;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -903,5 +963,9 @@ unsigned long PwnAttack::last_scan_time = 0;
 bool PwnAttack::scan_active = true;
 unsigned long PwnAttack::last_scan_time = 0;
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
+=======
+bool PwnAttack::scan_active = true;
+unsigned long PwnAttack::last_scan_time = 0;
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
 
 #endif

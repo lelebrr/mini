@@ -3,6 +3,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
@@ -10,6 +11,11 @@
 # Manual do Usuário - Mini Lele
 
 ## 1. O Pet (Lele)
+=======
+# Manual do Usuário - PwnTamagotchi BR
+
+## 1. O Pet (PwnPet)
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
 O seu Tamagotchi vive de dados. Ele precisa de **handshakes** WiFi para comer e evoluir.
 
 ### Alimentação
@@ -59,6 +65,7 @@ Acesse via navegador para controle total.
 - **Deep Sleep:** O dispositivo dorme automaticamente se inativo. Agite para acordar.
 - **Siesta:** A cada hora cheia, o Pet tira uma soneca de 3 min.
 - **Carregamento:** Use USB-C. O LED indica carga.
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -131,3 +138,5 @@ Para enviar handshakes capturados para quebra de senha online:
 >>>>>>> origin/pwntamagotchi-br-final-90-features
 =======
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
+=======
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final

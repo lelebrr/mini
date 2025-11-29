@@ -4,6 +4,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
@@ -45,6 +46,8 @@ Antes de enviar, teste em hardware real se possível. O simulador Wokwi não sup
 >>>>>>> origin/pwntamagotchi-br-final-90-features
 =======
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
+=======
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
 # Como Contribuir
 
 Este projeto é Open Source e aceita contribuições!
@@ -61,6 +64,7 @@ Este projeto é Open Source e aceita contribuições!
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/mini-lele-v2-rebrand
 =======
 >>>>>>> origin/pwn-tamagotchi-br-release
@@ -72,3 +76,5 @@ Este projeto é Open Source e aceita contribuições!
 >>>>>>> origin/pwntamagotchi-br-final-90-features
 =======
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
+=======
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final

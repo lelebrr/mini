@@ -18,6 +18,7 @@ public:
     bool init(TwoWire &wire) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         if (!qmi.begin(wire, QMI8658_L_SLAVE_ADDRESS, IIC_SDA, IIC_SCL)) { // Fix pin naming
              if (!qmi.begin(wire, QMI8658_H_SLAVE_ADDRESS, IIC_SDA, IIC_SCL)) {
 =======
@@ -29,6 +30,10 @@ public:
         if (!qmi.begin(wire, QMI8658_L_SLAVE_ADDRESS, IIC_SDA, IIC_SCL)) { // Fix pin naming
              if (!qmi.begin(wire, QMI8658_H_SLAVE_ADDRESS, IIC_SDA, IIC_SCL)) {
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
+=======
+        if (!qmi.begin(wire, QMI8658_L_SLAVE_ADDRESS, IIC_SDA, IIC_SCL)) { // Fix pin naming
+             if (!qmi.begin(wire, QMI8658_H_SLAVE_ADDRESS, IIC_SDA, IIC_SCL)) {
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
                  Serial.println("[IMU] Falha ao iniciar QMI8658");
                  return false;
              }
@@ -38,11 +43,14 @@ public:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         // Configurações Básicas
 >>>>>>> origin/pwntamagotchi-br-final-90-features
 =======
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
+=======
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
         qmi.configAccelerometer(SensorQMI8658::ACC_RANGE_4G, SensorQMI8658::ACC_ODR_1000Hz, SensorQMI8658::LPF_MODE_0, true);
         qmi.configGyroscope(SensorQMI8658::GYR_RANGE_64DPS, SensorQMI8658::GYR_ODR_896Hz, SensorQMI8658::LPF_MODE_3, true);
         qmi.enableGyroscope();
@@ -57,8 +65,11 @@ public:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
+=======
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
         // Configuração AnyMotion para QMI8658
         // Threshold (~32mg per LSB usually), duration
         // qmi.configAnyMotion(threshold, duration);
@@ -77,6 +88,7 @@ public:
 
         Serial.println("[IMU] Wake-on-Motion ativado (Low Power)");
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         // Otimização 22: Low Power Mode
         // Configura para detectar movimento (AnyMotion)
@@ -92,6 +104,8 @@ public:
 >>>>>>> origin/pwntamagotchi-br-final-90-features
 =======
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
+=======
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
     }
 
     void read(float &accX, float &accY, float &accZ) {

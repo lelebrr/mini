@@ -1,6 +1,7 @@
 #ifndef WEB_ASSETS_H
 #define WEB_ASSETS_H
 
+<<<<<<< HEAD
 // Mini Lele WebUI Assets (Gzipped)
 // HTML + Bootstrap 5 + Custom CSS/JS
 
@@ -111,13 +112,37 @@ const char* index_html_raw = R"rawliteral(
     0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03,
 };
 
+=======
+// PwnTamagotchi BR WebUI Assets (Gzipped)
+// HTML + Bootstrap 5 + Custom CSS/JS
+
+const uint8_t index_html_gz[] = {
+    // Placeholder GZIP header - Na pratica, voce geraria isso com um script python/node
+    // Aqui simularemos um HTML minificado e gzippado em array de bytes.
+    // Como nao posso gerar gzip binario real aqui sem ferramentas externas,
+    // vou colocar um HTML raw string para o WebHandler servir como text/html NAO comprimido inicialmente
+    // ou simular o conteudo.
+    // Para o proposito do codigo funcionar, vamos servir HTML raw e remover o header GZIP do handler por enquanto
+    // ou assumir que o usuario vai substituir este array pelo real.
+
+    // Vou criar um HTML minimalista em PROGMEM string para garantir que compile e funcione.
+    0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03,
+    // ... (binario real seria enorme) ...
+    // Fallback: Vamos usar Raw String Literal e mudar o WebHandler para servir sem gzip se falhar
+};
+// Devido a limitacao de gerar gzip on-the-fly, usaremos const char* raw
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
 const char* index_html_raw = R"rawliteral(
 <!DOCTYPE html>
 <html lang="pt-BR" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+<<<<<<< HEAD
     <title>Mini Lele</title>
+=======
+    <title>PwnTamagotchi BR</title>
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         :root { --neon-green: #00ff00; --neon-purple: #bc13fe; --bg-black: #050505; }
@@ -132,7 +157,11 @@ const char* index_html_raw = R"rawliteral(
 </head>
 <body>
     <div class="container py-4">
+<<<<<<< HEAD
         <h1 class="text-center mb-4" style="text-shadow: 0 0 10px var(--neon-purple);">Mini Lele <span class="badge bg-danger">v2.0</span></h1>
+=======
+        <h1 class="text-center mb-4" style="text-shadow: 0 0 10px var(--neon-purple);">PwnTamagotchi BR <span class="badge bg-danger">v2.0</span></h1>
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
 
         <!-- Status Cards -->
         <div class="row mb-4">
@@ -231,6 +260,7 @@ const char* index_html_raw = R"rawliteral(
 </html>
 )rawliteral";
 
+<<<<<<< HEAD
 const size_t index_html_gz_len = sizeof(index_html_gz);
 
 <<<<<<< HEAD
@@ -278,4 +308,9 @@ const size_t index_html_gz_len = sizeof(index_html_gz);
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+// Fake length for compatibility if using gzip later
+const size_t index_html_gz_len = sizeof(index_html_gz);
+
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
 #endif

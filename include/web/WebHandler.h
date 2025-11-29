@@ -147,7 +147,11 @@ public:
 
     static void onWsEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len) {
         if (type == WS_EVT_CONNECT) {
+<<<<<<< HEAD
             client->text("Connected to Mini Lele");
+=======
+            client->text("Connected to PwnTamagotchi BR");
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
         }
     }
 

@@ -3,6 +3,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
@@ -11,6 +12,12 @@
 
 ## Visão Geral
 O **Mini Lele** é o dispositivo definitivo de pentest + tamagotchi, projetado exclusivamente para o hardware Waveshare ESP32-S3-Touch-AMOLED-1.8.
+=======
+# PwnTamagotchi BR v2.0
+
+## Visão Geral
+O **PwnTamagotchi BR** é o dispositivo definitivo de pentest + tamagotchi, projetado exclusivamente para o hardware Waveshare ESP32-S3-Touch-AMOLED-1.8.
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
 
 **Versão:** 2.0 (God Tier)
 **Hardware:** Waveshare ESP32-S3 AMOLED 1.8" (SH8601/ST7701S + GT1151)
@@ -41,8 +48,13 @@ O **Mini Lele** é o dispositivo definitivo de pentest + tamagotchi, projetado e
 
 ### Modos de Operação
 1. **Modo AP (Padrão):**
+<<<<<<< HEAD
    - SSID: `Mini-Lele`
    - Senha: `minilele`
+=======
+   - SSID: `PwnTamagotchi-BR`
+   - Senha: `pwnme123`
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
    - Acesse: `http://192.168.4.1`
 
 2. **Modo STA (Cliente):**
@@ -50,7 +62,11 @@ O **Mini Lele** é o dispositivo definitivo de pentest + tamagotchi, projetado e
    - O IP aparecerá na tela do Pet.
 
 ### Comandos de Voz
+<<<<<<< HEAD
 - "Ei Lele" (2 sílabas fortes): Acorda/Ouve
+=======
+- "Ei Pwn" (2 sílabas fortes): Acorda/Ouve
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
 - "Status" (2 sílabas): Fala status
 - "Ataque" (3 sílabas): Inicia scan agressivo
 
@@ -70,6 +86,7 @@ A interface web permite controlar **100 configurações** em tempo real, incluin
 - Configuração de ataques e whitelist/blacklist.
 
 Divirta-se hackeando o planeta (com responsabilidade)!
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -110,3 +127,5 @@ Divirta-se!
 >>>>>>> origin/pwntamagotchi-br-final-90-features
 =======
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
+=======
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
