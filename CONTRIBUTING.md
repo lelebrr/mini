@@ -7,6 +7,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
@@ -54,6 +55,8 @@ Antes de enviar, teste em hardware real se possível. O simulador Wokwi não sup
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
 =======
 >>>>>>> origin/waveshare-s3-amoled-evil-portal-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-final-polish
 # Como Contribuir
 
 Este projeto é Open Source e aceita contribuições!
@@ -67,6 +70,7 @@ Este projeto é Open Source e aceita contribuições!
 ## Regras
 *   Mantenha o código em Português BR ou Inglês (comentários).
 *   Não submeta código malicioso real (apenas simulações educacionais).
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -90,3 +94,5 @@ Este projeto é Open Source e aceita contribuições!
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
 =======
 >>>>>>> origin/waveshare-s3-amoled-evil-portal-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-final-polish

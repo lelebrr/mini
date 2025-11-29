@@ -3,11 +3,19 @@
 
 #include <Arduino.h>
 #include <WiFi.h>
+<<<<<<< HEAD
 #include <HTTPClient.h>
 #include <SD_MMC.h>
 #include "FS.h"
 
 // Simple config loader for WiFi
+=======
+#include <WiFiClientSecure.h>
+#include <SD_MMC.h>
+#include "FS.h"
+
+// Config loader
+>>>>>>> origin/waveshare-s3-amoled-final-polish
 struct WiFiConfig {
     String ssid;
     String pass;
@@ -18,9 +26,15 @@ class OnlineCrack {
 public:
     static WiFiConfig loadConfig() {
         WiFiConfig cfg;
+<<<<<<< HEAD
         cfg.ssid = "SSID_AQUI";
         cfg.pass = "SENHA_AQUI";
         cfg.wpa_sec_key = "KEY_AQUI";
+=======
+        cfg.ssid = "";
+        cfg.pass = "";
+        cfg.wpa_sec_key = "";
+>>>>>>> origin/waveshare-s3-amoled-final-polish
 
         if (SD_MMC.exists("/wifi_config.txt")) {
             File f = SD_MMC.open("/wifi_config.txt");
@@ -38,6 +52,7 @@ public:
         return cfg;
     }
 
+<<<<<<< HEAD
     // Move a captured handshake/log to upload queue
     static void queueFile(String path) {
         // In a real scenario, this moves .pcap or .hccapx files
@@ -62,6 +77,13 @@ public:
 
         if (cfg.ssid == "SSID_AQUI") {
             Serial.println("Erro: Configure /wifi_config.txt no SD");
+=======
+    static int uploadAll() {
+        WiFiConfig cfg = loadConfig();
+
+        if (cfg.ssid == "" || cfg.wpa_sec_key == "") {
+            Serial.println("Erro: Configure SSID e KEY em /wifi_config.txt");
+>>>>>>> origin/waveshare-s3-amoled-final-polish
             return -1;
         }
 
@@ -80,15 +102,26 @@ public:
             return -2;
         }
 
+<<<<<<< HEAD
         Serial.println("\nWiFi Conectado! Iniciando Upload...");
 
         File root = SD_MMC.open("/upload_queue");
+=======
+        Serial.println("\nWiFi Conectado! Iniciando Real Upload (wpa-sec)...");
+
+        File root = SD_MMC.open("/upload_queue");
+        if (!root) {
+             root = SD_MMC.open("/handshakes"); // Fallback to handshakes folder if queue empty
+        }
+
+>>>>>>> origin/waveshare-s3-amoled-final-polish
         File file = root.openNextFile();
         int count = 0;
 
         while (file) {
             if (!file.isDirectory()) {
                 String filename = String(file.name());
+<<<<<<< HEAD
                 // Upload logic for wpa-sec (POST)
                 // This assumes standard wpa-sec API: https://wpa-sec.stanev.org/?help
                 // curl -X POST -F [email protected] -F key=... https://wpa-sec.stanev.org/
@@ -110,6 +143,19 @@ public:
                     Serial.printf("Erro envio %s\n", filename.c_str());
                 }
                 http.end();
+=======
+                // Only upload .pcap or .hccapx
+                if (filename.endsWith(".pcap") || filename.endsWith(".hccapx")) {
+                    if (uploadFile(file, cfg.wpa_sec_key)) {
+                        Serial.printf("SUCESSO: %s enviado.\n", filename.c_str());
+                        // Optional: Move to /uploaded
+                        // SD_MMC.rename(file.path(), "/uploaded/" + filename);
+                        count++;
+                    } else {
+                        Serial.printf("FALHA: %s\n", filename.c_str());
+                    }
+                }
+>>>>>>> origin/waveshare-s3-amoled-final-polish
             }
             file = root.openNextFile();
         }
@@ -117,6 +163,67 @@ public:
         WiFi.disconnect();
         return count;
     }
+<<<<<<< HEAD
+=======
+
+private:
+    static bool uploadFile(File& file, String key) {
+        WiFiClientSecure client;
+        client.setInsecure(); // Skip certificate check
+
+        if (!client.connect("wpa-sec.stanev.org", 443)) {
+            Serial.println("Falha ao conectar no servidor");
+            return false;
+        }
+
+        String boundary = "------------------------Esp32Boundary";
+        String fileName = String(file.name());
+        size_t fileSize = file.size();
+
+        // Construct Headers & Body parts
+        String head = "--" + boundary + "\r\nContent-Disposition: form-data; name=\"key\"\r\n\r\n" + key + "\r\n";
+        String fileHead = "--" + boundary + "\r\nContent-Disposition: form-data; name=\"file\"; filename=\"" + fileName + "\"\r\nContent-Type: application/octet-stream\r\n\r\n";
+        String tail = "\r\n--" + boundary + "--\r\n";
+
+        size_t totalLen = head.length() + fileHead.length() + fileSize + tail.length();
+
+        // Send Request
+        client.println("POST /?api&dl=1 HTTP/1.1");
+        client.println("Host: wpa-sec.stanev.org");
+        client.println("Content-Type: multipart/form-data; boundary=" + boundary);
+        client.print("Content-Length: "); client.println(totalLen);
+        client.println("Connection: close");
+        client.println();
+
+        client.print(head);
+        client.print(fileHead);
+
+        // Stream File
+        uint8_t buf[512];
+        while (file.available()) {
+            size_t read = file.read(buf, 512);
+            client.write(buf, read);
+        }
+
+        client.print(tail);
+
+        // Check Response
+        long timeout = millis();
+        while (client.connected() && !client.available()) {
+            if (millis() - timeout > 10000) return false;
+            delay(10);
+        }
+
+        bool success = false;
+        while (client.available()) {
+            String line = client.readStringUntil('\n');
+            if (line.indexOf("HTTP/1.1 200") >= 0) success = true;
+        }
+        client.stop();
+
+        return success;
+    }
+>>>>>>> origin/waveshare-s3-amoled-final-polish
 };
 
 #endif

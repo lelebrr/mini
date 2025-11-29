@@ -6,6 +6,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
@@ -79,6 +80,8 @@ Acesse via navegador para controle total.
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
 =======
 >>>>>>> origin/waveshare-s3-amoled-evil-portal-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-final-polish
 # 📖 Manual de Uso
 
 ## 🗣️ Comandos de Voz (Offline)
@@ -99,7 +102,11 @@ Clique no botão **"Voz"** e fale próximo ao microfone. O sistema detecta o nú
 2.  O dispositivo criará uma rede Wi-Fi aberta (Ex: "Cafe_Gratis_WiFi").
 3.  Qualquer pessoa que conectar será redirecionada para a página falsa (Template).
 <<<<<<< HEAD
+<<<<<<< HEAD
 4.  Se a vítima digitar a senha, ela será salva em `/arquivos_cartao_sd/credenciais_capturadas.txt`.
+=======
+4.  Se a vítima digitar a senha, ela será salva em `/captured_creds.txt` no SD.
+>>>>>>> origin/waveshare-s3-amoled-final-polish
 5.  O Pwnagotchi ficará feliz `(^_^)`.
 
 ## 🕵️ Sniffer WiFi (Wall of Flippers)
@@ -107,7 +114,11 @@ Clique no botão **"Voz"** e fale próximo ao microfone. O sistema detecta o nú
 1. Clique no botão **"Sniffer"**.
 2. O dispositivo entra em modo promíscuo.
 3. A tela exibirá uma lista em tempo real de endereços MAC próximos (dispositivos buscando WiFi).
+<<<<<<< HEAD
 4. Os dados são salvos em `/arquivos_cartao_sd/macs_detectados.txt`.
+=======
+4. Os dados são salvos em `/sniffed_macs.txt`.
+>>>>>>> origin/waveshare-s3-amoled-final-polish
 
 ## 📤 Manual Upload (WPA-SEC)
 
@@ -115,13 +126,18 @@ Para enviar handshakes capturados para quebra de senha online:
 
 1.  Crie uma conta em [wpa-sec.stanev.org](https://wpa-sec.stanev.org).
 2.  Copie sua **Key**.
+<<<<<<< HEAD
 3.  Edite o arquivo `/arquivos_cartao_sd/wifi_config.txt` no cartão SD:
+=======
+3.  Edite o arquivo `wifi_config.txt` no cartão SD:
+>>>>>>> origin/waveshare-s3-amoled-final-polish
     ```
     SSID=SeuWiFi
     PASS=SuaSenha
     KEY=ColeSuaKeyAqui
     ```
 4.  No dispositivo, clique em **"Upload"**.
+<<<<<<< HEAD
 5.  O sistema conectará ao WiFi e enviará todos os arquivos `.pcap` da pasta `/capturas` e `/fila_envio`.
 =======
 4.  Se a vítima digitar a senha, ela será salva em `/captured_creds.txt` no SD.
@@ -134,12 +150,16 @@ Para enviar handshakes capturados para quebra de senha online:
 3.  Para enviar para cracking, clique em **"Upload"**.
 4.  O dispositivo conecta no WiFi definido em `wifi_config.txt` e envia os arquivos.
 >>>>>>> origin/waveshare-s3-amoled-evil-portal-final
+=======
+5.  O sistema conectará ao WiFi e enviará todos os arquivos `.pcap` da pasta `/handshakes` e `/upload_queue`.
+>>>>>>> origin/waveshare-s3-amoled-final-polish
 
 ## 🎮 Gamificação
 
 *   **XP:** Ganhe experiência usando voz e capturando redes.
 *   **Nível:** Suba de nível para desbloquear... respeito do seu Pwnagotchi.
 *   **Status:** Acompanhe seu progresso na tela principal.
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 ## 🔋 Economia de Energia
@@ -164,3 +184,5 @@ Para enviar handshakes capturados para quebra de senha online:
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
 =======
 >>>>>>> origin/waveshare-s3-amoled-evil-portal-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-final-polish
