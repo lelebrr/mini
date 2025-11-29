@@ -5,10 +5,13 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 #include <Arduino.h>
 #include <SD_MMC.h>
 #include "FS.h"
@@ -31,6 +34,7 @@ struct Trophy {
     String name;
     bool unlocked;
 };
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -57,12 +61,15 @@ struct Trophy {
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 =======
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 
 struct GameStats {
     uint32_t xp;
     uint32_t level;
     uint32_t age_seconds;
     uint32_t interactions;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -81,6 +88,10 @@ struct GameStats {
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 =======
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+    uint32_t handshakes_total;
+    uint32_t missions_completed;
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 };
 
 class Gamification {
@@ -92,10 +103,13 @@ private:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
     static std::vector<Mission> active_missions;
     static std::vector<Trophy> trophies;
 
@@ -114,6 +128,7 @@ public:
         }
 
         trophies.push_back({"first_blood", "Primeira Captura", false});
+<<<<<<< HEAD
         trophies.push_back({"hacker_master", "PwnGod", false}); // Reverted to PwnGod
         trophies.push_back({"survivor", "Imortal", false});
     }
@@ -150,6 +165,12 @@ public:
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 =======
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+        trophies.push_back({"hacker_master", "PwnGod", false});
+        trophies.push_back({"survivor", "Imortal", false});
+    }
+
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
     static void load() {
         if (SD_MMC.exists(saveFile)) {
             File file = SD_MMC.open(saveFile, FILE_READ);
@@ -159,16 +180,20 @@ public:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 
             if (stats.handshakes_total > 0) unlockTrophy("first_blood");
             if (stats.handshakes_total >= 10000) unlockTrophy("hacker_master");
         }
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -189,6 +214,8 @@ public:
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 =======
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
     static void save() {
         File file = SD_MMC.open(saveFile, FILE_WRITE);
         if (file) {
@@ -197,6 +224,7 @@ public:
         }
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -215,11 +243,14 @@ public:
      * Atualiza o contador de tempo (chamar no loop principal).
      */
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
     static void tick() {
         if (millis() - last_tick >= 1000) {
             stats.age_seconds++;
             last_tick = millis();
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -230,10 +261,18 @@ public:
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
             updateMission("Sobreviva 1h sem USB", 1);
 
+=======
+            updateMission("Sobreviva 1h sem USB", 1);
+
+            // Overclock dinâmico (Gameplay 8)
+            // Lógica implementada no PowerManager baseada em stats.level
+
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
             if (stats.age_seconds % 60 == 0) save();
         }
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -258,6 +297,8 @@ public:
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 =======
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
     static void addXP(int amount) {
         stats.xp += amount;
         stats.interactions++;
@@ -266,14 +307,18 @@ public:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
         uint32_t required = stats.level * 500;
         if (stats.xp >= required) {
             stats.xp -= required;
             stats.level++;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -294,6 +339,9 @@ public:
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 =======
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+            // TODO: Play Sound
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
         }
         save();
     }
@@ -302,10 +350,13 @@ public:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
     static void registerHandshake() {
         stats.handshakes_total++;
         addXP(100);
@@ -316,6 +367,15 @@ public:
     }
 
     static void triggerBadUSB() {
+<<<<<<< HEAD
+=======
+        // Gameplay 9: BadUSB inofensivo se triste
+        // Como o ESP32-S3 tem USB nativo:
+        // USB.begin();
+        // Keyboard.begin();
+        // Keyboard.print("I am sad :(");
+        // USB.end();
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
     }
 
     static void updateMission(String desc_keyword, int increment) {
@@ -351,6 +411,7 @@ std::vector<Mission> Gamification::active_missions;
 std::vector<Trophy> Gamification::trophies;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> origin/pwntamagotchi-br-final-90-features
@@ -381,5 +442,7 @@ uint32_t Gamification::last_tick = 0;
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 =======
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 
 #endif

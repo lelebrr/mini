@@ -17,6 +17,7 @@ private:
 public:
     bool init(TwoWire &wire) {
 <<<<<<< HEAD
+<<<<<<< HEAD
         if (!qmi.begin(wire, QMI8658_L_SLAVE_ADDRESS, IIC_SDA, IIC_SCL)) { // Fix pin naming
              if (!qmi.begin(wire, QMI8658_H_SLAVE_ADDRESS, IIC_SDA, IIC_SCL)) {
 =======
@@ -24,6 +25,10 @@ public:
         if (!qmi.begin(wire, QMI8658_L_SLAVE_ADDRESS, IMU_SDA, IMU_SCL)) {
              if (!qmi.begin(wire, QMI8658_H_SLAVE_ADDRESS, IMU_SDA, IMU_SCL)) {
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+        if (!qmi.begin(wire, QMI8658_L_SLAVE_ADDRESS, IIC_SDA, IIC_SCL)) { // Fix pin naming
+             if (!qmi.begin(wire, QMI8658_H_SLAVE_ADDRESS, IIC_SDA, IIC_SCL)) {
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
                  Serial.println("[IMU] Falha ao iniciar QMI8658");
                  return false;
              }
@@ -32,9 +37,12 @@ public:
         Serial.println("[IMU] QMI8658 Online");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         // Configurações Básicas
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
         qmi.configAccelerometer(SensorQMI8658::ACC_RANGE_4G, SensorQMI8658::ACC_ODR_1000Hz, SensorQMI8658::LPF_MODE_0, true);
         qmi.configGyroscope(SensorQMI8658::GYR_RANGE_64DPS, SensorQMI8658::GYR_ODR_896Hz, SensorQMI8658::LPF_MODE_3, true);
         qmi.enableGyroscope();
@@ -48,6 +56,9 @@ public:
         if (!initialized) return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
         // Configuração AnyMotion para QMI8658
         // Threshold (~32mg per LSB usually), duration
         // qmi.configAnyMotion(threshold, duration);
@@ -65,6 +76,7 @@ public:
         // qmi.enableAnyMotion(true); // Placeholder function, verificar docs da lib Lewisxhe
 
         Serial.println("[IMU] Wake-on-Motion ativado (Low Power)");
+<<<<<<< HEAD
 =======
         // Otimização 22: Low Power Mode
         // Configura para detectar movimento (AnyMotion)
@@ -78,6 +90,8 @@ public:
 
         Serial.println("[IMU] Wake-on-Motion ativado");
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
     }
 
     void read(float &accX, float &accY, float &accZ) {

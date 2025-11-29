@@ -3,6 +3,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
@@ -56,6 +57,8 @@ O sistema requer um cartão microSD (FAT32) para salvar configurações, captura
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 # 📘 Guia de Instalação
 
 ## 1. Preparação do Ambiente
@@ -106,6 +109,7 @@ KEY=SuaChaveWpaSec
 *   **SD não monta?** Tente outro cartão ou formate novamente (FAT32).
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/mini-lele-v2-rebrand
 =======
 >>>>>>> origin/pwn-tamagotchi-br-release
@@ -115,3 +119,5 @@ KEY=SuaChaveWpaSec
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 =======
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized

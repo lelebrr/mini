@@ -7,12 +7,15 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 =======
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 #include "core/PwnPower.h"
 #include "FaceHandler.h"
 #include "pin_config.h"
@@ -25,6 +28,7 @@ static lv_style_t style_neon_text;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include "FaceHandler.h"
 >>>>>>> origin/pwn-tamagotchi-br-release
@@ -34,6 +38,8 @@ static lv_style_t style_neon_text;
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 =======
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 
 class PwnUI {
 private:
@@ -46,20 +52,26 @@ private:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
     static lv_obj_t* label_battery;
     static lv_obj_t* matrix_canvas;
     static lv_color_t* matrix_buf;
     static int matrix_cols;
     static int matrix_rows;
     static int* drops;
+<<<<<<< HEAD
 =======
     static lv_obj_t* label_battery;
     static lv_obj_t* matrix_bg; // Placeholder para Matrix Rain
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 
 public:
     static void initStyles() {
@@ -84,6 +96,9 @@ public:
     static void init() {
         initStyles();
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
         scr_main = lv_screen_active(); // LVGL 9
         lv_obj_add_style(scr_main, &style_base, 0);
 
@@ -108,6 +123,7 @@ public:
         }
 
         // Relógio Grande
+<<<<<<< HEAD
 =======
         scr_main = lv_scr_act();
         lv_obj_add_style(scr_main, &style_base, 0);
@@ -120,6 +136,8 @@ public:
 
         // Relógio Grande (Fonte Pixel se possível, usando Montserrat por padrão)
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
         label_clock = lv_label_create(scr_main);
         lv_obj_set_style_text_font(label_clock, &lv_font_montserrat_20, 0);
         lv_label_set_text(label_clock, "00:00");
@@ -132,10 +150,14 @@ public:
         lv_obj_align(label_battery, LV_ALIGN_TOP_RIGHT, -5, 5);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         // Barras
 =======
         // Barras "Hacker Battery"
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+        // Barras
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
         bar_hunger = lv_bar_create(scr_main);
         lv_obj_add_style(bar_hunger, &style_bar_bg, 0);
         lv_obj_add_style(bar_hunger, &style_bar_indic, LV_PART_INDICATOR);
@@ -151,6 +173,7 @@ public:
         lv_bar_set_range(bar_happy, 0, 100);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         FaceHandler::init(scr_main);
 
 =======
@@ -159,10 +182,15 @@ public:
 
         // Stats Texto
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+        FaceHandler::init(scr_main);
+
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
         label_stats = lv_label_create(scr_main);
         lv_obj_set_style_text_font(label_stats, &lv_font_montserrat_10, 0);
         lv_label_set_text(label_stats, "Iniciando Systema...");
         lv_obj_align(label_stats, LV_ALIGN_BOTTOM_MID, 0, -10);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -208,6 +236,8 @@ public:
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 =======
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
     }
 
     static void update() {
@@ -217,10 +247,13 @@ public:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
         lv_bar_set_value(bar_hunger, stats.hunger, LV_ANIM_ON);
         lv_bar_set_value(bar_happy, stats.happiness, LV_ANIM_ON);
 
@@ -230,6 +263,7 @@ public:
              static bool blink = false;
              blink = !blink;
              lv_obj_set_style_bg_color(scr_main, blink ? lv_color_hex(0x220000) : lv_color_hex(0x000000), 0);
+<<<<<<< HEAD
 =======
         lv_bar_set_value(bar_hunger, stats.hunger, LV_ANIM_ON);
         lv_bar_set_value(bar_happy, stats.happiness, LV_ANIM_ON);
@@ -240,6 +274,8 @@ public:
         } else {
              lv_obj_set_style_bg_color(scr_main, lv_color_hex(0x000000), 0);
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
         }
 
         String pwr = PwnPower::getPowerStatus();
@@ -252,17 +288,22 @@ public:
         lv_label_set_text(label_stats, txt.c_str());
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         unsigned long t = millis() / 1000;
 =======
         // Relógio
         unsigned long t = millis() / 1000; // Placeholder para RTC
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+        unsigned long t = millis() / 1000;
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
         int m = (t / 60) % 60;
         int h = (t / 3600) % 24;
         char buf[10];
         snprintf(buf, 10, "%02d:%02d", h, m);
         lv_label_set_text(label_clock, buf);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
         if (stats.stage == PWNGOD) FaceHandler::setFace(FACE_COOL);
         else if (stats.hunger < 20) FaceHandler::setFace(FACE_SAD);
@@ -298,6 +339,10 @@ public:
         if (stats.stage == PWNGOD) FaceHandler::setFace(FACE_COOL);
         else if (stats.hunger < 20) FaceHandler::setFace(FACE_SAD);
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+        if (stats.stage == PWNGOD) FaceHandler::setFace(FACE_COOL);
+        else if (stats.hunger < 20) FaceHandler::setFace(FACE_SAD);
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
         else FaceHandler::setFace(FACE_NEUTRAL);
     }
 };
@@ -311,16 +356,20 @@ lv_obj_t* PwnUI::label_stats;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 lv_obj_t* PwnUI::label_battery;
 lv_obj_t* PwnUI::matrix_canvas;
 lv_color_t* PwnUI::matrix_buf;
 int PwnUI::matrix_cols;
 int PwnUI::matrix_rows;
 int* PwnUI::drops;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -334,5 +383,7 @@ lv_obj_t* PwnUI::img_pet;
 lv_obj_t* PwnUI::label_battery;
 lv_obj_t* PwnUI::matrix_bg;
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 
 #endif

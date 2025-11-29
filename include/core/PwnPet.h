@@ -9,6 +9,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "ConfigManager.h"
 =======
 >>>>>>> origin/pwn-tamagotchi-br-release
@@ -20,6 +21,8 @@
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 =======
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 
 // Estágios de Evolução
 enum PetStage {
@@ -28,6 +31,7 @@ enum PetStage {
     KID,
     TEEN,
     ADULT,
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -61,6 +65,10 @@ enum PetMood {
     PWNLORD,
     PWNGOD // Otimização 30: Forma Secreta
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+    PWNLORD,
+    PWNGOD // Otimização 30: Forma Secreta
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 };
 
 struct PetStats {
@@ -71,6 +79,7 @@ struct PetStats {
     int hunger; // 0-100 (100 = Cheio)
     int happiness; // 0-100
     int handshakes_total;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -97,13 +106,18 @@ struct PetStats {
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 =======
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
     unsigned long last_save;
     bool is_sleeping;
 
     // Otimização 6: Modo Energia afeta XP
     int energy_mode; // 0=Eco, 1=Normal, 2=Turbo
     int sleep_hours; // Otimização 23: Siesta Track
+<<<<<<< HEAD
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 };
 
 class PwnPet {
@@ -114,6 +128,7 @@ private:
 public:
     static void init() {
         savePath = "/pwn_pet_save.json";
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -140,12 +155,17 @@ public:
         // Valores Padrão
         stats.name = "PwnBaby";
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+        // Valores Padrão
+        stats.name = "PwnBaby";
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
         stats.stage = EGG;
         stats.xp = 0;
         stats.level = 1;
         stats.hunger = 100;
         stats.happiness = 100;
         stats.handshakes_total = 0;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -173,6 +193,11 @@ public:
         stats.energy_mode = 1; // Normal
         stats.sleep_hours = 0;
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+        stats.is_sleeping = false;
+        stats.energy_mode = 1; // Normal
+        stats.sleep_hours = 0;
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 
         load();
     }
@@ -193,18 +218,22 @@ public:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 =======
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
             stats.energy_mode = doc["energy_mode"] | 1;
 
             Serial.printf("[Pet] Carregado: %s (Lvl %d)\n", stats.name.c_str(), stats.level);
         } else {
             Serial.println("[Pet] Novo Save Criado!");
             save();
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -221,6 +250,8 @@ public:
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 =======
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
         }
     }
 
@@ -231,6 +262,7 @@ public:
         doc["xp"] = stats.xp;
         doc["level"] = stats.level;
         doc["handshakes_total"] = stats.handshakes_total;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -247,6 +279,9 @@ public:
 =======
         doc["energy_mode"] = stats.energy_mode;
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+        doc["energy_mode"] = stats.energy_mode;
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 
         File f = SD_MMC.open(savePath, FILE_WRITE);
         serializeJson(doc, f);
@@ -254,6 +289,7 @@ public:
         stats.last_save = millis();
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -273,10 +309,14 @@ public:
 =======
     static void tick() {
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+    static void tick() {
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
         static unsigned long last_decay = 0;
         if (millis() - last_decay > 60000) { // 1 min
             last_decay = millis();
             if (!stats.is_sleeping) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -288,14 +328,21 @@ public:
 =======
                 // Otimização 6: Eco mode reduz fome mais devagar
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+                // Otimização 6: Eco mode reduz fome mais devagar
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
                 int hunger_loss = (stats.energy_mode == 0) ? 0 : 1;
                 stats.hunger = max(0, stats.hunger - hunger_loss);
                 stats.happiness = max(0, stats.happiness - 1);
             }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
             // Auto Save a cada 5 min
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+            // Auto Save a cada 5 min
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
             if (millis() - stats.last_save > 300000) save();
         }
         checkEvolution();
@@ -303,9 +350,13 @@ public:
 
     static void addXP(int amount) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         // Otimização 6: XP Boost em Turbo Mode, Penalidade em Eco
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+        // Otimização 6: XP Boost em Turbo Mode, Penalidade em Eco
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
         float multiplier = 1.0;
         if (stats.energy_mode == 2) multiplier = 1.5;
         if (stats.energy_mode == 0) multiplier = 0.5;
@@ -315,6 +366,7 @@ public:
         if (stats.xp > stats.level * 500) {
             stats.level++;
             stats.happiness = 100;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -350,12 +402,15 @@ public:
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 =======
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
         }
         checkEvolution();
     }
 
     static void addHandshake(bool is_wpa3) {
         stats.handshakes_total++;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -384,6 +439,11 @@ public:
         addXP(xp_gain);
         stats.hunger = min(100, stats.hunger + 2); // Handshake alimenta!
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+        int xp_gain = is_wpa3 ? 100 : 20;
+        addXP(xp_gain);
+        stats.hunger = min(100, stats.hunger + 2); // Handshake alimenta!
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
         save();
     }
 
@@ -395,6 +455,7 @@ public:
         else if (stats.level >= 30 && stats.stage == TEEN) stats.stage = ADULT;
         else if (stats.level >= 50 && stats.stage == ADULT) stats.stage = PWNLORD;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -419,15 +480,21 @@ public:
         if (old != stats.stage) {
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 =======
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
         // Otimização 30: Forma Secreta "PwnGod" com 10k handshakes
         if (stats.handshakes_total >= 10000) stats.stage = PWNGOD;
 
         if (old != stats.stage) {
+<<<<<<< HEAD
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
             Serial.println("[Pet] EVOLUCAO!");
         }
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -438,6 +505,8 @@ public:
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 =======
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
     static int getHunger() { return stats.hunger; }
     static PetStats& getStats() { return stats; }
 
@@ -445,6 +514,7 @@ public:
         if (stats.hunger < 20) return "FAMINTO";
         if (stats.happiness < 20) return "TRISTE";
         if (stats.stage == PWNGOD) return "DIVINO";
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -461,6 +531,8 @@ public:
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 =======
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
         return "FELIZ";
     }
 };

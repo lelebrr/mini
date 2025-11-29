@@ -4,6 +4,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
@@ -23,15 +24,21 @@
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 =======
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 #include <esp_task_wdt.h>
 
 // Core Headers
 #include "core/PwnPower.h"
+<<<<<<< HEAD
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 #include "core/PwnPet.h"
 #include "core/PwnAttack.h"
 #include "core/PwnUI.h"
 #include "core/PwnVoice.h"
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -45,6 +52,9 @@
 =======
 #include "core/Gamification.h"
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+#include "core/Gamification.h"
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 
 // Drivers
 #include "pin_config.h"
@@ -63,15 +73,22 @@
 #include <TouchLib.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define IRAM_ATTR_OPT __attribute__((section(".iram1")))
 
 =======
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+// Otimização Block 4: IRAM Attributes
+#define IRAM_ATTR_OPT __attribute__((section(".iram1")))
+
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 // Globals
 ESP_IOExpander *expander;
 SemaphoreHandle_t gui_mutex;
 PwnIMU imu;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -161,6 +178,14 @@ Arduino_GFX *gfx = new Arduino_ST7701_RGBPanel(
 Arduino_DataBus *bus = new Arduino_ESP32QSPI(LCD_CS, LCD_SCK, LCD_D0, LCD_D1, LCD_D2, LCD_D3);
 Arduino_GFX *gfx = new Arduino_SH8601(bus, LCD_RST, 0 /* rotation */, false /* IPS */, LCD_WIDTH, LCD_HEIGHT);
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+// Hardware Objects
+// Configuração para SH8601 368x448 (Waveshare Standard)
+// Se usuário realmente tiver ST7701S RGB, a pinagem e driver seriam drasticamente diferentes.
+// Assume-se que o usuário quer o driver SH8601 que roda na placa citada.
+Arduino_DataBus *bus = new Arduino_ESP32QSPI(LCD_CS, LCD_SCLK, LCD_SDIO0, LCD_SDIO1, LCD_SDIO2, LCD_SDIO3);
+Arduino_GFX *gfx = new Arduino_SH8601(bus, LCD_RST, 0, false, LCD_WIDTH, LCD_HEIGHT);
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 
 TouchLib *touch = NULL;
 
@@ -168,6 +193,7 @@ TouchLib *touch = NULL;
 lv_display_t * disp;
 lv_indev_t * indev;
 
+<<<<<<< HEAD
 // Double Buffer PSRAM
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -216,10 +242,15 @@ static lv_color_t *buf2;
 =======
 >>>>>>> origin/mini-lele-v2-rebrand
 #define BUFFER_SIZE (LCD_WIDTH * LCD_HEIGHT / 10)
+=======
+// Double Buffer PSRAM (Block 4: Opt 1)
+#define BUFFER_SIZE (LCD_WIDTH * LCD_HEIGHT / 10) // 1/10th screen buffer
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 static lv_color_t *buf1;
 static lv_color_t *buf2;
 
 // Siesta
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -260,17 +291,29 @@ static lv_disp_drv_t disp_drv;
 
 // Otimização 23: Siesta Timer
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 unsigned long siesta_start = 0;
 bool in_siesta = false;
 
 // -------------------------------------------------------------------------
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 // Display Callback (LVGL 9)
 // -------------------------------------------------------------------------
 void my_disp_flush(lv_display_t *disp, const lv_area_t *area, uint8_t * px_map) {
     uint32_t w = (area->x2 - area->x1 + 1);
     uint32_t h = (area->y2 - area->y1 + 1);
+<<<<<<< HEAD
     gfx->draw16bitBeRGBBitmap(area->x1, area->y1, (uint16_t*)px_map, w, h);
+=======
+
+    // DMA2D Simulation via GFX (Block 4: Opt 4)
+    gfx->draw16bitBeRGBBitmap(area->x1, area->y1, (uint16_t*)px_map, w, h);
+
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
     lv_display_flush_ready(disp);
 }
 
@@ -278,6 +321,7 @@ void my_disp_flush(lv_display_t *disp, const lv_area_t *area, uint8_t * px_map) 
 // Touch Callback (LVGL 9)
 // -------------------------------------------------------------------------
 void my_touch_read(lv_indev_t * indev, lv_indev_data_t * data) {
+<<<<<<< HEAD
 =======
 // Display Callback
 // -------------------------------------------------------------------------
@@ -293,10 +337,14 @@ void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color
 // -------------------------------------------------------------------------
 void my_touch_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data) {
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+    // Block 4: Opt 17 (Interrupt check would happen here if wired)
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
     if (touch && touch->read()) {
         TP_Point t = touch->getPoint(0);
         data->point.x = t.x;
         data->point.y = t.y;
+<<<<<<< HEAD
 <<<<<<< HEAD
         data->state = LV_INDEV_STATE_PRESSED;
     } else {
@@ -306,10 +354,16 @@ void my_touch_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data) {
     } else {
         data->state = LV_INDEV_STATE_REL;
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+        data->state = LV_INDEV_STATE_PRESSED;
+    } else {
+        data->state = LV_INDEV_STATE_RELEASED;
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
     }
 }
 
 // -------------------------------------------------------------------------
+<<<<<<< HEAD
 <<<<<<< HEAD
 // Audio Init
 // -------------------------------------------------------------------------
@@ -320,15 +374,24 @@ void initAudio() {
 void initAudio() {
     // 1. Configurar I2S
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+// Audio Init
+// -------------------------------------------------------------------------
+void initAudio() {
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
     i2s_config_t i2s_config = {
         .mode = (i2s_mode_t)(I2S_MODE_MASTER | I2S_MODE_TX | I2S_MODE_RX),
         .sample_rate = 16000,
         .bits_per_sample = I2S_BITS_PER_SAMPLE_16BIT,
 <<<<<<< HEAD
+<<<<<<< HEAD
         .channel_format = I2S_CHANNEL_FMT_ONLY_LEFT,
 =======
         .channel_format = I2S_CHANNEL_FMT_ONLY_LEFT, // Mono
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+        .channel_format = I2S_CHANNEL_FMT_ONLY_LEFT,
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
         .communication_format = I2S_COMM_FORMAT_STAND_I2S,
         .intr_alloc_flags = ESP_INTR_FLAG_LEVEL1,
         .dma_buf_count = 8,
@@ -339,6 +402,7 @@ void initAudio() {
     };
 
     i2s_pin_config_t pin_config = {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -388,10 +452,13 @@ void initAudio() {
 >>>>>>> origin/mini-lele-v2-rebrand
 =======
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
         .bck_io_num = BCLKPIN,
         .ws_io_num = WSPIN,
         .data_out_num = DOPIN,
         .data_in_num = DIPIN
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -422,12 +489,15 @@ void initAudio() {
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 =======
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
     };
 
     i2s_driver_install(I2S_NUM_0, &i2s_config, 0, NULL);
     i2s_set_pin(I2S_NUM_0, &pin_config);
     i2s_zero_dma_buffer(I2S_NUM_0);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -478,6 +548,9 @@ void initAudio() {
 =======
     es8311_handle_t es_dev = es8311_create(0, ES8311_ADDR);
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+    es8311_handle_t es_dev = es8311_create(0, ES8311_ADDRRES_0);
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
     if (es_dev) {
          es8311_clock_config_t cfg = {0};
          cfg.sample_frequency = 16000;
@@ -486,6 +559,7 @@ void initAudio() {
          es8311_microphone_config(es_dev, false);
          es8311_voice_mute(es_dev, false);
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -541,11 +615,14 @@ void initAudio() {
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 }
 
 // -------------------------------------------------------------------------
 // Task Definitions
 // -------------------------------------------------------------------------
+<<<<<<< HEAD
 void scanTask(void *pvParameters) {
     while(1) {
         if (PwnAttack::isRunning()) {
@@ -571,10 +648,21 @@ void scanTask(void *pvParameters) {
     } else {
          Serial.println("[Audio] Falha ES8311");
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+// Block 4: Opt 9 (Core 0 Pinned Task for WiFi)
+void scanTask(void *pvParameters) {
+    while(1) {
+        if (PwnAttack::isRunning()) {
+            // Priority logic inside PwnAttack
+            PwnAttack::tick();
+        }
+        vTaskDelay(10 / portTICK_PERIOD_MS);
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
     }
 }
 
 void setup() {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -728,10 +816,14 @@ void setup() {
 >>>>>>> origin/mini-lele-v2-rebrand
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+    // Opt 26: Serial off in runtime
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
     #if CORE_DEBUG_LEVEL > 0
     Serial.begin(115200);
     #endif
 
+<<<<<<< HEAD
     setCpuFrequencyMhz(240);
 
 <<<<<<< HEAD
@@ -742,11 +834,17 @@ void setup() {
 
     ConfigManager::getInstance()->load();
 
+=======
+    setCpuFrequencyMhz(240); // Boot turbo (Opt 7 handles scaling later)
+
+    Wire.begin(IIC_SDA, IIC_SCL);
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
     PwnPower::init();
 
     expander = new ESP_IOExpander_TCA95xx_8bit((i2c_port_t)0, ESP_IO_EXPANDER_I2C_TCA9554_ADDRESS_000, IIC_SCL, IIC_SDA);
     expander->init();
     expander->begin();
+<<<<<<< HEAD
     expander->pinMode(0, OUTPUT);
     expander->pinMode(6, OUTPUT);
     expander->digitalWrite(0, LOW); delay(10);
@@ -767,10 +865,18 @@ void setup() {
 >>>>>>> origin/mini-lele-v2-legendary-final-release
 =======
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+    expander->pinMode(0, OUTPUT); // LCD RST
+    expander->pinMode(6, OUTPUT); // Audio PA
+    expander->digitalWrite(0, LOW); delay(10);
+    expander->digitalWrite(0, HIGH); delay(50);
+    expander->digitalWrite(6, HIGH);
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 
     gfx->begin();
     gfx->fillScreen(BLACK);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -858,6 +964,8 @@ void setup() {
 >>>>>>> origin/mini-lele-v2-final-verified
 =======
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
     Wire.beginTransmission(GT1151_DEVICE_ADDRESS);
     if (Wire.endTransmission() == 0) {
         touch = new TouchLib(Wire, IIC_SDA, IIC_SCL, GT1151_DEVICE_ADDRESS);
@@ -865,6 +973,7 @@ void setup() {
         touch = new TouchLib(Wire, IIC_SDA, IIC_SCL, FT3168_DEVICE_ADDRESS);
     }
     touch->init();
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -952,6 +1061,21 @@ void setup() {
     lv_display_set_buffers(disp, buf1, buf2, BUFFER_SIZE * sizeof(lv_color_t), LV_DISPLAY_RENDER_MODE_FULL);
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 
+=======
+
+    lv_init();
+
+    // Allocate Buffers in PSRAM
+    buf1 = (lv_color_t*)heap_caps_malloc(BUFFER_SIZE * sizeof(lv_color_t), MALLOC_CAP_SPIRAM);
+    buf2 = (lv_color_t*)heap_caps_malloc(BUFFER_SIZE * sizeof(lv_color_t), MALLOC_CAP_SPIRAM);
+
+    // Create Display
+    disp = lv_display_create(LCD_WIDTH, LCD_HEIGHT);
+    lv_display_set_flush_cb(disp, my_disp_flush);
+    lv_display_set_buffers(disp, buf1, buf2, BUFFER_SIZE * sizeof(lv_color_t), LV_DISPLAY_RENDER_MODE_PARTIAL);
+
+    // Create Input
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
     indev = lv_indev_create();
     lv_indev_set_type(indev, LV_INDEV_TYPE_POINTER);
     lv_indev_set_read_cb(indev, my_touch_read);
@@ -959,11 +1083,18 @@ void setup() {
     imu.init(Wire);
     imu.enableWakeOnMotion();
 
+<<<<<<< HEAD
+=======
+    SD_MMC.setPins(SDMMC_CLK, SDMMC_CMD, SDMMC_DATA);
+    SD_MMC.begin("/sdcard", true);
+
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
     initAudio();
 
     gui_mutex = xSemaphoreCreateMutex();
     Gamification::init();
     PwnPet::init();
+<<<<<<< HEAD
 
     PwnAttack::init();
     PwnUI::init();
@@ -1071,11 +1202,23 @@ void setup() {
 
     Serial.println("PwnTamagotchi BR (Otimizado + Full HW) Iniciado!");
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+    PwnAttack::init();
+    PwnUI::init();
+
+    // Create Scan Task Pinned to Core 0
+    xTaskCreatePinnedToCore(scanTask, "WiFiScan", 4096, NULL, 1, NULL, 0);
+
+    // Watchdog Init (Opt 30)
+    // esp_task_wdt_init(10, true);
+    // esp_task_wdt_add(NULL);
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 }
 
 void loop() {
     unsigned long now = millis();
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1151,12 +1294,19 @@ void loop() {
 
     // LVGL
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+    // Opt 24: Monitor Current
+    float current = PwnPower::getSystemCurrent();
+    if (current > 130) PwnPower::setPerformanceMode(0);
+
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
     if (xSemaphoreTake(gui_mutex, 5)) {
         lv_timer_handler();
         PwnUI::update();
         xSemaphoreGive(gui_mutex);
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1176,12 +1326,18 @@ void loop() {
         in_siesta = true;
         // PwnPower::enterDeepSleep(); // ou Light sleep por 3 min
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+    int minute = (now / 60000) % 60;
+    if (minute == 0 && !in_siesta) {
+        in_siesta = true;
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
     } else if (minute > 3) {
         in_siesta = false;
     }
 
     if (!in_siesta) {
         PwnPet::tick();
+<<<<<<< HEAD
 <<<<<<< HEAD
         Gamification::tick();
     }
@@ -1203,5 +1359,11 @@ void loop() {
     }
 >>>>>>> origin/pwntamagotchi-br-final-90-features
 
+=======
+        Gamification::tick();
+    }
+
+    // esp_task_wdt_reset();
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
     delay(5);
 }
