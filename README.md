@@ -1,279 +1,312 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-# Mini Lele v2.0
+# Mini Lele
 
-## Visão Geral
-O **Mini Lele** é o dispositivo definitivo de pentest + tamagotchi, projetado exclusivamente para o hardware Waveshare ESP32-S3-Touch-AMOLED-1.8.
-=======
-# PwnTamagotchi BR v2.0
+![Status](https://img.shields.io/badge/status-ativo-brightgreen)
+![Versão](https://img.shields.io/badge/vers%C3%A3o-2.0.0-blue)
+![Plataforma](https://img.shields.io/badge/plataforma-ESP32--S3-orange)
+![Linguagem](https://img.shields.io/badge/linguagem-C%2B%2B%20%2F%20Arduino-informational)
+![Licen%C3%A7a](https://img.shields.io/badge/licen%C3%A7a-GPLv3-important)
 
-## Visão Geral
-O **PwnTamagotchi BR** é o dispositivo definitivo de pentest + tamagotchi, projetado exclusivamente para o hardware Waveshare ESP32-S3-Touch-AMOLED-1.8.
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
+O **Mini Lele** é um Tamagotchi Hacker + plataforma de pentest Wi‑Fi totalmente em **Português BR**, pensado para o kit **Waveshare ESP32‑S3‑Touch‑AMOLED‑1.8**.  
+Ele combina:
 
-**Versão:** 2.0 (God Tier)
-**Hardware:** Waveshare ESP32-S3 AMOLED 1.8" (SH8601/ST7701S + GT1151)
-**Autor:** Jules (Agent)
+- Pet virtual que evolui conforme você explora redes Wi‑Fi
+- Ferramentas reais de análise e ataque (para uso legal e educacional)
+- Interface Web completa (WebUI) com mais de 100 opções de configuração
+- Comandos de voz offline em PT‑BR
+- Design otimizado com LVGL e uso intensivo de PSRAM
 
-## Funcionalidades (120+100)
-- **Gameplay:** 6 Evoluções, Missões Diárias, Troféus, Voz Offline.
-- **Pentest:** Sniffer, Deauth Injection, Evil Portal, Handshake Capture, Beacon Spam.
-- **WebUI:** Interface completa (100 configs) responsiva, logs ao vivo, gerenciador de arquivos.
-- **Performance:** LVGL 9.2, -O3, DMA2D Simulado, PSRAM Double Buffer.
-- **Design:** Tema Cyber-Favela, Matrix Rain, Animações Fluídas.
+---
 
-## Instalação
+## 🧭 Índice
 
-### Requisitos
-- VS Code + PlatformIO
-- Python 3.x
-- ESP-IDF v5.x (Gerenciado pelo PIO)
+- [Visão geral](#visão-geral)
+- [Funcionalidades principais](#funcionalidades-principais)
+- [Hardware suportado](#hardware-suportado)
+- [Arquitetura do projeto](#arquitetura-do-projeto)
+- [Instalação rápida](#instalação-rápida)
+- [Modos de operação de rede](#modos-de-operação-de-rede)
+- [Comandos de voz](#comandos-de-voz)
+- [Estrutura do cartão SD](#estrutura-do-cartão-sd)
+- [Documentação complementar](#documentação-complementar)
+- [Contribuindo com o projeto](#contribuindo-com-o-projeto)
+- [Aviso legal](#⚠️-aviso-legal)
 
-### Passos
-1. Clone este repositório.
-2. Abra no VS Code.
-3. Conecte o dispositivo via USB-C.
-4. Execute o Upload: `PlatformIO: Upload`
-5. Execute o Upload do Filesystem (opcional, assets gerados em código): `PlatformIO: Upload Filesystem Image`
+---
 
-## Uso Básico
+## Visão geral
 
-### Modos de Operação
-1. **Modo AP (Padrão):**
-<<<<<<< HEAD
-   - SSID: `Mini-Lele`
-   - Senha: `minilele`
-=======
-   - SSID: `PwnTamagotchi-BR`
-   - Senha: `pwnme123`
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-   - Acesse: `http://192.168.4.1`
+- **Nome:** Mini Lele  
+- **Versão:** 2.0 (God Tier)  
+- **Autor original:** Jules (Agent) – adaptado e documentado para PT‑BR  
+- **Placa alvo:** Waveshare ESP32‑S3‑Touch‑AMOLED‑1.8  
+- **Display:** 1.8" AMOLED, 368x448 (SH8601, interface QSPI)  
+- **Foco:** Pentest Wi‑Fi, gamificação e aprendizado de segurança ofensiva
 
-2. **Modo STA (Cliente):**
-   - Configure via WebUI.
-   - O IP aparecerá na tela do Pet.
+O Mini Lele foi pensado para quem quer:
 
-### Comandos de Voz
-<<<<<<< HEAD
-- "Ei Lele" (2 sílabas fortes): Acorda/Ouve
-=======
-- "Ei Pwn" (2 sílabas fortes): Acorda/Ouve
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-- "Status" (2 sílabas): Fala status
-- "Ataque" (3 sílabas): Inicia scan agressivo
+- Estudar protocolos Wi‑Fi de forma divertida
+- Ter um “companheiro hacker” de bolso
+- Ter um laboratório portátil com WebUI, sniffer, portal cativo e upload de handshakes
 
-## Estrutura de Pastas
-- `src/`: Código fonte principal (`main.cpp`, handlers).
-- `include/core/`: Lógica de negócio (Pet, Attack, Power, Config).
-- `include/web/`: Servidor Web e Assets.
-- `include/drivers/`: Drivers de hardware customizados.
-- `lib/`: Drivers de terceiros/complexos (ES8311).
-- `data/`: Arquivos para upload no SPIFFS/LittleFS (se usado).
+---
 
-## WebUI
-A interface web permite controlar **100 configurações** em tempo real, incluindo:
-- Upload/Download de arquivos do SD.
-- Streaming de logs ao vivo via WebSocket.
-- Controle remoto do Pet.
-- Configuração de ataques e whitelist/blacklist.
+## Funcionalidades principais
 
-Divirta-se hackeando o planeta (com responsabilidade)!
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-# PwnTamagotchi BR (ESP32-S3 AMOLED)
+### 🐣 Tamagotchi Hacker
 
-Projeto completo de Pentest Gamificado para Waveshare ESP32-S3 AMOLED.
+- Pet virtual que “se alimenta” de:
+  - Handshakes WPA2/WPA3
+  - Probes e atividade Wi‑Fi em geral
+- Sistema de **XP e níveis**, com múltiplas evoluções (Egg → Baby → Kid → Teen → Adult → “Deus do Pwn”).
+- Barras de:
+  - Fome
+  - Felicidade
+  - Energia / Bateria
+- Faces ASCII e/ou imagens customizadas que reagem ao seu estilo de uso.
 
-## 🌟 Funcionalidades
-1. **Tamagotchi Hacker:** Evolua de Ovo para PwnGod capturando handshakes.
-2. **Pentest:** Sniffer, Deauth (simulado/frame), Evil Portal.
-3. **Voz Offline:** Comandos em PT-BR ("Ataca", "Status").
-4. **Hardware:** Suporte total a Tela AMOLED, Touch, SD, Power.
+### 🛰 Ferramentas de pentest Wi‑Fi
 
-## 🛠 Instalação
-1. Formate SD em FAT32.
-2. Rode `sh generate_sd_structure.sh` e copie `sd_out/*` para o SD.
-3. Gere arquivos WAV 16kHz para a pasta `tts/`.
-4. Compile e Grave via PlatformIO.
+- Sniffer em modo promíscuo
+  - Lista APs e clientes próximos
+  - Gera arquivos `.pcap` no cartão SD para análise posterior
+- Deauth / ataques ativos
+  - Força reconexão de clientes para captura de handshakes
+  - Pode ser disparado manualmente ou quando o Pet está “com muita fome”
+- Evil Portal (Portal Cativo)
+  - Pontos de acesso falsos com templates HTML personalizáveis
+  - Registro de credenciais em arquivo de log no SD
+- Captura e organização de handshakes
+  - Diretório dedicado no SD
+  - Integração com upload manual/automático para serviços de cracking (ex.: wpa-sec)
 
-## 🎮 Como Jogar
-- **Fome:** Cai com o tempo. Alimente capturando redes WiFi.
-- **Felicidade:** Aumenta interagindo (Voz/Touch).
-- **Evolução:** Ganhe XP. Lvl 50 = PwnLord.
+Sempre utilize apenas em redes **suas** ou com **autorização explícita**.
 
-Divirta-se!
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
-# Waveshare ESP32-S3-Touch-AMOLED-1.8 "Pwnagotchi Edition"
+### 🌐 WebUI (Interface Web)
 
-![Status](https://img.shields.io/badge/Status-100%25%20Complete-brightgreen)
-=======
-# Waveshare ESP32-S3-Touch-AMOLED-1.8 "Pwnagotchi Edition"
+- Painel responsivo acessível via navegador
+- Mais de **100 configurações** em tempo real:
+  - Nome do Pet, tema, brilho, economia de energia
+  - Parâmetros de scan, filtros, potência de TX (quando suportado)
+  - Controle do Evil Portal, listas de redenegrada (whitelist/blacklist)
+- Gerenciador de arquivos do cartão SD:
+  - Upload/Download de `.pcap`, logs, templates HTML e arquivos de configuração
+- Logs ao vivo via WebSocket
+- Controles remotos básicos (iniciar/pausar scans, mudar modo, reiniciar, etc.)
 
-![Status](https://img.shields.io/badge/Status-Functional-brightgreen)
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
-# Waveshare ESP32-S3-Touch-AMOLED-1.8 "Pwnagotchi Edition"
+### 🗣 Voz offline (Português BR)
 
-![Status](https://img.shields.io/badge/Status-100%25%20Complete-brightgreen)
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
-# Waveshare ESP32-S3-Touch-AMOLED-1.8 "Pwnagotchi Edition"
+- Detecção offline de padrões sonoros simples
+- Comandos curtos, otimizados para funcionamento sem internet
+- Feedback por áudio (WAV 16 kHz) e animações na tela
 
-![Status](https://img.shields.io/badge/Status-100%25%20Complete-brightgreen)
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-=======
-# Waveshare ESP32-S3-Touch-AMOLED-1.8 "Pwnagotchi Edition"
+### ⚙️ Performance e tecnologia
 
-![Status](https://img.shields.io/badge/Status-100%25%20Complete-brightgreen)
->>>>>>> origin/waveshare-s3-amoled-review-complete
-![Language](https://img.shields.io/badge/Language-Portuguese%20BR-blue)
-![Platform](https://img.shields.io/badge/Platform-ESP32--S3-orange)
+- Framework: **Arduino** para ESP32‑S3
+- UI: **LVGL 9.x** (otimizada para PSRAM e double buffering)
+- Otimizações de compilador (`-O3`) e uso cuidadoso de PSRAM
+- Drivers específicos para:
+  - Display SH8601 (QSPI)
+  - Touch (FT3168 / GT1151)
+  - Codec de áudio ES8311
+  - PMU AXP2101
+  - IMU QMI8658
+  - Expansor I²C TCA9554
 
-Este repositório contém o firmware completo para transformar o **Waveshare ESP32-S3-Touch-AMOLED-1.8** em um assistente de segurança ofensiva (inspirado no Pwnagotchi), totalmente em **Português do Brasil**, com foco em operação Offline, Gamificação e Evil Portal.
+---
 
-## 🚀 Funcionalidades Principais
+## Hardware suportado
 
-*   **Offline AI Voice:** Comandos de voz sem internet (reconhecimento de sílabas).
-*   **Evil Portal:** Crie pontos de acesso falsos (Phishing) com 10 templates humorísticos.
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-=======
->>>>>>> origin/waveshare-s3-amoled-review-complete
-*   **WiFi Sniffer:** Veja dispositivos próximos (Wall of Flippers Style) e salve logs.
-*   **Gamificação:** Ganhe XP e suba de nível usando o dispositivo.
-*   **Dashboard:** Monitoramento em tempo real de CPU, RAM, Bateria e Temperatura.
-*   **Real Manual Upload:** Envie handshakes capturados diretamente para `wpa-sec.stanev.org`.
-*   **Personalidade:** Rostos ASCII (Faces) que reagem às suas ações.
+Projeto desenhado para a placa:
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-## 📂 Estrutura de Arquivos (Cartão SD)
+- **Waveshare ESP32‑S3‑Touch‑AMOLED‑1.8**
+  - ESP32‑S3R8 (Dual‑Core, 240 MHz, 16 MB Flash, 8 MB PSRAM)
+  - Tela AMOLED 1.8" 368x448 (SH8601, QSPI)
+  - Touch capacitivo (FT3168 ou GT1151, I²C)
+  - Codec de áudio ES8311 + microfone + amplificador
+  - PMU AXP2101 com suporte a bateria LiPo 3.7 V
+  - IMU QMI8658 (acel. + giroscópio)
+  - Slot microSD (FAT32)
 
-O cartão SD deve estar formatado em **FAT32** e conter a seguinte estrutura na raiz:
+Detalhes completos de pinagem e chips: consulte `FULL_HARDWARE.md` e `HARDWARE.md`.
 
-```
+---
+
+## Arquitetura do projeto
+
+Principais pastas do repositório:
+
+- `src/`
+  - Código-fonte principal (ex.: `main.cpp`)
+  - Inicialização do sistema, laço principal e integração entre módulos
+- `include/`
+  - Cabeçalhos e lógica de alto nível
+  - `pin_config.h`: mapeamento completo de pinos da placa
+  - `core/`: lógicas de jogo, gamificação, configuração, etc.
+  - `drivers/`: drivers de display, touch, PMU, áudio, IMU, SD, etc.
+  - `web/`: handlers da WebUI, APIs HTTP/WebSocket e templates embutidos
+- `lib/`
+  - Bibliotecas externas ou adaptadas (ES8311, expansor de IO, etc.)
+- `arquivos_cartao_sd/`
+  - Estrutura base de arquivos para o cartão SD (evil_portal, tts, voice, etc.)
+- `sd_card_files/`
+  - Versões/estruturas antigas – mantenha o foco em `arquivos_cartao_sd/` na versão atual
+- `generate_sd_structure.sh`
+  - Script para gerar automaticamente a estrutura mínima do SD em `sd_out/`
+- `platformio.ini`
+  - Configuração completa do ambiente `env:waveshare-esp32-s3-amoled`
+
+---
+
+## Instalação rápida
+
+Para detalhes completos, leia `INSTALACAO.md`.  
+Abaixo, um resumo:
+
+1. Pré‑requisitos
+   - VS Code + extensão **PlatformIO IDE**
+   - Python 3.x instalado
+   - Cabo USB‑C de boa qualidade
+2. Clonar o repositório
+   ```bash
+   git clone https://github.com/seu-usuario/mini-lele.git
+   cd mini-lele
+   ```
+3. Preparar o cartão SD
+   - Formate em **FAT32**
+   - Rode:
+     ```bash
+     sh generate_sd_structure.sh
+     ```
+   - Copie o conteúdo de `sd_out/` para a raiz do cartão microSD
+4. Compilar e gravar o firmware
+   - Abra o projeto no VS Code
+   - Selecione o ambiente `waveshare-esp32-s3-amoled`
+   - Clique em:
+     - `Build` (compilar)
+     - `Upload` (gravar o firmware)
+5. Primeiro boot
+   - Insira o cartão SD na placa
+   - Conecte a bateria ou USB‑C
+   - Aguarde o boot do Mini Lele até aparecer a tela inicial do Pet
+
+Problemas comuns e soluções detalhadas: veja `INSTALACAO.md`.
+
+---
+
+## Modos de operação de rede
+
+O Mini Lele pode operar em dois modos principais:
+
+### 1. Modo AP (padrão)
+
+- Cria um ponto de acesso próprio:
+  - **SSID:** `Mini-Lele`
+  - **Senha:** `minilele`
+- IP padrão: `192.168.4.1`
+- Acesse no navegador:
+  - `http://192.168.4.1`
+  - ou (quando suportado) `http://minilele.local`
+
+Este modo é ideal para configuração inicial e uso totalmente offline.
+
+### 2. Modo STA (cliente Wi‑Fi)
+
+- Configurável pela WebUI:
+  - Informe SSID, senha e, opcionalmente, configurações avançadas
+- O endereço IP obtido via DHCP é exibido na tela principal do Pet ou na aba de **Status** da WebUI
+- Permite:
+  - Upload automático/manual de handshakes
+  - Atualizações e integrações que dependam de rede local
+
+---
+
+## Comandos de voz
+
+Os comandos de voz são baseados em padrões de som simples (número de sílabas/pulsos), otimizados para funcionar offline.
+
+Exemplos (podem variar conforme configuração):
+
+- “**Ei Lele**” – acorda o sistema de escuta / ativa interação
+- “**Status**” – o Mini Lele fala (e mostra) o estado atual (XP, bateria, etc.)
+- “**Ataque**” – inicia um ciclo de varredura/ataque mais agressivo
+
+Detalhes, ajustes finos e exemplos de arquivos de áudio estão descritos em `MANUAL.md` e `MISSING_ASSETS.md`.
+
+---
+
+## Estrutura do cartão SD
+
+Resumo (detalhado em `MISSING_ASSETS.md`):
+
+```text
 /
-├── arquivos_cartao_sd/     (Assets do sistema)
-│   ├── evil_portal/        (Templates HTML)
-│   ├── boot_pt.wav         (Áudio de boot)
-│   ├── listening_pt.wav    (Áudio de escuta)
-│   ├── success_pt.wav      (Áudio de sucesso)
-│   ├── error_pt.wav        (Áudio de erro)
-│   ├── wifi_config.txt     (Credenciais para Upload)
-│   ├── macs_detectados.txt (Log do Sniffer)
-│   └── credenciais_capturadas.txt (Logs do Portal)
-├── capturas/               (Handshakes .pcap salvos)
-└── fila_envio/             (Arquivos prontos para upload)
+├── arquivos_cartao_sd/
+│   ├── evil_portal/              # Templates HTML do portal cativo
+│   ├── tts/                      # Áudios TTS (WAV 16 kHz, 16-bit mono)
+│   ├── voice/                    # Gravações de entrada / processamento
+│   ├── wifi_config.txt           # Credenciais para upload (WPA-SEC etc.)
+│   ├── macs_detectados.txt       # Log do sniffer Wi‑Fi
+│   └── credenciais_capturadas.txt# Log de senhas do Evil Portal
+├── capturas/                     # Handshakes e .pcap salvos
+└── fila_envio/                   # Arquivos na fila de upload
 ```
 
-## 🛠 Hardware Necessário
+Use `generate_sd_structure.sh` para criar essa estrutura automaticamente com placeholders.
 
-*   **Placa:** Waveshare ESP32-S3-Touch-AMOLED-1.8
-*   **Cartão SD:** MicroSD (FAT32).
-<<<<<<< HEAD
-=======
-*   **Gamificação:** Ganhe XP e suba de nível usando o dispositivo.
-*   **Dashboard:** Monitoramento em tempo real de CPU, RAM, Bateria e Temperatura.
-*   **Manual Upload:** Salve handshakes e envie manualmente quando tiver WiFi.
-*   **Personalidade:** Rostos ASCII (Faces) que reagem às suas ações.
+---
 
-=======
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
->>>>>>> origin/waveshare-s3-amoled-review-complete
-## 🛠 Hardware Necessário
+## Documentação complementar
 
-*   **Placa:** Waveshare ESP32-S3-Touch-AMOLED-1.8
-*   **Cartão SD:** MicroSD (FAT32) para armazenar logs, áudios e templates.
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-=======
->>>>>>> origin/waveshare-s3-amoled-review-complete
-*   **Bateria:** LiPo 3.7V (Conector MX1.25).
+Toda a documentação foi organizada em PT‑BR:
 
-## 📚 Documentação
+- `INSTALACAO.md` – Guia passo a passo de instalação e preparação do ambiente
+- `MANUAL.md` – Manual de uso do Mini Lele (voz, WebUI, sniffer, Evil Portal, upload, gamificação)
+- `HARDWARE.md` – Resumo de hardware, pinagem principal e visão rápida
+- `FULL_HARDWARE.md` – Documentação completa de hardware (pinos, chips, tensões, observações)
+- `DISPLAY_GUIDE.md` – Guia detalhado de display AMOLED e touchscreen (drivers, sequências, debug)
+- `MISSING_ASSETS.md` – Lista de assets que precisam estar no SD (áudio, imagens, templates)
+- `README_PlatformIO.md` – Detalhes sobre o uso do PlatformIO com o Mini Lele
+- `TUTORIAL.md` – “Primeiros passos” com o Mini Lele (para iniciantes)
+- `CONTRIBUTING.md` – Como contribuir com o projeto
 
-Leia os guias abaixo para começar:
+---
 
-*   [📘 Guia de Instalação](INSTALACAO.md) - Como compilar e gravar.
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-*   [📖 Manual de Uso](MANUAL.md) - Como usar voz, portal, sniffer e upload.
-=======
-*   [📖 Manual de Uso](MANUAL.md) - Como usar voz, portal e ferramentas.
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
-*   [📖 Manual de Uso](MANUAL.md) - Como usar voz, portal, sniffer e upload.
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
-*   [📖 Manual de Uso](MANUAL.md) - Como usar voz, portal, sniffer e upload.
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-=======
-*   [📖 Manual de Uso](MANUAL.md) - Como usar voz, portal, sniffer e upload.
->>>>>>> origin/waveshare-s3-amoled-review-complete
-*   [⚙️ Hardware e Pinos](HARDWARE.md) - Detalhes técnicos.
+## Contribuindo com o projeto
 
-## ⚠️ Aviso Legal
+O Mini Lele é um projeto comunitário.  
+Você pode ajudar:
 
-Este projeto é para fins educacionais e de teste em redes próprias. O uso de "Evil Portal" ou captura de dados em redes de terceiros sem permissão é ilegal. Use com responsabilidade.
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-=======
->>>>>>> origin/waveshare-s3-amoled-review-complete
+- Abrindo issues com bugs, ideias ou melhorias
+- Enviando Pull Requests:
+  - Novos templates de Evil Portal
+  - Melhorias na WebUI
+  - Novas animações/faces do Pet
+  - Otimizações de performance ou estabilidade
+- Melhorando a documentação e exemplos
+
+Leia `CONTRIBUTING.md` para conhecer o fluxo sugerido de contribuição (branchs, estilo de código, testes, etc).
+
+---
+
+## ⚠️ Aviso legal
+
+Este firmware é fornecido **exclusivamente** para:
+
+- Estudos de segurança em redes **próprias**
+- Ambientes de laboratório controlados
+- Pesquisas e demonstrações educacionais
+
+O uso de:
+
+- Ataques de deautenticação,
+- Captura de handshakes,
+- Portais cativos para coleta de credenciais,
+
+em redes ou dispositivos de terceiros **sem autorização explícita** é **ilegal** em diversos países.
+
+Ao utilizar o Mini Lele, você concorda em:
+
+- Respeitar a legislação local
+- Não responsabilizar os autores, mantenedores ou contribuidores por qualquer uso indevido
+
+Use com responsabilidade. Aprenda, ensine, compartilhe conhecimento – sem prejudicar outras pessoas.
