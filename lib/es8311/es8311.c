@@ -20,21 +20,23 @@ typedef struct {
 } es8311_dev_t;
 
 /*
- * Clock coefficient structure
+/*
+ * Estrutura de coeficiente de clock
  */
 struct _coeff_div {
-    uint32_t mclk;        /* mclk frequency */
-    uint32_t rate;        /* sample rate */
-    uint8_t pre_div;      /* the pre divider with range from 1 to 8 */
-    uint8_t pre_multi;    /* the pre multiplier with 0: 1x, 1: 2x, 2: 4x, 3: 8x selection */
-    uint8_t adc_div;      /* adcclk divider */
-    uint8_t dac_div;      /* dacclk divider */
-    uint8_t fs_mode;      /* double speed or single speed, =0, ss, =1, ds */
-    uint8_t lrck_h;       /* adclrck divider and daclrck divider */
+    uint32_t mclk;        /* frequência mclk */
+    uint32_t rate;        /* taxa de amostragem */
+    uint8_t pre_div;      /* o pré-divisor com intervalo de 1 a 8 */
+    uint8_t pre_multi;    /* o pré-multiplicador com seleção 0: 1x, 1: 2x, 2: 4x, 3: 8x */
+    uint8_t adc_div;      /* divisor adcclk */
+    uint8_t dac_div;      /* divisor dacclk */
+    uint8_t fs_mode;      /* velocidade dupla ou velocidade simples, =0, ss, =1, ds */
+    uint8_t lrck_h;       /* divisor adclrck e divisor daclrck */
     uint8_t lrck_l;
-    uint8_t bclk_div;     /* sclk divider */
-    uint8_t adc_osr;      /* adc osr */
-    uint8_t dac_osr;      /* dac osr */
+    uint8_t bclk_div;     /* divisor sclk */
+    uint8_t adc_osr;      /* osr adc */
+    uint8_t dac_osr;      /* osr dac */
+}
 };
 
 /* codec hifi mclk clock divider coefficients */
@@ -100,7 +102,7 @@ static const struct _coeff_div coeff_div[] = {
     {3072000, 32000, 0x03, 0x03, 0x01, 0x01, 0x00, 0x00, 0xff, 0x04, 0x10, 0x10},
     {2048000, 32000, 0x01, 0x02, 0x01, 0x01, 0x00, 0x00, 0xff, 0x04, 0x10, 0x10},
     {1536000, 32000, 0x03, 0x03, 0x01, 0x01, 0x01, 0x00, 0x7f, 0x02, 0x10, 0x10},
-    {1024000, 32000, 0x01, 0x03, 0x01, 0x01, 0x00, 0x00, 0xff, 0x04, 0x10, 0x10},
+    {1024000, 32000, 0x01, 0x03, 0x01, 0x01, 0x01, 0x00, 0xff, 0x04, 0x10, 0x10},
 
     /* 44.1k */
     {11289600, 44100, 0x01, 0x00, 0x01, 0x01, 0x00, 0x00, 0xff, 0x04, 0x10, 0x10},
@@ -158,7 +160,7 @@ static inline esp_err_t es8311_read_reg(es8311_handle_t dev, uint8_t reg_addr, u
 }
 
 /*
-* look for the coefficient in coeff_div[] table
+* procura pelo coeficiente na tabela coeff_div[]
 */
 static int get_coeff(uint32_t mclk, uint32_t rate)
 {
@@ -175,16 +177,17 @@ esp_err_t es8311_sample_frequency_config(es8311_handle_t dev, int mclk_frequency
 {
     uint8_t regv;
 
-    /* Get clock coefficients from coefficient table */
+    /* Obtém coeficientes de clock da tabela */
     int coeff = get_coeff(mclk_frequency, sample_frequency);
 
     if (coeff < 0) {
-        ESP_LOGE(TAG, "Unable to configure sample rate %dHz with %dHz MCLK", sample_frequency, mclk_frequency);
+        ESP_LOGE(TAG, "Incapaz de configurar taxa de amostragem %dHz com %dHz MCLK", sample_frequency, mclk_frequency);
         return ESP_ERR_INVALID_ARG;
     }
 
     const struct _coeff_div *const selected_coeff = &coeff_div[coeff];
 
+<<<<<<< HEAD
     /* register 0x02 */
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_CLK_MANAGER_REG02, &regv), TAG, "I2C read/write error");
     regv &= 0x07;
@@ -205,6 +208,28 @@ esp_err_t es8311_sample_frequency_config(es8311_handle_t dev, int mclk_frequency
 
     /* register 0x06 */
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_CLK_MANAGER_REG06, &regv), TAG, "I2C read/write error");
+=======
+    /* registro 0x02 */
+    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_CLK_MANAGER_REG02, &regv), TAG, "Erro leitura/escrita I2C");
+    regv &= 0x07;
+    regv |= (selected_coeff->pre_div - 1) << 5;
+    regv |= selected_coeff->pre_multi << 3;
+    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG02, regv), TAG, "Erro leitura/escrita I2C");
+
+    /* registro 0x03 */
+    const uint8_t reg03 = (selected_coeff->fs_mode << 6) | selected_coeff->adc_osr;
+    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG03, reg03), TAG, "Erro leitura/escrita I2C");
+
+    /* registro 0x04 */
+    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG04, selected_coeff->dac_osr), TAG, "Erro leitura/escrita I2C");
+
+    /* registro 0x05 */
+    const uint8_t reg05 = ((selected_coeff->adc_div - 1) << 4) | (selected_coeff->dac_div - 1);
+    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG05, reg05), TAG, "Erro leitura/escrita I2C");
+
+    /* registro 0x06 */
+    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_CLK_MANAGER_REG06, &regv), TAG, "Erro leitura/escrita I2C");
+>>>>>>> origin/merge-ready-mini-lele-v2
     regv &= 0xE0;
 
     if (selected_coeff->bclk_div < 19) {
@@ -213,6 +238,7 @@ esp_err_t es8311_sample_frequency_config(es8311_handle_t dev, int mclk_frequency
         regv |= (selected_coeff->bclk_div) << 0;
     }
 
+<<<<<<< HEAD
     ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, regv), TAG, "I2C read/write error");
 
     /* register 0x07 */
@@ -223,6 +249,18 @@ esp_err_t es8311_sample_frequency_config(es8311_handle_t dev, int mclk_frequency
 
     /* register 0x08 */
     ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG08, selected_coeff->lrck_l), TAG, "I2C read/write error");
+=======
+    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, regv), TAG, "Erro leitura/escrita I2C");
+
+    /* registro 0x07 */
+    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_CLK_MANAGER_REG07, &regv), TAG, "Erro leitura/escrita I2C");
+    regv &= 0xC0;
+    regv |= selected_coeff->lrck_h << 0;
+    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG07, regv), TAG, "Erro leitura/escrita I2C");
+
+    /* registro 0x08 */
+    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG08, selected_coeff->lrck_l), TAG, "Erro leitura/escrita I2C");
+>>>>>>> origin/merge-ready-mini-lele-v2
 
     return ESP_OK;
 }
@@ -230,14 +268,22 @@ esp_err_t es8311_sample_frequency_config(es8311_handle_t dev, int mclk_frequency
 static esp_err_t es8311_clock_config(es8311_handle_t dev, const es8311_clock_config_t *const clk_cfg, es8311_resolution_t res)
 {
     uint8_t reg06;
+<<<<<<< HEAD
     uint8_t reg01 = 0x3F; // Enable all clocks
     int mclk_hz;
 
     /* Select clock source for internal MCLK and determine its frequency */
+=======
+    uint8_t reg01 = 0x3F; // Habilita todos os clocks
+    int mclk_hz;
+
+    /* Seleciona fonte de clock para MCLK interno e determina sua frequência */
+>>>>>>> origin/merge-ready-mini-lele-v2
     if (clk_cfg->mclk_from_mclk_pin) {
         mclk_hz = clk_cfg->mclk_frequency;
     } else {
         mclk_hz = clk_cfg->sample_frequency * (int)res * 2;
+<<<<<<< HEAD
         reg01 |= BIT(7); // Select BCLK (a.k.a. SCK) pin
     }
 
@@ -247,14 +293,31 @@ static esp_err_t es8311_clock_config(es8311_handle_t dev, const es8311_clock_con
     ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG01, reg01), TAG, "I2C read/write error");
 
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_CLK_MANAGER_REG06, &reg06), TAG, "I2C read/write error");
+=======
+        reg01 |= BIT(7); // Seleciona pino BCLK (a.k.a. SCK)
+    }
+
+    if (clk_cfg->mclk_inverted) {
+        reg01 |= BIT(6); // Inverte pino MCLK
+    }
+    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG01, reg01), TAG, "Erro leitura/escrita I2C");
+
+    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_CLK_MANAGER_REG06, &reg06), TAG, "Erro leitura/escrita I2C");
+>>>>>>> origin/merge-ready-mini-lele-v2
     if (clk_cfg->sclk_inverted) {
         reg06 |= BIT(5);
     } else {
         reg06 &= ~BIT(5);
     }
+<<<<<<< HEAD
     ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "I2C read/write error");
 
     /* Configure clock dividers */
+=======
+    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "Erro leitura/escrita I2C");
+
+    /* Configura divisores de clock */
+>>>>>>> origin/merge-ready-mini-lele-v2
     return es8311_sample_frequency_config(dev, mclk_hz, clk_cfg->sample_frequency);
 }
 
@@ -287,6 +350,7 @@ static esp_err_t es8311_fmt_config(es8311_handle_t dev, const es8311_resolution_
     uint8_t reg09 = 0; // SDP In
     uint8_t reg0a = 0; // SDP Out
 
+<<<<<<< HEAD
     ESP_LOGI(TAG, "ES8311 in Slave mode and I2S format");
     uint8_t reg00;
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_RESET_REG00, &reg00), TAG, "I2C read/write error");
@@ -299,12 +363,27 @@ static esp_err_t es8311_fmt_config(es8311_handle_t dev, const es8311_resolution_
 
     ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_SDPIN_REG09, reg09), TAG, "I2C read/write error");
     ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_SDPOUT_REG0A, reg0a), TAG, "I2C read/write error");
+=======
+    ESP_LOGI(TAG, "ES8311 em modo Slave e formato I2S");
+    uint8_t reg00;
+    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_RESET_REG00, &reg00), TAG, "Erro leitura/escrita I2C");
+    reg00 &= 0xBF;
+    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_RESET_REG00, reg00), TAG, "Erro leitura/escrita I2C"); // Porta serial Slave - padrão
+
+    /* Configura resolução SDP In e Out */
+    es8311_resolution_config(res_in, &reg09);
+    es8311_resolution_config(res_out, &reg0a);
+
+    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_SDPIN_REG09, reg09), TAG, "Erro leitura/escrita I2C");
+    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_SDPOUT_REG0A, reg0a), TAG, "Erro leitura/escrita I2C");
+>>>>>>> origin/merge-ready-mini-lele-v2
 
     return ESP_OK;
 }
 
 esp_err_t es8311_microphone_config(es8311_handle_t dev, bool digital_mic)
 {
+<<<<<<< HEAD
     uint8_t reg14 = 0x1A; // enable analog MIC and max PGA gain
 
     /* PDM digital microphone enable or disable */
@@ -312,6 +391,15 @@ esp_err_t es8311_microphone_config(es8311_handle_t dev, bool digital_mic)
         reg14 |= BIT(6);
     }
     es8311_write_reg(dev, ES8311_ADC_REG17, 0xC8); // Set ADC gain @todo move this to ADC config section
+=======
+    uint8_t reg14 = 0x1A; // habilita MIC analógico e ganho PGA máximo
+
+    /* Habilita ou desabilita microfone digital PDM */
+    if (digital_mic) {
+        reg14 |= BIT(6);
+    }
+    es8311_write_reg(dev, ES8311_ADC_REG17, 0xC8); // Define ganho ADC
+>>>>>>> origin/merge-ready-mini-lele-v2
 
     return es8311_write_reg(dev, ES8311_SYSTEM_REG14, reg14);
 }
@@ -320,6 +408,7 @@ esp_err_t es8311_init(es8311_handle_t dev, const es8311_clock_config_t *const cl
 {
     ESP_RETURN_ON_FALSE(
         (clk_cfg->sample_frequency >= 8000) && (clk_cfg->sample_frequency <= 96000),
+<<<<<<< HEAD
         ESP_ERR_INVALID_ARG, TAG, "ES8311 init needs frequency in interval [8000; 96000] Hz"
     );
     if (!clk_cfg->mclk_from_mclk_pin) {
@@ -345,6 +434,33 @@ esp_err_t es8311_init(es8311_handle_t dev, const es8311_clock_config_t *const cl
     ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_SYSTEM_REG13, 0x10), TAG, "I2C read/write error"); // Enable output to HP drive - NOT default
     ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_ADC_REG1C, 0x6A), TAG, "I2C read/write error"); // ADC Equalizer bypass, cancel DC offset in digital domain
     ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_DAC_REG37, 0x08), TAG, "I2C read/write error"); // Bypass DAC equalizer - NOT default
+=======
+        ESP_ERR_INVALID_ARG, TAG, "ES8311 init precisa de frequência no intervalo [8000; 96000] Hz"
+    );
+    if (!clk_cfg->mclk_from_mclk_pin) {
+        ESP_RETURN_ON_FALSE(res_out == res_in, ESP_ERR_INVALID_ARG, TAG, "Resolução IN/OUT deve ser igual se MCLK é tomado do pino SCK");
+    }
+
+
+    /* Reseta ES8311 para o padrão */
+    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_RESET_REG00, 0x1F), TAG, "Erro leitura/escrita I2C");
+    vTaskDelay(20);
+    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_RESET_REG00, 0x00), TAG, "Erro leitura/escrita I2C");
+    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_RESET_REG00, 0x80), TAG, "Erro leitura/escrita I2C"); // Comando Power-on
+
+    /* Configura clock: fonte, polaridade e divisores */
+    ESP_RETURN_ON_ERROR(es8311_clock_config(dev, clk_cfg, res_out), TAG, "");
+
+    /* Configura formato de áudio (fmt): master/slave, resolução, I2S */
+    ESP_RETURN_ON_ERROR(es8311_fmt_config(dev, res_in, res_out), TAG, "");
+
+    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_SYSTEM_REG0D, 0x01), TAG, "Erro leitura/escrita I2C"); // Liga circuitos analógicos - NÃO padrão
+    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_SYSTEM_REG0E, 0x02), TAG, "Erro leitura/escrita I2C"); // Habilita PGA analógico, modulador ADC - NÃO padrão
+    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_SYSTEM_REG12, 0x00), TAG, "Erro leitura/escrita I2C"); // liga DAC - NÃO padrão
+    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_SYSTEM_REG13, 0x10), TAG, "Erro leitura/escrita I2C"); // Habilita saída para drive HP - NÃO padrão
+    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_ADC_REG1C, 0x6A), TAG, "Erro leitura/escrita I2C"); // Bypass Equalizador ADC, cancela offset DC no domínio digital
+    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_DAC_REG37, 0x08), TAG, "Erro leitura/escrita I2C"); // Bypass equalizador DAC - NÃO padrão
+>>>>>>> origin/merge-ready-mini-lele-v2
 
     return ESP_OK;
 }
@@ -369,7 +485,11 @@ esp_err_t es8311_voice_volume_set(es8311_handle_t dev, int volume, int *volume_s
         reg32 = ((volume) * 256 / 100) - 1;
     }
 
+<<<<<<< HEAD
     // provide user with real volume set
+=======
+    // fornece ao usuário o volume real definido
+>>>>>>> origin/merge-ready-mini-lele-v2
     if (volume_set != NULL) {
         *volume_set = volume;
     }
@@ -379,7 +499,11 @@ esp_err_t es8311_voice_volume_set(es8311_handle_t dev, int volume, int *volume_s
 esp_err_t es8311_voice_volume_get(es8311_handle_t dev, int *volume)
 {
     uint8_t reg32;
+<<<<<<< HEAD
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "I2C read/write error");
+=======
+    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "Erro leitura/escrita I2C");
+>>>>>>> origin/merge-ready-mini-lele-v2
 
     if (reg32 == 0) {
         *volume = 0;
@@ -392,7 +516,11 @@ esp_err_t es8311_voice_volume_get(es8311_handle_t dev, int *volume)
 esp_err_t es8311_voice_mute(es8311_handle_t dev, bool mute)
 {
     uint8_t reg31;
+<<<<<<< HEAD
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "I2C read/write error");
+=======
+    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "Erro leitura/escrita I2C");
+>>>>>>> origin/merge-ready-mini-lele-v2
 
     if (mute) {
         reg31 |= BIT(6) | BIT(5);
@@ -405,13 +533,21 @@ esp_err_t es8311_voice_mute(es8311_handle_t dev, bool mute)
 
 esp_err_t es8311_microphone_gain_set(es8311_handle_t dev, es8311_mic_gain_t gain_db)
 {
+<<<<<<< HEAD
     return es8311_write_reg(dev, ES8311_ADC_REG16, gain_db); // ADC gain scale up
+=======
+    return es8311_write_reg(dev, ES8311_ADC_REG16, gain_db); // Escala ganho ADC
+>>>>>>> origin/merge-ready-mini-lele-v2
 }
 
 esp_err_t es8311_voice_fade(es8311_handle_t dev, const es8311_fade_t fade)
 {
     uint8_t reg37;
+<<<<<<< HEAD
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG37, &reg37), TAG, "I2C read/write error");
+=======
+    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG37, &reg37), TAG, "Erro leitura/escrita I2C");
+>>>>>>> origin/merge-ready-mini-lele-v2
     reg37 &= 0x0F;
     reg37 |= (fade << 4);
     return es8311_write_reg(dev, ES8311_DAC_REG37, reg37);
@@ -420,7 +556,11 @@ esp_err_t es8311_voice_fade(es8311_handle_t dev, const es8311_fade_t fade)
 esp_err_t es8311_microphone_fade(es8311_handle_t dev, const es8311_fade_t fade)
 {
     uint8_t reg15;
+<<<<<<< HEAD
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "I2C read/write error");
+=======
+    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "Erro leitura/escrita I2C");
+>>>>>>> origin/merge-ready-mini-lele-v2
     reg15 &= 0x0F;
     reg15 |= (fade << 4);
     return es8311_write_reg(dev, ES8311_ADC_REG15, reg15);

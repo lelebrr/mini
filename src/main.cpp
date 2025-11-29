@@ -1,248 +1,226 @@
 #include <Arduino.h>
 #include <lvgl.h>
-#include "Arduino_GFX_Library.h"
-#include "Arduino_DriveBus_Library.h"
-#include <ESP_IOExpander_Library.h>
+#include <esp_task_wdt.h>
+
+// Core Headers
+#include "core/ConfigManager.h" // 1. Config Manager first
+#include "core/PwnPower.h"
+#include "core/PwnPet.h"
+#include "core/PwnAttack.h"
+#include "core/PwnUI.h"
+#include "core/PwnVoice.h"
+#include "core/Gamification.h"
+#include "web/WebHandler.h" // 2. Web Handler
+
+// Drivers
 #include "pin_config.h"
-#include <Wire.h>
+#include "drivers/PwnIMU.h"
+#include "ESP_IOExpander_Library.h"
 #include <SD_MMC.h>
-#include "es8311.h"
+#include "WiFiTools.h"
+#include <Wire.h>
+
+// Audio Drivers
 #include <driver/i2s.h>
+#include "../lib/es8311/es8311.h"
 
-// --- Global Objects ---
-Arduino_DataBus *bus = new Arduino_ESP32QSPI(
-  LCD_CS /* CS */, LCD_SCLK /* SCK */, LCD_SDIO0 /* SDIO0 */, LCD_SDIO1 /* SDIO1 */,
-  LCD_SDIO2 /* SDIO2 */, LCD_SDIO3 /* SDIO3 */);
+// Graphics Drivers
+#include <Arduino_GFX_Library.h>
+#include <TouchLib.h>
 
-Arduino_GFX *gfx = new Arduino_SH8601(bus, LCD_RST /* RST (-1) */,
-                                      0 /* rotation */, false /* IPS */, LCD_WIDTH, LCD_HEIGHT);
+#define IRAM_ATTR_OPT __attribute__((section(".iram1")))
 
-std::shared_ptr<Arduino_IIC_DriveBus> IIC_Bus =
-  std::make_shared<Arduino_HWIIC>(IIC_SDA, IIC_SCL, &Wire);
+// Globals
+ESP_IOExpander *expander;
+SemaphoreHandle_t gui_mutex;
+PwnIMU imu;
 
-ESP_IOExpander *expander = NULL;
+// Hardware Objects
+Arduino_DataBus *bus = new Arduino_ESP32QSPI(LCD_CS, LCD_SCLK, LCD_SDIO0, LCD_SDIO1, LCD_SDIO2, LCD_SDIO3);
+Arduino_GFX *gfx = new Arduino_SH8601(bus, LCD_RST, 0, false, LCD_WIDTH, LCD_HEIGHT);
 
-// Touch (FT3168)
-void Arduino_IIC_Touch_Interrupt(void);
-std::unique_ptr<Arduino_IIC> FT3168(new Arduino_FT3x68(IIC_Bus, FT3168_DEVICE_ADDRESS,
-                                                       DRIVEBUS_DEFAULT_VALUE, TP_INT, Arduino_IIC_Touch_Interrupt));
+TouchLib *touch = NULL;
 
-void Arduino_IIC_Touch_Interrupt(void) {
-  FT3168->IIC_Interrupt_Flag = true;
-}
+// LVGL 9 Display Object
+lv_display_t * disp;
+lv_indev_t * indev;
 
-// LVGL Buffers
-static lv_disp_draw_buf_t draw_buf;
+// Double Buffer PSRAM
+#define BUFFER_SIZE (LCD_WIDTH * LCD_HEIGHT / 10)
 static lv_color_t *buf1;
 static lv_color_t *buf2;
 
-// --- LVGL Functions ---
-#if LV_USE_LOG != 0
-void my_print(const char *buf) {
-  Serial.printf(buf);
-  Serial.flush();
-}
-#endif
+// Siesta
+unsigned long siesta_start = 0;
+bool in_siesta = false;
 
-void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p) {
-  uint32_t w = (area->x2 - area->x1 + 1);
-  uint32_t h = (area->y2 - area->y1 + 1);
-
-#if (LV_COLOR_16_SWAP != 0)
-  gfx->draw16bitBeRGBBitmap(area->x1, area->y1, (uint16_t *)&color_p->full, w, h);
-#else
-  gfx->draw16bitRGBBitmap(area->x1, area->y1, (uint16_t *)&color_p->full, w, h);
-#endif
-
-  lv_disp_flush_ready(disp);
+// -------------------------------------------------------------------------
+// Display Callback (LVGL 9)
+// -------------------------------------------------------------------------
+void my_disp_flush(lv_display_t *disp, const lv_area_t *area, uint8_t * px_map) {
+    uint32_t w = (area->x2 - area->x1 + 1);
+    uint32_t h = (area->y2 - area->y1 + 1);
+    gfx->draw16bitBeRGBBitmap(area->x1, area->y1, (uint16_t*)px_map, w, h);
+    lv_display_flush_ready(disp);
 }
 
-void my_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data) {
-    int32_t touchX = FT3168->IIC_Read_Device_Value(FT3168->Arduino_IIC_Touch::Value_Information::TOUCH_COORDINATE_X);
-    int32_t touchY = FT3168->IIC_Read_Device_Value(FT3168->Arduino_IIC_Touch::Value_Information::TOUCH_COORDINATE_Y);
-
-    FT3168->IIC_Interrupt_Flag = true;
-
-    if (touchX > 0 && touchY > 0) {
-        data->state = LV_INDEV_STATE_PR;
-        data->point.x = touchX;
-        data->point.y = touchY;
+// -------------------------------------------------------------------------
+// Touch Callback (LVGL 9)
+// -------------------------------------------------------------------------
+void my_touch_read(lv_indev_t * indev, lv_indev_data_t * data) {
+    if (touch && touch->read()) {
+        TP_Point t = touch->getPoint(0);
+        data->point.x = t.x;
+        data->point.y = t.y;
+        data->state = LV_INDEV_STATE_PRESSED;
     } else {
-        data->state = LV_INDEV_STATE_REL;
+        data->state = LV_INDEV_STATE_RELEASED;
     }
 }
 
-// --- Audio Init ---
-esp_err_t audio_init() {
-  // 1. I2C Init for ES8311 (Already done via Wire)
-  es8311_handle_t es_handle = es8311_create(0, ES8311_ADDRRES_0);
-  if (!es_handle) {
-      Serial.println("ES8311 Create Failed");
-      return ESP_FAIL;
-  }
+// -------------------------------------------------------------------------
+// Audio Init
+// -------------------------------------------------------------------------
+void initAudio() {
+    i2s_config_t i2s_config = {
+        .mode = (i2s_mode_t)(I2S_MODE_MASTER | I2S_MODE_TX | I2S_MODE_RX),
+        .sample_rate = 16000,
+        .bits_per_sample = I2S_BITS_PER_SAMPLE_16BIT,
+        .channel_format = I2S_CHANNEL_FMT_ONLY_LEFT,
+        .communication_format = I2S_COMM_FORMAT_STAND_I2S,
+        .intr_alloc_flags = ESP_INTR_FLAG_LEVEL1,
+        .dma_buf_count = 8,
+        .dma_buf_len = 64,
+        .use_apll = true,
+        .tx_desc_auto_clear = true,
+        .fixed_mclk = 0
+    };
 
-  const es8311_clock_config_t es_clk = {
-    .mclk_inverted = false,
-    .sclk_inverted = false,
-    .mclk_from_mclk_pin = true,
-    .mclk_frequency = 16000 * 256,
-    .sample_frequency = 16000
-  };
+    i2s_pin_config_t pin_config = {
+        .bck_io_num = BCLKPIN,
+        .ws_io_num = WSPIN,
+        .data_out_num = DOPIN,
+        .data_in_num = DIPIN
+    };
 
-  if (es8311_init(es_handle, &es_clk, ES8311_RESOLUTION_16, ES8311_RESOLUTION_16) != ESP_OK) {
-      Serial.println("ES8311 Init Failed");
-      return ESP_FAIL;
-  }
+    i2s_driver_install(I2S_NUM_0, &i2s_config, 0, NULL);
+    i2s_set_pin(I2S_NUM_0, &pin_config);
+    i2s_zero_dma_buffer(I2S_NUM_0);
 
-  es8311_voice_volume_set(es_handle, 60, NULL);
-  es8311_microphone_gain_set(es_handle, ES8311_MIC_GAIN_18DB);
-  es8311_microphone_config(es_handle, false); // Analog Mic
-
-  // 2. I2S Init
-  i2s_config_t i2s_config = {
-    .mode = (i2s_mode_t)(I2S_MODE_MASTER | I2S_MODE_TX | I2S_MODE_RX),
-    .sample_rate = 16000,
-    .bits_per_sample = I2S_BITS_PER_SAMPLE_16BIT,
-    .channel_format = I2S_CHANNEL_FMT_RIGHT_LEFT,
-    .communication_format = I2S_COMM_FORMAT_STAND_I2S,
-    .intr_alloc_flags = ESP_INTR_FLAG_LEVEL1,
-    .dma_buf_count = 6,
-    .dma_buf_len = 160,
-    .use_apll = false,
-    .tx_desc_auto_clear = true,
-    .fixed_mclk = 0
-  };
-
-  i2s_pin_config_t pin_config = {
-    .bck_io_num = BCLKPIN,
-    .ws_io_num = WSPIN,
-    .data_out_num = DOPIN,
-    .data_in_num = DIPIN
-  };
-
-  if (i2s_driver_install(I2S_NUM_0, &i2s_config, 0, NULL) != ESP_OK) {
-      Serial.println("I2S Driver Install Failed");
-      return ESP_FAIL;
-  }
-
-  if (i2s_set_pin(I2S_NUM_0, &pin_config) != ESP_OK) {
-      Serial.println("I2S Set Pin Failed");
-      return ESP_FAIL;
-  }
-
-  // MCLK is often generated by ESP32 on GPIO 0, 1, or 3, or specifically GPIO2 on some boards
-  // For ESP32-S3, MCLK can be routed to any pin via GPIO Matrix if using proper clock source
-  // However, often specific pins are better.
-  // We will assume the pin_config.h MCLKPIN (2) is correct.
-  // Need to enable MCLK output.
-  PIN_FUNC_SELECT(GPIO_PIN_MUX_REG[MCLKPIN], PIN_FUNC_GPIO);
-  gpio_set_direction((gpio_num_t)MCLKPIN, GPIO_MODE_OUTPUT);
-
-  Serial.println("Audio Initialized (ES8311 + I2S)");
-  return ESP_OK;
+    es8311_handle_t es_dev = es8311_create(0, ES8311_ADDRRES_0);
+    if (es_dev) {
+         es8311_clock_config_t cfg = {0};
+         cfg.sample_frequency = 16000;
+         es8311_init(es_dev, &cfg, ES8311_RESOLUTION_16, ES8311_RESOLUTION_16);
+         es8311_voice_volume_set(es_dev, 60, NULL);
+         es8311_microphone_config(es_dev, false);
+         es8311_voice_mute(es_dev, false);
+    }
 }
 
-// --- Setup ---
+// -------------------------------------------------------------------------
+// Task Definitions
+// -------------------------------------------------------------------------
+void scanTask(void *pvParameters) {
+    while(1) {
+        if (PwnAttack::isRunning()) {
+            PwnAttack::tick();
+        }
+        vTaskDelay(10 / portTICK_PERIOD_MS);
+    }
+}
+
 void setup() {
-  Serial.begin(115200);
-  Serial.println("System Initializing...");
+    #if CORE_DEBUG_LEVEL > 0
+    Serial.begin(115200);
+    #endif
 
-  // Init I2C
-  Wire.begin(IIC_SDA, IIC_SCL);
+    setCpuFrequencyMhz(240);
 
-  // Init IO Expander (TCA9554)
-  expander = new ESP_IOExpander_TCA95xx_8bit((i2c_port_t)0, ESP_IO_EXPANDER_I2C_TCA9554_ADDRESS_000, IIC_SCL, IIC_SDA);
-  if(expander) {
-      expander->init();
-      expander->begin();
+    Wire.begin(IIC_SDA, IIC_SCL);
 
-      // Configure pins
-      expander->pinMode(0, OUTPUT); // LCD_RST
-      expander->pinMode(1, OUTPUT); // TOUCH_RST ?
-      expander->pinMode(2, OUTPUT); // PWR
-      expander->pinMode(6, OUTPUT); // Audio PWR?
+    SD_MMC.setPins(SDMMC_CLK, SDMMC_CMD, SDMMC_DATA);
+    bool sd_ok = SD_MMC.begin("/sdcard", true);
 
-      // Reset Sequence
-      expander->digitalWrite(0, LOW);
-      expander->digitalWrite(1, LOW);
-      delay(20);
-      expander->digitalWrite(0, HIGH); // Release LCD Reset
-      expander->digitalWrite(1, HIGH); // Release Touch Reset
-      expander->digitalWrite(2, HIGH); // Enable Power
-      expander->digitalWrite(6, HIGH); // Enable Audio Power
+    ConfigManager::getInstance()->load();
 
-      Serial.println("IO Expander Initialized & Reset Sequence Done");
-  } else {
-      Serial.println("IO Expander Init Failed");
-  }
+    PwnPower::init();
 
-  // Init Display
-  // Note: Reset already done by expander
-  if (!gfx->begin()) {
-    Serial.println("gfx->begin() failed!");
-  }
-  gfx->fillScreen(BLACK);
-  gfx->Display_Brightness(200);
-  Serial.println("Display Initialized");
+    expander = new ESP_IOExpander_TCA95xx_8bit((i2c_port_t)0, ESP_IO_EXPANDER_I2C_TCA9554_ADDRESS_000, IIC_SCL, IIC_SDA);
+    expander->init();
+    expander->begin();
+    expander->pinMode(0, OUTPUT);
+    expander->pinMode(6, OUTPUT);
+    expander->digitalWrite(0, LOW); delay(10);
+    expander->digitalWrite(0, HIGH); delay(50);
+    expander->digitalWrite(6, HIGH);
 
-  // Init Touch
-  while (FT3168->begin() == false) {
-    Serial.println("FT3168 initialization fail");
-    delay(1000);
-  }
-  Serial.println("Touch Initialized");
+    gfx->begin();
+    gfx->fillScreen(BLACK);
 
-  FT3168->IIC_Write_Device_State(FT3168->Arduino_IIC_Touch::Device::TOUCH_POWER_MODE,
-                                 FT3168->Arduino_IIC_Touch::Device_Mode::TOUCH_POWER_MONITOR);
+    Wire.beginTransmission(GT1151_DEVICE_ADDRESS);
+    if (Wire.endTransmission() == 0) {
+        touch = new TouchLib(Wire, IIC_SDA, IIC_SCL, GT1151_DEVICE_ADDRESS);
+    } else {
+        touch = new TouchLib(Wire, IIC_SDA, IIC_SCL, FT3168_DEVICE_ADDRESS);
+    }
+    touch->init();
 
-  // Init SD Card
-  SD_MMC.setPins(SDMMC_CLK, SDMMC_CMD, SDMMC_DATA);
-  if (!SD_MMC.begin("/sdcard", true)) {
-    Serial.println("SD Card Mount Failed");
-  } else {
-    Serial.printf("SD Card Type: %d\n", SD_MMC.cardType());
-    Serial.printf("SD Card Size: %lluMB\n", SD_MMC.cardSize() / (1024 * 1024));
-  }
+    lv_init();
 
-  // Init Audio
-  audio_init();
+    buf1 = (lv_color_t*)heap_caps_malloc(BUFFER_SIZE * sizeof(lv_color_t), MALLOC_CAP_SPIRAM);
+    buf2 = (lv_color_t*)heap_caps_malloc(BUFFER_SIZE * sizeof(lv_color_t), MALLOC_CAP_SPIRAM);
 
-  // Init LVGL
-  lv_init();
-  uint32_t screenWidth = gfx->width();
-  uint32_t screenHeight = gfx->height();
+    disp = lv_display_create(LCD_WIDTH, LCD_HEIGHT);
+    lv_display_set_flush_cb(disp, my_disp_flush);
+    lv_display_set_buffers(disp, buf1, buf2, BUFFER_SIZE * sizeof(lv_color_t), LV_DISPLAY_RENDER_MODE_PARTIAL);
 
-  buf1 = (lv_color_t *)heap_caps_malloc(screenWidth * screenHeight / 10 * sizeof(lv_color_t), MALLOC_CAP_DMA);
-  buf2 = (lv_color_t *)heap_caps_malloc(screenWidth * screenHeight / 10 * sizeof(lv_color_t), MALLOC_CAP_DMA);
+    indev = lv_indev_create();
+    lv_indev_set_type(indev, LV_INDEV_TYPE_POINTER);
+    lv_indev_set_read_cb(indev, my_touch_read);
 
-  lv_disp_draw_buf_init(&draw_buf, buf1, buf2, screenWidth * screenHeight / 10);
+    imu.init(Wire);
+    imu.enableWakeOnMotion();
 
-  static lv_disp_drv_t disp_drv;
-  lv_disp_drv_init(&disp_drv);
-  disp_drv.hor_res = screenWidth;
-  disp_drv.ver_res = screenHeight;
-  disp_drv.flush_cb = my_disp_flush;
-  disp_drv.draw_buf = &draw_buf;
-  lv_disp_drv_register(&disp_drv);
+    initAudio();
 
-  static lv_indev_drv_t indev_drv;
-  lv_indev_drv_init(&indev_drv);
-  indev_drv.type = LV_INDEV_TYPE_POINTER;
-  indev_drv.read_cb = my_touchpad_read;
-  lv_indev_drv_register(&indev_drv);
+    gui_mutex = xSemaphoreCreateMutex();
+    Gamification::init();
+    PwnPet::init();
 
-  // UI
-  lv_obj_t *label = lv_label_create(lv_scr_act());
-  lv_label_set_text(label, "Hello Waveshare!\nESP32-S3 AMOLED\nAudio & SD Ready");
-  lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
+    PwnAttack::init();
+    PwnUI::init();
 
-  // Test Audio Tone (Simple square wave via I2S would require writing buffer)
-  // For now just logged initialized.
+    WebHandler::init();
 
-  Serial.println("Setup Done");
+    xTaskCreatePinnedToCore(scanTask, "WiFiScan", 4096, NULL, 1, NULL, 0);
+
+    Serial.println("Mini Lele (v2.0) Iniciado!");
 }
 
 void loop() {
-  lv_timer_handler();
-  delay(5);
+    unsigned long now = millis();
+
+    float current = PwnPower::getSystemCurrent();
+    if (current > 130) PwnPower::setPerformanceMode(0);
+
+    if (xSemaphoreTake(gui_mutex, 5)) {
+        lv_timer_handler();
+        PwnUI::update();
+        xSemaphoreGive(gui_mutex);
+    }
+
+    int minute = (now / 60000) % 60;
+    if (minute == 0 && !in_siesta) {
+        in_siesta = true;
+    } else if (minute > 3) {
+        in_siesta = false;
+    }
+
+    if (!in_siesta) {
+        PwnPet::tick();
+        Gamification::tick();
+    }
+
+    delay(5);
 }
