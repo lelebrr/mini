@@ -10,6 +10,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "pin_config.h"
 
 // Definições de Pinos do PMU AXP2101
@@ -20,15 +21,20 @@
 =======
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
+=======
+>>>>>>> origin/mini-lele-v2-final-verified
 
 // Definições de Pinos (Reuso)
 #define PMU_SDA 38
 #define PMU_SCL 39
 #define TOUCH_INT_PIN -1 // Definir pino real se disponível no hardware (GPIO 3?)
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/merge-ready-mini-lele-v2
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
+=======
+>>>>>>> origin/mini-lele-v2-final-verified
 
 // RTC Memory para Modo Zumbi
 struct RTC_SaveData {
@@ -59,6 +65,7 @@ public:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             // Configurar voltagens específicas (ALDO1=AMOLED Logic, BLDO1=Backlight, etc)
             pmu.setALDO1Voltage(1800); pmu.enableALDO1();
             pmu.setALDO2Voltage(2800); pmu.enableALDO2(); // Touch
@@ -69,6 +76,8 @@ public:
 >>>>>>> origin/merge-ready-mini-lele-v2
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
+=======
+>>>>>>> origin/mini-lele-v2-final-verified
             // Otimização 24: Monitoramento de Corrente (Configuração)
             // pmu.setTSPinMode(XPOWERS_TS_PIN_OFF); // Economia
         }
@@ -100,6 +109,7 @@ public:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	    // Otimização 1: Deep Sleep Total
 	    static void enterDeepSleep() {
 	        Serial.println("[Power] Entrando em Deep Sleep...");
@@ -120,6 +130,8 @@ public:
 =======
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
+=======
+>>>>>>> origin/mini-lele-v2-final-verified
     // Otimização 1: Deep Sleep Total
     static void enterDeepSleep() {
         Serial.println("[Power] Entrando em Deep Sleep...");
@@ -138,27 +150,36 @@ public:
             rtc_save.magic = 0xDEADBEEF;
             // rtc_save.xp = PwnPet::getXP(); ...
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/merge-ready-mini-lele-v2
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
+=======
+>>>>>>> origin/mini-lele-v2-final-verified
             Serial.println("[Power] MODO ZUMBI ATIVADO");
         }
 
         esp_deep_sleep_start();
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     	    // Otimização 2: Light Sleep entre scans    static void lightSleep(uint64_t time_us) {
 =======
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
+=======
+>>>>>>> origin/mini-lele-v2-final-verified
     }
 
     // Otimização 2: Light Sleep entre scans
     static void lightSleep(uint64_t time_us) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/merge-ready-mini-lele-v2
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
+=======
+>>>>>>> origin/mini-lele-v2-final-verified
         esp_sleep_enable_timer_wakeup(time_us);
         esp_light_sleep_start();
     }
@@ -174,6 +195,7 @@ public:
     static float getSystemCurrent() {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	        // AXP2101 pode não ter getSystemCurrent direto, usar discharge ou Vbus
 	        return pmu.isDischarge() ? pmu.getBattDischargeCurrent() : 0;
 =======
@@ -184,11 +206,16 @@ public:
         // Otimização 24: Monitoramento
         return pmu.getSystemVoltage(); // AXP2101 pode não ter getSystemCurrent direto na lib, usar discharge
 >>>>>>> origin/mini-lele-v2-complete-verified
+=======
+        // Otimização 24: Monitoramento
+        return pmu.getSystemVoltage(); // AXP2101 pode não ter getSystemCurrent direto na lib, usar discharge
+>>>>>>> origin/mini-lele-v2-final-verified
     }
 
     static String getPowerStatus() {
         float ma = pmu.isDischarge() ? pmu.getBattDischargeCurrent() : 0;
         int pct = pmu.getBatteryPercent();
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 	        // Estimativa (Bat 1000mAh ex)
@@ -198,6 +225,9 @@ public:
 =======
         // Estimativa (Bat 1000mAh ex)
 >>>>>>> origin/mini-lele-v2-complete-verified
+=======
+        // Estimativa (Bat 1000mAh ex)
+>>>>>>> origin/mini-lele-v2-final-verified
         float hours = (pct > 0 && ma > 0) ? (1000.0 * (pct/100.0)) / ma : 0;
 
         char buf[64];
@@ -207,6 +237,7 @@ public:
 
     static void checkCritical() {
         if (getBatteryPercent() < 10 && !is_critical) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 	            // Otimização 13: Modo Crítico
@@ -220,6 +251,8 @@ public:
 =======
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
+=======
+>>>>>>> origin/mini-lele-v2-final-verified
             // Otimização 13: Modo Crítico
             is_critical = true;
             Serial.println("[Power] BATERIA CRITICA (<10%)");
@@ -229,9 +262,12 @@ public:
             setPerformanceMode(0);
             // UI deve atualizar para relógio monocromático
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/merge-ready-mini-lele-v2
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
+=======
+>>>>>>> origin/mini-lele-v2-final-verified
         }
     }
 

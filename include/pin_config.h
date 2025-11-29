@@ -4,6 +4,7 @@
  * pin_config.h
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * Mini Lele - Waveshare ESP32-S3-Touch-AMOLED-1.8
 	 * Hardware: SH8601 QSPI, FT3168 I2C, AXP2101 I2C, ES8311 I2S
 	 */
@@ -19,6 +20,8 @@
 =======
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
+=======
+>>>>>>> origin/mini-lele-v2-final-verified
  * Mapeamento de Pinos para Waveshare ESP32-S3-Touch-AMOLED-1.8
  *
  * Hardware:
@@ -41,13 +44,17 @@
 #define LCD_SDIO3  9   // Data 3
 #define LCD_RST    -1  // Controlado pelo Expander IO Pin 0
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/merge-ready-mini-lele-v2
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
+=======
+>>>>>>> origin/mini-lele-v2-final-verified
 
 #define LCD_WIDTH  368
 #define LCD_HEIGHT 448
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 // --- I2C (Shared Bus: Touch, PMU, Audio, IMU, Expander, RTC) ---
@@ -101,6 +108,8 @@
 =======
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
+=======
+>>>>>>> origin/mini-lele-v2-final-verified
 // --- Barramento I2C (Interno) ---
 #define IIC_SDA    38
 #define IIC_SCL    39
@@ -133,6 +142,9 @@
 #define COLOR_NEON_YELLOW 0xFFE0 // Amarelo
 #define COLOR_DARK_BG     0x0000
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/merge-ready-mini-lele-v2
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
+=======
+>>>>>>> origin/mini-lele-v2-final-verified

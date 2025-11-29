@@ -9,6 +9,7 @@
 // Singleton Config Manager
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Gerencia 120 configurações com persistência no SD
 =======
 // Gerencia 100 configurações com persistência no SD
@@ -16,6 +17,9 @@
 =======
 // Gerencia 100 configurações com persistência no SD
 >>>>>>> origin/mini-lele-v2-complete-verified
+=======
+// Gerencia 100 configurações com persistência no SD
+>>>>>>> origin/mini-lele-v2-final-verified
 
 class ConfigManager {
 private:
@@ -25,6 +29,7 @@ private:
     bool _dirty = false;
 
     ConfigManager() {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 	        // Aumentado para 16KB para acomodar 120 chaves + strings longas
@@ -37,6 +42,10 @@ private:
         // Aloca 8KB para JSON (Suficiente para ~100 chaves)
         doc = new DynamicJsonDocument(8192);
 >>>>>>> origin/mini-lele-v2-complete-verified
+=======
+        // Aloca 8KB para JSON (Suficiente para ~100 chaves)
+        doc = new DynamicJsonDocument(8192);
+>>>>>>> origin/mini-lele-v2-final-verified
     }
 
 public:
@@ -73,6 +82,7 @@ public:
     void createDefaults() {
         JsonObject root = doc->to<JsonObject>();
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 	        // --- 1. SYSTEM IDENTITY ---
@@ -190,6 +200,8 @@ public:
 =======
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
+=======
+>>>>>>> origin/mini-lele-v2-final-verified
         // --- 1. PET (Gameplay) ---
         root["pet_name"] = "PwnBaby"; // Default mantido
         root["pet_voice_enabled"] = true;
@@ -282,14 +294,18 @@ public:
         root["pet_allow_swear_words"] = false; // Family friendly?
         root["sys_factory_reset"] = false;
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/merge-ready-mini-lele-v2
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
+=======
+>>>>>>> origin/mini-lele-v2-final-verified
 
         save();
     }
 
     void validateMissingKeys() {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 	        // Checa se falta alguma chave e adiciona (para upgrades de versão)
@@ -367,6 +383,8 @@ public:
 =======
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
+=======
+>>>>>>> origin/mini-lele-v2-final-verified
         // Checa se falta alguma chave e adiciona (para upgrades de versão)
         bool changed = false;
         JsonObject root = doc->as<JsonObject>();
@@ -380,9 +398,12 @@ public:
 
     // Getters Genéricos
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/merge-ready-mini-lele-v2
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
+=======
+>>>>>>> origin/mini-lele-v2-final-verified
     template <typename T>
     T get(const char* key) {
         return (*doc)[key].as<T>();
@@ -390,6 +411,7 @@ public:
 
     String getString(const char* key) {
         return (*doc)[key].as<String>();
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     }	    // Setters
@@ -406,6 +428,8 @@ public:
 =======
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
+=======
+>>>>>>> origin/mini-lele-v2-final-verified
     }
 
     // Setters
@@ -424,9 +448,12 @@ public:
     // Atualiza do JSON recebido da WebAPI
     void updateFromJSON(String json) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/merge-ready-mini-lele-v2
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
+=======
+>>>>>>> origin/mini-lele-v2-final-verified
         DeserializationError error = deserializeJson(*doc, json);
         if (!error) save();
     }
