@@ -12,6 +12,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Gerencia 120 configurações com persistência no SD
 =======
 // Gerencia 100 configurações com persistência no SD
@@ -28,6 +29,9 @@
 =======
 // Gerencia 120 configurações com persistência no SD
 >>>>>>> origin/mini-lele-v2-legendary-final-release
+=======
+// Gerencia 120 configurações com persistência no SD
+>>>>>>> origin/mini-lele-v2-legendary-final-sync
 
 class ConfigManager {
 private:
@@ -37,6 +41,7 @@ private:
     bool _dirty = false;
 
     ConfigManager() {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -64,6 +69,10 @@ private:
         // Aumentado para 16KB para acomodar 120 chaves + strings longas
         doc = new DynamicJsonDocument(16384);
 >>>>>>> origin/mini-lele-v2-legendary-final-release
+=======
+        // Aumentado para 16KB para acomodar 120 chaves + strings longas
+        doc = new DynamicJsonDocument(16384);
+>>>>>>> origin/mini-lele-v2-legendary-final-sync
     }
 
 public:
@@ -100,6 +109,7 @@ public:
     void createDefaults() {
         JsonObject root = doc->to<JsonObject>();
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -323,6 +333,8 @@ public:
 =======
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-release
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-sync
         // --- 1. SYSTEM IDENTITY ---
         root["sys_device_name"] = "PwnTamagotchi BR - Legendary";
         root["sys_hostname"] = "minilele";
@@ -370,14 +382,18 @@ public:
         root["web_theme"] = "cyber_favela";
         root["web_live_logs"] = true;
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-release
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-sync
 
         save();
     }
 
     void validateMissingKeys() {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -470,19 +486,25 @@ public:
 =======
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-release
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-sync
         bool changed = false;
         JsonObject root = doc->as<JsonObject>();
 
         if (!root.containsKey("leg_pwn_radar")) { root["leg_pwn_radar"] = true; changed = true; }
         if (!root.containsKey("sys_device_name")) { root["sys_device_name"] = "PwnTamagotchi BR - Legendary"; changed = true; }
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-release
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-sync
 
         if (changed) save();
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     // Getters Genéricos
@@ -497,6 +519,8 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-release
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-sync
     template <typename T>
     T get(const char* key) {
         return (*doc)[key].as<T>();
@@ -504,6 +528,7 @@ public:
 
     String getString(const char* key) {
         return (*doc)[key].as<String>();
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -539,6 +564,8 @@ public:
 =======
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-release
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-sync
     }
 
     template <typename T>
@@ -549,13 +576,17 @@ public:
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-release
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-sync
     void getJSON(String &output) {
         serializeJson(*doc, output);
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     // Atualiza do JSON recebido da WebAPI
@@ -573,6 +604,9 @@ public:
 =======
     void updateFromJSON(String json) {
 >>>>>>> origin/mini-lele-v2-legendary-final-release
+=======
+    void updateFromJSON(String json) {
+>>>>>>> origin/mini-lele-v2-legendary-final-sync
         DeserializationError error = deserializeJson(*doc, json);
         if (!error) save();
     }

