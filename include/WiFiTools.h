@@ -16,7 +16,6 @@
 #include "core/Gamification.h"
 
 #define MAX_SNIFFED 50 // Aumentado para 50
-
 // Estrutura para dispositivos encontrados
 struct WiFiDevice {
     String mac;
@@ -28,6 +27,7 @@ struct WiFiDevice {
 class WiFiTools {
 public:
     static std::vector<WiFiDevice> nearby_devices;
+
 
     static void promiscuous_rx_cb(void* buf, wifi_promiscuous_pkt_type_t type) {
         wifi_promiscuous_pkt_t* pkt = (wifi_promiscuous_pkt_t*)buf;
@@ -103,7 +103,6 @@ public:
             }
         }
     }
-
     static void startSniffer() {
         WiFi.mode(WIFI_MODE_APSTA); // APSTA permite injeção + WebUI
         esp_wifi_set_promiscuous(true);

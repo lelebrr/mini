@@ -7,9 +7,12 @@ adafruit/Adafruit BusIO @ ^1.16.1
 https://github.com/moononournation/Arduino_GFX.git
 lvgl/lvgl @ ^8.3.11
 
+<<<<<<< HEAD
 # PlatformIO specific
 platformio/framework-arduinoespressif32 @ ^3.20004.0
 Arduino_GFX_Library
+=======
+>>>>>>> origin/mini-lele-v2-final-verified
 # JSON e Utilitários
 bblanchon/ArduinoJson @ ^6.21.3
 

