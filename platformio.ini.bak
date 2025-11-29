@@ -1,0 +1,643 @@
+[env:waveshare-esp32-s3-amoled]
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+platform = https://github.com/platformio/platform-espressif32.git
+=======
+=======
+>>>>>>> origin/pwntamagotchi-br-final-90-features
+platform = espressif32
+>>>>>>> origin/pwn-tamagotchi-br-release
+board = esp32-s3-devkitc-1
+framework = arduino
+monitor_speed = 115200
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/mini-lele-v2-final-verified
+>>>>>>> main
+=======
+>>>>>>> origin/merge-ready-mini-lele-v2
+=======
+>>>>>>> origin/mini-lele-v2-complete-verified
+=======
+>>>>>>> origin/mini-lele-v2-final-verified
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-drivers
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-release
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-sync
+=======
+>>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
+=======
+>>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
+; Partição de 16MB (10MB App, 5MB FS, 1MB System)
+board_build.partitions = partitions.csv
+=======
+; Configuração de Partição (16MB Flash)
+board_build.partitions = default_16MB.csv
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> origin/pwn-tamagotchi-br-release
+=======
+platform = https://github.com/platformio/platform-espressif32.git
+board = esp32-s3-devkitc-1
+framework = arduino
+monitor_speed = 115200
+=======
+board_build.arduino.memory_type = qio_opi
+board_build.flash_mode = dio
+board_upload.flash_size = 16MB
+>>>>>>> origin/waveshare-esp32-s3-amoled-fix
+=======
+board_build.arduino.memory_type = qio_opi
+board_build.flash_mode = dio
+board_upload.flash_size = 16MB
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+board_build.arduino.memory_type = qio_opi
+board_build.flash_mode = dio
+board_upload.flash_size = 16MB
+>>>>>>> origin/waveshare-s3-amoled-evil-portal-final
+=======
+board_build.arduino.memory_type = qio_opi
+board_build.flash_mode = dio
+board_upload.flash_size = 16MB
+>>>>>>> origin/waveshare-s3-amoled-faces-offline
+=======
+board_build.arduino.memory_type = qio_opi
+board_build.flash_mode = dio
+board_upload.flash_size = 16MB
+>>>>>>> origin/waveshare-s3-amoled-final-polish
+=======
+board_build.arduino.memory_type = qio_opi
+board_build.flash_mode = dio
+board_upload.flash_size = 16MB
+>>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+board_build.arduino.memory_type = qio_opi
+board_build.flash_mode = dio
+board_upload.flash_size = 16MB
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
+=======
+board_build.arduino.memory_type = qio_opi
+board_build.flash_mode = dio
+board_upload.flash_size = 16MB
+>>>>>>> origin/waveshare-s3-amoled-manual-upload
+=======
+board_build.arduino.memory_type = qio_opi
+board_build.flash_mode = dio
+board_upload.flash_size = 16MB
+>>>>>>> origin/waveshare-s3-amoled-offline-voice
+=======
+board_build.arduino.memory_type = qio_opi
+board_build.flash_mode = dio
+board_upload.flash_size = 16MB
+>>>>>>> origin/waveshare-s3-amoled-ptbr-final
+=======
+board_build.arduino.memory_type = qio_opi
+board_build.flash_mode = dio
+board_upload.flash_size = 16MB
+>>>>>>> origin/waveshare-s3-amoled-review-complete
+=======
+board_build.arduino.memory_type = qio_opi
+board_build.flash_mode = dio
+board_upload.flash_size = 16MB
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
+
+; Partição de 16MB (10MB App, 5MB FS, 1MB System)
+board_build.partitions = partitions.csv
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
+=======
+platform = https://github.com/platformio/platform-espressif32.git
+board = esp32-s3-devkitc-1
+framework = arduino
+monitor_speed = 115200
+
+; Partição de 16MB (10MB App, 5MB FS, 1MB System)
+board_build.partitions = partitions.csv
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
+board_build.arduino.memory_type = qio_opi
+board_build.flash_mode = dio
+board_upload.flash_size = 16MB
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+; Otimizações Extremas de Compilador (-O3)
+build_unflags = -Os -O2
+=======
+; Flags de Compilação
+>>>>>>> origin/pwn-tamagotchi-br-release
+=======
+platform = https://github.com/platformio/platform-espressif32.git
+board = esp32-s3-devkitc-1
+framework = arduino
+monitor_speed = 115200
+
+=======
+platform = https://github.com/platformio/platform-espressif32.git
+board = esp32-s3-devkitc-1
+framework = arduino
+monitor_speed = 115200
+
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+; Partição de 16MB (10MB App, 5MB FS, 1MB System)
+board_build.partitions = partitions.csv
+=======
+
+; Configuração de Partição (16MB Flash)
+board_build.partitions = default_16MB.csv
+>>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+
+# Particionamento e Memória
+board_build.partitions = default_16MB.csv
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
+board_build.arduino.memory_type = qio_opi
+board_build.flash_mode = dio
+board_upload.flash_size = 16MB
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+; Otimizações Extremas de Compilador (-O3)
+build_unflags = -Os -O2
+<<<<<<< HEAD
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+; Otimizações Extremas de Compilador (-O3)
+build_unflags = -Os -O2
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
+=======
+; Otimizações Extremas de Compilador (-O3)
+build_unflags = -Os -O2
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
+=======
+# Flags de Compilação
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
+build_flags =
+    -O3
+    -funroll-loops
+    -fomit-frame-pointer
+    -DCORE_DEBUG_LEVEL=0 ; Log desativado em runtime (Opt 26)
+<<<<<<< HEAD
+<<<<<<< HEAD
+    -DARDUINO_USB_CDC_ON_BOOT=1
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+    -DARDUINO_USB_CDC_ON_BOOT=1
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
+    -DARDUINO_USB_MODE=1
+    -DBOARD_HAS_PSRAM
+    -DLV_CONF_INCLUDE_SIMPLE
+    -DLV_CONF_PATH="${PROJECT_DIR}/include/lv_conf.h"
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    -DARDUINO_USB_MODE=1 ; Composite Device (CDC + HID)
+    -DBOARD_HAS_PSRAM
+    -DLV_CONF_INCLUDE_SIMPLE
+>>>>>>> origin/pwn-tamagotchi-br-release
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+; Otimização: Compilador para Performance/Size
+build_unflags = -Os
+build_flags =
+    -O2
+    -DCORE_DEBUG_LEVEL=3
+=======
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
+    -DARDUINO_USB_CDC_ON_BOOT=1
+    -DARDUINO_USB_MODE=1
+    -DBOARD_HAS_PSRAM
+    -DLV_CONF_INCLUDE_SIMPLE
+<<<<<<< HEAD
+>>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+    -DLV_CONF_PATH="${PROJECT_DIR}/include/lv_conf.h"
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
+=======
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
+    -I include
+    -I include/core
+    -I include/ui
+    -I include/drivers
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    -DCONFIG_ZLIB_SUPPORT
+    -DDISABLE_ALL_LIBRARY_WARNINGS
+=======
+>>>>>>> origin/pwn-tamagotchi-br-release
+=======
+    -DCONFIG_ZLIB_SUPPORT
+    -DDISABLE_ALL_LIBRARY_WARNINGS
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+    -DCONFIG_ZLIB_SUPPORT
+    -DDISABLE_ALL_LIBRARY_WARNINGS
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+    -DCONFIG_ZLIB_SUPPORT
+>>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+    -DCONFIG_ZLIB_SUPPORT
+    -DDISABLE_ALL_LIBRARY_WARNINGS
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
+=======
+    -DCONFIG_ZLIB_SUPPORT
+    -DDISABLE_ALL_LIBRARY_WARNINGS
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
+=======
+=======
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-evil-portal-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-faces-offline
+=======
+>>>>>>> origin/waveshare-s3-amoled-final-polish
+=======
+>>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
+=======
+>>>>>>> origin/waveshare-s3-amoled-manual-upload
+=======
+>>>>>>> origin/waveshare-s3-amoled-offline-voice
+=======
+>>>>>>> origin/waveshare-s3-amoled-ptbr-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
+=======
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
+    -DLV_CONF_INCLUDE_SIMPLE
+    -DLV_COMP_CONF_INCLUDE_SIMPLE
+    -DLV_LVGL_H_INCLUDE_SIMPLE
+    -DBOARD_HAS_PSRAM
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> origin/waveshare-esp32-s3-amoled-fix
+=======
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-evil-portal-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-faces-offline
+=======
+>>>>>>> origin/waveshare-s3-amoled-final-polish
+=======
+>>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
+=======
+>>>>>>> origin/waveshare-s3-amoled-manual-upload
+=======
+>>>>>>> origin/waveshare-s3-amoled-offline-voice
+=======
+>>>>>>> origin/waveshare-s3-amoled-ptbr-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
+=======
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
+
+; Dependências
+lib_deps =
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    bodmer/TFT_eSPI @ ^2.5.43
+    adafruit/Adafruit GFX Library @ ^1.11.9
+    adafruit/Adafruit BusIO @ ^1.16.1
+    https://github.com/moononournation/Arduino_GFX.git
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    lvgl/lvgl @ ^9.2.0 ; LVGL 9.2 (Opt Block 4)
+=======
+    lvgl/lvgl @ ^8.3.11 ; Mantendo 8.3 pela estabilidade com drivers existentes
+>>>>>>> origin/pwn-tamagotchi-br-release
+=======
+    lvgl/lvgl @ ^9.2.0 ; LVGL 9.2 (Opt Block 4)
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+    lvgl/lvgl @ ^9.2.0 ; LVGL 9.2 (Opt Block 4)
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+    lvgl/lvgl @ ^8.3.11
+>>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+    lvgl/lvgl @ ^9.2.0 ; LVGL 9.2 (Opt Block 4)
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
+=======
+    lvgl/lvgl @ ^9.2.0 ; LVGL 9.2 (Opt Block 4)
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
+=======
+    -I include
+
+# Dependências (Lê de lib_deps.txt)
+lib_deps =
+    ${common.lib_deps}
+    https://github.com/moononournation/Arduino_GFX.git
+    lvgl/lvgl @ ^8.3.11
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
+    https://github.com/Maucke/Arduino_DriveBus_Library.git
+    https://github.com/Maucke/ESP_IOExpander_Library.git
+    https://github.com/lewisxhe/XPowersLib
+    https://github.com/Lewisxhe/SensorLib
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-evil-portal-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-faces-offline
+=======
+>>>>>>> origin/waveshare-s3-amoled-final-polish
+=======
+>>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
+=======
+>>>>>>> origin/waveshare-s3-amoled-manual-upload
+=======
+>>>>>>> origin/waveshare-s3-amoled-offline-voice
+=======
+>>>>>>> origin/waveshare-s3-amoled-ptbr-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
+=======
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
+    https://github.com/moononournation/Arduino_GFX.git
+    lvgl/lvgl @ ^8.3.11
+    https://github.com/Maucke/Arduino_DriveBus_Library.git
+    https://github.com/Maucke/ESP_IOExpander_Library.git
+    https://github.com/Lewisxhe/SensorLib.git
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> origin/waveshare-esp32-s3-amoled-fix
+=======
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-evil-portal-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-faces-offline
+=======
+>>>>>>> origin/waveshare-s3-amoled-final-polish
+=======
+>>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
+=======
+>>>>>>> origin/waveshare-s3-amoled-manual-upload
+=======
+>>>>>>> origin/waveshare-s3-amoled-offline-voice
+=======
+>>>>>>> origin/waveshare-s3-amoled-ptbr-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
+=======
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
+    bblanchon/ArduinoJson @ ^6.21.3
+    me-no-dev/AsyncTCP @ ^1.1.1
+    https://github.com/me-no-dev/ESPAsyncWebServer.git
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    mmMicky/TouchLib @ ^1.1.8
+=======
+>>>>>>> origin/pwn-tamagotchi-br-release
+=======
+    mmMicky/TouchLib @ ^1.1.8
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+    mmMicky/TouchLib @ ^1.1.8
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+    mmMicky/TouchLib @ ^1.1.8
+>>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+    mmMicky/TouchLib @ ^1.1.8
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
+=======
+    mmMicky/TouchLib @ ^1.1.8
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
+    WiFiClientSecure
+    HTTPClient
+    USB
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+    bblanchon/ArduinoJson @ ^6.21.3
+    me-no-dev/AsyncTCP @ ^1.1.1
+    https://github.com/me-no-dev/ESPAsyncWebServer.git
+    adafruit/Adafruit GFX Library @ ^1.11.9
+    adafruit/Adafruit BusIO @ ^1.16.1
+
+# Upload
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
+upload_protocol = esptool
+upload_speed = 921600
+<<<<<<< HEAD
+=======
+>>>>>>> origin/mini-lele-v2-final-verified
+>>>>>>> main
+=======
+>>>>>>> origin/merge-ready-mini-lele-v2
+=======
+>>>>>>> origin/mini-lele-v2-complete-verified
+=======
+>>>>>>> origin/mini-lele-v2-final-verified
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-drivers
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-release
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-sync
+=======
+>>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
+=======
+>>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
+build_src_filter = +<*> -<legacy/>
+=======
+; Filtros
+build_src_filter = +<**/*>
+>>>>>>> origin/pwn-tamagotchi-br-release
+=======
+build_src_filter = +<*> -<legacy/>
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+build_src_filter = +<*> -<legacy/>
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+; Build Filter: Ignorar Legacy para evitar conflitos
+build_src_filter = +<*> -<legacy/>
+>>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+build_src_filter = +<*> -<legacy/>
+>>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
+=======
+build_src_filter = +<*> -<legacy/>
+>>>>>>> origin/pwntamagotchi-br-v2-webui-final
+=======
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+build_src_filter = +<**/*>
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> origin/waveshare-esp32-s3-amoled-fix
+=======
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-evil-portal-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-faces-offline
+=======
+>>>>>>> origin/waveshare-s3-amoled-final-polish
+=======
+>>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
+=======
+# Filtro de Código Fonte
+build_src_filter = +<**/*>
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
+=======
+build_src_filter = +<**/*>
+>>>>>>> origin/waveshare-s3-amoled-manual-upload
+=======
+build_src_filter = +<**/*>
+>>>>>>> origin/waveshare-s3-amoled-offline-voice
+=======
+build_src_filter = +<**/*>
+>>>>>>> origin/waveshare-s3-amoled-ptbr-final
+=======
+build_src_filter = +<**/*>
+>>>>>>> origin/waveshare-s3-amoled-review-complete
+=======
+build_src_filter = +<**/*>
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr

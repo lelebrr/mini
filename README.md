@@ -29,7 +29,7 @@ Ele combina:
 - [Estrutura do cartão SD](#estrutura-do-cartão-sd)
 - [Documentação complementar](#documentação-complementar)
 - [Contribuindo com o projeto](#contribuindo-com-o-projeto)
-- [Aviso legal](#⚠️-aviso-legal)
+- [Aviso legal](#aviso-legal)
 
 ---
 
@@ -87,7 +87,7 @@ Sempre utilize apenas em redes **suas** ou com **autorização explícita**.
 - Mais de **100 configurações** em tempo real:
   - Nome do Pet, tema, brilho, economia de energia
   - Parâmetros de scan, filtros, potência de TX (quando suportado)
-  - Controle do Evil Portal, listas de redenegrada (whitelist/blacklist)
+  - Controle do Evil Portal, listas de permissão/bloqueio (whitelist/blacklist)
 - Gerenciador de arquivos do cartão SD:
   - Upload/Download de `.pcap`, logs, templates HTML e arquivos de configuração
 - Logs ao vivo via WebSocket
