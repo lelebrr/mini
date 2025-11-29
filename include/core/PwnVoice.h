@@ -5,6 +5,7 @@
 #include "AudioHandler.h"
 #include "OfflineVoice.h"
 #include "core/PwnPet.h"
+<<<<<<< HEAD
 #include "core/PwnPower.h"
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -109,10 +110,26 @@ public:
 
         // Toca "Ouvindo"
         // AudioHandler::playWav("/voice/listening.wav");
+=======
+
+// Comandos de Voz Mapeados (Offline - Contagem de Sílabas)
+// "Ei Pwn" (2 sílabas) -> Wake Word (Simulado)
+
+class PwnVoice {
+public:
+    static void init() {
+        // Nada específico
+    }
+
+    static void listen() {
+        // Toca "Ouvindo"
+        AudioHandler::playWav("/voice/listening.wav");
+>>>>>>> origin/pwn-tamagotchi-br-release
 
         // Grava 4s
         bool ok = AudioHandler::recordWav("/voice/input.wav", 4, true);
 
+<<<<<<< HEAD
         is_listening = false;
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -144,6 +161,8 @@ public:
         // Otimização 26: DSP off (feito no recordWav auto shutdown)
 >>>>>>> origin/mini-lele-v2-rebrand
 
+=======
+>>>>>>> origin/pwn-tamagotchi-br-release
         if (ok) {
             int syllables = OfflineVoice::analyzeCommand("/voice/input.wav");
             processCommand(syllables);
@@ -152,6 +171,7 @@ public:
 
     static void processCommand(int syllables) {
         Serial.printf("[Voice] Silabas: %d\n", syllables);
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -251,11 +271,17 @@ public:
             case 2: // "Ei Pwn" / "Status"
                 PwnPet::feed(5); // Atenção = Comida
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+        switch(syllables) {
+            case 2: // "Ei Pwn" / "Status"
+                PwnPet::feed(5); // Atenção = Comida
+>>>>>>> origin/pwn-tamagotchi-br-release
                 speak("Ola amigo");
                 break;
             case 3: // "Bateria" / "Comida"
                 speak("Estou com fome");
                 break;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -313,6 +339,11 @@ public:
                 speak("Iniciando ataque");
                 // PwnAttack::start();
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+            case 4: // "Ataca Vivo"
+                speak("Iniciando ataque");
+                // PwnAttack::start();
+>>>>>>> origin/pwn-tamagotchi-br-release
                 break;
             default:
                 speak("Nao entendi");
@@ -320,6 +351,7 @@ public:
         }
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -368,18 +400,30 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
 =======
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+    // TTS Simulado (Frases pré-gravadas)
+    static void speak(String phrase) {
+        // Mapeia texto para arquivo WAV
+>>>>>>> origin/pwn-tamagotchi-br-release
         String file = "/tts/unknown.wav";
 
         if (phrase.indexOf("Ola") >= 0) file = "/tts/hello.wav";
         else if (phrase.indexOf("fome") >= 0) file = "/tts/hungry.wav";
         else if (phrase.indexOf("ataque") >= 0) file = "/tts/attack.wav";
+<<<<<<< HEAD
         else if (phrase.indexOf("acordar") >= 0) file = "/tts/wakeup.wav";
+=======
+        else if (phrase.indexOf("Mano") >= 0) file = "/tts/slang_mano.wav";
+>>>>>>> origin/pwn-tamagotchi-br-release
 
         Serial.printf("[Voice] Falando: %s (%s)\n", phrase.c_str(), file.c_str());
         AudioHandler::playWav(file.c_str());
     }
 };
 
+<<<<<<< HEAD
 bool PwnVoice::is_listening = false;
 
+=======
+>>>>>>> origin/pwn-tamagotchi-br-release
 #endif

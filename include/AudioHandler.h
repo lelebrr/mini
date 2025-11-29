@@ -4,10 +4,13 @@
 /**
  * AudioHandler.h
  * Manipulação de Áudio para ESP32-S3 (Gravação e Reprodução)
+<<<<<<< HEAD
  * Otimizações:
  * 5. Mute hardware quando não em uso.
  * 26. Desligar DSP Task (via controle de estado).
  * 10. Sample rate configurável.
+=======
+>>>>>>> origin/pwn-tamagotchi-br-release
  */
 
 #include <Arduino.h>
@@ -16,9 +19,12 @@
 #include "FS.h"
 #include <math.h>
 
+<<<<<<< HEAD
 // Definição de pinos de controle de áudio (assumindo Expander)
 extern ESP_IOExpander *expander; // Disponível no main.cpp
 
+=======
+>>>>>>> origin/pwn-tamagotchi-br-release
 struct WavHeader {
     char riff[4];             // "RIFF"
     uint32_t overall_size;    // Tamanho do arquivo - 8
@@ -36,6 +42,7 @@ struct WavHeader {
 };
 
 class AudioHandler {
+<<<<<<< HEAD
 private:
     static void setAmpPower(bool on) {
         if (expander) {
@@ -50,13 +57,20 @@ public:
         setAmpPower(true);
         // es8311_voice_mute(false); // Assumindo função driver disponível ou I2S handles
 
+=======
+public:
+    static void playWav(const char* filename) {
+>>>>>>> origin/pwn-tamagotchi-br-release
         // Ajuste de caminho para nova estrutura em Português
         String path = String("/arquivos_cartao_sd") + filename;
 
         File file = SD_MMC.open(path);
         if (!file) {
             Serial.printf("[Audio] Erro: Arquivo %s nao encontrado\n", path.c_str());
+<<<<<<< HEAD
             setAmpPower(false);
+=======
+>>>>>>> origin/pwn-tamagotchi-br-release
             return;
         }
 
@@ -66,6 +80,7 @@ public:
         if (memcmp(header.riff, "RIFF", 4) != 0) {
             Serial.println("[Audio] Erro: Cabeçalho WAV invalido");
             file.close();
+<<<<<<< HEAD
             setAmpPower(false);
             return;
         }
@@ -73,16 +88,27 @@ public:
         // Otimização 10: Seta sample rate do arquivo
         i2s_set_sample_rates(I2S_NUM_0, header.sample_rate);
 
+=======
+            return;
+        }
+
+>>>>>>> origin/pwn-tamagotchi-br-release
         size_t bytes_read = 0;
         size_t bytes_written = 0;
         uint8_t buffer[1024];
 
+<<<<<<< HEAD
+=======
+        i2s_set_sample_rates(I2S_NUM_0, header.sample_rate);
+
+>>>>>>> origin/pwn-tamagotchi-br-release
         while (file.available()) {
             bytes_read = file.read(buffer, sizeof(buffer));
             i2s_write(I2S_NUM_0, buffer, bytes_read, &bytes_written, portMAX_DELAY);
         }
         file.close();
 
+<<<<<<< HEAD
         // Zero buffer para evitar pop e flush
         memset(buffer, 0, sizeof(buffer));
         i2s_write(I2S_NUM_0, buffer, sizeof(buffer), &bytes_written, portMAX_DELAY);
@@ -96,6 +122,13 @@ public:
         // Liga o Microfone (Normalmente AMP não afeta Mic, mas verifica hardware)
         // Se houver Bias de mic no expander, ligar aqui.
 
+=======
+        memset(buffer, 0, sizeof(buffer));
+        i2s_write(I2S_NUM_0, buffer, sizeof(buffer), &bytes_written, portMAX_DELAY);
+    }
+
+    static bool recordWav(const char* filename, int max_duration_sec, bool use_vad = true) {
+>>>>>>> origin/pwn-tamagotchi-br-release
         String path = String("/arquivos_cartao_sd") + filename;
 
         File file = SD_MMC.open(path, FILE_WRITE);
@@ -179,7 +212,10 @@ public:
         file.write((uint8_t*)&header, sizeof(WavHeader));
         file.close();
 
+<<<<<<< HEAD
         // Desligar ou colocar em idle se necessário
+=======
+>>>>>>> origin/pwn-tamagotchi-br-release
         return true;
     }
 };

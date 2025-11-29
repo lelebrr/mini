@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Guia de Instalação - Mini Lele v2.0
 
 ## Requisitos de Sistema
@@ -42,6 +43,8 @@ O sistema requer um cartão microSD (FAT32) para salvar configurações, captura
 *   **Bootloop:** Verifique se a partição foi gravada corretamente (use `Upload Filesystem Image` se necessário, embora este projeto use WebAssets embutidos).
 *   **Falha no Upload:** Segure o botão BOOT, aperte RESET, solte BOOT para entrar no modo download.
 =======
+=======
+>>>>>>> origin/pwn-tamagotchi-br-release
 # 📘 Guia de Instalação
 
 ## 1. Preparação do Ambiente
@@ -90,4 +93,7 @@ KEY=SuaChaveWpaSec
 *   **Tela preta?** Verifique bateria e cabo USB. O PMU (AXP2101) pode precisar de reset (segure PWR 10s).
 *   **Sem áudio?** Verifique se os arquivos `.wav` estão na pasta correta (`arquivos_cartao_sd`).
 *   **SD não monta?** Tente outro cartão ou formate novamente (FAT32).
+<<<<<<< HEAD
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+>>>>>>> origin/pwn-tamagotchi-br-release

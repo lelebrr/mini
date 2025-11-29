@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Guia de Contribuição - Mini Lele
 
 Obrigado pelo interesse em contribuir com o **Mini Lele**! Este projeto é mantido pela comunidade e qualquer ajuda é bem-vinda.
@@ -28,6 +29,8 @@ Todo o texto visível ao usuário (Tela, Logs, WebUI) deve estar em Português.
 ## Testes
 Antes de enviar, teste em hardware real se possível. O simulador Wokwi não suporta o chip SH8601/AXP2101 completamente.
 =======
+=======
+>>>>>>> origin/pwn-tamagotchi-br-release
 # Como Contribuir
 
 Este projeto é Open Source e aceita contribuições!
@@ -41,4 +44,7 @@ Este projeto é Open Source e aceita contribuições!
 ## Regras
 *   Mantenha o código em Português BR ou Inglês (comentários).
 *   Não submeta código malicioso real (apenas simulações educacionais).
+<<<<<<< HEAD
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+>>>>>>> origin/pwn-tamagotchi-br-release

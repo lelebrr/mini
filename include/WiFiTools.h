@@ -9,8 +9,11 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+>>>>>>> origin/pwn-tamagotchi-br-release
 /**
  * WiFiTools.h
  * Ferramentas WiFi com caminhos traduzidos.
@@ -22,6 +25,7 @@
 #include <SD_MMC.h>
 #include "FS.h"
 #include <vector>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 #include "core/PwnPet.h"
@@ -81,11 +85,14 @@ struct WiFiDevice {
 =======
 =======
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+>>>>>>> origin/pwn-tamagotchi-br-release
 
 #define MAX_SNIFFED 10
 
 struct SniffedDevice {
     String mac;
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> origin/merge-ready-mini-lele-v2
 =======
@@ -104,10 +111,13 @@ struct SniffedDevice {
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
 =======
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+>>>>>>> origin/pwn-tamagotchi-br-release
     int rssi;
     unsigned long last_seen;
 };
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -289,6 +299,8 @@ public:
 =======
 =======
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+>>>>>>> origin/pwn-tamagotchi-br-release
 std::vector<SniffedDevice> nearby_devices;
 
 class WiFiTools {
@@ -329,6 +341,7 @@ public:
                     f.printf("%s,%d,%lu\n", mac.c_str(), rssi, millis());
                     f.close();
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/merge-ready-mini-lele-v2
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
@@ -346,10 +359,13 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
 =======
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+>>>>>>> origin/pwn-tamagotchi-br-release
                 }
             }
         }
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -371,6 +387,11 @@ public:
     static void startSniffer() {
         WiFi.disconnect();
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+
+    static void startSniffer() {
+        WiFi.disconnect();
+>>>>>>> origin/pwn-tamagotchi-br-release
         esp_wifi_set_promiscuous(true);
         esp_wifi_set_promiscuous_rx_cb(&promiscuous_rx_cb);
     }
@@ -412,6 +433,7 @@ public:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 std::vector<WiFiDevice> WiFiTools::nearby_devices;
 
 #endif
@@ -458,3 +480,6 @@ std::vector<WiFiDevice> WiFiTools::nearby_devices;
 =======
 #endif
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+#endif
+>>>>>>> origin/pwn-tamagotchi-br-release

@@ -11,6 +11,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * Mini Lele - Waveshare ESP32-S3-Touch-AMOLED-1.8
 	 * Hardware: SH8601 QSPI, FT3168 I2C, AXP2101 I2C, ES8311 I2S
 	 */
@@ -30,12 +31,18 @@
 >>>>>>> origin/mini-lele-v2-final-verified
 =======
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+>>>>>>> origin/pwn-tamagotchi-br-release
  * Mapeamento de Pinos para Waveshare ESP32-S3-Touch-AMOLED-1.8
  *
  * Hardware:
  * - MCU: ESP32-S3 (N16R8)
  * - Tela: 1.8" AMOLED (SH8601) - QSPI
+<<<<<<< HEAD
  * - Touch: FT3168 ou GT1151 - I2C
+=======
+ * - Touch: FT3168 - I2C
+>>>>>>> origin/pwn-tamagotchi-br-release
  * - PMU: AXP2101 - I2C
  * - Áudio: ES8311 - I2S
  * - IMU: QMI8658 - I2C
@@ -50,6 +57,7 @@
 #define LCD_SDIO1  7   // Data 1
 #define LCD_SDIO2  8   // Data 2
 #define LCD_SDIO3  9   // Data 3
+<<<<<<< HEAD
 #define LCD_RST    -1  // Controlado pelo Expander IO Pin 0
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -95,10 +103,15 @@
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
 =======
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+// O Reset do LCD é controlado pelo Pino 0 do Expansor IO (TCA9554)
+#define LCD_RST    -1
+>>>>>>> origin/pwn-tamagotchi-br-release
 
 #define LCD_WIDTH  368
 #define LCD_HEIGHT 448
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -164,12 +177,17 @@
 =======
 >>>>>>> origin/mini-lele-v2-rebrand
 // --- Barramento I2C (Interno) ---
+=======
+// --- Barramento I2C (Interno) ---
+// Compartilhado por: Touch, PMU, Expansor IO, IMU
+>>>>>>> origin/pwn-tamagotchi-br-release
 #define IIC_SDA    38
 #define IIC_SCL    39
 #define D_IIC_SDA  38
 #define D_IIC_SCL  39
 
 // Endereços I2C dos Dispositivos
+<<<<<<< HEAD
 #define AXP2101_SLAVE_ADDRESS 0x34
 #define FT3168_DEVICE_ADDRESS 0x38
 #define GT1151_DEVICE_ADDRESS 0x14 // Endereço comum para GT1151 (ou 0x5D)
@@ -185,10 +203,34 @@
 #define MCLKPIN    2
 
 // --- Cartão SD (SDMMC Slot 1) ---
+=======
+#define AXP2101_SLAVE_ADDRESS 0x34         // Gerenciamento de Energia
+#define FT3168_DEVICE_ADDRESS 0x38         // Controlador de Touch
+#define ESP_IO_EXPANDER_I2C_TCA9554_ADDRESS_000 0x20 // Expansor de IO
+#define QMI8658_L_SLAVE_ADDRESS 0x6B       // Acelerômetro/Giroscópio
+#define ES8311_ADDRRES_0      0x18         // Codec de Áudio
+
+// --- Touch (FT3168) ---
+// Reset controlado pelo Pino 1 do Expansor IO
+#define TP_INT     -1  // Interrupção (usamos polling)
+#define TOUCH_CS   -1
+
+// --- Áudio (ES8311 + I2S) ---
+// Microfone (Entrada) e Alto-falante (Saída)
+#define BCLKPIN    41
+#define WSPIN      42
+#define DIPIN      1   // Data In (Do Mic)
+#define DOPIN      40  // Data Out (Para Speaker)
+#define MCLKPIN    2   // Master Clock (Gerado pelo ESP32)
+
+// --- Cartão SD (SDMMC Slot 1) ---
+// Modo 1-Bit (Padrão da placa)
+>>>>>>> origin/pwn-tamagotchi-br-release
 #define SDMMC_CLK  12
 #define SDMMC_CMD  11
 #define SDMMC_DATA 13
 
+<<<<<<< HEAD
 // --- Cores Cyberpunk BR ---
 #define COLOR_NEON_PURPLE 0x801F // Roxo
 #define COLOR_NEON_GREEN  0x07E0 // Verde Matrix
@@ -312,3 +354,11 @@
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
 =======
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+// --- Cores (Formato RGB565) ---
+#define BLACK   0x0000
+#define WHITE   0xFFFF
+#define RED     0xF800
+#define GREEN   0x07E0
+#define BLUE    0x001F
+>>>>>>> origin/pwn-tamagotchi-br-release

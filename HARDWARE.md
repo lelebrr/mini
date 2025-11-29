@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Documentação de Hardware - Mini Lele
 
 O **Mini Lele** é projetado especificamente para o kit de desenvolvimento abaixo. O uso de outro hardware requer adaptação significativa dos drivers.
@@ -210,6 +211,8 @@ O sistema utiliza o AXP2101 para gerenciar as tensões. O driver `PwnPower` conf
 *   **ALDO4:** Microfone Bias
 *   **BLDO1:** AMOLED Power
 =======
+=======
+>>>>>>> origin/pwn-tamagotchi-br-release
 # ⚙️ Hardware e Pinos
 
 ## Especificações Técnicas
@@ -252,4 +255,7 @@ O sistema utiliza o AXP2101 para gerenciar as tensões. O driver `PwnPower` conf
 
 ### IO Expander (TCA9554)
 Endereço 0x20. Controla Reset e Energia dos periféricos.
+<<<<<<< HEAD
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+>>>>>>> origin/pwn-tamagotchi-br-release
