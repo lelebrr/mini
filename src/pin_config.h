@@ -7,6 +7,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Based on provided documentation, example code, and code review.
 
 // QSPI Display (SH8601)
@@ -104,10 +105,33 @@
 // --- I2C Bus (Internal) ---
 // Used for: Touch, PMU (AXP2101), IO Expander (TCA9554), IMU (QMI8658)
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
+=======
+// Configuration based on Hardware v1.0 / v1.1
+// ESP32-S3-N16R8 Module: 16MB Flash, 8MB PSRAM (Octal)
+// Connectivity: Wi-Fi 2.4GHz (802.11 b/g/n) & Bluetooth 5 (LE)
+
+// --- QSPI Display (SH8601) ---
+// Resolution: 368x448 px (AMOLED)
+#define LCD_CS     4   // Chip Select
+#define LCD_SCLK   5   // Clock
+#define LCD_SDIO0  6   // Data 0
+#define LCD_SDIO1  7   // Data 1
+#define LCD_SDIO2  8   // Data 2
+#define LCD_SDIO3  9   // Data 3
+// LCD Reset is controlled by TCA9554 IO Expander Pin 0 (Output)
+#define LCD_RST    -1
+
+#define LCD_WIDTH  368
+#define LCD_HEIGHT 448
+
+// --- I2C Bus (Internal) ---
+// Used for: Touch, PMU (AXP2101), IO Expander (TCA9554), IMU (QMI8658)
+>>>>>>> origin/waveshare-s3-amoled-offline-voice
 #define IIC_SDA    38
 #define IIC_SCL    39
 #define D_IIC_SDA  38
 #define D_IIC_SCL  39
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 
@@ -297,6 +321,21 @@
 #define TOUCH_CS   -1
 
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
+=======
+
+// Device I2C Addresses
+#define AXP2101_SLAVE_ADDRESS 0x34         // Power Management Unit
+#define FT3168_DEVICE_ADDRESS 0x38         // Touch Controller
+#define ESP_IO_EXPANDER_I2C_TCA9554_ADDRESS_000 0x20 // IO Expander
+#define QMI8658_L_SLAVE_ADDRESS 0x6B       // 6-Axis IMU (Check 0x6A or 0x6B)
+#define ES8311_ADDRRES_0      0x18         // Audio Codec
+
+// --- Touch (FT3168) ---
+// Reset is controlled by TCA9554 IO Expander Pin 1 (Output)
+#define TP_INT     -1  // Polling is often used, but interrupt pin might be connected to a GPIO
+#define TOUCH_CS   -1
+
+>>>>>>> origin/waveshare-s3-amoled-offline-voice
 // --- Audio (ES8311 + I2S) ---
 // Microphone (Input) and Speaker (Output)
 #define BCLKPIN    41
