@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 /**
  * @file lv_conf.h
  * @brief LVGL 9.2 Configuration for Waveshare ESP32-S3 AMOLED
@@ -84,6 +87,7 @@
 #define LV_USE_LOG 0
 
 #endif
+<<<<<<< HEAD
 =======
 #ifndef LV_CONF_H
 #define LV_CONF_H
@@ -140,3 +144,5 @@
 
 #endif /*LV_CONF_H*/
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final

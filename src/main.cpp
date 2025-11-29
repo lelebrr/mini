@@ -1,19 +1,28 @@
 #include <Arduino.h>
 #include <lvgl.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 #include <esp_task_wdt.h>
 
 // Core Headers
 #include "core/ConfigManager.h" // 1. Config Manager first
 #include "core/PwnPower.h"
+<<<<<<< HEAD
 =======
 // Core Headers
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 #include "core/PwnPet.h"
 #include "core/PwnAttack.h"
 #include "core/PwnUI.h"
 #include "core/PwnVoice.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 #include "core/Gamification.h"
 #include "web/WebHandler.h" // 2. Web Handler
 
@@ -40,6 +49,7 @@ ESP_IOExpander *expander;
 SemaphoreHandle_t gui_mutex;
 PwnIMU imu;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -103,6 +113,24 @@ Arduino_GFX *gfx = new Arduino_SH8601(bus, LCD_RST, 0 /* rotation */, false /* I
 Arduino_DataBus *bus = new Arduino_ESP32QSPI(LCD_CS, LCD_SCLK, LCD_SDIO0, LCD_SDIO1, LCD_SDIO2, LCD_SDIO3);
 Arduino_GFX *gfx = new Arduino_SH8601(bus, LCD_RST, 0, false, LCD_WIDTH, LCD_HEIGHT);
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+// ST7701S Init Operations (Standard sequence for 480x480 or similar - adapted for 320x240 RGB)
+// This is a placeholder for the actual massive init array usually required by ST7701
+Arduino_DataBus *bus = new Arduino_ESP32RGBPanel(
+    LCD_DE, LCD_VSYNC, LCD_HSYNC, LCD_PCLK,
+    LCD_R0, LCD_R1, LCD_R2, LCD_R3, LCD_R4,
+    LCD_G0, LCD_G1, LCD_G2, LCD_G3, LCD_G4, LCD_G5,
+    LCD_B0, LCD_B1, LCD_B2, LCD_B3, LCD_B4
+);
+
+// Fallback init if header not present
+// Real ST7701S requires ~100 bytes of init commands via SPI before RGB starts
+// Assuming Arduino_GFX has a default or user provides it.
+// We use a generic placeholder here to allow compilation.
+Arduino_GFX *gfx = new Arduino_ST7701_RGBPanel(
+    bus, LCD_RST, 0, true, LCD_WIDTH, LCD_HEIGHT
+);
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 
 TouchLib *touch = NULL;
 
@@ -111,6 +139,7 @@ lv_display_t * disp;
 lv_indev_t * indev;
 
 // Double Buffer PSRAM
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -131,10 +160,13 @@ lv_indev_t * indev;
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 =======
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 #define BUFFER_SIZE (LCD_WIDTH * LCD_HEIGHT)
 static lv_color_t *buf1;
 static lv_color_t *buf2;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -177,6 +209,8 @@ static lv_color_t *buf2;
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
 =======
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 unsigned long siesta_start = 0;
 bool in_siesta = false;
 
@@ -233,6 +267,7 @@ void initAudio() {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
 =======
@@ -243,10 +278,13 @@ void initAudio() {
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 =======
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
         .bck_io_num = I2S_BCLK,
         .ws_io_num = I2S_LRCK,
         .data_out_num = I2S_DOUT,
         .data_in_num = I2S_DIN
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -288,12 +326,15 @@ void initAudio() {
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
 =======
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
     };
 
     i2s_driver_install(I2S_NUM_0, &i2s_config, 0, NULL);
     i2s_set_pin(I2S_NUM_0, &pin_config);
     i2s_zero_dma_buffer(I2S_NUM_0);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -335,6 +376,9 @@ void initAudio() {
 =======
     es8311_handle_t es_dev = es8311_create(0, ES8311_ADDRRES_0);
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+    es8311_handle_t es_dev = es8311_create(0, ES8311_ADDR);
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
     if (es_dev) {
          es8311_clock_config_t cfg = {0};
          cfg.sample_frequency = 16000;
@@ -343,6 +387,7 @@ void initAudio() {
          es8311_microphone_config(es_dev, false);
          es8311_voice_mute(es_dev, false);
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -392,6 +437,8 @@ void initAudio() {
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
 =======
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 }
 
 // -------------------------------------------------------------------------
@@ -407,6 +454,7 @@ void scanTask(void *pvParameters) {
 }
 
 void setup() {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -531,12 +579,15 @@ void setup() {
 >>>>>>> origin/mini-lele-v2-final-verified
 =======
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
     #if CORE_DEBUG_LEVEL > 0
     Serial.begin(115200);
     #endif
 
     setCpuFrequencyMhz(240);
 
+<<<<<<< HEAD
     Wire.begin(IIC_SDA, IIC_SCL);
 
     SD_MMC.setPins(SDMMC_CLK, SDMMC_CMD, SDMMC_DATA);
@@ -588,11 +639,33 @@ void setup() {
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 =======
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+    Wire.begin(TOUCH_SDA, TOUCH_SCL);
+
+    // Power Init (AXP2101)
+    PwnPower::init();
+
+    // SD Card Init (SD_MMC 1-bit or 4-bit)
+    // Using 1-bit mode often safer if pins conflict, but we try 4-bit first per pin_config
+    SD_MMC.setPins(SD_CLK, SD_CMD, SD_D0, SD_D1, SD_D2, SD_D3);
+    if (!SD_MMC.begin("/sdcard", true)) {
+        Serial.println("SD MMC Init Failed!");
+        // Try 1-bit mode fallback
+        SD_MMC.setPins(SD_CLK, SD_CMD, SD_D0);
+        if (!SD_MMC.begin("/sdcard", true, true)) {
+             Serial.println("SD MMC 1-Bit Failed!");
+        }
+    }
+
+    // Now we can load config
+    ConfigManager::getInstance()->load();
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 
     // Init GFX
     gfx->begin();
     gfx->fillScreen(BLACK);
 
+<<<<<<< HEAD
     // Init Touch (FT3168 or GT1151 fallback)
     touch = new TouchLib(Wire, IIC_SDA, IIC_SCL, FT3168_ADDR);
     if (!touch->init()) {
@@ -659,6 +732,10 @@ void setup() {
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
 =======
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+    touch = new TouchLib(Wire, TOUCH_SDA, TOUCH_SCL, GT1151_ADDR);
+    touch->init();
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 
     lv_init();
 
@@ -667,6 +744,7 @@ void setup() {
 
     disp = lv_display_create(LCD_WIDTH, LCD_HEIGHT);
     lv_display_set_flush_cb(disp, my_disp_flush);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -708,6 +786,9 @@ void setup() {
 =======
     lv_display_set_buffers(disp, buf1, buf2, BUFFER_SIZE * sizeof(lv_color_t), LV_DISPLAY_RENDER_MODE_PARTIAL);
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+    lv_display_set_buffers(disp, buf1, buf2, BUFFER_SIZE * sizeof(lv_color_t), LV_DISPLAY_RENDER_MODE_FULL);
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 
     indev = lv_indev_create();
     lv_indev_set_type(indev, LV_INDEV_TYPE_POINTER);
@@ -729,12 +810,17 @@ void setup() {
 
     xTaskCreatePinnedToCore(scanTask, "WiFiScan", 4096, NULL, 1, NULL, 0);
 
+<<<<<<< HEAD
     Serial.println("Mini Lele (v2.0) Iniciado!");
+=======
+    Serial.println("PwnTamagotchi BR - Edicao Lendaria Iniciado!");
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 }
 
 void loop() {
     unsigned long now = millis();
 
+<<<<<<< HEAD
     float current = PwnPower::getSystemCurrent();
     if (current > 130) PwnPower::setPerformanceMode(0);
 
@@ -789,6 +875,12 @@ void setup() {
 void loop() {
     // 1. LVGL Logic
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+    // PwnPower::getSystemCurrent() relies on initialized PMU
+    float current = PwnPower::getSystemCurrent();
+    if (current > 130) PwnPower::setPerformanceMode(0);
+
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
     if (xSemaphoreTake(gui_mutex, 5)) {
         lv_timer_handler();
         PwnUI::update();
@@ -796,6 +888,9 @@ void loop() {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
     int minute = (now / 60000) % 60;
     if (minute == 0 && !in_siesta) {
         in_siesta = true;
@@ -807,6 +902,7 @@ void loop() {
         PwnPet::tick();
         Gamification::tick();
     }
+<<<<<<< HEAD
 =======
     // 2. Game Logic
     PwnPet::tick();
@@ -814,6 +910,8 @@ void loop() {
     // 3. Attack Logic
     PwnAttack::tick();
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 
     delay(5);
 }

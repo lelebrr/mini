@@ -6,6 +6,7 @@
 #include "OfflineVoice.h"
 #include "core/PwnPet.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "core/PwnPower.h"
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -42,6 +43,10 @@
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
 =======
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+#include "core/PwnPower.h"
+#include "core/PwnAttack.h"
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 
 // Comandos de Voz Mapeados (Offline - Contagem de Sílabas)
 
@@ -55,6 +60,7 @@ public:
     }
 
     static void listen() {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -106,10 +112,15 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
 =======
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+        if (PwnPower::isCritical()) return;
+
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
         is_listening = true;
 
         // Toca "Ouvindo"
         // AudioHandler::playWav("/voice/listening.wav");
+<<<<<<< HEAD
 =======
 
 // Comandos de Voz Mapeados (Offline - Contagem de Sílabas)
@@ -125,10 +136,13 @@ public:
         // Toca "Ouvindo"
         AudioHandler::playWav("/voice/listening.wav");
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 
         // Grava 4s
         bool ok = AudioHandler::recordWav("/voice/input.wav", 4, true);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
         is_listening = false;
 <<<<<<< HEAD
@@ -163,6 +177,10 @@ public:
 
 =======
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+        is_listening = false;
+
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
         if (ok) {
             int syllables = OfflineVoice::analyzeCommand("/voice/input.wav");
             processCommand(syllables);
@@ -171,6 +189,7 @@ public:
 
     static void processCommand(int syllables) {
         Serial.printf("[Voice] Silabas: %d\n", syllables);
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 <<<<<<< HEAD
@@ -214,6 +233,10 @@ public:
         if (PwnPet::getStats().is_sleeping) {
              // Acorda se gritar (muitas silabas)?
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+
+        if (PwnPet::getStats().is_sleeping) {
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
              if (syllables > 4) {
                  PwnPet::getStats().is_sleeping = false;
                  speak("Quem ousa me acordar");
@@ -222,6 +245,7 @@ public:
         }
 
         switch(syllables) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -276,11 +300,16 @@ public:
             case 2: // "Ei Pwn" / "Status"
                 PwnPet::feed(5); // Atenção = Comida
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+            case 2: // "Ei Lele" / "Status"
+                PwnPet::getStats().hunger += 5;
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
                 speak("Ola amigo");
                 break;
             case 3: // "Bateria" / "Comida"
                 speak("Estou com fome");
                 break;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -344,6 +373,11 @@ public:
                 speak("Iniciando ataque");
                 // PwnAttack::start();
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+            case 4: // "Ataca Vivo" / "Ataque"
+                speak("Iniciando ataque");
+                PwnAttack::start(); // Agora existe
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
                 break;
             default:
                 speak("Nao entendi");
@@ -351,6 +385,7 @@ public:
         }
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -405,16 +440,23 @@ public:
     static void speak(String phrase) {
         // Mapeia texto para arquivo WAV
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+    static void speak(String phrase) {
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
         String file = "/tts/unknown.wav";
 
         if (phrase.indexOf("Ola") >= 0) file = "/tts/hello.wav";
         else if (phrase.indexOf("fome") >= 0) file = "/tts/hungry.wav";
         else if (phrase.indexOf("ataque") >= 0) file = "/tts/attack.wav";
 <<<<<<< HEAD
+<<<<<<< HEAD
         else if (phrase.indexOf("acordar") >= 0) file = "/tts/wakeup.wav";
 =======
         else if (phrase.indexOf("Mano") >= 0) file = "/tts/slang_mano.wav";
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+        else if (phrase.indexOf("acordar") >= 0) file = "/tts/wakeup.wav";
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 
         Serial.printf("[Voice] Falando: %s (%s)\n", phrase.c_str(), file.c_str());
         AudioHandler::playWav(file.c_str());
@@ -422,8 +464,13 @@ public:
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 bool PwnVoice::is_listening = false;
 
 =======
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+bool PwnVoice::is_listening = false;
+
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 #endif

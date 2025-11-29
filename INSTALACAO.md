@@ -1,5 +1,8 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 # Guia de Instalação - Mini Lele v2.0
 
 ## Requisitos de Sistema
@@ -42,6 +45,7 @@ O sistema requer um cartão microSD (FAT32) para salvar configurações, captura
 *   **Tela preta:** Verifique se o cartão SD está inserido corretamente.
 *   **Bootloop:** Verifique se a partição foi gravada corretamente (use `Upload Filesystem Image` se necessário, embora este projeto use WebAssets embutidos).
 *   **Falha no Upload:** Segure o botão BOOT, aperte RESET, solte BOOT para entrar no modo download.
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> origin/pwn-tamagotchi-br-release
@@ -97,3 +101,5 @@ KEY=SuaChaveWpaSec
 >>>>>>> origin/mini-lele-v2-rebrand
 =======
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final

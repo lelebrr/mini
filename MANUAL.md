@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 # Manual do Usuário - Mini Lele
 
 ## 1. O Pet (Lele)
@@ -51,6 +54,7 @@ Acesse via navegador para controle total.
 - **Deep Sleep:** O dispositivo dorme automaticamente se inativo. Agite para acordar.
 - **Siesta:** A cada hora cheia, o Pet tira uma soneca de 3 min.
 - **Carregamento:** Use USB-C. O LED indica carga.
+<<<<<<< HEAD
 =======
 # 📖 Manual de Uso
 
@@ -107,3 +111,5 @@ Para enviar handshakes capturados para quebra de senha online:
 *   **Screen Saver:** A tela desliga automaticamente após 30 segundos de inatividade.
 *   **Acordar:** Toque na tela para ligar novamente.
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final

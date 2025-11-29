@@ -16,6 +16,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Gerencia 120 configurações com persistência no SD
 =======
 // Gerencia 100 configurações com persistência no SD
@@ -44,6 +45,9 @@
 =======
 // Gerencia 100 configurações com persistência no SD
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+// Gerencia 120 configurações com persistência no SD
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 
 class ConfigManager {
 private:
@@ -53,6 +57,7 @@ private:
     bool _dirty = false;
 
     ConfigManager() {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -100,6 +105,10 @@ private:
         // Aloca 8KB para JSON (Suficiente para ~100 chaves)
         doc = new DynamicJsonDocument(8192);
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+        // Aumentado para 16KB para acomodar 120 chaves + strings longas
+        doc = new DynamicJsonDocument(16384);
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
     }
 
 public:
@@ -136,6 +145,7 @@ public:
     void createDefaults() {
         JsonObject root = doc->to<JsonObject>();
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -372,6 +382,8 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 =======
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
         // --- 1. SYSTEM IDENTITY ---
         root["sys_device_name"] = "PwnTamagotchi BR - Legendary";
         root["sys_hostname"] = "minilele";
@@ -422,6 +434,7 @@ public:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-release
@@ -433,11 +446,14 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
 =======
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 
         save();
     }
 
     void validateMissingKeys() {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -543,11 +559,14 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 =======
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
         bool changed = false;
         JsonObject root = doc->as<JsonObject>();
 
         if (!root.containsKey("leg_pwn_radar")) { root["leg_pwn_radar"] = true; changed = true; }
         if (!root.containsKey("sys_device_name")) { root["sys_device_name"] = "PwnTamagotchi BR - Legendary"; changed = true; }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -563,10 +582,13 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
 =======
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 
         if (changed) save();
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -594,6 +616,8 @@ public:
 =======
     // Getters Genéricos
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
     template <typename T>
     T get(const char* key) {
         return (*doc)[key].as<T>();
@@ -601,6 +625,7 @@ public:
 
     String getString(const char* key) {
         return (*doc)[key].as<String>();
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -649,6 +674,8 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 =======
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
     }
 
     template <typename T>
@@ -658,6 +685,7 @@ public:
         save();
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -673,10 +701,13 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
 =======
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
     void getJSON(String &output) {
         serializeJson(*doc, output);
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -711,6 +742,9 @@ public:
     // Atualiza do JSON recebido da WebAPI
     void updateFromJSON(String json) {
 >>>>>>> origin/mini-lele-v2-rebrand
+=======
+    void updateFromJSON(String json) {
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
         DeserializationError error = deserializeJson(*doc, json);
         if (!error) save();
     }

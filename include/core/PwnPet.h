@@ -6,9 +6,13 @@
 #include <SD_MMC.h>
 #include "FS.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "ConfigManager.h"
 =======
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+#include "ConfigManager.h"
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 
 // Estágios de Evolução
 enum PetStage {
@@ -17,6 +21,7 @@ enum PetStage {
     KID,
     TEEN,
     ADULT,
+<<<<<<< HEAD
 <<<<<<< HEAD
     PWNLORD, // Reverted
     PWNGOD   // Reverted
@@ -35,6 +40,10 @@ enum PetMood {
     EVIL,
     COOL
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+    PWNLORD, // Reverted
+    PWNGOD   // Reverted
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 };
 
 struct PetStats {
@@ -46,10 +55,14 @@ struct PetStats {
     int happiness; // 0-100
     int handshakes_total;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
     unsigned long last_save;
     bool is_sleeping;
     int energy_mode;
     int sleep_hours;
+<<<<<<< HEAD
 =======
     int handshakes_today;
     unsigned long birth_date;
@@ -57,6 +70,8 @@ struct PetStats {
     bool is_sleeping;
     bool silent_mode;
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 };
 
 class PwnPet {
@@ -68,20 +83,27 @@ public:
     static void init() {
         savePath = "/pwn_pet_save.json";
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
         // Valores Padrão - Nome vem do ConfigManager se disponivel, ou padrao aqui
         stats.name = ConfigManager::getInstance()->getString("pet_name");
         if (stats.name.length() == 0) stats.name = "PwnBaby";
 
+<<<<<<< HEAD
 =======
         // Valores Padrão
         stats.name = "PwnBaby";
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
         stats.stage = EGG;
         stats.xp = 0;
         stats.level = 1;
         stats.hunger = 100;
         stats.happiness = 100;
         stats.handshakes_total = 0;
+<<<<<<< HEAD
 <<<<<<< HEAD
         stats.is_sleeping = false;
         stats.energy_mode = 1; // Normal
@@ -91,6 +113,11 @@ public:
         stats.birth_date = 0; // Será setado via RTC
         stats.is_sleeping = false;
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+        stats.is_sleeping = false;
+        stats.energy_mode = 1; // Normal
+        stats.sleep_hours = 0;
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 
         load();
     }
@@ -108,12 +135,16 @@ public:
             stats.level = doc["level"];
             stats.handshakes_total = doc["handshakes_total"];
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
             stats.energy_mode = doc["energy_mode"] | 1;
 
             Serial.printf("[Pet] Carregado: %s (Lvl %d)\n", stats.name.c_str(), stats.level);
         } else {
             Serial.println("[Pet] Novo Save Criado!");
             save();
+<<<<<<< HEAD
 =======
             // ... carregar resto
             Serial.printf("[Pet] Carregado: %s (Lvl %d)\n", stats.name.c_str(), stats.level);
@@ -121,6 +152,8 @@ public:
             Serial.println("[Pet] Novo Save Criado!");
             save(); // Salva inicial
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
         }
     }
 
@@ -132,9 +165,13 @@ public:
         doc["level"] = stats.level;
         doc["handshakes_total"] = stats.handshakes_total;
 <<<<<<< HEAD
+<<<<<<< HEAD
         doc["energy_mode"] = stats.energy_mode;
 =======
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+        doc["energy_mode"] = stats.energy_mode;
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 
         File f = SD_MMC.open(savePath, FILE_WRITE);
         serializeJson(doc, f);
@@ -143,17 +180,24 @@ public:
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     static void tick() {
 =======
     // Lógica de Jogo
     static void tick() {
         // Reduz fome/felicidade a cada X tempo
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+    static void tick() {
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
         static unsigned long last_decay = 0;
         if (millis() - last_decay > 60000) { // 1 min
             last_decay = millis();
             if (!stats.is_sleeping) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
                 int hunger_loss = (stats.energy_mode == 0) ? 0 : 1;
                 stats.hunger = max(0, stats.hunger - hunger_loss);
                 stats.happiness = max(0, stats.happiness - 1);
@@ -173,6 +217,7 @@ public:
         if (stats.xp > stats.level * 500) {
             stats.level++;
             stats.happiness = 100;
+<<<<<<< HEAD
 =======
                 stats.hunger = max(0, stats.hunger - 1);
                 stats.happiness = max(0, stats.happiness - 1);
@@ -199,12 +244,15 @@ public:
             stats.happiness = 100;
             // Tocar som de Level UP
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
         }
         checkEvolution();
     }
 
     static void addHandshake(bool is_wpa3) {
         stats.handshakes_total++;
+<<<<<<< HEAD
 <<<<<<< HEAD
         int xp_gain = is_wpa3 ? 100 : 20;
         addXP(xp_gain);
@@ -215,6 +263,11 @@ public:
         addXP(xp_gain);
         feed(xp_gain / 5);
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+        int xp_gain = is_wpa3 ? 100 : 20;
+        addXP(xp_gain);
+        stats.hunger = min(100, stats.hunger + 2);
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
         save();
     }
 
@@ -227,6 +280,7 @@ public:
         else if (stats.level >= 50 && stats.stage == ADULT) stats.stage = PWNLORD;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         if (stats.handshakes_total >= 10000) stats.stage = PWNGOD;
 
         if (old != stats.stage) {
@@ -236,11 +290,19 @@ public:
         if (old != stats.stage) {
             // Evento de Evolução
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+        if (stats.handshakes_total >= 10000) stats.stage = PWNGOD;
+
+        if (old != stats.stage) {
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
             Serial.println("[Pet] EVOLUCAO!");
         }
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
     static int getHunger() { return stats.hunger; }
     static PetStats& getStats() { return stats; }
 
@@ -248,6 +310,7 @@ public:
         if (stats.hunger < 20) return "FAMINTO";
         if (stats.happiness < 20) return "TRISTE";
         if (stats.stage == PWNGOD) return "DIVINO";
+<<<<<<< HEAD
 =======
     // Getters
     static PetStats& getStats() { return stats; }
@@ -255,6 +318,8 @@ public:
         if (stats.hunger < 20) return "FAMINTO";
         if (stats.happiness < 20) return "TRISTE";
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
         return "FELIZ";
     }
 };

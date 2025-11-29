@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 # Mini Lele v2.0
 
 ## Visão Geral
@@ -62,6 +65,7 @@ A interface web permite controlar **100 configurações** em tempo real, incluin
 - Configuração de ataques e whitelist/blacklist.
 
 Divirta-se hackeando o planeta (com responsabilidade)!
+<<<<<<< HEAD
 =======
 # PwnTamagotchi BR (ESP32-S3 AMOLED)
 
@@ -86,3 +90,5 @@ Projeto completo de Pentest Gamificado para Waveshare ESP32-S3 AMOLED.
 
 Divirta-se!
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-edition-final
