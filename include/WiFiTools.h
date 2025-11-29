@@ -8,6 +8,9 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
 /**
  * WiFiTools.h
  * Ferramentas WiFi com caminhos traduzidos.
@@ -19,6 +22,7 @@
 #include <SD_MMC.h>
 #include "FS.h"
 #include <vector>
+<<<<<<< HEAD
 <<<<<<< HEAD
 #include "core/PwnPet.h"
 #include "core/Gamification.h"
@@ -75,11 +79,14 @@ struct WiFiDevice {
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
 
 #define MAX_SNIFFED 10
 
 struct SniffedDevice {
     String mac;
+<<<<<<< HEAD
 >>>>>>> origin/merge-ready-mini-lele-v2
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
@@ -95,10 +102,13 @@ struct SniffedDevice {
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 =======
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
     int rssi;
     unsigned long last_seen;
 };
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -277,6 +287,8 @@ public:
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
 std::vector<SniffedDevice> nearby_devices;
 
 class WiFiTools {
@@ -316,6 +328,7 @@ public:
                 if (f) {
                     f.printf("%s,%d,%lu\n", mac.c_str(), rssi, millis());
                     f.close();
+<<<<<<< HEAD
 >>>>>>> origin/merge-ready-mini-lele-v2
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
@@ -331,10 +344,13 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 =======
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
                 }
             }
         }
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -350,6 +366,11 @@ public:
     static void startSniffer() {
         WiFi.disconnect();
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+
+    static void startSniffer() {
+        WiFi.disconnect();
+>>>>>>> origin/mini-lele-v2-rebrand
         esp_wifi_set_promiscuous(true);
         esp_wifi_set_promiscuous_rx_cb(&promiscuous_rx_cb);
     }
@@ -390,6 +411,7 @@ public:
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 std::vector<WiFiDevice> WiFiTools::nearby_devices;
 
 #endif
@@ -433,3 +455,6 @@ std::vector<WiFiDevice> WiFiTools::nearby_devices;
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 =======
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+#endif
+>>>>>>> origin/mini-lele-v2-rebrand

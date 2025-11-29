@@ -44,6 +44,7 @@ PwnIMU imu;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Hardware Objects - QSPI SH8601 (Waveshare Standard)
 Arduino_DataBus *bus = new Arduino_ESP32QSPI(LCD_CS, LCD_SCK, LCD_D0, LCD_D1, LCD_D2, LCD_D3);
 Arduino_GFX *gfx = new Arduino_SH8601(bus, LCD_RST, 0 /* rotation */, false /* IPS */, LCD_WIDTH, LCD_HEIGHT);
@@ -92,6 +93,11 @@ Arduino_GFX *gfx = new Arduino_SH8601(bus, LCD_RST, 0 /* rotation */, false /* I
 Arduino_DataBus *bus = new Arduino_ESP32QSPI(LCD_CS, LCD_SCK, LCD_D0, LCD_D1, LCD_D2, LCD_D3);
 Arduino_GFX *gfx = new Arduino_SH8601(bus, LCD_RST, 0 /* rotation */, false /* IPS */, LCD_WIDTH, LCD_HEIGHT);
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+// Hardware Objects
+Arduino_DataBus *bus = new Arduino_ESP32QSPI(LCD_CS, LCD_SCLK, LCD_SDIO0, LCD_SDIO1, LCD_SDIO2, LCD_SDIO3);
+Arduino_GFX *gfx = new Arduino_SH8601(bus, LCD_RST, 0, false, LCD_WIDTH, LCD_HEIGHT);
+>>>>>>> origin/mini-lele-v2-rebrand
 
 TouchLib *touch = NULL;
 
@@ -100,6 +106,7 @@ lv_display_t * disp;
 lv_indev_t * indev;
 
 // Double Buffer PSRAM
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -135,11 +142,14 @@ static lv_color_t *buf2;
 >>>>>>> origin/mini-lele-v2-complete-verified
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
 #define BUFFER_SIZE (LCD_WIDTH * LCD_HEIGHT / 10)
 static lv_color_t *buf1;
 static lv_color_t *buf2;
 
 // Siesta
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -160,6 +170,8 @@ static lv_color_t *buf2;
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 =======
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
 unsigned long siesta_start = 0;
 bool in_siesta = false;
 
@@ -215,6 +227,7 @@ void initAudio() {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
 =======
@@ -241,10 +254,13 @@ void initAudio() {
 >>>>>>> origin/mini-lele-v2-complete-verified
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
         .bck_io_num = BCLKPIN,
         .ws_io_num = WSPIN,
         .data_out_num = DOPIN,
         .data_in_num = DIPIN
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -265,6 +281,8 @@ void initAudio() {
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 =======
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
     };
 
     i2s_driver_install(I2S_NUM_0, &i2s_config, 0, NULL);
@@ -280,6 +298,7 @@ void initAudio() {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     es8311_handle_t es_dev = es8311_create(0, ES8311_ADDR);
 =======
     es8311_handle_t es_dev = es8311_create(0, ES8311_ADDRRES_0);
@@ -308,6 +327,9 @@ void initAudio() {
 =======
     es8311_handle_t es_dev = es8311_create(0, ES8311_ADDR);
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+    es8311_handle_t es_dev = es8311_create(0, ES8311_ADDRRES_0);
+>>>>>>> origin/mini-lele-v2-rebrand
     if (es_dev) {
          es8311_clock_config_t cfg = {0};
          cfg.sample_frequency = 16000;
@@ -316,6 +338,7 @@ void initAudio() {
          es8311_microphone_config(es_dev, false);
          es8311_voice_mute(es_dev, false);
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -362,6 +385,8 @@ void initAudio() {
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 =======
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
 }
 
 // -------------------------------------------------------------------------
@@ -377,6 +402,7 @@ void scanTask(void *pvParameters) {
 }
 
 void setup() {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -498,6 +524,8 @@ void setup() {
 >>>>>>> origin/mini-lele-v2-complete-verified
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
     #if CORE_DEBUG_LEVEL > 0
     Serial.begin(115200);
     #endif
@@ -524,6 +552,7 @@ void setup() {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> main
 =======
 >>>>>>> origin/merge-ready-mini-lele-v2
@@ -533,10 +562,13 @@ void setup() {
 >>>>>>> origin/mini-lele-v2-final-verified
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-release
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
 
     gfx->begin();
     gfx->fillScreen(BLACK);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -590,6 +622,8 @@ void setup() {
 >>>>>>> origin/mini-lele-v2-complete-verified
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
     Wire.beginTransmission(GT1151_DEVICE_ADDRESS);
     if (Wire.endTransmission() == 0) {
         touch = new TouchLib(Wire, IIC_SDA, IIC_SCL, GT1151_DEVICE_ADDRESS);
@@ -597,6 +631,7 @@ void setup() {
         touch = new TouchLib(Wire, IIC_SDA, IIC_SCL, FT3168_DEVICE_ADDRESS);
     }
     touch->init();
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -617,6 +652,8 @@ void setup() {
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 =======
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
 
     lv_init();
 
@@ -634,6 +671,7 @@ void setup() {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     lv_display_set_buffers(disp, buf1, buf2, BUFFER_SIZE * sizeof(lv_color_t), LV_DISPLAY_RENDER_MODE_FULL);
 =======
     lv_display_set_buffers(disp, buf1, buf2, BUFFER_SIZE * sizeof(lv_color_t), LV_DISPLAY_RENDER_MODE_PARTIAL);
@@ -662,6 +700,9 @@ void setup() {
 =======
     lv_display_set_buffers(disp, buf1, buf2, BUFFER_SIZE * sizeof(lv_color_t), LV_DISPLAY_RENDER_MODE_FULL);
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+    lv_display_set_buffers(disp, buf1, buf2, BUFFER_SIZE * sizeof(lv_color_t), LV_DISPLAY_RENDER_MODE_PARTIAL);
+>>>>>>> origin/mini-lele-v2-rebrand
 
     indev = lv_indev_create();
     lv_indev_set_type(indev, LV_INDEV_TYPE_POINTER);

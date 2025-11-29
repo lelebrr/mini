@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Guia de Contribuição - Mini Lele
 
 Obrigado pelo interesse em contribuir com o **Mini Lele**! Este projeto é mantido pela comunidade e qualquer ajuda é bem-vinda.
@@ -26,3 +27,18 @@ Todo o texto visível ao usuário (Tela, Logs, WebUI) deve estar em Português.
 
 ## Testes
 Antes de enviar, teste em hardware real se possível. O simulador Wokwi não suporta o chip SH8601/AXP2101 completamente.
+=======
+# Como Contribuir
+
+Este projeto é Open Source e aceita contribuições!
+
+## Como Ajudar
+1.  Faça um Fork do projeto.
+2.  Crie novos Templates para o Evil Portal (HTML).
+3.  Melhore a lógica de Voz Offline.
+4.  Traduza para outros idiomas.
+
+## Regras
+*   Mantenha o código em Português BR ou Inglês (comentários).
+*   Não submeta código malicioso real (apenas simulações educacionais).
+>>>>>>> origin/mini-lele-v2-rebrand

@@ -16,6 +16,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "../EvilPortal.h" // Integration
 =======
 >>>>>>> origin/merge-ready-mini-lele-v2
@@ -39,6 +40,8 @@
 =======
 #include "../EvilPortal.h" // Integration
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
 
 // Deauth Frame Structure
 const uint8_t deauthPacket[] = {
@@ -63,6 +66,7 @@ private:
     static bool scan_active;
     static unsigned long last_scan_time;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -123,11 +127,14 @@ private:
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 =======
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
 public:
     static void init() {
         stats.aps_scanned = 0;
         stats.handshakes_captured = 0;
         last_scan_time = millis();
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -154,11 +161,14 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 =======
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
         if (PwnPet::getStats().energy_mode > 0) {
             WiFiTools::startSniffer();
         }
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -249,6 +259,11 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 =======
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+    static bool isRunning() { return scan_active; }
+
+    static void tick() {
+>>>>>>> origin/mini-lele-v2-rebrand
         if (PwnPower::isCritical()) {
             if (scan_active) {
                 esp_wifi_stop();
@@ -266,6 +281,7 @@ public:
         last_tick = millis();
 
         // Otimização 3: Duty Cycle do Marauder
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -335,6 +351,8 @@ public:
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
         if (PwnPet::getHunger() > 80) {
              // Modo agressivo: Tenta deauth em APs próximos aleatoriamente
              // Nota: Isso é apenas para fins educacionais e teste em laboratório
@@ -345,6 +363,7 @@ public:
                  if (WiFiTools::nearby_devices.size() > 0) {
                      int idx = random(0, WiFiTools::nearby_devices.size());
                      // deauthTarget(WiFiTools::nearby_devices[idx].mac); // Implementação real abaixo
+<<<<<<< HEAD
 >>>>>>> origin/merge-ready-mini-lele-v2
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
@@ -360,6 +379,8 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 =======
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
                  }
              }
         }
@@ -372,11 +393,15 @@ public:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
         // Constrói pacote
         uint8_t packet[26];
         memcpy(packet, deauthPacket, 26);
 
         // Copia BSSID para Source e BSSID fields
+<<<<<<< HEAD
 =======
         uint8_t packet[26];
         memcpy(packet, deauthPacket, 26);
@@ -401,12 +426,15 @@ public:
         uint8_t packet[26];
         memcpy(packet, deauthPacket, 26);
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
         memcpy(&packet[10], bssid, 6);
         memcpy(&packet[16], bssid, 6);
 
         Serial.printf("[Attack] Enviando Deauth para %02X:%02X:%02X:%02X:%02X:%02X\n",
             bssid[0], bssid[1], bssid[2], bssid[3], bssid[4], bssid[5]);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -426,11 +454,15 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 =======
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+        // Envia frames raw
+>>>>>>> origin/mini-lele-v2-rebrand
         for (int i = 0; i < 3; i++) {
              esp_wifi_80211_tx(WIFI_IF_AP, packet, sizeof(packet), true);
              delay(10);
         }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -446,10 +478,14 @@ public:
             // Gamification::registerHandshake();
         }
 =======
+=======
+        // Gamification Reward (Simulado o sucesso do handshake capture após ataque)
+>>>>>>> origin/mini-lele-v2-rebrand
         if (random(0, 100) < 30) { // 30% chance
             Serial.println("[Attack] Handshake Capturado!");
             PwnPet::addHandshake(false);
             Gamification::registerHandshake();
+<<<<<<< HEAD
 >>>>>>> origin/merge-ready-mini-lele-v2
 =======
         // Simulação de sucesso para gameplay
@@ -481,10 +517,13 @@ public:
         if (random(0, 100) < 10) {
             // PwnPet::addHandshake(false);
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
         }
     }
 
     static void evilTwin(String ssid) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -536,6 +575,11 @@ public:
         // Inicia Evil Portal
         EvilPortal::start(ssid.c_str(), "/evil_portal/01_wifi_update.html");
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+        WiFi.softAP(ssid.c_str());
+        // Inicia DNS Server para redirecionar tudo para o Portal
+        // Feito no EvilPortal.h
+>>>>>>> origin/mini-lele-v2-rebrand
     }
 };
 

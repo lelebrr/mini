@@ -14,6 +14,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "core/PwnAttack.h"
 =======
 >>>>>>> origin/merge-ready-mini-lele-v2
@@ -38,6 +39,8 @@
 =======
 #include "core/PwnAttack.h"
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
 
 // Comandos de Voz Mapeados (Offline - Contagem de Sílabas)
 
@@ -59,14 +62,18 @@ public:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	        if (PwnPower::isCritical()) return;
 =======
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
         // Otimização 15: Não ouve se bateria crítica
         if (PwnPower::isCritical()) return;
 
         // Otimização 18: Wake Word só se tela ligada (implícito se chamado via botão)
         // Se fosse always-on listening, verificaríamos screen state.
 
+<<<<<<< HEAD
 >>>>>>> origin/merge-ready-mini-lele-v2
 =======
         if (PwnPower::isCritical()) return;
@@ -96,6 +103,8 @@ public:
         if (PwnPower::isCritical()) return;
 
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
         is_listening = true;
 
         // Toca "Ouvindo"
@@ -105,6 +114,7 @@ public:
         bool ok = AudioHandler::recordWav("/voice/input.wav", 4, true);
 
         is_listening = false;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -130,6 +140,9 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 =======
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+        // Otimização 26: DSP off (feito no recordWav auto shutdown)
+>>>>>>> origin/mini-lele-v2-rebrand
 
         if (ok) {
             int syllables = OfflineVoice::analyzeCommand("/voice/input.wav");
@@ -140,6 +153,7 @@ public:
     static void processCommand(int syllables) {
         Serial.printf("[Voice] Silabas: %d\n", syllables);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -175,6 +189,11 @@ public:
 =======
         if (PwnPet::getStats().is_sleeping) {
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+        // Se Pet estiver dormindo (Modo Zzz), ignora ou acorda?
+        if (PwnPet::getStats().is_sleeping) {
+             // Acorda se gritar (muitas silabas)?
+>>>>>>> origin/mini-lele-v2-rebrand
              if (syllables > 4) {
                  PwnPet::getStats().is_sleeping = false;
                  speak("Quem ousa me acordar");
@@ -183,6 +202,7 @@ public:
         }
 
         switch(syllables) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -227,11 +247,16 @@ public:
             case 2: // "Ei Lele" / "Status"
                 PwnPet::getStats().hunger += 5;
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+            case 2: // "Ei Pwn" / "Status"
+                PwnPet::feed(5); // Atenção = Comida
+>>>>>>> origin/mini-lele-v2-rebrand
                 speak("Ola amigo");
                 break;
             case 3: // "Bateria" / "Comida"
                 speak("Estou com fome");
                 break;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -283,6 +308,11 @@ public:
                 speak("Iniciando ataque");
                 PwnAttack::start(); // Agora existe
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+            case 4: // "Ataca Vivo"
+                speak("Iniciando ataque");
+                // PwnAttack::start();
+>>>>>>> origin/mini-lele-v2-rebrand
                 break;
             default:
                 speak("Nao entendi");
@@ -298,18 +328,22 @@ public:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	    static void speak(String phrase) {
 	        // Otimização: Silent Mode
 	        // if (PwnPet::isSilent()) return;
 	
 	        // Mapeia texto para arquivo WAV
 =======
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
     // TTS Simulado (Frases pré-gravadas)
     static void speak(String phrase) {
         // Otimização: Silent Mode
         // if (PwnPet::isSilent()) return;
 
         // Mapeia texto para arquivo WAV
+<<<<<<< HEAD
 >>>>>>> origin/merge-ready-mini-lele-v2
 =======
     static void speak(String phrase) {
@@ -332,6 +366,8 @@ public:
 =======
     static void speak(String phrase) {
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
         String file = "/tts/unknown.wav";
 
         if (phrase.indexOf("Ola") >= 0) file = "/tts/hello.wav";

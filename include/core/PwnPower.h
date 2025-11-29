@@ -16,6 +16,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
 =======
@@ -40,11 +41,14 @@
 >>>>>>> origin/mini-lele-v2-complete-verified
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
 
 // Definições de Pinos (Reuso)
 #define PMU_SDA 38
 #define PMU_SCL 39
 #define TOUCH_INT_PIN -1 // Definir pino real se disponível no hardware (GPIO 3?)
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> origin/merge-ready-mini-lele-v2
@@ -69,6 +73,8 @@
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 =======
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
 
 // RTC Memory para Modo Zumbi
 struct RTC_SaveData {
@@ -105,6 +111,7 @@ public:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
 =======
@@ -132,6 +139,8 @@ public:
 >>>>>>> origin/mini-lele-v2-complete-verified
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
             // Otimização 24: Monitoramento de Corrente (Configuração)
             // pmu.setTSPinMode(XPOWERS_TS_PIN_OFF); // Economia
         }
@@ -144,6 +153,7 @@ public:
     }
 
     // Otimização 7 & 8: Scaling Dinâmico
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-release
@@ -171,6 +181,8 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 =======
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
     static void setPerformanceMode(int level) {
         switch(level) {
             case 0: // Sleepy/Bored
@@ -188,6 +200,7 @@ public:
         }
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -218,6 +231,8 @@ public:
 >>>>>>> origin/mini-lele-v2-complete-verified
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
     // Otimização 1: Deep Sleep Total
     static void enterDeepSleep() {
         Serial.println("[Power] Entrando em Deep Sleep...");
@@ -237,6 +252,7 @@ public:
             // rtc_save.xp = PwnPet::getXP(); ...
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/merge-ready-mini-lele-v2
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
@@ -269,10 +285,13 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 =======
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
             Serial.println("[Power] MODO ZUMBI ATIVADO");
         }
 
         esp_deep_sleep_start();
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -287,10 +306,13 @@ public:
 >>>>>>> origin/mini-lele-v2-complete-verified
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
     }
 
     // Otimização 2: Light Sleep entre scans
     static void lightSleep(uint64_t time_us) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> origin/merge-ready-mini-lele-v2
@@ -323,6 +345,8 @@ public:
 
     static void lightSleep(uint64_t time_us) {
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
         esp_sleep_enable_timer_wakeup(time_us);
         esp_light_sleep_start();
     }
@@ -336,6 +360,7 @@ public:
     }
 
     static float getSystemCurrent() {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -378,11 +403,16 @@ public:
         // AXP2101 pode não ter getSystemCurrent direto, usar discharge ou Vbus
         return pmu.isDischarge() ? pmu.getBattDischargeCurrent() : 0;
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+        // Otimização 24: Monitoramento
+        return pmu.getSystemVoltage(); // AXP2101 pode não ter getSystemCurrent direto na lib, usar discharge
+>>>>>>> origin/mini-lele-v2-rebrand
     }
 
     static String getPowerStatus() {
         float ma = pmu.isDischarge() ? pmu.getBattDischargeCurrent() : 0;
         int pct = pmu.getBatteryPercent();
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -411,6 +441,9 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 =======
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+        // Estimativa (Bat 1000mAh ex)
+>>>>>>> origin/mini-lele-v2-rebrand
         float hours = (pct > 0 && ma > 0) ? (1000.0 * (pct/100.0)) / ma : 0;
 
         char buf[64];
@@ -420,6 +453,7 @@ public:
 
     static void checkCritical() {
         if (getBatteryPercent() < 10 && !is_critical) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -441,6 +475,8 @@ public:
 >>>>>>> origin/mini-lele-v2-complete-verified
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
             // Otimização 13: Modo Crítico
             is_critical = true;
             Serial.println("[Power] BATERIA CRITICA (<10%)");
@@ -449,6 +485,7 @@ public:
             // Reduz Clock
             setPerformanceMode(0);
             // UI deve atualizar para relógio monocromático
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> origin/merge-ready-mini-lele-v2
@@ -482,6 +519,8 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 =======
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
         }
     }
 

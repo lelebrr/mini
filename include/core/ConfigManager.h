@@ -15,6 +15,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Gerencia 120 configurações com persistência no SD
 =======
 // Gerencia 100 configurações com persistência no SD
@@ -40,6 +41,9 @@
 =======
 // Gerencia 120 configurações com persistência no SD
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+// Gerencia 100 configurações com persistência no SD
+>>>>>>> origin/mini-lele-v2-rebrand
 
 class ConfigManager {
 private:
@@ -49,6 +53,7 @@ private:
     bool _dirty = false;
 
     ConfigManager() {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -91,6 +96,10 @@ private:
         // Aumentado para 16KB para acomodar 120 chaves + strings longas
         doc = new DynamicJsonDocument(16384);
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+        // Aloca 8KB para JSON (Suficiente para ~100 chaves)
+        doc = new DynamicJsonDocument(8192);
+>>>>>>> origin/mini-lele-v2-rebrand
     }
 
 public:
@@ -127,6 +136,7 @@ public:
     void createDefaults() {
         JsonObject root = doc->to<JsonObject>();
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -252,6 +262,8 @@ public:
 >>>>>>> origin/mini-lele-v2-complete-verified
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
         // --- 1. PET (Gameplay) ---
         root["pet_name"] = "PwnBaby"; // Default mantido
         root["pet_voice_enabled"] = true;
@@ -345,6 +357,7 @@ public:
         root["sys_factory_reset"] = false;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/merge-ready-mini-lele-v2
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
@@ -418,11 +431,14 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 =======
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
 
         save();
     }
 
     void validateMissingKeys() {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -508,6 +524,8 @@ public:
 >>>>>>> origin/mini-lele-v2-complete-verified
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
         // Checa se falta alguma chave e adiciona (para upgrades de versão)
         bool changed = false;
         JsonObject root = doc->as<JsonObject>();
@@ -515,6 +533,7 @@ public:
         if (!root.containsKey("web_theme")) { root["web_theme"] = "cyber_favela"; changed = true; }
         if (!root.containsKey("sys_web_user")) { root["sys_web_user"] = "admin"; changed = true; }
         // Adicionar outras verificações críticas aqui
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-release
@@ -542,10 +561,13 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 =======
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
 
         if (changed) save();
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -569,6 +591,9 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 =======
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+    // Getters Genéricos
+>>>>>>> origin/mini-lele-v2-rebrand
     template <typename T>
     T get(const char* key) {
         return (*doc)[key].as<T>();
@@ -576,6 +601,7 @@ public:
 
     String getString(const char* key) {
         return (*doc)[key].as<String>();
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -600,6 +626,8 @@ public:
 >>>>>>> origin/mini-lele-v2-complete-verified
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
     }
 
     // Setters
@@ -611,6 +639,7 @@ public:
     }
 
     // Retorna JSON bruto para a WebAPI
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-release
@@ -642,10 +671,13 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 =======
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+>>>>>>> origin/mini-lele-v2-rebrand
     void getJSON(String &output) {
         serializeJson(*doc, output);
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -675,6 +707,10 @@ public:
 =======
     void updateFromJSON(String json) {
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+    // Atualiza do JSON recebido da WebAPI
+    void updateFromJSON(String json) {
+>>>>>>> origin/mini-lele-v2-rebrand
         DeserializationError error = deserializeJson(*doc, json);
         if (!error) save();
     }
