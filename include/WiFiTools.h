@@ -12,61 +12,100 @@
 #include <SD_MMC.h>
 #include "FS.h"
 #include <vector>
+#include "core/PwnPet.h"
+#include "core/Gamification.h"
 
-#define MAX_SNIFFED 10
+#define MAX_SNIFFED 50 // Aumentado para 50
 
-struct SniffedDevice {
+// Estrutura para dispositivos encontrados
+struct WiFiDevice {
     String mac;
+    String vendor; // Placeholder
     int rssi;
     unsigned long last_seen;
 };
 
-std::vector<SniffedDevice> nearby_devices;
-
 class WiFiTools {
 public:
+    static std::vector<WiFiDevice> nearby_devices;
+
     static void promiscuous_rx_cb(void* buf, wifi_promiscuous_pkt_type_t type) {
-        if (type != WIFI_PKT_MGMT) return;
+        wifi_promiscuous_pkt_t* pkt = (wifi_promiscuous_pkt_t*)buf;
+        uint8_t* frame = pkt->payload;
+        int len = pkt->rx_ctrl.sig_len;
 
-        wifi_promiscuous_pkt_t* packet = (wifi_promiscuous_pkt_t*)buf;
-        uint8_t* payload = packet->payload;
-        uint8_t frame_type = (payload[0] & 0x0C) >> 2;
-        uint8_t frame_subtype = (payload[0] & 0xF0) >> 4;
+        // Frame Control (Bytes 0-1)
+        uint8_t frame_type = (frame[0] & 0x0C) >> 2;
+        uint8_t frame_subtype = (frame[0] & 0xF0) >> 4;
 
-        if (frame_type == 0 && frame_subtype == 4) {
-            char macStr[18];
-            snprintf(macStr, sizeof(macStr), "%02X:%02X:%02X:%02X:%02X:%02X",
-                     payload[10], payload[11], payload[12], payload[13], payload[14], payload[15]);
+        // --- 1. Management Frames (Beacons / Probes) ---
+        if (frame_type == 0) {
+            // Probe Request (Subtype 4)
+            if (frame_subtype == 4) {
+                // Source Addr está no offset 10
+                char macStr[18];
+                snprintf(macStr, sizeof(macStr), "%02X:%02X:%02X:%02X:%02X:%02X",
+                    frame[10], frame[11], frame[12], frame[13], frame[14], frame[15]);
 
-            String mac = String(macStr);
-            int rssi = packet->rx_ctrl.rssi;
+                // Add/Update List
+                bool found = false;
+                for (auto &dev : nearby_devices) {
+                    if (dev.mac.equalsIgnoreCase(macStr)) {
+                        dev.rssi = pkt->rx_ctrl.rssi;
+                        dev.last_seen = millis();
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    nearby_devices.push_back({String(macStr), "Unknown", pkt->rx_ctrl.rssi, millis()});
+                    // Limita tamanho
+                    if (nearby_devices.size() > MAX_SNIFFED) nearby_devices.erase(nearby_devices.begin());
 
-            bool found = false;
-            for (auto &dev : nearby_devices) {
-                if (dev.mac == mac) {
-                    dev.rssi = rssi;
-                    dev.last_seen = millis();
-                    found = true;
-                    break;
+                    // Log em /arquivos_cartao_sd/macs_detectados.txt
+                    File f = SD_MMC.open("/arquivos_cartao_sd/macs_detectados.txt", FILE_APPEND);
+                    if (f) {
+                        f.printf("%s,%d,%lu\n", macStr, pkt->rx_ctrl.rssi, millis());
+                        f.close();
+                    }
                 }
             }
-            if (!found) {
-                SniffedDevice newDev = {mac, rssi, millis()};
-                if (nearby_devices.size() >= MAX_SNIFFED) nearby_devices.erase(nearby_devices.begin());
-                nearby_devices.push_back(newDev);
+        }
 
-                // Log em /arquivos_cartao_sd/macs_detectados.txt
-                File f = SD_MMC.open("/arquivos_cartao_sd/macs_detectados.txt", FILE_APPEND);
-                if (f) {
-                    f.printf("%s,%d,%lu\n", mac.c_str(), rssi, millis());
-                    f.close();
+        // --- 2. Data Frames (EAPOL Handshakes) ---
+        if (frame_type == 2) {
+            // Check for EAPOL (0x888e in LLC/SNAP header usually around offset 30+ depending on QoS)
+            // Simplificado: Check payload patterns se possivel
+            // Para EAPOL Handshake, precisamos ver se EtherType é 0x888e
+
+            // Offset varia se tem QoS (2 bytes)
+            int header_len = 24;
+            uint16_t frame_ctrl = frame[0] | (frame[1] << 8);
+            if ((frame_ctrl & 0x0080) != 0) header_len += 2; // QoS present
+
+            // Verifica LLC (8 bytes) -> EtherType
+            if (len > header_len + 8) {
+                uint8_t* llc = frame + header_len;
+                // EAPOL EtherType = 0x888E
+                if (llc[6] == 0x88 && llc[7] == 0x8E) {
+                    // EAPOL Detectado!
+                    // Verificar Key Type (1/4, 2/4, 3/4, 4/4) no payload EAPOL
+                    // ... logica complexa de parsing ...
+
+                    Serial.println("[Sniffer] EAPOL Frame Detected!");
+
+                    // Alimentar Pet
+                    PwnPet::addHandshake(false);
+                    Gamification::registerHandshake();
+
+                    // TODO: Salvar PCAP
                 }
             }
         }
     }
 
     static void startSniffer() {
-        WiFi.disconnect();
+        WiFi.mode(WIFI_MODE_APSTA); // APSTA permite injeção + WebUI
         esp_wifi_set_promiscuous(true);
         esp_wifi_set_promiscuous_rx_cb(&promiscuous_rx_cb);
     }
@@ -106,4 +145,4 @@ public:
     }
 };
 
-#endif
+std::vector<WiFiDevice> WiFiTools::nearby_devices;

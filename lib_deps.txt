@@ -10,7 +10,6 @@ lvgl/lvgl @ ^8.3.11
 # PlatformIO specific
 platformio/framework-arduinoespressif32 @ ^3.20004.0
 Arduino_GFX_Library
-
 # JSON e Utilitários
 bblanchon/ArduinoJson @ ^6.21.3
 

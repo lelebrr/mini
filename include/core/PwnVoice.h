@@ -6,6 +6,7 @@
 #include "OfflineVoice.h"
 #include "core/PwnPet.h"
 #include "core/PwnPower.h"
+#include "core/PwnAttack.h"
 
 // Comandos de Voz Mapeados (Offline - Contagem de Sílabas)
 
@@ -19,12 +20,7 @@ public:
     }
 
     static void listen() {
-        // Otimização 15: Não ouve se bateria crítica
-        if (PwnPower::isCritical()) return;
-
-        // Otimização 18: Wake Word só se tela ligada (implícito se chamado via botão)
-        // Se fosse always-on listening, verificaríamos screen state.
-
+	        if (PwnPower::isCritical()) return;
         is_listening = true;
 
         // Toca "Ouvindo"
@@ -34,7 +30,7 @@ public:
         bool ok = AudioHandler::recordWav("/voice/input.wav", 4, true);
 
         is_listening = false;
-        // Otimização 26: DSP off (feito no recordWav auto shutdown)
+
 
         if (ok) {
             int syllables = OfflineVoice::analyzeCommand("/voice/input.wav");
@@ -45,9 +41,7 @@ public:
     static void processCommand(int syllables) {
         Serial.printf("[Voice] Silabas: %d\n", syllables);
 
-        // Se Pet estiver dormindo (Modo Zzz), ignora ou acorda?
-        if (PwnPet::getStats().is_sleeping) {
-             // Acorda se gritar (muitas silabas)?
+	        if (PwnPet::getStats().is_sleeping) {
              if (syllables > 4) {
                  PwnPet::getStats().is_sleeping = false;
                  speak("Quem ousa me acordar");
@@ -56,16 +50,18 @@ public:
         }
 
         switch(syllables) {
-            case 2: // "Ei Pwn" / "Status"
-                PwnPet::feed(5); // Atenção = Comida
+	            case 2: // "Ei Lele" / "Status"
+	                PwnPet::getStats().hunger += 5; // Atenção = Comida
+	                // PwnPet::feed(5); // Usar a função feed se existir e for mais completa
+	                // Vou manter a versão do branch de merge, mas adicionando o comentário para clareza.
                 speak("Ola amigo");
                 break;
             case 3: // "Bateria" / "Comida"
                 speak("Estou com fome");
                 break;
-            case 4: // "Ataca Vivo"
-                speak("Iniciando ataque");
-                // PwnAttack::start();
+	            case 4: // "Ataca Vivo" / "Ataque"
+	                speak("Iniciando ataque");
+	                PwnAttack::start();
                 break;
             default:
                 speak("Nao entendi");
@@ -73,12 +69,11 @@ public:
         }
     }
 
-    // TTS Simulado (Frases pré-gravadas)
-    static void speak(String phrase) {
-        // Otimização: Silent Mode
-        // if (PwnPet::isSilent()) return;
-
-        // Mapeia texto para arquivo WAV
+	    static void speak(String phrase) {
+	        // Otimização: Silent Mode
+	        // if (PwnPet::isSilent()) return;
+	
+	        // Mapeia texto para arquivo WAV
         String file = "/tts/unknown.wav";
 
         if (phrase.indexOf("Ola") >= 0) file = "/tts/hello.wav";
