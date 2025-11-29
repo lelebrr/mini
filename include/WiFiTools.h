@@ -6,6 +6,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 /**
  * WiFiTools.h
  * Ferramentas WiFi com caminhos traduzidos.
@@ -31,6 +32,8 @@
 >>>>>>> origin/mini-lele-v2-legendary-final-release
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-sync
+=======
+>>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 #include <Arduino.h>
 #include <WiFi.h>
 #include <esp_wifi.h>
@@ -38,6 +41,7 @@
 #include "core/PwnPet.h"
 #include "core/Gamification.h"
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -51,10 +55,13 @@
 >>>>>>> origin/mini-lele-v2-legendary-final-release
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-sync
+=======
+>>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 // Estrutura para dispositivos encontrados
 struct WiFiDevice {
     String mac;
     String vendor; // Placeholder
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -77,6 +84,8 @@ struct SniffedDevice {
 >>>>>>> origin/mini-lele-v2-legendary-final-release
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-sync
+=======
+>>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
     int rssi;
     unsigned long last_seen;
 };
@@ -87,6 +96,7 @@ struct SniffedDevice {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
 =======
@@ -97,6 +107,8 @@ struct SniffedDevice {
 >>>>>>> origin/mini-lele-v2-legendary-final-release
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-sync
+=======
+>>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 class WiFiTools {
 public:
     static std::vector<WiFiDevice> nearby_devices;
@@ -106,6 +118,7 @@ public:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 =======
@@ -116,11 +129,14 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-final-release
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-sync
+=======
+>>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
     static void startSniffer() {
         WiFi.mode(WIFI_MODE_APSTA); // APSTA permite injeção + WebUI
         esp_wifi_set_promiscuous(true);
         esp_wifi_set_promiscuous_rx_cb(&promiscuous_rx_cb);
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -134,6 +150,8 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-final-release
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-sync
+=======
+>>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 
     static void promiscuous_rx_cb(void* buf, wifi_promiscuous_pkt_type_t type) {
         wifi_promiscuous_pkt_t* pkt = (wifi_promiscuous_pkt_t*)buf;
@@ -171,6 +189,7 @@ public:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                     if (nearby_devices.size() > MAX_SNIFFED) nearby_devices.erase(nearby_devices.begin());
 
                     // Log em /arquivos_cartao_sd/macs_detectados.txt
@@ -194,6 +213,9 @@ public:
 =======
                     if (nearby_devices.size() > 50) nearby_devices.erase(nearby_devices.begin());
 >>>>>>> origin/mini-lele-v2-legendary-final-sync
+=======
+                    if (nearby_devices.size() > 50) nearby_devices.erase(nearby_devices.begin());
+>>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
                 }
             }
         }
@@ -225,6 +247,7 @@ public:
                     Gamification::registerHandshake();
 
                     // TODO: Salvar PCAP
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -281,10 +304,13 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-final-release
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-sync
+=======
+>>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
                 }
             }
         }
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -353,11 +379,14 @@ std::vector<WiFiDevice> WiFiTools::nearby_devices;
 >>>>>>> origin/mini-lele-v2-legendary-final-release
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-sync
+=======
+>>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 };
 
 std::vector<WiFiDevice> WiFiTools::nearby_devices;
 
 #endif
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -371,3 +400,5 @@ std::vector<WiFiDevice> WiFiTools::nearby_devices;
 >>>>>>> origin/mini-lele-v2-legendary-final-release
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-sync
+=======
+>>>>>>> origin/mini-lele-v2-legendary-fixed-hardware

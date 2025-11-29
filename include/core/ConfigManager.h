@@ -13,6 +13,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Gerencia 120 configurações com persistência no SD
 =======
 // Gerencia 100 configurações com persistência no SD
@@ -32,6 +33,9 @@
 =======
 // Gerencia 120 configurações com persistência no SD
 >>>>>>> origin/mini-lele-v2-legendary-final-sync
+=======
+// Gerencia 120 configurações com persistência no SD
+>>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 
 class ConfigManager {
 private:
@@ -41,6 +45,7 @@ private:
     bool _dirty = false;
 
     ConfigManager() {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -73,6 +78,10 @@ private:
         // Aumentado para 16KB para acomodar 120 chaves + strings longas
         doc = new DynamicJsonDocument(16384);
 >>>>>>> origin/mini-lele-v2-legendary-final-sync
+=======
+        // Aumentado para 16KB para acomodar 120 chaves + strings longas
+        doc = new DynamicJsonDocument(16384);
+>>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
     }
 
 public:
@@ -109,6 +118,7 @@ public:
     void createDefaults() {
         JsonObject root = doc->to<JsonObject>();
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -335,6 +345,8 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-final-release
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-sync
+=======
+>>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
         // --- 1. SYSTEM IDENTITY ---
         root["sys_device_name"] = "PwnTamagotchi BR - Legendary";
         root["sys_hostname"] = "minilele";
@@ -383,16 +395,20 @@ public:
         root["web_live_logs"] = true;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-release
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-sync
+=======
+>>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 
         save();
     }
 
     void validateMissingKeys() {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -488,6 +504,8 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-final-release
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-sync
+=======
+>>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
         bool changed = false;
         JsonObject root = doc->as<JsonObject>();
 
@@ -495,15 +513,19 @@ public:
         if (!root.containsKey("sys_device_name")) { root["sys_device_name"] = "PwnTamagotchi BR - Legendary"; changed = true; }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-release
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-sync
+=======
+>>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 
         if (changed) save();
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -521,6 +543,8 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-final-release
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-sync
+=======
+>>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
     template <typename T>
     T get(const char* key) {
         return (*doc)[key].as<T>();
@@ -528,6 +552,7 @@ public:
 
     String getString(const char* key) {
         return (*doc)[key].as<String>();
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -566,6 +591,8 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-final-release
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-sync
+=======
+>>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
     }
 
     template <typename T>
@@ -577,15 +604,19 @@ public:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-release
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-sync
+=======
+>>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
     void getJSON(String &output) {
         serializeJson(*doc, output);
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -607,6 +638,9 @@ public:
 =======
     void updateFromJSON(String json) {
 >>>>>>> origin/mini-lele-v2-legendary-final-sync
+=======
+    void updateFromJSON(String json) {
+>>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
         DeserializationError error = deserializeJson(*doc, json);
         if (!error) save();
     }
