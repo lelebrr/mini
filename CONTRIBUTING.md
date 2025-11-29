@@ -1,8 +1,11 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 # Guia de Contribuição - Mini Lele
 
 Obrigado pelo interesse em contribuir com o **Mini Lele**! Este projeto é mantido pela comunidade e qualquer ajuda é bem-vinda.
@@ -32,6 +35,7 @@ Todo o texto visível ao usuário (Tela, Logs, WebUI) deve estar em Português.
 ## Testes
 Antes de enviar, teste em hardware real se possível. O simulador Wokwi não suporta o chip SH8601/AXP2101 completamente.
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> origin/pwn-tamagotchi-br-release
@@ -54,3 +58,5 @@ Este projeto é Open Source e aceita contribuições!
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final

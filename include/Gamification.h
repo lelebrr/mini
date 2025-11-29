@@ -3,8 +3,11 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 #include <Arduino.h>
 #include <SD_MMC.h>
 #include "FS.h"
@@ -28,6 +31,7 @@ struct Trophy {
     bool unlocked;
 };
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /**
  * Gamification.h
@@ -45,12 +49,15 @@ struct Trophy {
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 
 struct GameStats {
     uint32_t xp;
     uint32_t level;
     uint32_t age_seconds;
     uint32_t interactions;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     uint32_t handshakes_total;
@@ -61,6 +68,10 @@ struct GameStats {
     uint32_t handshakes_total;
     uint32_t missions_completed;
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+    uint32_t handshakes_total;
+    uint32_t missions_completed;
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 };
 
 class Gamification {
@@ -70,8 +81,11 @@ private:
     static uint32_t last_tick;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
     static std::vector<Mission> active_missions;
     static std::vector<Trophy> trophies;
 
@@ -94,6 +108,7 @@ public:
         trophies.push_back({"survivor", "Imortal", false});
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 
@@ -118,6 +133,8 @@ public:
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
     static void load() {
         if (SD_MMC.exists(saveFile)) {
             File file = SD_MMC.open(saveFile, FILE_READ);
@@ -125,14 +142,18 @@ public:
             file.close();
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 
             if (stats.handshakes_total > 0) unlockTrophy("first_blood");
             if (stats.handshakes_total >= 10000) unlockTrophy("hacker_master");
         }
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
             Serial.printf("[Game] Dados carregados: Lvl %d, XP %d\n", stats.level, stats.xp);
@@ -145,6 +166,8 @@ public:
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
     static void save() {
         File file = SD_MMC.open(saveFile, FILE_WRITE);
         if (file) {
@@ -155,6 +178,7 @@ public:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     /**
      * Atualiza o contador de tempo (chamar no loop principal).
@@ -162,6 +186,8 @@ public:
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
     static void tick() {
         if (millis() - last_tick >= 1000) {
             stats.age_seconds++;
@@ -169,14 +195,18 @@ public:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
             updateMission("Sobreviva 1h sem USB", 1);
 
             if (stats.age_seconds % 60 == 0) save();
         }
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
             // Auto-salvar a cada minuto para não desgastar o SD
@@ -193,18 +223,24 @@ public:
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
     static void addXP(int amount) {
         stats.xp += amount;
         stats.interactions++;
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
         uint32_t required = stats.level * 500;
         if (stats.xp >= required) {
             stats.xp -= required;
             stats.level++;
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
         // Curva simples: Nível * 100 XP necessário para o próximo
@@ -217,14 +253,19 @@ public:
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
         }
         save();
     }
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
     static void registerHandshake() {
         stats.handshakes_total++;
         addXP(100);
@@ -269,6 +310,7 @@ uint32_t Gamification::last_tick = 0;
 std::vector<Mission> Gamification::active_missions;
 std::vector<Trophy> Gamification::trophies;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     static String getLevelStr() {
         return "Nvl " + String(stats.level);
@@ -292,5 +334,7 @@ uint32_t Gamification::last_tick = 0;
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 
 #endif

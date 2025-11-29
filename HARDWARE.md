@@ -1,8 +1,11 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 # Documentação de Hardware - Mini Lele
 
 O **Mini Lele** é projetado especificamente para o kit de desenvolvimento abaixo. O uso de outro hardware requer adaptação significativa dos drivers.
@@ -22,6 +25,7 @@ O **Mini Lele** é projetado especificamente para o kit de desenvolvimento abaix
 ### Display (Interface QSPI)
 | Sinal | GPIO | Notas |
 | :--- | :--- | :--- |
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -56,12 +60,15 @@ O **Mini Lele** é projetado especificamente para o kit de desenvolvimento abaix
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 | CS | 4 | Chip Select |
 | SCK | 5 | Clock |
 | D0 | 6 | Data 0 |
 | D1 | 7 | Data 1 |
 | D2 | 8 | Data 2 |
 | D3 | 9 | Data 3 |
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -85,6 +92,8 @@ O **Mini Lele** é projetado especificamente para o kit de desenvolvimento abaix
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 | RST | Ext. 0 | Controlado via TCA9554 (Pino 0) |
 
 ### Touch (I2C)
@@ -99,6 +108,7 @@ O **Mini Lele** é projetado especificamente para o kit de desenvolvimento abaix
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 | SDA | 15 | Barramento I2C compartilhado |
 | SCL | 14 | Barramento I2C compartilhado |
 | INT | 21 | Polling ou Interrupção (Configurável) |
@@ -147,11 +157,17 @@ O **Mini Lele** é projetado especificamente para o kit de desenvolvimento abaix
 | SCL | 39 | Barramento I2C compartilhado |
 | INT | - | Polling ou Interrupção (Configurável) |
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+| SDA | 38 | Barramento I2C compartilhado |
+| SCL | 39 | Barramento I2C compartilhado |
+| INT | - | Polling ou Interrupção (Configurável) |
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 | RST | Ext. 1 | Controlado via TCA9554 (Pino 1) |
 
 ### Áudio (I2S)
 | Sinal | GPIO | Notas |
 | :--- | :--- | :--- |
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -186,12 +202,15 @@ O **Mini Lele** é projetado especificamente para o kit de desenvolvimento abaix
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 | MCLK | 2 | Master Clock |
 | BCLK | 41 | Bit Clock |
 | LRCK | 42 | Word Select (WS) |
 | DOUT | 40 | Speaker Out |
 | DIN | 1 | Mic In |
 | PA_EN | Ext. 6 | Enable Amplificador (TCA9554) |
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -215,6 +234,8 @@ O **Mini Lele** é projetado especificamente para o kit de desenvolvimento abaix
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 
 ### Periféricos I2C (Endereços)
 *   **AXP2101 (PMU):** `0x34`
@@ -231,6 +252,7 @@ O sistema utiliza o AXP2101 para gerenciar as tensões. O driver `PwnPower` conf
 *   **ALDO3:** Audio Logic
 *   **ALDO4:** Microfone Bias
 *   **BLDO1:** AMOLED Power
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 =======
@@ -283,3 +305,5 @@ Endereço 0x20. Controla Reset e Energia dos periféricos.
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final

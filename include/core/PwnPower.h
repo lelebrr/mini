@@ -18,6 +18,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
 =======
@@ -66,6 +67,8 @@
 =======
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 #include "pin_config.h"
 
 // Definições de Pinos do PMU AXP2101
@@ -74,6 +77,7 @@
 #define PMU_SCL 7
 #define TOUCH_INT_PIN 5 // GT1151 INT
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 =======
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
@@ -81,6 +85,8 @@
 >>>>>>> origin/mini-lele-v2-rebrand
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 
 // RTC Memory para Modo Zumbi
 struct RTC_SaveData {
@@ -119,6 +125,7 @@ public:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
 =======
@@ -131,12 +138,15 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
             // Configurar voltagens específicas (ALDO1=AMOLED Logic, BLDO1=Backlight, etc)
             pmu.setALDO1Voltage(1800); pmu.enableALDO1();
             pmu.setALDO2Voltage(2800); pmu.enableALDO2(); // Touch
             pmu.setALDO3Voltage(3000); pmu.enableALDO3(); // Audio
             pmu.setALDO4Voltage(3300); pmu.enableALDO4(); // Mic Bias
             pmu.setBLDO1Voltage(3300); pmu.enableBLDO1(); // AMOLED Power
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -175,11 +185,14 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
         }
 
         setCpuFrequencyMhz(160);
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -198,6 +211,8 @@ public:
 >>>>>>> origin/mini-lele-v2-rebrand
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
     static void setPerformanceMode(int level) {
         switch(level) {
             case 0: // Sleepy/Bored
@@ -215,6 +230,7 @@ public:
         }
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -285,11 +301,14 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
     static void enterDeepSleep() {
         Serial.println("[Power] Entrando em Deep Sleep...");
 
         if (getBatteryPercent() < 3) {
             rtc_save.magic = 0xDEADBEEF;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -308,10 +327,13 @@ public:
 >>>>>>> origin/mini-lele-v2-rebrand
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
             Serial.println("[Power] MODO ZUMBI ATIVADO");
         }
 
         esp_deep_sleep_start();
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -374,6 +396,11 @@ public:
 
     static void lightSleep(uint64_t time_us) {
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+    }
+
+    static void lightSleep(uint64_t time_us) {
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
         esp_sleep_enable_timer_wakeup(time_us);
         esp_light_sleep_start();
     }
@@ -387,6 +414,7 @@ public:
     }
 
     static float getSystemCurrent() {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -439,11 +467,16 @@ public:
         // AXP2101 pode não ter getSystemCurrent direto, usar discharge ou Vbus
         return pmu.isDischarge() ? pmu.getBattDischargeCurrent() : 0;
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+        // AXP2101 pode não ter getSystemCurrent direto, usar discharge ou Vbus
+        return pmu.isDischarge() ? pmu.getBattDischargeCurrent() : 0;
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
     }
 
     static String getPowerStatus() {
         float ma = pmu.isDischarge() ? pmu.getBattDischargeCurrent() : 0;
         int pct = pmu.getBatteryPercent();
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -479,6 +512,8 @@ public:
 >>>>>>> origin/mini-lele-v2-rebrand
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
         float hours = (pct > 0 && ma > 0) ? (1000.0 * (pct/100.0)) / ma : 0;
 
         char buf[64];
@@ -488,6 +523,7 @@ public:
 
     static void checkCritical() {
         if (getBatteryPercent() < 10 && !is_critical) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -540,10 +576,13 @@ public:
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
             is_critical = true;
             Serial.println("[Power] BATERIA CRITICA (<10%)");
             WiFi.mode(WIFI_OFF);
             setPerformanceMode(0);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -562,6 +601,8 @@ public:
 >>>>>>> origin/mini-lele-v2-rebrand
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
         }
     }
 

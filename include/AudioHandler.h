@@ -6,17 +6,23 @@
  * Manipulação de Áudio para ESP32-S3 (Gravação e Reprodução)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
  * Otimizações:
  * 5. Mute hardware quando não em uso.
  * 26. Desligar DSP Task (via controle de estado).
  * 10. Sample rate configurável.
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
  */
 
 #include <Arduino.h>
@@ -27,6 +33,7 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Definição de pinos de controle de áudio (assumindo Expander)
 extern ESP_IOExpander *expander; // Disponível no main.cpp
 
@@ -37,6 +44,11 @@ extern ESP_IOExpander *expander; // Disponível no main.cpp
 extern ESP_IOExpander *expander; // Disponível no main.cpp
 
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+// Definição de pinos de controle de áudio (assumindo Expander)
+extern ESP_IOExpander *expander; // Disponível no main.cpp
+
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 struct WavHeader {
     char riff[4];             // "RIFF"
     uint32_t overall_size;    // Tamanho do arquivo - 8
@@ -56,8 +68,11 @@ struct WavHeader {
 class AudioHandler {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 private:
     static void setAmpPower(bool on) {
         if (expander) {
@@ -73,12 +88,15 @@ public:
         // es8311_voice_mute(false); // Assumindo função driver disponível ou I2S handles
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 public:
     static void playWav(const char* filename) {
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
         // Ajuste de caminho para nova estrutura em Português
         String path = String("/arquivos_cartao_sd") + filename;
 
@@ -87,12 +105,16 @@ public:
             Serial.printf("[Audio] Erro: Arquivo %s nao encontrado\n", path.c_str());
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             setAmpPower(false);
 =======
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
             setAmpPower(false);
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+            setAmpPower(false);
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
             return;
         }
 
@@ -104,8 +126,11 @@ public:
             file.close();
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
             setAmpPower(false);
             return;
         }
@@ -114,6 +139,7 @@ public:
         i2s_set_sample_rates(I2S_NUM_0, header.sample_rate);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
             return;
         }
@@ -121,10 +147,13 @@ public:
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
         size_t bytes_read = 0;
         size_t bytes_written = 0;
         uint8_t buffer[1024];
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -133,6 +162,8 @@ public:
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
         while (file.available()) {
             bytes_read = file.read(buffer, sizeof(buffer));
             i2s_write(I2S_NUM_0, buffer, bytes_read, &bytes_written, portMAX_DELAY);
@@ -141,8 +172,11 @@ public:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
         // Zero buffer para evitar pop e flush
         memset(buffer, 0, sizeof(buffer));
         i2s_write(I2S_NUM_0, buffer, sizeof(buffer), &bytes_written, portMAX_DELAY);
@@ -157,6 +191,7 @@ public:
         // Se houver Bias de mic no expander, ligar aqui.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         memset(buffer, 0, sizeof(buffer));
         i2s_write(I2S_NUM_0, buffer, sizeof(buffer), &bytes_written, portMAX_DELAY);
@@ -166,6 +201,8 @@ public:
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
         String path = String("/arquivos_cartao_sd") + filename;
 
         File file = SD_MMC.open(path, FILE_WRITE);
@@ -251,12 +288,16 @@ public:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         // Desligar ou colocar em idle se necessário
 =======
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
         // Desligar ou colocar em idle se necessário
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+        // Desligar ou colocar em idle se necessário
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
         return true;
     }
 };

@@ -5,8 +5,11 @@
 #include "core/PwnPet.h"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 #include "core/PwnPower.h"
 #include "FaceHandler.h"
 #include "pin_config.h"
@@ -17,11 +20,14 @@ static lv_style_t style_bar_bg;
 static lv_style_t style_bar_indic;
 static lv_style_t style_neon_text;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include "FaceHandler.h"
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 
 class PwnUI {
 private:
@@ -32,8 +38,11 @@ private:
     static lv_obj_t* label_stats;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
     static lv_obj_t* label_battery;
     static lv_obj_t* matrix_canvas;
     static lv_color_t* matrix_buf;
@@ -120,6 +129,7 @@ public:
         lv_label_set_text(label_stats, "Iniciando Systema...");
         lv_obj_align(label_stats, LV_ALIGN_BOTTOM_MID, 0, -10);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     static lv_obj_t* img_pet; // Placeholder para Sprite
 
@@ -158,6 +168,8 @@ public:
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
     }
 
     static void update() {
@@ -165,8 +177,11 @@ public:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
         lv_bar_set_value(bar_hunger, stats.hunger, LV_ANIM_ON);
         lv_bar_set_value(bar_happy, stats.happiness, LV_ANIM_ON);
 
@@ -197,6 +212,7 @@ public:
         if (stats.stage == PWNGOD) FaceHandler::setFace(FACE_COOL);
         else if (stats.hunger < 20) FaceHandler::setFace(FACE_SAD);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         // Atualiza Barras
         lv_bar_set_value(bar_hunger, stats.hunger, LV_ANIM_ON);
@@ -220,6 +236,8 @@ public:
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
         else FaceHandler::setFace(FACE_NEUTRAL);
     }
 };
@@ -231,8 +249,11 @@ lv_obj_t* PwnUI::label_clock;
 lv_obj_t* PwnUI::label_stats;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 lv_obj_t* PwnUI::label_battery;
 lv_obj_t* PwnUI::matrix_canvas;
 lv_color_t* PwnUI::matrix_buf;
@@ -240,10 +261,13 @@ int PwnUI::matrix_cols;
 int PwnUI::matrix_rows;
 int* PwnUI::drops;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 lv_obj_t* PwnUI::img_pet;
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 
 #endif

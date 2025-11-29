@@ -13,6 +13,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * Mini Lele - Waveshare ESP32-S3-Touch-AMOLED-1.8
 	 * Hardware: SH8601 QSPI, FT3168 I2C, AXP2101 I2C, ES8311 I2S
 	 */
@@ -77,6 +78,8 @@
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
 =======
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
  * Mini Lele - Waveshare ESP32-S3-Touch-AMOLED-1.8
  * Hardware: SH8601 QSPI, FT3168 I2C, AXP2101 I2C, ES8311 I2S
  */
@@ -89,6 +92,7 @@
 #define LCD_D2     6
 #define LCD_D3     7
 #define LCD_RST    -1 // Reset via TCA9554 Pin 0
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -108,10 +112,13 @@
 // O Reset do LCD é controlado pelo Pino 0 do Expansor IO (TCA9554)
 #define LCD_RST    -1
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 
 #define LCD_WIDTH  368
 #define LCD_HEIGHT 448
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -255,6 +262,9 @@
 =======
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
 // --- I2C (Shared Bus: Touch, PMU, Audio, IMU, Expander, RTC) ---
+=======
+// --- I2C (Shared Bus: Touch, PMU, Audio, IMU, Expander) ---
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 #define IIC_SDA    15
 #define IIC_SCL    14
 
@@ -281,6 +291,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define PA_EN      46 // GPIO Direto (Snippet confirms PA 46)
 =======
 #define PA_EN      46
@@ -294,12 +305,16 @@
 =======
 #define PA_EN      46 // GPIO Direto (Snippet confirms PA 46)
 >>>>>>> origin/mini-lele-v2-legendary-missing-assets
+=======
+#define PA_EN      -1 // Via TCA9554 Pin 6
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 
 // --- IMU (QMI8658) ---
 #define IMU_SDA    15
 #define IMU_SCL    14
 #define QMI8658_ADDR 0x6B
 
+<<<<<<< HEAD
 // --- RTC (PCF85063) ---
 #define RTC_ADDR   0x51
 
@@ -417,11 +432,20 @@
 #define SD_D3      38
 #define SD_CS      21
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+// --- SD Card (SDMMC Slot 0 - Onboard) ---
+#define SDMMC_CLK  2
+#define SDMMC_CMD  1
+#define SDMMC_D0   40 // Verify if used? usually on these boards it's 1-bit mode if not specified
+// Actually Waveshare schematic often uses 1-bit mode if pins limited.
+// Let's assume 1-bit mode on standard slot 0 D0 pin if not explicitly D0-D3
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 
 // --- System ---
 #define PIN_BOOT   0
 #define COLOR_NEON_PURPLE 0x801F
 #define COLOR_NEON_GREEN  0x07E0
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -448,3 +472,5 @@
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
+=======
+>>>>>>> origin/pwn-tamagotchi-legendary-qs-final
