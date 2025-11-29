@@ -5,14 +5,20 @@
 #include <WiFi.h>
 #include <esp_wifi.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <SD_MMC.h>
 #include "FS.h"
 <<<<<<< HEAD
+=======
+#include <SD_MMC.h>
+#include "FS.h"
+>>>>>>> origin/waveshare-s3-amoled-manual-upload
 
 // Simple Sniffer Callback
 #define MAX_SNIFFED 10
 String sniffed_macs[MAX_SNIFFED];
 int sniff_idx = 0;
+<<<<<<< HEAD
 =======
 #include <vector>
 
@@ -35,17 +41,23 @@ std::vector<SniffedDevice> nearby_devices;
 String sniffed_macs[MAX_SNIFFED];
 int sniff_idx = 0;
 >>>>>>> origin/waveshare-s3-amoled-full-plugins
+=======
+>>>>>>> origin/waveshare-s3-amoled-manual-upload
 
 class WiFiTools {
 public:
     static void promiscuous_rx_cb(void* buf, wifi_promiscuous_pkt_type_t type) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-manual-upload
         wifi_promiscuous_pkt_t* packet = (wifi_promiscuous_pkt_t*)buf;
         // Keep simple: Detect Management Frames (Probe Requests)
         // This is a minimal implementation.
         // In a real sniffer, we parse 802.11 frames.
         // This callback is in ISR context (careful!)
+<<<<<<< HEAD
 =======
         if (type != WIFI_PKT_MGMT) return; // Only Management Frames
 
@@ -103,6 +115,8 @@ public:
         // uint8_t* mac_addr = packet->payload + 10; // Source address position varies by frame type
         // Just increment a counter for visualization "Activity"
 >>>>>>> origin/waveshare-s3-amoled-full-plugins
+=======
+>>>>>>> origin/waveshare-s3-amoled-manual-upload
     }
 
     static void startSniffer() {
@@ -111,17 +125,23 @@ public:
         esp_wifi_set_promiscuous_rx_cb(&promiscuous_rx_cb);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         Serial.println("Sniffer Ativo");
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-full-plugins
+=======
+>>>>>>> origin/waveshare-s3-amoled-manual-upload
     }
 
     static void stopSniffer() {
         esp_wifi_set_promiscuous(false);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-manual-upload
     }
 
     // Save a "Handshake" (Simulated/Placeholder)
@@ -136,6 +156,7 @@ public:
             f.printf("SSID: %s\nBSSID: %s\n", ssid.c_str(), bssid.c_str());
             f.close();
             Serial.printf("Handshake salvo: %s\n", filename.c_str());
+<<<<<<< HEAD
 =======
         Serial.println("Sniffer Parado");
     }
@@ -149,6 +170,8 @@ public:
             f.println("PCAP DUMMY"); // Real implementation requires libpcap logic
             f.close();
 >>>>>>> origin/waveshare-s3-amoled-final-polish
+=======
+>>>>>>> origin/waveshare-s3-amoled-manual-upload
         }
     }
 
@@ -160,6 +183,7 @@ public:
         sprintf(buffer, "Temp: %.0fC RAM: %dKB\nUp: %ds", temp, free_heap/1024, uptime);
         return String(buffer);
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 
@@ -195,6 +219,8 @@ public:
         return String(buffer);
     }
 >>>>>>> origin/waveshare-s3-amoled-full-plugins
+=======
+>>>>>>> origin/waveshare-s3-amoled-manual-upload
 };
 
 #endif

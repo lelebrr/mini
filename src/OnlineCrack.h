@@ -4,11 +4,15 @@
 #include <Arduino.h>
 #include <WiFi.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-manual-upload
 #include <HTTPClient.h>
 #include <SD_MMC.h>
 #include "FS.h"
 
 // Simple config loader for WiFi
+<<<<<<< HEAD
 =======
 #include <WiFiClientSecure.h>
 #include <SD_MMC.h>
@@ -16,6 +20,8 @@
 
 // Config loader
 >>>>>>> origin/waveshare-s3-amoled-final-polish
+=======
+>>>>>>> origin/waveshare-s3-amoled-manual-upload
 struct WiFiConfig {
     String ssid;
     String pass;
@@ -27,6 +33,7 @@ public:
     static WiFiConfig loadConfig() {
         WiFiConfig cfg;
 <<<<<<< HEAD
+<<<<<<< HEAD
         cfg.ssid = "SSID_AQUI";
         cfg.pass = "SENHA_AQUI";
         cfg.wpa_sec_key = "KEY_AQUI";
@@ -35,6 +42,11 @@ public:
         cfg.pass = "";
         cfg.wpa_sec_key = "";
 >>>>>>> origin/waveshare-s3-amoled-final-polish
+=======
+        cfg.ssid = "SSID_AQUI";
+        cfg.pass = "SENHA_AQUI";
+        cfg.wpa_sec_key = "KEY_AQUI";
+>>>>>>> origin/waveshare-s3-amoled-manual-upload
 
         if (SD_MMC.exists("/wifi_config.txt")) {
             File f = SD_MMC.open("/wifi_config.txt");
@@ -53,6 +65,9 @@ public:
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-manual-upload
     // Move a captured handshake/log to upload queue
     static void queueFile(String path) {
         // In a real scenario, this moves .pcap or .hccapx files
@@ -77,6 +92,7 @@ public:
 
         if (cfg.ssid == "SSID_AQUI") {
             Serial.println("Erro: Configure /wifi_config.txt no SD");
+<<<<<<< HEAD
 =======
     static int uploadAll() {
         WiFiConfig cfg = loadConfig();
@@ -84,6 +100,8 @@ public:
         if (cfg.ssid == "" || cfg.wpa_sec_key == "") {
             Serial.println("Erro: Configure SSID e KEY em /wifi_config.txt");
 >>>>>>> origin/waveshare-s3-amoled-final-polish
+=======
+>>>>>>> origin/waveshare-s3-amoled-manual-upload
             return -1;
         }
 
@@ -103,6 +121,7 @@ public:
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         Serial.println("\nWiFi Conectado! Iniciando Upload...");
 
         File root = SD_MMC.open("/upload_queue");
@@ -115,6 +134,11 @@ public:
         }
 
 >>>>>>> origin/waveshare-s3-amoled-final-polish
+=======
+        Serial.println("\nWiFi Conectado! Iniciando Upload...");
+
+        File root = SD_MMC.open("/upload_queue");
+>>>>>>> origin/waveshare-s3-amoled-manual-upload
         File file = root.openNextFile();
         int count = 0;
 
@@ -122,6 +146,9 @@ public:
             if (!file.isDirectory()) {
                 String filename = String(file.name());
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-manual-upload
                 // Upload logic for wpa-sec (POST)
                 // This assumes standard wpa-sec API: https://wpa-sec.stanev.org/?help
                 // curl -X POST -F [email protected] -F key=... https://wpa-sec.stanev.org/
@@ -143,6 +170,7 @@ public:
                     Serial.printf("Erro envio %s\n", filename.c_str());
                 }
                 http.end();
+<<<<<<< HEAD
 =======
                 // Only upload .pcap or .hccapx
                 if (filename.endsWith(".pcap") || filename.endsWith(".hccapx")) {
@@ -156,6 +184,8 @@ public:
                     }
                 }
 >>>>>>> origin/waveshare-s3-amoled-final-polish
+=======
+>>>>>>> origin/waveshare-s3-amoled-manual-upload
             }
             file = root.openNextFile();
         }
@@ -163,6 +193,7 @@ public:
         WiFi.disconnect();
         return count;
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 
@@ -224,6 +255,8 @@ private:
         return success;
     }
 >>>>>>> origin/waveshare-s3-amoled-final-polish
+=======
+>>>>>>> origin/waveshare-s3-amoled-manual-upload
 };
 
 #endif
