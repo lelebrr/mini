@@ -12,6 +12,7 @@ lvgl/lvgl @ ^8.3.11
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 # PlatformIO specific
@@ -28,6 +29,8 @@ Arduino_GFX_Library
 >>>>>>> origin/mini-lele-v2-final-verified
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-release
 # JSON e Utilitários
 bblanchon/ArduinoJson @ ^6.21.3
 

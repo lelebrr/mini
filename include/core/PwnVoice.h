@@ -10,6 +10,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "core/PwnAttack.h"
 =======
 >>>>>>> origin/merge-ready-mini-lele-v2
@@ -22,6 +23,9 @@
 =======
 #include "core/PwnAttack.h"
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
+=======
+#include "core/PwnAttack.h"
+>>>>>>> origin/mini-lele-v2-legendary-final-release
 
 // Comandos de Voz Mapeados (Offline - Contagem de Sílabas)
 
@@ -35,6 +39,7 @@ public:
     }
 
     static void listen() {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -60,6 +65,10 @@ public:
         if (PwnPower::isCritical()) return;
 
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
+=======
+        if (PwnPower::isCritical()) return;
+
+>>>>>>> origin/mini-lele-v2-legendary-final-release
         is_listening = true;
 
         // Toca "Ouvindo"
@@ -73,6 +82,7 @@ public:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         // Otimização 26: DSP off (feito no recordWav auto shutdown)
 >>>>>>> origin/merge-ready-mini-lele-v2
@@ -82,6 +92,8 @@ public:
 >>>>>>> origin/mini-lele-v2-final-verified
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-release
 
         if (ok) {
             int syllables = OfflineVoice::analyzeCommand("/voice/input.wav");
@@ -92,6 +104,7 @@ public:
     static void processCommand(int syllables) {
         Serial.printf("[Voice] Silabas: %d\n", syllables);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -111,6 +124,9 @@ public:
 =======
         if (PwnPet::getStats().is_sleeping) {
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
+=======
+        if (PwnPet::getStats().is_sleeping) {
+>>>>>>> origin/mini-lele-v2-legendary-final-release
              if (syllables > 4) {
                  PwnPet::getStats().is_sleeping = false;
                  speak("Quem ousa me acordar");
@@ -119,6 +135,7 @@ public:
         }
 
         switch(syllables) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -143,11 +160,16 @@ public:
             case 2: // "Ei Lele" / "Status"
                 PwnPet::getStats().hunger += 5;
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
+=======
+            case 2: // "Ei Lele" / "Status"
+                PwnPet::getStats().hunger += 5;
+>>>>>>> origin/mini-lele-v2-legendary-final-release
                 speak("Ola amigo");
                 break;
             case 3: // "Bateria" / "Comida"
                 speak("Estou com fome");
                 break;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -175,6 +197,11 @@ public:
                 speak("Iniciando ataque");
                 PwnAttack::start(); // Agora existe
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
+=======
+            case 4: // "Ataca Vivo" / "Ataque"
+                speak("Iniciando ataque");
+                PwnAttack::start(); // Agora existe
+>>>>>>> origin/mini-lele-v2-legendary-final-release
                 break;
             default:
                 speak("Nao entendi");
@@ -182,6 +209,7 @@ public:
         }
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -208,6 +236,9 @@ public:
 =======
     static void speak(String phrase) {
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
+=======
+    static void speak(String phrase) {
+>>>>>>> origin/mini-lele-v2-legendary-final-release
         String file = "/tts/unknown.wav";
 
         if (phrase.indexOf("Ola") >= 0) file = "/tts/hello.wav";

@@ -40,6 +40,7 @@ PwnIMU imu;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Hardware Objects - QSPI SH8601 (Waveshare Standard)
 Arduino_DataBus *bus = new Arduino_ESP32QSPI(LCD_CS, LCD_SCK, LCD_D0, LCD_D1, LCD_D2, LCD_D3);
 Arduino_GFX *gfx = new Arduino_SH8601(bus, LCD_RST, 0 /* rotation */, false /* IPS */, LCD_WIDTH, LCD_HEIGHT);
@@ -68,6 +69,11 @@ Arduino_GFX *gfx = new Arduino_SH8601(bus, LCD_RST, 0, false, LCD_WIDTH, LCD_HEI
 Arduino_DataBus *bus = new Arduino_ESP32QSPI(LCD_CS, LCD_SCK, LCD_D0, LCD_D1, LCD_D2, LCD_D3);
 Arduino_GFX *gfx = new Arduino_SH8601(bus, LCD_RST, 0 /* rotation */, false /* IPS */, LCD_WIDTH, LCD_HEIGHT);
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
+=======
+// Hardware Objects - QSPI SH8601 (Waveshare Standard)
+Arduino_DataBus *bus = new Arduino_ESP32QSPI(LCD_CS, LCD_SCK, LCD_D0, LCD_D1, LCD_D2, LCD_D3);
+Arduino_GFX *gfx = new Arduino_SH8601(bus, LCD_RST, 0 /* rotation */, false /* IPS */, LCD_WIDTH, LCD_HEIGHT);
+>>>>>>> origin/mini-lele-v2-legendary-final-release
 
 TouchLib *touch = NULL;
 
@@ -81,12 +87,16 @@ lv_indev_t * indev;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-release
 #define BUFFER_SIZE (LCD_WIDTH * LCD_HEIGHT)
 static lv_color_t *buf1;
 static lv_color_t *buf2;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 =======
@@ -112,6 +122,8 @@ static lv_color_t *buf2;
 >>>>>>> origin/mini-lele-v2-final-verified
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-release
 unsigned long siesta_start = 0;
 bool in_siesta = false;
 
@@ -163,12 +175,16 @@ void initAudio() {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-release
         .bck_io_num = I2S_BCLK,
         .ws_io_num = I2S_LRCK,
         .data_out_num = I2S_DOUT,
         .data_in_num = I2S_DIN
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 =======
@@ -193,12 +209,15 @@ void initAudio() {
 >>>>>>> origin/mini-lele-v2-final-verified
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-release
     };
 
     i2s_driver_install(I2S_NUM_0, &i2s_config, 0, NULL);
     i2s_set_pin(I2S_NUM_0, &pin_config);
     i2s_zero_dma_buffer(I2S_NUM_0);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -220,6 +239,9 @@ void initAudio() {
 =======
     es8311_handle_t es_dev = es8311_create(0, ES8311_ADDR);
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
+=======
+    es8311_handle_t es_dev = es8311_create(0, ES8311_ADDR);
+>>>>>>> origin/mini-lele-v2-legendary-final-release
     if (es_dev) {
          es8311_clock_config_t cfg = {0};
          cfg.sample_frequency = 16000;
@@ -228,6 +250,7 @@ void initAudio() {
          es8311_microphone_config(es_dev, false);
          es8311_voice_mute(es_dev, false);
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -250,6 +273,11 @@ void initAudio() {
     pinMode(PA_EN, OUTPUT);
     digitalWrite(PA_EN, HIGH);
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
+=======
+
+    pinMode(PA_EN, OUTPUT);
+    digitalWrite(PA_EN, HIGH);
+>>>>>>> origin/mini-lele-v2-legendary-final-release
 }
 
 // -------------------------------------------------------------------------
@@ -270,6 +298,9 @@ void setup() {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-release
     Serial.begin(115200);
     setCpuFrequencyMhz(240);
 
@@ -278,6 +309,7 @@ void setup() {
 
     PwnPower::init();
 
+<<<<<<< HEAD
 =======
     // Serial nativa (USB CDC) para debug
     Serial.begin(115200);
@@ -293,6 +325,8 @@ void setup() {
 
     // IO Expander (TCA9554)
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-release
     expander = new ESP_IOExpander_TCA95xx_8bit((i2c_port_t)0, 0x20, IIC_SCL, IIC_SDA);
     expander->init();
     expander->begin();
@@ -301,6 +335,9 @@ void setup() {
 
     // Reset Sequence
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-release
     expander->digitalWrite(0, LOW); delay(20);
     expander->digitalWrite(0, HIGH); delay(100);
 
@@ -310,6 +347,7 @@ void setup() {
     // SD Card
     SD_MMC.setPins(SDMMC_CLK, SDMMC_CMD, SDMMC_D0);
     if (!SD_MMC.begin("/sdcard", true, true)) {
+<<<<<<< HEAD
 =======
     expander->digitalWrite(0, LOW); delay(10);
     expander->digitalWrite(0, HIGH); delay(50);
@@ -322,10 +360,13 @@ void setup() {
     SD_MMC.setPins(SDMMC_CLK, SDMMC_CMD, SDMMC_D0);
     if (!SD_MMC.begin("/sdcard", true, true)) { // true=1bit, true=format_if_fail
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-release
         Serial.println("SD MMC Init Failed!");
     } else {
         ConfigManager::getInstance()->load();
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 =======
@@ -367,10 +408,13 @@ void setup() {
 >>>>>>> origin/mini-lele-v2-complete-verified
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-release
 
     gfx->begin();
     gfx->fillScreen(BLACK);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -388,10 +432,15 @@ void setup() {
     if (!touch->init()) {
          // Try GT1151 address
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
+=======
+    touch = new TouchLib(Wire, IIC_SDA, IIC_SCL, FT3168_ADDR);
+    if (!touch->init()) {
+>>>>>>> origin/mini-lele-v2-legendary-final-release
          delete touch;
          touch = new TouchLib(Wire, IIC_SDA, IIC_SCL, 0x14);
          touch->init();
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 =======
@@ -419,6 +468,8 @@ void setup() {
 >>>>>>> origin/mini-lele-v2-final-verified
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-release
 
     lv_init();
 
@@ -427,6 +478,7 @@ void setup() {
 
     disp = lv_display_create(LCD_WIDTH, LCD_HEIGHT);
     lv_display_set_flush_cb(disp, my_disp_flush);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -448,6 +500,9 @@ void setup() {
 =======
     lv_display_set_buffers(disp, buf1, buf2, BUFFER_SIZE * sizeof(lv_color_t), LV_DISPLAY_RENDER_MODE_FULL);
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
+=======
+    lv_display_set_buffers(disp, buf1, buf2, BUFFER_SIZE * sizeof(lv_color_t), LV_DISPLAY_RENDER_MODE_FULL);
+>>>>>>> origin/mini-lele-v2-legendary-final-release
 
     indev = lv_indev_create();
     lv_indev_set_type(indev, LV_INDEV_TYPE_POINTER);

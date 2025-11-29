@@ -6,6 +6,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * Mini Lele - Waveshare ESP32-S3-Touch-AMOLED-1.8
 	 * Hardware: SH8601 QSPI, FT3168 I2C, AXP2101 I2C, ES8311 I2S
 	 */
@@ -52,6 +53,8 @@
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
 =======
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-release
  * Mini Lele - Waveshare ESP32-S3-Touch-AMOLED-1.8
  * Hardware: SH8601 QSPI, FT3168 I2C, AXP2101 I2C, ES8311 I2S
  */
@@ -64,11 +67,15 @@
 #define LCD_D2     6
 #define LCD_D3     7
 #define LCD_RST    -1 // Reset via TCA9554 Pin 0
+<<<<<<< HEAD
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-release
 
 #define LCD_WIDTH  368
 #define LCD_HEIGHT 448
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -165,6 +172,8 @@
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
 =======
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-release
 // --- I2C (Shared Bus: Touch, PMU, Audio, IMU, Expander, RTC) ---
 #define IIC_SDA    15
 #define IIC_SCL    14
@@ -188,7 +197,11 @@
 #define I2S_LRCK   45
 #define I2S_DOUT   10
 #define I2S_DIN    8
+<<<<<<< HEAD
 #define PA_EN      46 // GPIO Direto (Snippet confirms PA 46)
+=======
+#define PA_EN      46
+>>>>>>> origin/mini-lele-v2-legendary-final-release
 
 // --- IMU (QMI8658) ---
 #define IMU_SDA    15
@@ -199,14 +212,25 @@
 #define RTC_ADDR   0x51
 
 // --- SD Card (SDMMC Slot 0 Remapped) ---
+<<<<<<< HEAD
 // Using 1-bit mode. Pinos 1 e 2 são UART0 TX/RX,
 // então só funciona com USB CDC para debug.
 #define SDMMC_CLK  2
 #define SDMMC_CMD  1
 #define SDMMC_D0   42 // Tentativa educada baseada em pinos livres/comuns
+=======
+// Using 1-bit mode. Pinos 1 e 2 são UART0 TX/RX.
+// Requer ARDUINO_USB_CDC_ON_BOOT=1.
+#define SDMMC_CLK  2
+#define SDMMC_CMD  1
+#define SDMMC_D0   42 // Safe fallback for 1-bit mode
+>>>>>>> origin/mini-lele-v2-legendary-final-release
 
 // --- System ---
 #define PIN_BOOT   0
 #define COLOR_NEON_PURPLE 0x801F
 #define COLOR_NEON_GREEN  0x07E0
+<<<<<<< HEAD
 >>>>>>> origin/mini-lele-v2-legendary-final-drivers
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-release
