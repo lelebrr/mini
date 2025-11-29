@@ -32,6 +32,7 @@ platformio/framework-arduinoespressif32 @ ^3.20004.0
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 Arduino_GFX_Library
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
@@ -107,3 +108,8 @@ HTTPClient
 >>>>>>> origin/waveshare-s3-amoled-faces-offline
 =======
 >>>>>>> origin/waveshare-s3-amoled-final-polish
+=======
+bblanchon/ArduinoJson @ ^6.21.3
+Arduino_GFX_Library
+https://github.com/lewisxhe/XPowersLib
+>>>>>>> origin/waveshare-s3-amoled-fix-v2
