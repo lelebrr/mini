@@ -1,137 +1,271 @@
-# Minigotchi ESP32 - Suporte PlatformIO
+# Mini Lele – Guia de Uso com PlatformIO
 
-Este documento descreve como usar o PlatformIO para compilar e flashar o firmware do Minigotchi ESP32.
+Este documento descreve como usar o **PlatformIO** para compilar, gravar e depurar o firmware do **Mini Lele** na placa **Waveshare ESP32‑S3‑Touch‑AMOLED‑1.8**.
 
-## Pré-requisitos
+---
+
+## 1. Pré‑requisitos
 
 1. Instale o [Visual Studio Code](https://code.visualstudio.com/)
 2. Instale a extensão [PlatformIO IDE](https://platformio.org/install/ide?install=vscode)
-3. Clone ou baixe este projeto
+3. Instale o **Git** (recomendado, para clonar o repositório)
+4. Tenha o Python 3.x instalado (para scripts auxiliares, se necessário)
 
-## Configuração do Projeto
+---
 
-O projeto já está configurado para PlatformIO com os seguintes arquivos:
+## 2. Arquivos de configuração importantes
 
-- `platformio.ini` - Configurações principais do build
-- `include/platformio.h` - Definições específicas para PlatformIO
-- `lib_deps.txt` - Lista de dependências
-- `platformio_override.ini` - Arquivo para configurações locais
+O projeto já vem preparado para PlatformIO. Os arquivos principais são:
 
-## Compilando e Flashando
+- `platformio.ini`
+  - Define o ambiente:
+    - `[env:waveshare-esp32-s3-amoled]`
+  - Configura:
+    - Placa (`esp32-s3-devkitc-1`)
+    - Velocidade de monitor serial
+    - Particionamento de 16 MB
+    - Flags de compilação (otimizações, PSRAM, LVGL, USB CDC)
+    - Bibliotecas necessárias (via `lib_deps`)
+- `platformio_override.ini`
+  - Arquivo opcional para ajustes locais (não versionado por padrão)
+- `lib_deps.txt`
+  - Lista de dependências de bibliotecas externas (usada em algumas versões de configuração)
+- `sdkconfig.defaults`
+  - Configurações base para a stack do ESP‑IDF quando usado junto do framework Arduino (em algumas builds)
 
-### Via Interface Gráfica (VS Code)
+> Não há `include/platformio.h` neste projeto – essa referência era de um template antigo e pode ser ignorada.
 
-1. Abra a pasta do projeto no VS Code
-2. Aguarde o PlatformIO carregar (pode demorar na primeira vez)
-3. Clique no ícone de PlatformIO na barra lateral esquerda
-4. Vá para a aba "PIO Home"
-5. Clique em "Open" ao lado do projeto
+---
 
-### Via Linha de Comando
+## 3. Abrindo o projeto no VS Code
+
+1. Abra o **VS Code**
+2. Vá em `File → Open Folder…` e selecione a pasta raiz do projeto (onde está o `platformio.ini`)
+3. Aguarde o PlatformIO:
+   - Ler o projeto
+   - Baixar as bibliotecas definidas em `lib_deps`
+
+No canto inferior da janela, você deve ver mensagens do PlatformIO indicando o carregamento do ambiente.
+
+---
+
+## 4. Compilando e gravando o firmware
+
+### 4.1 Pela interface gráfica (VS Code)
+
+1. No menu lateral, clique no ícone da **cabeça de alien** (PlatformIO)
+2. Em **PROJECT TASKS**, localize o ambiente:
+
+   ```ini
+   env:waveshare-esp32-s3-amoled
+   ```
+
+3. Clique em:
+   - `General → Build` para compilar
+   - `General → Upload` para gravar o firmware na placa
+
+Durante o upload:
+
+- Certifique‑se de que a placa está conectada via **USB‑C**
+- Se necessário, use a combinação:
+  - Segurar **BOOT**
+  - Tocar **RESET**
+  - Soltar **BOOT** (modo de bootloader)
+
+### 4.2 Pela linha de comando
+
+Dentro da pasta do projeto:
 
 ```bash
-# Instalar dependências
-pio lib install
+# Compilar
+pio run -e waveshare-esp32-s3-amoled
 
-# Compilar o projeto
-pio run
+# Gravar firmware
+pio run -e waveshare-esp32-s3-amoled -t upload
 
-# Flashar o dispositivo
-pio run --target upload
-
-# Monitor serial
-pio device monitor
+# Abrir monitor serial
+pio device monitor -e waveshare-esp32-s3-amoled
 ```
 
-## Configurações Personalizadas
+---
 
-Para personalizar as configurações:
+## 5. Personalizando configurações (sem quebrar o repositório)
 
-1. Copie `platformio_override.ini` para `platformio.local.ini`
-2. Modifique as configurações desejadas no arquivo `platformio.local.ini`
+Para evitar conflitos com o `platformio.ini` original, utilize o arquivo de override:
 
-## Opções de Build Disponíveis
+1. Copie o arquivo de exemplo (se existir) ou crie um novo:
 
-### Board Suportado
-- `esp32-s3-devkitc-1` - ESP32-S3 DevKitC-1 (padrão)
+   ```bash
+   cp platformio_override.ini platformio.local.ini  # ou crie do zero
+   ```
 
-### Variáveis de Build
-- `BOARD` - Altera o board alvo
-- `MONITOR_SPEED` - Velocidade do monitor serial
-- `UPLOAD_SPEED` - Velocidade de upload
-- `BUILD_FLAGS` - Flags adicionais de compilação
+2. Dentro de `platformio.local.ini`, você pode sobrescrever ajustes, por exemplo:
 
-### Exemplos de Uso
+   ```ini
+   [env:waveshare-esp32-s3-amoled]
+   monitor_speed = 921600
+   upload_speed = 460800
+   ```
 
-```bash
-# Usar um board diferente
-pio run -e esp32doit-devkit-v1
+3. PlatformIO mescla as configurações de `platformio.ini` com `platformio.local.ini`.
 
-# Mudar a velocidade do monitor
-pio device monitor --baud 921600
+> Mantenha `platformio.ini` o mais próximo possível do upstream; faça ajustes locais via override quando puder.
 
-# Compilar com flags personalizadas
-pio run --build_flags "-DCUSTOM_DEBUG=1"
-```
+---
 
-## Depuração
+## 6. Opções e parâmetros de build
 
-Para depurar o firmware:
+### 6.1 Ambiente principal
 
-1. Conecte o ESP32 ao seu computador
-2. Pressione F5 no VS Code ou clique no ícone de depuração
-3. Configure breakpoints no código
-4. Inicie a depuração
+- **Ambiente:** `env:waveshare-esp32-s3-amoled`
+- **Board:** `esp32-s3-devkitc-1` (equivalente ao módulo usado na placa Waveshare)
+- **Framework:** `arduino`
+- **Flash:** 16 MB (configurada em `board_upload.flash_size`)
+- **PSRAM:** habilitada (`BOARD_HAS_PSRAM`)
 
-## Problemas Comuns
+### 6.2 Flags de compilação (resumo)
 
-### Include Path
-Se encontrar erros de include, certifique-se de que o VS Code reconheceu o projeto PlatformIO. Reinicie o VS Code se necessário.
+O `platformio.ini` configura, entre outras coisas:
 
-### Bibliotecas Faltando
-Execute `pio lib install` para instalar todas as dependências.
+- Otimização (`-O3`, `-funroll-loops`, etc.)
+- Uso de PSRAM e LVGL:
+  - `-DBOARD_HAS_PSRAM`
+  - `-DLV_CONF_INCLUDE_SIMPLE`
+  - `-DLV_CONF_PATH="include/lv_conf.h"`
+- USB nativo:
+  - `-DARDUINO_USB_CDC_ON_BOOT=1`
+  - `-DARDUINO_USB_MODE=1`
 
-### Porta Serial
-Verifique qual porta serial está sendo usada pelo seu ESP32 e configure no PlatformIO.
+Essas flags são importantes para:
 
-## Estrutura de Arquivos
+- Desempenho (UI fluida com LVGL)
+- Disponibilidade de memória para texturas e buffers
+- Debug via USB‑C usando `Serial` (CDC), em vez de UART nos pinos 1 e 2.
 
-```
-minigotchi-ESP32/
-├── platformio.ini          # Configurações principais
-├── platformio_override.ini # Override de configurações
-├── lib_deps.txt           # Dependências
+---
+
+## 7. Monitor serial e depuração básica
+
+### 7.1 Monitor serial
+
+- Velocidade padrão (verifique em `platformio.ini`): geralmente `115200` baud.
+- No VS Code:
+  - Clique em **Monitor** na barra de status do PlatformIO
+- Na linha de comando:
+
+  ```bash
+  pio device monitor -e waveshare-esp32-s3-amoled
+  ```
+
+Isso permite observar:
+
+- Logs de boot do ESP32‑S3
+- Mensagens do PMU (AXP2101), display, touch, SD, etc.
+- Informações de debug da WebUI e das ferramentas de pentest (se habilitadas no código)
+
+### 7.2 Depuração (debug avançado)
+
+O projeto não vem com uma configuração de **debug por JTAG** pré‑pronta, mas você pode:
+
+- Usar o monitor serial e logs para a maioria dos problemas
+- Integrar adaptadores JTAG suportados pelo PlatformIO, se desejar
+- Configurar sessões de debug no VS Code (depende do hardware de debug disponível)
+
+---
+
+## 8. Estrutura do projeto (visão PlatformIO)
+
+Para referência rápida, a estrutura do projeto dentro do contexto PlatformIO é aproximadamente:
+
+```text
+mini-lele/
+├── platformio.ini            # Configuração principal de ambiente/build
+├── platformio_override.ini   # (Opcional) ajustes locais
+├── lib_deps.txt              # Lista auxiliar de dependências
 ├── src/
-│   └── sketch.ino         # Arquivo principal (estrutura padrão PlatformIO)
+│   └── main.cpp              # Entrypoint principal do firmware
 ├── include/
-│   └── platformio.h       # Definições PlatformIO
-└── ... (outros arquivos do projeto)
+│   ├── pin_config.h          # Mapeamento de pinos da placa
+│   ├── core/                 # Lógica do Pet, gamificação, config, etc.
+│   ├── drivers/              # Display, touch, PMU, IMU, SD, áudio, etc.
+│   └── web/                  # WebUI, handlers HTTP/WS, etc.
+├── lib/                      # Bibliotecas externas/adaptadas
+├── arquivos_cartao_sd/       # Estrutura de exemplo do cartão SD
+└── ...
 ```
 
-## Contribuição
+---
 
-Para contribuir com melhorias no suporte PlatformIO:
+## 9. Problemas comuns e soluções
 
-1. Faça um fork do projeto
-2. Crie uma branch para sua feature
-3. Faça commit das suas mudanças
-4. Abra um Pull Request
+### 9.1 Erros de include / bibliotecas faltando
 
-## Licença
+- Rode:
 
-Este projeto está sob a licença GNU General Public License v3.0.
+  ```bash
+  pio run -e waveshare-esp32-s3-amoled
+  ```
 
-## Correções e Notas
+  e deixe o PlatformIO baixar todas as libs listadas em `lib_deps`.
+- Se o VS Code não “enxerga” corretamente os includes:
+  - Feche e reabra o VS Code
+  - Ou execute `Rebuild IntelliSense` (via Command Palette, `Ctrl+Shift+P`).
 
-### Bibliotecas Corrigidas
-- **XPowersLib @ ^1.2.0**: Substituiu `adafruit/Adafruit AXP2101 @ ^1.0.3` que não estava disponível para Windows AMD64
-- Removida opção `build_dir` do `platformio.ini` que não é suportada pela versão atual do PlatformIO
+### 9.2 Erro ao detectar a porta serial
 
-### Configuração Atual
-- Board: ESP32-S3 DevKitC-1
-- Framework: Arduino
-- Monitor serial: 115200 baud
-- Upload speed: 921600
+- Verifique qual porta o seu sistema atribuiu ao ESP32‑S3:
+  - Windows: `COMx`
+  - Linux: `/dev/ttyACM0`, `/dev/ttyUSB0`, etc.
+  - macOS: `/dev/cu.usbmodem…` ou semelhante
+- Configure a porta correta no PlatformIO, se necessário, ou deixe em auto.
 
-### Bibliotecas Removidas
-- **Adafruit SH8601**: Removida por não estar disponível para Windows AMD64. O display será configurado diretamente no código usando as bibliotecas TFT_eSPI e XPowersLib.
+### 9.3 Erros de flash / timeout
+
+- Reduza a velocidade de upload em `platformio.ini`:
+  - Ex.: `upload_speed = 460800` ou `115200`
+- Use a sequência de bootloader:
+  - Segure **BOOT**
+  - Aperte **RESET**
+  - Solte **BOOT** após alguns segundos
+
+---
+
+## 10. Notas sobre bibliotecas e correções
+
+### 10.1 Bibliotecas importantes usadas pelo projeto
+
+- **LVGL** (UI)
+- **Arduino_GFX** (display SH8601)
+- **XPowersLib** (PMU AXP2101)
+- **ESPAsyncWebServer / AsyncTCP** (WebUI)
+- **TouchLib** (controladores de touch FT3168/GT1151)
+- **ArduinoJson** (configurações, WebUI)
+- Bibliotecas auxiliares da Waveshare/lewisxhe/Maucke para drivers e sensores
+
+A maior parte é obtida automaticamente via `lib_deps` no próprio `platformio.ini`.
+
+### 10.2 Ajustes anteriores
+
+Alguns ajustes já foram feitos (em versões anteriores do projeto) para melhorar a compatibilidade com o PlatformIO, por exemplo:
+
+- Substituição de bibliotecas incompatíveis em certas plataformas
+- Remoção de opções avançadas de build não suportadas em versões recentes do PlatformIO
+- Ajustes do particionamento para **16 MB** de flash
+
+Se você fizer mudanças significativas no `platformio.ini`, considere documentá‑las e, se fizer sentido, abrir um Pull Request.
+
+---
+
+## 11. Licença
+
+O firmware do Mini Lele é distribuído sob a licença **GNU General Public License v3.0 (GPLv3)**.
+
+Em resumo:
+
+- Você pode usar, estudar, modificar e redistribuir
+- Mas deve manter a mesma licença em trabalhos derivados
+- Leia o texto completo da GPLv3 para detalhes legais
+
+---
+
+Se tiver sugestões específicas para melhorar a integração com o PlatformIO (novos ambientes, suporte a outros kits, presets de debug), fique à vontade para contribuir via Pull Request ou abrir uma issue descrevendo o caso de uso.

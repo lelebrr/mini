@@ -1,238 +1,293 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-# Manual do Usuário - Mini Lele
+# Manual do Usuário – Mini Lele
 
-## 1. O Pet (Lele)
-=======
-# Manual do Usuário - PwnTamagotchi BR
+Este manual explica como usar o **Mini Lele** no dia a dia:  
+o Pet, a WebUI, as ferramentas de pentest e os recursos de voz e economia de energia.
 
-## 1. O Pet (PwnPet)
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-O seu Tamagotchi vive de dados. Ele precisa de **handshakes** WiFi para comer e evoluir.
+---
 
-### Alimentação
-- **Handshakes WPA2:** Comida padrão.
-- **Handshakes WPA3:** Iguaria gourmet (muito XP).
-- **Probes:** Snacks rápidos.
+## 1. Conhecendo o Pet (Lele)
 
-### Evolução
-- **Egg:** Nível 0-5
-- **Baby:** Nível 5-10
-- **Kid:** Nível 10-20
-- **Teen:** Nível 20-30
-- **Adult:** Nível 30-50
-- **PwnLord:** Nível 50+
-- **PwnGod:** (Secreto) 10.000 Handshakes capturados.
+O **Lele** é um Tamagotchi Hacker: ele “come” dados de redes Wi‑Fi.
 
-## 2. Ferramentas de Pentest
-⚠️ **Aviso:** Use apenas em redes que você possui permissão!
+### 1.1 Alimentação do Pet
 
-### Sniffer
-Coleta pacotes passivamente. Detecta clientes e APs próximos.
-- Salva `.pcap` no SD Card automaticamente.
+O Lele ganha energia e experiência (XP) quando você:
 
-### Deauth (Ataque)
-Desconecta clientes de um AP alvo para forçar reconexão e capturar o handshake.
-- Ativado automaticamente se o Pet estiver com muita fome (Fome > 80%).
+- Captura **handshakes WPA2** – “comida padrão”
+- Captura **handshakes WPA3** – iguaria rara, muito XP
+- Observa **probes e tráfego Wi‑Fi** – snacks rápidos
 
-### Evil Portal
-Cria um Ponto de Acesso falso para capturar credenciais.
-- Templates disponíveis: Google, Facebook, Café Grátis.
-- Logs salvos em `/sdcard/credenciais.txt`.
+Se você passar muito tempo sem gerar atividade, ele ficará:
 
-## 3. Web Interface
-Acesse via navegador para controle total.
+- Com “fome” (barra vermelha)
+- Menos feliz (barra de felicidade diminui)
+- Potencialmente “mal‑humorado” (caras tristes na tela)
 
-### Login Padrão
-- **Usuário:** admin
-- **Senha:** admin (Altere imediatamente na aba Sistema!)
+### 1.2 Evolução e níveis
 
-### Abas
-- **Dashboard:** Status ao vivo.
-- **Configurações:** 100 opções editáveis.
-- **Arquivos:** Gerencie o Cartão SD.
-- **Logs:** Debug em tempo real.
+Exemplo de progressão (pode variar conforme configuração):
 
-## 4. Hardware e Bateria
-- **Deep Sleep:** O dispositivo dorme automaticamente se inativo. Agite para acordar.
-- **Siesta:** A cada hora cheia, o Pet tira uma soneca de 3 min.
-- **Carregamento:** Use USB-C. O LED indica carga.
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-=======
->>>>>>> origin/waveshare-s3-amoled-review-complete
-# 📖 Manual de Uso
+- **Egg:** nível 0–5
+- **Baby:** nível 5–10
+- **Kid:** nível 10–20
+- **Teen:** nível 20–30
+- **Adult:** nível 30–50
+- **Lendário:** nível 50+
+- **Forma secreta:** após um grande número de handshakes (alvo: 10.000+)
 
-## 🗣️ Comandos de Voz (Offline)
+Quanto mais você usa as ferramentas de pentest (de forma legal!), mais o Lele evolui.
 
-Clique no botão **"Voz"** e fale próximo ao microfone. O sistema detecta o número de sílabas/palavras.
+---
 
-| Comando (Sons) | Ação | Exemplo |
-| :--- | :--- | :--- |
-| **1 Som** | Alternar Lanterna/Tela | "Luz", "Sim", "Pai" |
-| **2 Sons** | Relatório de Status | "Status", "Ola", "Teste" |
-| **3 Sons** | Nível de Bateria | "Bateria", "Energia" |
+## 2. WebUI (Interface Web)
 
-*Nota: Fale pausadamente. O sistema usa energia sonora, não reconhecimento de palavras complexas.*
+A WebUI é o painel de controle completo do Mini Lele.
 
-## 😈 Evil Portal
+### 2.1 Acesso
 
-1.  Clique no botão vermelho **"EVIL PORTAL"**.
-2.  O dispositivo criará uma rede Wi-Fi aberta (Ex: "Cafe_Gratis_WiFi").
-3.  Qualquer pessoa que conectar será redirecionada para a página falsa (Template).
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-4.  Se a vítima digitar a senha, ela será salva em `/arquivos_cartao_sd/credenciais_capturadas.txt`.
-=======
-4.  Se a vítima digitar a senha, ela será salva em `/captured_creds.txt` no SD.
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
-4.  Se a vítima digitar a senha, ela será salva em `/arquivos_cartao_sd/credenciais_capturadas.txt`.
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-=======
-4.  Se a vítima digitar a senha, ela será salva em `/captured_creds.txt` no SD.
->>>>>>> origin/waveshare-s3-amoled-review-complete
-5.  O Pwnagotchi ficará feliz `(^_^)`.
+1. Conecte‑se à rede Wi‑Fi criada pelo Mini Lele:
+   - **SSID:** `Mini-Lele`
+   - **Senha:** `minilele`
+2. Abra o navegador e acesse:
+   - `http://192.168.4.1`
+   - ou `http://minilele.local` (quando mDNS estiver disponível)
+3. Login padrão (se habilitado no firmware):
+   - **Usuário:** `admin`
+   - **Senha:** `admin`  
+     (recomendado alterar na primeira utilização)
 
-## 🕵️ Sniffer WiFi (Wall of Flippers)
+### 2.2 Abas principais
 
-1. Clique no botão **"Sniffer"**.
-2. O dispositivo entra em modo promíscuo.
-3. A tela exibirá uma lista em tempo real de endereços MAC próximos (dispositivos buscando WiFi).
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-4. Os dados são salvos em `/arquivos_cartao_sd/macs_detectados.txt`.
-=======
-4. Os dados são salvos em `/sniffed_macs.txt`.
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
-4. Os dados são salvos em `/arquivos_cartao_sd/macs_detectados.txt`.
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-=======
-4. Os dados são salvos em `/sniffed_macs.txt`.
->>>>>>> origin/waveshare-s3-amoled-review-complete
+- **Dashboard**
+  - Mostra status atual:
+    - Nível, XP, fome, felicidade
+    - Bateria, temperatura, uso de memória
+    - Estado da rede (AP/STA), IP, etc.
+- **Configurações**
+  - Ajuste fino do comportamento:
+    - Nome do Pet
+    - Idioma (mantendo PT‑BR como base)
+    - Modo de energia (Eco, Normal, Turbo)
+    - Parâmetros de scan, filtros, potência (quando aplicável)
+- **Ferramentas / Pentest**
+  - Controles para:
+    - Sniffer
+    - Deauth / ataques ativos
+    - Evil Portal
+    - Upload de handshakes
+- **Arquivos**
+  - Gerenciador de arquivos do cartão SD:
+    - Download de `.pcap`, logs e configs
+    - Upload de templates de portal e outros assets
+- **Logs**
+  - Logs de sistema em tempo real (via WebSocket quando disponível)
+  - Útil para debug de problemas
 
-## 📤 Manual Upload (WPA-SEC)
+---
 
-Para enviar handshakes capturados para quebra de senha online:
+## 3. Ferramentas de Pentest
 
-1.  Crie uma conta em [wpa-sec.stanev.org](https://wpa-sec.stanev.org).
-2.  Copie sua **Key**.
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-3.  Edite o arquivo `/arquivos_cartao_sd/wifi_config.txt` no cartão SD:
-=======
-3.  Edite o arquivo `wifi_config.txt` no cartão SD:
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
-3.  Edite o arquivo `/arquivos_cartao_sd/wifi_config.txt` no cartão SD:
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-=======
-3.  Edite o arquivo `wifi_config.txt` no cartão SD:
->>>>>>> origin/waveshare-s3-amoled-review-complete
-    ```
-    SSID=SeuWiFi
-    PASS=SuaSenha
-    KEY=ColeSuaKeyAqui
-    ```
-4.  No dispositivo, clique em **"Upload"**.
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-5.  O sistema conectará ao WiFi e enviará todos os arquivos `.pcap` da pasta `/capturas` e `/fila_envio`.
-=======
-4.  Se a vítima digitar a senha, ela será salva em `/captured_creds.txt` no SD.
-5.  O Pwnagotchi ficará feliz `(^_^)`.
+⚠️ **Atenção:** Sempre utilize APENAS em redes suas ou com autorização explícita.
 
-## 📤 Manual Upload
+### 3.1 Sniffer Wi‑Fi
 
-1.  O sistema captura handshakes passivamente ou via Sniffer.
-2.  Eles ficam salvos em `/handshakes/`.
-3.  Para enviar para cracking, clique em **"Upload"**.
-4.  O dispositivo conecta no WiFi definido em `wifi_config.txt` e envia os arquivos.
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
-5.  O sistema conectará ao WiFi e enviará todos os arquivos `.pcap` da pasta `/handshakes` e `/upload_queue`.
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
-5.  O sistema conectará ao WiFi e enviará todos os arquivos `.pcap` da pasta `/capturas` e `/fila_envio`.
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-=======
-5.  O sistema conectará ao WiFi e enviará todos os arquivos `.pcap` da pasta `/handshakes` e `/upload_queue`.
->>>>>>> origin/waveshare-s3-amoled-review-complete
+O **Sniffer** permite ver dispositivos próximos e capturar tráfego relevante.
 
-## 🎮 Gamificação
+- Ativação:
+  - Pelo botão correspondente na tela
+  - Pela aba de Ferramentas na WebUI
+- Quando ativo:
+  - A tela exibe endereços MAC e informações básicas
+  - O sistema salva capturas em arquivos `.pcap` na pasta:
 
-*   **XP:** Ganhe experiência usando voz e capturando redes.
-*   **Nível:** Suba de nível para desbloquear... respeito do seu Pwnagotchi.
-*   **Status:** Acompanhe seu progresso na tela principal.
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-=======
->>>>>>> origin/waveshare-s3-amoled-review-complete
+```text
+/capturas/
+```
 
-## 🔋 Economia de Energia
+- Log simples de MACs observados:
+  - `arquivos_cartao_sd/macs_detectados.txt`
 
-*   **Screen Saver:** A tela desliga automaticamente após 30 segundos de inatividade.
-*   **Acordar:** Toque na tela para ligar novamente.
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-=======
->>>>>>> origin/waveshare-s3-amoled-review-complete
+### 3.2 Ataques de Deauth
+
+O Lele pode, em modo laboratório, enviar quadros de deautenticação:
+
+- Finalidade:
+  - Forçar clientes a se reconectarem
+  - Aumentar a chance de capturar o handshake
+- Ativação:
+  - Manual, via WebUI
+  - Ou automaticamente, se o Pet estiver “com muita fome” (configurável)
+- Recomendações:
+  - Use em ambiente isolado
+  - Nunca em redes de terceiros sem permissão
+
+### 3.3 Evil Portal (Portal Cativo)
+
+O **Evil Portal** simula uma rede Wi‑Fi aberta com páginas de login falsas (educacionais).
+
+1. Ative o modo **Evil Portal** na WebUI ou pelo botão dedicado na interface do dispositivo.
+2. O Mini Lele cria uma rede Wi‑Fi aberta (ex.: `Cafe_Gratis_WiFi`).
+3. Ao conectar, o usuário é redirecionado para um template HTML da pasta:
+
+```text
+/arquivos_cartao_sd/evil_portal/
+```
+
+4. Se a vítima (em ambiente de teste controlado) digitar credenciais, elas são salvas em:
+
+```text
+/arquivos_cartao_sd/credenciais_capturadas.txt
+```
+
+> Esses templates são apenas para fins educacionais.  
+> Não utilize para roubar contas de serviços reais ou de terceiros.
+
+---
+
+## 4. Upload de Handshakes (WPA‑SEC e afins)
+
+O Mini Lele pode organizar e enviar handshakes para serviços de cracking online (ex.: `wpa-sec.stanev.org`).
+
+### 4.1 Fluxo básico
+
+1. Crie uma conta em  
+   https://wpa-sec.stanev.org  
+   e copie sua **KEY**.
+2. Edite o arquivo `wifi_config.txt` no SD:
+
+```text
+/arquivos_cartao_sd/wifi_config.txt
+```
+
+Conteúdo de exemplo:
+
+```text
+SSID=RedeParaUpload
+PASS=SenhaDaRede
+KEY=SuaKeyDoWpaSec
+```
+
+- `SSID` e `PASS`: rede Wi‑Fi que o Mini Lele usará para enviar arquivos
+- `KEY`: chave fornecida pelo wpa‑sec
+
+3. No dispositivo, acione **Upload**:
+   - Via WebUI (botão Upload)
+   - Ou via atalho na interface principal (se implementado no firmware)
+4. O Mini Lele:
+   - Tenta conectar à rede definida em `wifi_config.txt`
+   - Envia os arquivos `.pcap` contidos em:
+
+```text
+/capturas/
+```
+
+   - Pode mover arquivos enviados para:
+
+```text
+/fila_envio/
+```
+
+   (exatamente como o firmware estiver programado)
+
+---
+
+## 5. Comandos de voz (offline)
+
+O Mini Lele possui reconhecimento simples de padrões de áudio, sem depender de internet.
+
+### 5.1 Como usar
+
+1. Pressione o botão de **Voz** na interface (ou ative via WebUI, se disponível).
+2. Fale próximo ao microfone.
+3. O sistema analisa a energia sonora / número de “pulsos” (sílabas simples), e:
+   - Mapeia para comandos básicos (1 som, 2 sons, 3 sons, etc.)
+   - Opcionalmente toca respostas gravadas em arquivos WAV do SD
+
+### 5.2 Exemplos de mapeamento
+
+| Padrão de som      | Ação típica                 | Exemplo de palavra  |
+|--------------------|----------------------------|----------------------|
+| 1 som              | Alternar tela/lanterna     | “Luz”, “Oi”         |
+| 2 sons             | Relatório de status        | “Status”, “Le‑le”   |
+| 3 sons             | Falar nível de bateria     | “Bateria”, “Energia”|
+
+Além disso, comandos “fraseados” podem ser usados como gatilhos, por exemplo:
+
+- “**Ei Lele**” – acordar atenção do Pet
+- “**Status**” – forçar resumo falado do estado atual
+- “**Ataque**” – iniciar um ciclo de scan/ataques (quando permitido na config)
+
+> Os arquivos de áudio usados nas respostas ficam em `/arquivos_cartao_sd/tts/`.  
+> Veja `MISSING_ASSETS.md` para a lista completa.
+
+---
+
+## 6. Gamificação
+
+O Mini Lele registra e mostra o seu progresso de uso.
+
+- **XP:** ganho ao:
+  - Capturar handshakes
+  - Usar comandos de voz
+  - Manter o dispositivo ativo em modo de “exploração”
+- **Nível:** indica o “quão hacker” seu Lele se tornou:
+  - Níveis baixos: comportamento mais simples
+  - Níveis altos: animações mais “confiante” e reações extras
+- **Status:** exibido:
+  - Na tela principal do dispositivo
+  - Na aba de Dashboard da WebUI
+
+---
+
+## 7. Economia de energia e modos de sono
+
+Para não acabar com a bateria rapidamente, o Mini Lele conta com mecanismos automáticos.
+
+- **Screen Saver:**
+  - Após alguns segundos de inatividade (ex.: 30s), a tela escurece ou desliga
+  - Toque na tela ou use um botão para acordar
+- **Sono leve / Deep Sleep:**
+  - Em períodos longos sem atividade, o dispositivo pode entrar em modos de menor consumo
+  - O acordar pode ocorrer por:
+    - Toque na tela
+    - Movimento detectado pela IMU
+    - Botão físico
+
+> A lógica exata pode variar conforme a versão do firmware.  
+> Consulte `INSTALACAO.md` e `README.md` para detalhes mais técnicos sobre PMU e modos de energia.
+
+---
+
+## 8. Bateria e carregamento
+
+- O AXP2101 gerencia:
+  - Carregamento da bateria Li‑Po
+  - Proteções básicas (sobrecarga, etc.)
+- Recomendações:
+  - Use baterias de qualidade conhecida
+  - Não deixe o dispositivo em ambientes muito quentes
+  - Se a bateria estiver muito baixa:
+    - O Mini Lele pode reduzir brilho, desativar Wi‑Fi ou entrar em modo “zumbi” para se proteger
+
+---
+
+## 9. Boas práticas e ética
+
+- Use o Mini Lele apenas em:
+  - Redes suas
+  - Ambientes de teste controlados
+  - Laboratórios educacionais
+- Nunca:
+  - Ataque redes de terceiros sem permissão
+  - Use o Evil Portal para roubar credenciais reais
+- Se estiver ensinando outras pessoas:
+  - Reforce sempre a importância da ética e da legislação local
+
+---
+
+Se algo não estiver claro, consulte também:
+
+- `README.md` – visão geral do projeto
+- `INSTALACAO.md` – detalhes de instalação e preparação do SD
+- `MISSING_ASSETS.md` – lista de arquivos de áudio/imagens/templates
+- `TUTORIAL.md` – primeiros passos práticos com o Mini Lele
