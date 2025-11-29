@@ -1,6 +1,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
@@ -93,6 +94,8 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/pwntamagotchi-br-final-90-features
 #ifndef LV_CONF_H
 #define LV_CONF_H
 
@@ -147,8 +150,11 @@
 #define LV_USE_IMG              1
 
 #endif /*LV_CONF_H*/
+<<<<<<< HEAD
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+>>>>>>> origin/pwntamagotchi-br-final-90-features

@@ -20,6 +20,7 @@ lvgl/lvgl @ ^8.3.11
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 # PlatformIO specific
@@ -52,6 +53,8 @@ Arduino_GFX_Library
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+>>>>>>> origin/pwntamagotchi-br-final-90-features
 # JSON e Utilitários
 bblanchon/ArduinoJson @ ^6.21.3
 

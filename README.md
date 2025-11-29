@@ -1,6 +1,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
@@ -71,6 +72,8 @@ Divirta-se hackeando o planeta (com responsabilidade)!
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/pwntamagotchi-br-final-90-features
 # PwnTamagotchi BR (ESP32-S3 AMOLED)
 
 Projeto completo de Pentest Gamificado para Waveshare ESP32-S3 AMOLED.
@@ -93,8 +96,11 @@ Projeto completo de Pentest Gamificado para Waveshare ESP32-S3 AMOLED.
 - **Evolução:** Ganhe XP. Lvl 50 = PwnLord.
 
 Divirta-se!
+<<<<<<< HEAD
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+>>>>>>> origin/pwntamagotchi-br-final-90-features

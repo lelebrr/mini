@@ -12,10 +12,13 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/mini-lele-v2-rebrand
 =======
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+>>>>>>> origin/pwntamagotchi-br-final-90-features
 /**
  * WiFiTools.h
  * Ferramentas WiFi com caminhos traduzidos.
@@ -27,6 +30,7 @@
 #include <SD_MMC.h>
 #include "FS.h"
 #include <vector>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -101,11 +105,14 @@ struct WiFiDevice {
 >>>>>>> origin/mini-lele-v2-rebrand
 =======
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+>>>>>>> origin/pwntamagotchi-br-final-90-features
 
 #define MAX_SNIFFED 10
 
 struct SniffedDevice {
     String mac;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> origin/merge-ready-mini-lele-v2
@@ -131,10 +138,13 @@ struct SniffedDevice {
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+>>>>>>> origin/pwntamagotchi-br-final-90-features
     int rssi;
     unsigned long last_seen;
 };
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -347,6 +357,8 @@ public:
 >>>>>>> origin/mini-lele-v2-rebrand
 =======
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+>>>>>>> origin/pwntamagotchi-br-final-90-features
 std::vector<SniffedDevice> nearby_devices;
 
 class WiFiTools {
@@ -388,6 +400,7 @@ public:
                     f.close();
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/merge-ready-mini-lele-v2
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
@@ -411,10 +424,13 @@ public:
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+>>>>>>> origin/pwntamagotchi-br-final-90-features
                 }
             }
         }
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -444,6 +460,11 @@ public:
     static void startSniffer() {
         WiFi.disconnect();
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+
+    static void startSniffer() {
+        WiFi.disconnect();
+>>>>>>> origin/pwntamagotchi-br-final-90-features
         esp_wifi_set_promiscuous(true);
         esp_wifi_set_promiscuous_rx_cb(&promiscuous_rx_cb);
     }
@@ -486,6 +507,7 @@ public:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 std::vector<WiFiDevice> WiFiTools::nearby_devices;
 
 #endif
@@ -545,3 +567,6 @@ std::vector<WiFiDevice> WiFiTools::nearby_devices;
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+#endif
+>>>>>>> origin/pwntamagotchi-br-final-90-features

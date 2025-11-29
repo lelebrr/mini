@@ -8,6 +8,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "core/PwnPower.h"
 #include "core/Gamification.h"
 #include "WiFiTools.h"
@@ -75,6 +76,10 @@ const uint8_t deauthPacket[] = {
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+#include "core/PwnPower.h" // Power Manager
+#include "WiFiTools.h"
+>>>>>>> origin/pwntamagotchi-br-final-90-features
 
 struct AttackStats {
     int aps_scanned;
@@ -87,6 +92,7 @@ class PwnAttack {
 private:
     static AttackStats stats;
     static bool scan_active;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -174,10 +180,15 @@ private:
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+    static unsigned long last_scan_time;
+
+>>>>>>> origin/pwntamagotchi-br-final-90-features
 public:
     static void init() {
         stats.aps_scanned = 0;
         stats.handshakes_captured = 0;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -217,11 +228,16 @@ public:
 =======
         last_scan_time = millis();
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+        last_scan_time = millis();
+        // Sniffer iniciado apenas se permitido pelo modo de energia
+>>>>>>> origin/pwntamagotchi-br-final-90-features
         if (PwnPet::getStats().energy_mode > 0) {
             WiFiTools::startSniffer();
         }
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -338,6 +354,13 @@ public:
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+    static bool isRunning() { return scan_active; }
+
+    // Loop principal de ataque
+    static void tick() {
+        // Otimização 15: Desliga rádio se bateria crítica
+>>>>>>> origin/pwntamagotchi-br-final-90-features
         if (PwnPower::isCritical()) {
             if (scan_active) {
                 esp_wifi_stop();
@@ -347,13 +370,20 @@ public:
             return;
         }
 
+<<<<<<< HEAD
         int energy = PwnPet::getStats().energy_mode;
         int interval = (energy == 2) ? 100 : (energy == 1 ? 500 : 2000);
+=======
+        // Otimização 6: Ajusta intensidade baseado no modo de energia
+        int energy = PwnPet::getStats().energy_mode;
+        int interval = (energy == 2) ? 100 : (energy == 1 ? 500 : 2000); // ms entre scans/ticks
+>>>>>>> origin/pwntamagotchi-br-final-90-features
 
         static unsigned long last_tick = 0;
         if (millis() - last_tick < interval) return;
         last_tick = millis();
 
+<<<<<<< HEAD
         // Otimização 3: Duty Cycle do Marauder
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -750,10 +780,45 @@ public:
         // Inicia Evil Portal
         EvilPortal::start(ssid.c_str(), "/evil_portal/01_wifi_update.html");
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+        // Lógica de "Sentinela" / Walk Mode
+        static int last_ap_count = 0;
+        int current_ap_count = WiFiTools::nearby_devices.size();
+
+        // Otimização 12: Cache de PSRAM (Simulado pelo WiFiTools vector)
+
+        if (current_ap_count > last_ap_count + 5) {
+            Serial.println("[Attack] Ambiente Rico detectado!");
+        }
+        last_ap_count = current_ap_count;
+
+        // Otimização 3: Marauder Duty Cycle
+        // Se Fome > 90 (Muito faminto), ataca agressivamente
+        // Se Fome < 20 (Cheio), apenas escuta passivamente
+        if (PwnPet::getHunger() > 80) {
+             // Ataque ativo (Deauth broadcast simulado)
+             // if (millis() % 10000 == 0) deauthTarget("FF:FF:FF:FF:FF:FF");
+        }
+    }
+
+    static void deauthTarget(String bssid) {
+        Serial.printf("[Attack] Deauthing %s\n", bssid.c_str());
+        // Simulação de captura
+        // Na prática, injetar frames aqui
+
+        // Se sucesso (simulado):
+        PwnPet::addHandshake(false);
+    }
+
+    static void evilTwin(String ssid) {
+        WiFi.softAP(ssid.c_str());
+        // Inicia DNS Server...
+>>>>>>> origin/pwntamagotchi-br-final-90-features
     }
 };
 
 AttackStats PwnAttack::stats;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -770,5 +835,9 @@ unsigned long PwnAttack::last_scan_time = 0;
 bool PwnAttack::scan_active = true;
 unsigned long PwnAttack::last_scan_time = 0;
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+bool PwnAttack::scan_active = true;
+unsigned long PwnAttack::last_scan_time = 0;
+>>>>>>> origin/pwntamagotchi-br-final-90-features
 
 #endif

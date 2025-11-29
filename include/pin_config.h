@@ -14,6 +14,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * Mini Lele - Waveshare ESP32-S3-Touch-AMOLED-1.8
 	 * Hardware: SH8601 QSPI, FT3168 I2C, AXP2101 I2C, ES8311 I2S
 	 */
@@ -35,16 +36,22 @@
 >>>>>>> origin/mini-lele-v2-rebrand
 =======
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+>>>>>>> origin/pwntamagotchi-br-final-90-features
  * Mapeamento de Pinos para Waveshare ESP32-S3-Touch-AMOLED-1.8
  *
  * Hardware:
  * - MCU: ESP32-S3 (N16R8)
  * - Tela: 1.8" AMOLED (SH8601) - QSPI
 <<<<<<< HEAD
+<<<<<<< HEAD
  * - Touch: FT3168 ou GT1151 - I2C
 =======
  * - Touch: FT3168 - I2C
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+ * - Touch: FT3168 ou GT1151 - I2C
+>>>>>>> origin/pwntamagotchi-br-final-90-features
  * - PMU: AXP2101 - I2C
  * - Áudio: ES8311 - I2S
  * - IMU: QMI8658 - I2C
@@ -59,6 +66,7 @@
 #define LCD_SDIO1  7   // Data 1
 #define LCD_SDIO2  8   // Data 2
 #define LCD_SDIO3  9   // Data 3
+<<<<<<< HEAD
 <<<<<<< HEAD
 #define LCD_RST    -1  // Controlado pelo Expander IO Pin 0
 <<<<<<< HEAD
@@ -114,10 +122,14 @@
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+#define LCD_RST    -1  // Controlado pelo Expander IO Pin 0
+>>>>>>> origin/pwntamagotchi-br-final-90-features
 
 #define LCD_WIDTH  368
 #define LCD_HEIGHT 448
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -189,6 +201,9 @@
 // --- Barramento I2C (Interno) ---
 // Compartilhado por: Touch, PMU, Expansor IO, IMU
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+// --- Barramento I2C (Interno) ---
+>>>>>>> origin/pwntamagotchi-br-final-90-features
 #define IIC_SDA    38
 #define IIC_SCL    39
 #define D_IIC_SDA  38
@@ -196,6 +211,9 @@
 
 // Endereços I2C dos Dispositivos
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/pwntamagotchi-br-final-90-features
 #define AXP2101_SLAVE_ADDRESS 0x34
 #define FT3168_DEVICE_ADDRESS 0x38
 #define GT1151_DEVICE_ADDRESS 0x14 // Endereço comum para GT1151 (ou 0x5D)
@@ -211,6 +229,7 @@
 #define MCLKPIN    2
 
 // --- Cartão SD (SDMMC Slot 1) ---
+<<<<<<< HEAD
 =======
 #define AXP2101_SLAVE_ADDRESS 0x34         // Gerenciamento de Energia
 #define FT3168_DEVICE_ADDRESS 0x38         // Controlador de Touch
@@ -234,16 +253,22 @@
 // --- Cartão SD (SDMMC Slot 1) ---
 // Modo 1-Bit (Padrão da placa)
 >>>>>>> origin/pwn-tamagotchi-br-release
+=======
+>>>>>>> origin/pwntamagotchi-br-final-90-features
 #define SDMMC_CLK  12
 #define SDMMC_CMD  11
 #define SDMMC_DATA 13
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/pwntamagotchi-br-final-90-features
 // --- Cores Cyberpunk BR ---
 #define COLOR_NEON_PURPLE 0x801F // Roxo
 #define COLOR_NEON_GREEN  0x07E0 // Verde Matrix
 #define COLOR_NEON_YELLOW 0xFFE0 // Amarelo
 #define COLOR_DARK_BG     0x0000
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -474,3 +499,5 @@
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+>>>>>>> origin/pwntamagotchi-br-final-90-features

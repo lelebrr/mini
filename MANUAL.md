@@ -1,6 +1,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
@@ -60,6 +61,8 @@ Acesse via navegador para controle total.
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/pwntamagotchi-br-final-90-features
 # 📖 Manual de Uso
 
 ## 🗣️ Comandos de Voz (Offline)
@@ -114,8 +117,11 @@ Para enviar handshakes capturados para quebra de senha online:
 
 *   **Screen Saver:** A tela desliga automaticamente após 30 segundos de inatividade.
 *   **Acordar:** Toque na tela para ligar novamente.
+<<<<<<< HEAD
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+>>>>>>> origin/pwntamagotchi-br-final-90-features

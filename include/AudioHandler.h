@@ -7,14 +7,18 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+>>>>>>> origin/pwntamagotchi-br-final-90-features
  * Otimizações:
  * 5. Mute hardware quando não em uso.
  * 26. Desligar DSP Task (via controle de estado).
  * 10. Sample rate configurável.
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -23,6 +27,8 @@
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+>>>>>>> origin/pwntamagotchi-br-final-90-features
  */
 
 #include <Arduino.h>
@@ -34,6 +40,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Definição de pinos de controle de áudio (assumindo Expander)
 extern ESP_IOExpander *expander; // Disponível no main.cpp
 
@@ -49,6 +56,11 @@ extern ESP_IOExpander *expander; // Disponível no main.cpp
 extern ESP_IOExpander *expander; // Disponível no main.cpp
 
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+// Definição de pinos de controle de áudio (assumindo Expander)
+extern ESP_IOExpander *expander; // Disponível no main.cpp
+
+>>>>>>> origin/pwntamagotchi-br-final-90-features
 struct WavHeader {
     char riff[4];             // "RIFF"
     uint32_t overall_size;    // Tamanho do arquivo - 8
@@ -69,10 +81,13 @@ class AudioHandler {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+>>>>>>> origin/pwntamagotchi-br-final-90-features
 private:
     static void setAmpPower(bool on) {
         if (expander) {
@@ -89,6 +104,7 @@ public:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 public:
     static void playWav(const char* filename) {
@@ -97,6 +113,8 @@ public:
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+>>>>>>> origin/pwntamagotchi-br-final-90-features
         // Ajuste de caminho para nova estrutura em Português
         String path = String("/arquivos_cartao_sd") + filename;
 
@@ -106,6 +124,7 @@ public:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             setAmpPower(false);
 =======
 >>>>>>> origin/pwn-tamagotchi-br-release
@@ -115,6 +134,9 @@ public:
 =======
             setAmpPower(false);
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+            setAmpPower(false);
+>>>>>>> origin/pwntamagotchi-br-final-90-features
             return;
         }
 
@@ -127,10 +149,13 @@ public:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+>>>>>>> origin/pwntamagotchi-br-final-90-features
             setAmpPower(false);
             return;
         }
@@ -140,6 +165,7 @@ public:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
             return;
         }
@@ -149,10 +175,13 @@ public:
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+>>>>>>> origin/pwntamagotchi-br-final-90-features
         size_t bytes_read = 0;
         size_t bytes_written = 0;
         uint8_t buffer[1024];
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -164,6 +193,8 @@ public:
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+>>>>>>> origin/pwntamagotchi-br-final-90-features
         while (file.available()) {
             bytes_read = file.read(buffer, sizeof(buffer));
             i2s_write(I2S_NUM_0, buffer, bytes_read, &bytes_written, portMAX_DELAY);
@@ -173,10 +204,13 @@ public:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+>>>>>>> origin/pwntamagotchi-br-final-90-features
         // Zero buffer para evitar pop e flush
         memset(buffer, 0, sizeof(buffer));
         i2s_write(I2S_NUM_0, buffer, sizeof(buffer), &bytes_written, portMAX_DELAY);
@@ -192,6 +226,7 @@ public:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         memset(buffer, 0, sizeof(buffer));
         i2s_write(I2S_NUM_0, buffer, sizeof(buffer), &bytes_written, portMAX_DELAY);
@@ -203,6 +238,8 @@ public:
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+>>>>>>> origin/pwntamagotchi-br-final-90-features
         String path = String("/arquivos_cartao_sd") + filename;
 
         File file = SD_MMC.open(path, FILE_WRITE);
@@ -289,6 +326,7 @@ public:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         // Desligar ou colocar em idle se necessário
 =======
 >>>>>>> origin/pwn-tamagotchi-br-release
@@ -298,6 +336,9 @@ public:
 =======
         // Desligar ou colocar em idle se necessário
 >>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+=======
+        // Desligar ou colocar em idle se necessário
+>>>>>>> origin/pwntamagotchi-br-final-90-features
         return true;
     }
 };
