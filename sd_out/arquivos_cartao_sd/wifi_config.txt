@@ -1,0 +1,1 @@
+SSID=SuaRede\nPASS=SuaSenha\nKEY=WpaSecKey
