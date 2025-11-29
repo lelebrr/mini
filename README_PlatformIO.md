@@ -27,7 +27,7 @@ O projeto já vem preparado para PlatformIO. Os arquivos principais são:
     - Flags de compilação (otimizações, PSRAM, LVGL, USB CDC)
     - Bibliotecas necessárias (via `lib_deps`)
 - `platformio_override.ini`
-  - Arquivo opcional para ajustes locais (não versionado por padrão)
+  - Arquivo opcional para ajustes locais (em muitos projetos não é versionado por padrão)
 - `lib_deps.txt`
   - Lista de dependências de bibliotecas externas (usada em algumas versões de configuração)
 - `sdkconfig.defaults`
@@ -107,7 +107,7 @@ Para evitar conflitos com o `platformio.ini` original, utilize o arquivo de over
    upload_speed = 460800
    ```
 
-3. PlatformIO mescla as configurações de `platformio.ini` com `platformio.local.ini`.
+3. Para que o PlatformIO mescle as configurações de `platformio.ini` com esse arquivo extra (como `platformio.local.ini` ou `platformio_override.ini`), é necessário adicioná-lo na opção `extra_configs` dentro de uma seção `[platformio]` do `platformio.ini` (veja a documentação oficial).
 
 > Mantenha `platformio.ini` o mais próximo possível do upstream; faça ajustes locais via override quando puder.
 

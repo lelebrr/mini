@@ -12,7 +12,7 @@ Este documento explica, em detalhes, como o display AMOLED e o touchscreen da pl
 
 ## Índice
 
-1. [Display AMOLED 1.8"](##1-display-amoled-18)
+1. [Display AMOLED 1.8"]( #1-display-amoled-18)
    - [Especificações técnicas](#especificações-técnicas)
    - [Pinagem do display](#pinagem-do-display)
    - [Exemplo de inicialização com Arduino_GFX](#exemplo-de-inicialização-com-arduino_gfx)
