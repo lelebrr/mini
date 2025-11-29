@@ -18,6 +18,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
@@ -1548,6 +1549,8 @@ void loop() {
 >>>>>>> origin/waveshare-s3-amoled-ptbr-final
 =======
 >>>>>>> origin/waveshare-s3-amoled-review-complete
+=======
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
 #include "Arduino_GFX_Library.h"
 #include "Arduino_DriveBus_Library.h"
 #include <ESP_IOExpander_Library.h>
@@ -1556,6 +1559,7 @@ void loop() {
 #include <SD_MMC.h>
 #include "es8311.h"
 #include <driver/i2s.h>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1661,12 +1665,15 @@ SemaphoreHandle_t gui_mutex;
 // --- Objects ---
 >>>>>>> origin/waveshare-s3-amoled-offline-voice
 =======
+=======
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
 #include "XPowersLib.h"
 #include <SensorQMI8658.hpp>
 #include <WiFi.h>
 #include <BLEDevice.h>
 #include <BLEUtils.h>
 #include <BLEServer.h>
+<<<<<<< HEAD
 
 // --- Objetos Globais ---
 >>>>>>> origin/waveshare-s3-amoled-ptbr-final
@@ -1676,6 +1683,11 @@ SemaphoreHandle_t gui_mutex;
 
 // --- Objects ---
 >>>>>>> origin/waveshare-s3-amoled-review-complete
+=======
+#include "AudioHandler.h"
+
+// --- Objetos Globais ---
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
 Arduino_DataBus *bus = new Arduino_ESP32QSPI(
   LCD_CS /* CS */, LCD_SCLK /* SCK */, LCD_SDIO0 /* SDIO0 */, LCD_SDIO1 /* SDIO1 */,
   LCD_SDIO2 /* SDIO2 */, LCD_SDIO3 /* SDIO3 */);
@@ -1687,6 +1699,7 @@ std::shared_ptr<Arduino_IIC_DriveBus> IIC_Bus =
   std::make_shared<Arduino_HWIIC>(IIC_SDA, IIC_SCL, &Wire);
 
 ESP_IOExpander *expander = NULL;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1719,10 +1732,13 @@ ESP_IOExpander *expander = NULL;
 >>>>>>> origin/waveshare-s3-amoled-ptbr-final
 =======
 >>>>>>> origin/waveshare-s3-amoled-review-complete
+=======
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
 XPowersPMU power;
 SensorQMI8658 qmi;
 IMUdata acc;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 // --- Touch ---
@@ -1759,6 +1775,9 @@ XPowersPMU power;
 =======
 // --- Touch ---
 >>>>>>> origin/waveshare-s3-amoled-review-complete
+=======
+// --- Touch (FT3168) ---
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
 void Arduino_IIC_Touch_Interrupt(void);
 std::unique_ptr<Arduino_IIC> FT3168(new Arduino_FT3x68(IIC_Bus, FT3168_DEVICE_ADDRESS,
                                                        DRIVEBUS_DEFAULT_VALUE, TP_INT, Arduino_IIC_Touch_Interrupt));
@@ -1778,27 +1797,42 @@ void Arduino_IIC_Touch_Interrupt(void) {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/waveshare-s3-amoled-fix-v2
 // LVGL Buffers
 =======
 // --- Buffers LVGL ---
 >>>>>>> origin/waveshare-s3-amoled-ptbr-final
+=======
+// --- Buffers LVGL ---
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
 static lv_disp_draw_buf_t draw_buf;
 static lv_color_t *buf1;
 static lv_color_t *buf2;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 // --- LVGL Functions ---
 =======
+=======
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
 // --- UI Objects ---
 lv_obj_t *label_status;
 lv_obj_t *label_wifi;
 lv_obj_t *label_battery;
+<<<<<<< HEAD
 
 // --- Funções Auxiliares ---
 
 >>>>>>> origin/waveshare-s3-amoled-ptbr-final
+=======
+lv_obj_t *btn_voice;
+lv_obj_t *label_btn;
+
+// --- Funções Auxiliares ---
+
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
 #if LV_USE_LOG != 0
 void my_print(const char *buf) {
   Serial.printf(buf);
@@ -1810,6 +1844,7 @@ void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color
   uint32_t w = (area->x2 - area->x1 + 1);
   uint32_t h = (area->y2 - area->y1 + 1);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -1936,11 +1971,14 @@ void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color
 >>>>>>> origin/waveshare-s3-amoled-ptbr-final
 =======
 >>>>>>> origin/waveshare-s3-amoled-review-complete
+=======
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
 #if (LV_COLOR_16_SWAP != 0)
   gfx->draw16bitBeRGBBitmap(area->x1, area->y1, (uint16_t *)&color_p->full, w, h);
 #else
   gfx->draw16bitRGBBitmap(area->x1, area->y1, (uint16_t *)&color_p->full, w, h);
 #endif
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1977,6 +2015,9 @@ void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color
 >>>>>>> origin/waveshare-s3-amoled-ptbr-final
 =======
 >>>>>>> origin/waveshare-s3-amoled-review-complete
+=======
+
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
   lv_disp_flush_ready(disp);
 }
 
@@ -1994,10 +2035,13 @@ void my_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data) {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/waveshare-s3-amoled-fix-v2
 =======
 >>>>>>> origin/waveshare-s3-amoled-ptbr-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
 
     FT3168->IIC_Interrupt_Flag = true;
 
@@ -2005,6 +2049,7 @@ void my_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data) {
         data->state = LV_INDEV_STATE_PR;
         data->point.x = touchX;
         data->point.y = touchY;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -2060,11 +2105,14 @@ void my_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data) {
 =======
         last_interaction = millis(); // Reset screensaver
 >>>>>>> origin/waveshare-s3-amoled-review-complete
+=======
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
     } else {
         data->state = LV_INDEV_STATE_REL;
     }
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2085,12 +2133,42 @@ esp_err_t audio_init() {
   if (!es_handle) {
       Serial.println("ES8311 Create Failed");
 =======
+=======
+// --- Evento de Voz ---
+static void event_handler_voice_btn(lv_event_t * e) {
+    lv_event_code_t code = lv_event_get_code(e);
+    if(code == LV_EVENT_CLICKED) {
+        Serial.println("Botao Voz Clicado");
+        lv_label_set_text(label_btn, "Ouvindo...");
+        lv_timer_handler(); // Force update UI
+
+        // 1. Play Prompt
+        playWav("/listening_pt.wav");
+
+        // 2. Record
+        lv_label_set_text(label_btn, "Gravando...");
+        lv_timer_handler();
+        recordWav("/recording.wav", 4); // 4 seconds
+
+        // 3. Play Ack
+        lv_label_set_text(label_btn, "Processando...");
+        lv_timer_handler();
+        playWav("/success_pt.wav");
+
+        lv_label_set_text(label_btn, "Falar Comando");
+    }
+}
+
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
 // --- Inicialização de Áudio ---
 esp_err_t audio_init() {
   es8311_handle_t es_handle = es8311_create(0, ES8311_ADDRRES_0);
   if (!es_handle) {
       Serial.println("Erro ao criar ES8311");
+<<<<<<< HEAD
 >>>>>>> origin/waveshare-s3-amoled-ptbr-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
       return ESP_FAIL;
   }
 
@@ -2103,6 +2181,7 @@ esp_err_t audio_init() {
   };
 
   if (es8311_init(es_handle, &es_clk, ES8311_RESOLUTION_16, ES8311_RESOLUTION_16) != ESP_OK) {
+<<<<<<< HEAD
 <<<<<<< HEAD
       Serial.println("ES8311 Init Failed");
 <<<<<<< HEAD
@@ -2121,6 +2200,8 @@ esp_err_t audio_init() {
 
   // 2. I2S Init
 =======
+=======
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
       Serial.println("Falha na inicializacao do ES8311");
   }
 
@@ -2128,7 +2209,10 @@ esp_err_t audio_init() {
   es8311_microphone_gain_set(es_handle, ES8311_MIC_GAIN_18DB);
   es8311_microphone_config(es_handle, false);
 
+<<<<<<< HEAD
 >>>>>>> origin/waveshare-s3-amoled-ptbr-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
   i2s_config_t i2s_config = {
     .mode = (i2s_mode_t)(I2S_MODE_MASTER | I2S_MODE_TX | I2S_MODE_RX),
     .sample_rate = 16000,
@@ -2145,9 +2229,13 @@ esp_err_t audio_init() {
 
   i2s_pin_config_t pin_config = {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     .mck_io_num = MCLKPIN, // MCLK Output
 >>>>>>> origin/waveshare-s3-amoled-ptbr-final
+=======
+    .mck_io_num = MCLKPIN, // MCLK Output
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
     .bck_io_num = BCLKPIN,
     .ws_io_num = WSPIN,
     .data_out_num = DOPIN,
@@ -2156,14 +2244,19 @@ esp_err_t audio_init() {
 
   if (i2s_driver_install(I2S_NUM_0, &i2s_config, 0, NULL) != ESP_OK) {
 <<<<<<< HEAD
+<<<<<<< HEAD
       Serial.println("I2S Driver Install Failed");
 =======
       Serial.println("Falha ao instalar driver I2S");
 >>>>>>> origin/waveshare-s3-amoled-ptbr-final
+=======
+      Serial.println("Falha ao instalar driver I2S");
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
       return ESP_FAIL;
   }
 
   if (i2s_set_pin(I2S_NUM_0, &pin_config) != ESP_OK) {
+<<<<<<< HEAD
 <<<<<<< HEAD
       Serial.println("I2S Set Pin Failed");
       return ESP_FAIL;
@@ -2854,6 +2947,8 @@ void setup() {
     // Set charging voltage/current if needed (defaults usually safe)
     power.setChargeTargetVoltage(3); // From demo
 =======
+=======
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
       Serial.println("Falha ao configurar pinos I2S");
       return ESP_FAIL;
   }
@@ -2879,7 +2974,11 @@ void wifi_scan_task(void * parameter) {
         }
 
         // Update UI (Need mutex ideally, but for demo simpler)
+<<<<<<< HEAD
         lv_label_set_text(label_wifi, wifi_list.c_str());
+=======
+        if (label_wifi) lv_label_set_text(label_wifi, wifi_list.c_str());
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
 
         vTaskDelay(10000 / portTICK_PERIOD_MS); // Scan every 10s
     }
@@ -2900,12 +2999,16 @@ void setup() {
 
     // Configurações de Carregamento
     power.setChargeTargetVoltage(3);
+<<<<<<< HEAD
 >>>>>>> origin/waveshare-s3-amoled-ptbr-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
     power.enableBattDetection();
     power.enableVbusVoltageMeasure();
     power.enableBattVoltageMeasure();
     power.enableSystemVoltageMeasure();
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     // IMPORTANT: Enable voltages for Screen/Peripherals
     // The demo doesn't explicitly enable DCDC/ALDOs, implying defaults are ON or controlled via Expander?
@@ -2932,10 +3035,23 @@ void setup() {
 
   // 2. IO Expander Init (TCA9554)
 >>>>>>> origin/waveshare-s3-amoled-ptbr-final
+=======
+    // Habilitar Rails de Energia
+    power.enableALDO1();
+    power.enableALDO2();
+    power.enableALDO3();
+    power.enableALDO4();
+    power.enableBLDO1();
+    power.enableBLDO2();
+  }
+
+  // 2. IO Expander Init (TCA9554)
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
   expander = new ESP_IOExpander_TCA95xx_8bit((i2c_port_t)0, ESP_IO_EXPANDER_I2C_TCA9554_ADDRESS_000, IIC_SCL, IIC_SDA);
   if(expander) {
       expander->init();
       expander->begin();
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 <<<<<<< HEAD
@@ -2965,28 +3081,38 @@ void setup() {
 
 =======
 >>>>>>> origin/waveshare-s3-amoled-ptbr-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
       expander->pinMode(0, OUTPUT);
       expander->pinMode(1, OUTPUT);
       expander->pinMode(2, OUTPUT);
       expander->pinMode(6, OUTPUT);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
       // Reset/Power Cycle Sequence
 =======
 >>>>>>> origin/waveshare-s3-amoled-ptbr-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
       expander->digitalWrite(0, LOW);
       expander->digitalWrite(1, LOW);
       expander->digitalWrite(2, LOW);
       expander->digitalWrite(6, LOW);
 <<<<<<< HEAD
+<<<<<<< HEAD
       delay(50); // Increased delay
 =======
       delay(50);
 >>>>>>> origin/waveshare-s3-amoled-ptbr-final
+=======
+      delay(50);
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
       expander->digitalWrite(0, HIGH);
       expander->digitalWrite(1, HIGH);
       expander->digitalWrite(2, HIGH);
       expander->digitalWrite(6, HIGH);
+<<<<<<< HEAD
 <<<<<<< HEAD
 
       Serial.println("IO Expander Initialized & Power Sequence Done");
@@ -3031,6 +3157,8 @@ void setup() {
 
   // Init LVGL
 =======
+=======
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
       Serial.println("IO Expander Inicializado");
   } else {
       Serial.println("Falha no IO Expander");
@@ -3091,7 +3219,10 @@ void setup() {
   Serial.println("Bluetooth Iniciado");
 
   // 9. LVGL Init
+<<<<<<< HEAD
 >>>>>>> origin/waveshare-s3-amoled-ptbr-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
   lv_init();
   uint32_t screenWidth = gfx->width();
   uint32_t screenHeight = gfx->height();
@@ -3115,6 +3246,7 @@ void setup() {
   indev_drv.read_cb = my_touchpad_read;
   lv_indev_drv_register(&indev_drv);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
   // UI
   lv_obj_t *label = lv_label_create(lv_scr_act());
@@ -4002,6 +4134,8 @@ void loop() {
 =======
 >>>>>>> origin/waveshare-s3-amoled-offline-voice
 =======
+=======
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
   // --- UI Layout (Portuguese) ---
   lv_obj_t *scr = lv_scr_act();
 
@@ -4020,14 +4154,37 @@ void loop() {
   lv_label_set_text(label_battery, "Bateria: --%");
   lv_obj_align(label_battery, LV_ALIGN_TOP_RIGHT, -10, 40);
 
+<<<<<<< HEAD
   // WiFi Info
   label_wifi = lv_label_create(scr);
   lv_label_set_text(label_wifi, "Escaneando WiFi...");
   lv_obj_align(label_wifi, LV_ALIGN_CENTER, 0, 40);
+=======
+  // Botao de Voz
+  btn_voice = lv_btn_create(scr);
+  lv_obj_align(btn_voice, LV_ALIGN_CENTER, 0, 20);
+  lv_obj_set_size(btn_voice, 200, 60);
+  lv_obj_add_event_cb(btn_voice, event_handler_voice_btn, LV_EVENT_ALL, NULL);
+
+  label_btn = lv_label_create(btn_voice);
+  lv_label_set_text(label_btn, "Falar Comando");
+  lv_obj_center(label_btn);
+
+  // WiFi Info
+  label_wifi = lv_label_create(scr);
+  lv_label_set_text(label_wifi, "Escaneando WiFi...");
+  lv_obj_align(label_wifi, LV_ALIGN_BOTTOM_MID, 0, -20);
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
 
   // Start WiFi Task
   xTaskCreate(wifi_scan_task, "WiFiScan", 4096, NULL, 1, NULL);
 
+<<<<<<< HEAD
+=======
+  // Play Boot Sound
+  playWav("/boot_pt.wav");
+
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
   Serial.println("Setup Completo - UI em Portugues");
 }
 
@@ -4045,7 +4202,10 @@ void loop() {
   }
 
   delay(5);
+<<<<<<< HEAD
 >>>>>>> origin/waveshare-s3-amoled-ptbr-final
 =======
 >>>>>>> origin/waveshare-s3-amoled-review-complete
+=======
+>>>>>>> origin/waveshare-s3-amoled-voice-ptbr
 }
