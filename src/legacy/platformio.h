@@ -1,10 +1,14 @@
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
  * ARQUIVO LEGADO - MANTIDO PARA REFERÊNCIA
  */
 
 /**
  * platformio.h: Configurações específicas do PlatformIO (se necessário)
+<<<<<<< HEAD
 =======
  * PlatformIO specific definitions for Minigotchi ESP32
  * Copyright (C) 2024 dj1ch
@@ -22,17 +26,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
  */
 
 #ifndef PLATFORMIO_H
 #define PLATFORMIO_H
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 #include <Arduino.h>
 
 void platformio_init();
 
 #endif
+<<<<<<< HEAD
 =======
 #ifdef ARDUINO
   #ifdef ESP32
@@ -99,3 +109,5 @@ void platformio_init();
 
 #endif // PLATFORMIO_H
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406

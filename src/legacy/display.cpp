@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 /*
  * ARQUIVO LEGADO - MANTIDO PARA REFERÊNCIA
  */
@@ -51,6 +54,7 @@ void Display::updateDisplay(String face) {
     // gfx_display->setCursor(10, 10);
     // gfx_display->println(face);
   }
+<<<<<<< HEAD
 =======
 #include "display.h"
 #include "pin_config.h"
@@ -137,4 +141,6 @@ namespace Display {
         }
     }
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 }

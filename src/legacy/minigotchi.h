@@ -1,10 +1,14 @@
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
  * ARQUIVO LEGADO - MANTIDO PARA REFERÊNCIA
  */
 
 /**
  * minigotchi.h: arquivo de cabeçalho para minigotchi.cpp
+<<<<<<< HEAD
 =======
  * Minigotchi: An even smaller Pwnagotchi
  * Copyright (C) 2024 dj1ch
@@ -26,18 +30,26 @@
 /**
  * minigotchi.h: header files for minigotchi.cpp
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
  */
 
 #ifndef MINIGOTCHI_H
 #define MINIGOTCHI_H
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 #include <Arduino.h>
 #include <esp_wifi.h>
 #include <nvs_flash.h>
 
+<<<<<<< HEAD
 =======
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 #include "ble.h"
 #include "channel.h"
 #include "config.h"
@@ -45,6 +57,9 @@
 #include "display.h"
 #include "frame.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 #include "mood.h"
 #include "parasite.h"
 #include "pwnagotchi.h"
@@ -69,6 +84,7 @@ public:
   static void monStart();
   static void monStop();
   static void epoch();
+<<<<<<< HEAD
 =======
 #include "freertos/FreeRTOS.h"
 #include "freertos/queue.h"
@@ -98,11 +114,14 @@ public:
   static void monStart();
   static void monStop();
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
   static void cycle();
   static void detect();
   static void deauth();
   static void advertise();
   static void spam();
+<<<<<<< HEAD
 <<<<<<< HEAD
 };
 
@@ -123,3 +142,8 @@ private:
 
 #endif // MINIGOTCHI_H
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+};
+
+#endif
+>>>>>>> origin/waveshare-s3-amoled-full-review-406

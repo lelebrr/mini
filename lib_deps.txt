@@ -23,6 +23,7 @@ lvgl/lvgl @ ^8.3.11
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 # PlatformIO specific
@@ -68,6 +69,8 @@ Arduino_GFX_Library
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 =======
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 # JSON e Utilitários
 bblanchon/ArduinoJson @ ^6.21.3
 
@@ -82,6 +85,7 @@ me-no-dev/AsyncTCP @ ^1.1.1
 https://github.com/me-no-dev/ESPAsyncWebServer.git
 WiFiClientSecure
 HTTPClient
+<<<<<<< HEAD
 =======
 bblanchon/ArduinoJson @ ^6.21.3
 Arduino_GFX_Library
@@ -119,3 +123,5 @@ https://github.com/lewisxhe/XPowersLib
 >>>>>>> origin/waveshare-s3-amoled-fix-v2
 =======
 >>>>>>> origin/waveshare-s3-amoled-full-plugins
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406

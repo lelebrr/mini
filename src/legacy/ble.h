@@ -1,10 +1,14 @@
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
  * ARQUIVO LEGADO - MANTIDO PARA REFERÊNCIA
  */
 
 /**
  * ble.h: Arquivo de cabeçalho para ble.cpp
+<<<<<<< HEAD
 =======
  * Minigotchi: An even smaller Pwnagotchi
  * Copyright (C) 2024 dj1ch
@@ -26,22 +30,30 @@
 /**
  * ble.h: header files for ble.cpp
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
  */
 
 #ifndef BLE_H
 #define BLE_H
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include "config.h"
 #include "mood.h"
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 #include <Arduino.h>
 #include <BLEDevice.h>
 #include <BLEServer.h>
 #include <BLEUtils.h>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 #include "config.h"
 #include "display.h"
 #include "mood.h"
@@ -63,6 +75,7 @@ public:
 };
 
 #endif
+<<<<<<< HEAD
 =======
 // forward declaration of mood class
 class Mood;
@@ -86,3 +99,5 @@ private:
 
 #endif // BLE_H
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406

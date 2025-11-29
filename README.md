@@ -7,6 +7,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
@@ -146,6 +147,11 @@ Divirta-se!
 
 ![Status](https://img.shields.io/badge/Status-100%25%20Complete-brightgreen)
 >>>>>>> origin/waveshare-s3-amoled-final-polish
+=======
+# Waveshare ESP32-S3-Touch-AMOLED-1.8 "Pwnagotchi Edition"
+
+![Status](https://img.shields.io/badge/Status-100%25%20Complete-brightgreen)
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 ![Language](https://img.shields.io/badge/Language-Portuguese%20BR-blue)
 ![Platform](https://img.shields.io/badge/Platform-ESP32--S3-orange)
 
@@ -157,8 +163,11 @@ Este repositório contém o firmware completo para transformar o **Waveshare ESP
 *   **Evil Portal:** Crie pontos de acesso falsos (Phishing) com 10 templates humorísticos.
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/waveshare-s3-amoled-final-polish
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 *   **WiFi Sniffer:** Veja dispositivos próximos (Wall of Flippers Style) e salve logs.
 *   **Gamificação:** Ganhe XP e suba de nível usando o dispositivo.
 *   **Dashboard:** Monitoramento em tempo real de CPU, RAM, Bateria e Temperatura.
@@ -166,6 +175,9 @@ Este repositório contém o firmware completo para transformar o **Waveshare ESP
 *   **Personalidade:** Rostos ASCII (Faces) que reagem às suas ações.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 ## 📂 Estrutura de Arquivos (Cartão SD)
 
 O cartão SD deve estar formatado em **FAT32** e conter a seguinte estrutura na raiz:
@@ -189,6 +201,7 @@ O cartão SD deve estar formatado em **FAT32** e conter a seguinte estrutura na 
 
 *   **Placa:** Waveshare ESP32-S3-Touch-AMOLED-1.8
 *   **Cartão SD:** MicroSD (FAT32).
+<<<<<<< HEAD
 =======
 *   **Gamificação:** Ganhe XP e suba de nível usando o dispositivo.
 *   **Dashboard:** Monitoramento em tempo real de CPU, RAM, Bateria e Temperatura.
@@ -205,6 +218,8 @@ O cartão SD deve estar formatado em **FAT32** e conter a seguinte estrutura na 
 >>>>>>> origin/waveshare-s3-amoled-evil-portal-final
 =======
 >>>>>>> origin/waveshare-s3-amoled-final-polish
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 *   **Bateria:** LiPo 3.7V (Conector MX1.25).
 
 ## 📚 Documentação
@@ -214,6 +229,7 @@ Leia os guias abaixo para começar:
 *   [📘 Guia de Instalação](INSTALACAO.md) - Como compilar e gravar.
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 *   [📖 Manual de Uso](MANUAL.md) - Como usar voz, portal, sniffer e upload.
 =======
 *   [📖 Manual de Uso](MANUAL.md) - Como usar voz, portal e ferramentas.
@@ -221,6 +237,9 @@ Leia os guias abaixo para começar:
 =======
 *   [📖 Manual de Uso](MANUAL.md) - Como usar voz, portal, sniffer e upload.
 >>>>>>> origin/waveshare-s3-amoled-final-polish
+=======
+*   [📖 Manual de Uso](MANUAL.md) - Como usar voz, portal, sniffer e upload.
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 *   [⚙️ Hardware e Pinos](HARDWARE.md) - Detalhes técnicos.
 
 ## ⚠️ Aviso Legal
@@ -228,8 +247,11 @@ Leia os guias abaixo para começar:
 Este projeto é para fins educacionais e de teste em redes próprias. O uso de "Evil Portal" ou captura de dados em redes de terceiros sem permissão é ilegal. Use com responsabilidade.
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
 =======
 >>>>>>> origin/waveshare-s3-amoled-evil-portal-final
 =======
 >>>>>>> origin/waveshare-s3-amoled-final-polish
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406

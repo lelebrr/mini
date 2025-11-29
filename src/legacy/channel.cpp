@@ -1,10 +1,14 @@
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
  * ARQUIVO LEGADO - MANTIDO PARA REFERÊNCIA
  */
 
 /**
  * channel.cpp: lida com saltos de canal
+<<<<<<< HEAD
 =======
  * Minigotchi: An even smaller Pwnagotchi
  * Copyright (C) 2024 dj1ch
@@ -26,11 +30,16 @@
 /**
  * channel.cpp: handles channel switching
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
  */
 
 #include "channel.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 // Define o canal inicial
 int Channel::channel = 1;
 
@@ -47,6 +56,7 @@ void Channel::hop() {
     esp_wifi_set_channel(Channel::channel, WIFI_SECOND_CHAN_NONE);
   }
 }
+<<<<<<< HEAD
 =======
 /** developer note:
  *
@@ -208,3 +218,5 @@ int Channel::getChannel() {
   return primary;
 }
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406

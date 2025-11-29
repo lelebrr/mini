@@ -1,10 +1,14 @@
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
  * ARQUIVO LEGADO - MANTIDO PARA REFERÊNCIA
  */
 
 /**
  * frame.cpp: analisa o frame do parasita
+<<<<<<< HEAD
 =======
  * Minigotchi: An even smaller Pwnagotchi
  * Copyright (C) 2024 dj1ch
@@ -26,11 +30,16 @@
 /**
  * frame.cpp: handles the sending of "pwnagotchi" beacon frames
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
  */
 
 #include "frame.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 // inicializando
 size_t Frame::payloadSize = 255; // por padrão
 uint8_t Frame::payload[255];     // por padrão
@@ -100,6 +109,7 @@ void Frame::parse() {
   // serializa e copia para payload
   // o offset é 7 porque os primeiros 7 bytes são cabeçalho
   serializeJson(doc, Frame::payload + 7, Frame::payloadSize - 7);
+<<<<<<< HEAD
 =======
 /** developer note:
  *
@@ -319,4 +329,6 @@ void Frame::advertise() {
     // do nothing but still idle
   }
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 }

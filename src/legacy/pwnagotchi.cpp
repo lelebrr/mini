@@ -1,10 +1,14 @@
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
  * ARQUIVO LEGADO - MANTIDO PARA REFERÊNCIA
  */
 
 /**
  * pwnagotchi.cpp: Implementa lógica de detecção de Pwnagotchi
+<<<<<<< HEAD
 =======
  * Minigotchi: An even smaller Pwnagotchi
  * Copyright (C) 2024 dj1ch
@@ -27,11 +31,16 @@
  * pwnagotchi.cpp: sniffs for pwnagotchi beacon frames
  * source: https://github.com/justcallmekoko/ESP32Marauder
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
  */
 
 #include "pwnagotchi.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 // Variáveis de controle
 bool Pwnagotchi::seen = false;
 std::vector<String> Pwnagotchi::pwnagotchiList = {};
@@ -67,6 +76,7 @@ void Pwnagotchi::detect() {
     }
   } else {
     // não faz nada se o scan estiver desabilitado
+<<<<<<< HEAD
 =======
 /** developer note:
  *
@@ -311,5 +321,7 @@ void Pwnagotchi::pwnagotchiCallback(void *buf,
       }
     }
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
   }
 }

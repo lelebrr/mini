@@ -1,10 +1,14 @@
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
  * ARQUIVO LEGADO - MANTIDO PARA REFERÊNCIA
  */
 
 /**
  * channel.h: arquivo de cabeçalho para channel.cpp
+<<<<<<< HEAD
 =======
  * Minigotchi: An even smaller Pwnagotchi
  * Copyright (C) 2024 dj1ch
@@ -26,12 +30,17 @@
 /**
  * channel.h: header files for channel.cpp
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
  */
 
 #ifndef CHANNEL_H
 #define CHANNEL_H
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 #include <Arduino.h>
 #include <esp_wifi.h>
 
@@ -44,6 +53,7 @@ public:
 };
 
 #endif
+<<<<<<< HEAD
 =======
 #include "config.h"
 #include "display.h"
@@ -76,3 +86,5 @@ private:
 
 #endif // CHANNEL_H
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406

@@ -1,10 +1,14 @@
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
  * ARQUIVO LEGADO - MANTIDO PARA REFERÊNCIA
  */
 
 /**
  * deauth.h: arquivo de cabeçalho para deauth.cpp
+<<<<<<< HEAD
 =======
  * Minigotchi: An even smaller Pwnagotchi
  * Copyright (C) 2024 dj1ch
@@ -26,12 +30,17 @@
 /**
  * deauth.h: header files for deauth.cpp
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
  */
 
 #ifndef DEAUTH_H
 #define DEAUTH_H
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 #include <Arduino.h>
 #include <esp_wifi.h>
 
@@ -48,6 +57,7 @@
 
 class Deauth {
 private:
+<<<<<<< HEAD
 =======
 #include "config.h"
 #include "minigotchi.h"
@@ -69,21 +79,29 @@ public:
   static void list();
   static void add(const std::string &bssids);
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
   static uint8_t deauthTemp[26];
   static uint8_t deauthFrame[26];
   static uint8_t disassociateFrame[26];
   static uint8_t broadcastAddr[6];
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
   static Mood &mood;
   static bool running;
   static std::vector<String> whitelist;
   static void add(const std::string &bssids);
+<<<<<<< HEAD
 =======
   static int randomIndex;
 
 private:
   static Mood &mood;
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
   static bool send(uint8_t *buf, uint16_t len, bool sys_seq);
   static bool broadcast(uint8_t *mac);
   static void printMac(uint8_t *mac);
@@ -91,6 +109,9 @@ private:
   static bool select();
   static void start();
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 
 public:
   static String randomAP;
@@ -100,6 +121,7 @@ public:
 };
 
 #endif
+<<<<<<< HEAD
 =======
   static uint8_t bssid[6];
   static bool running;
@@ -109,3 +131,5 @@ public:
 
 #endif // DEAUTH_H
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406

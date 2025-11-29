@@ -1,10 +1,14 @@
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
  * ARQUIVO LEGADO - MANTIDO PARA REFERÊNCIA
  */
 
 /**
  * mood.cpp: lida com os "humores" do minigotchi
+<<<<<<< HEAD
 =======
  * Minigotchi: An even smaller Pwnagotchi
  * Copyright (C) 2024 dj1ch
@@ -26,11 +30,16 @@
 /**
  * mood.cpp: handles and sets mood on the minigotchi
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
  */
 
 #include "mood.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 String Mood::currentFace;
 String Mood::happy;
 String Mood::sad;
@@ -107,6 +116,7 @@ String Mood::getMood(String face) {
 /**
  * Obtém face completa (função estranha, apenas repassa?)
  * @param face Face para obter humor
+<<<<<<< HEAD
 =======
 /*
 String Mood::happy = "";
@@ -199,11 +209,16 @@ Mood &Mood::getInstance() { return *instance; }
  * Returns the current mood and writes it to a variable
  * @param face Face to get mood off of
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
  */
 String Mood::getFull(String face) { Mood::getFace(Mood::getMood(face)); return currentFace; }
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
  * Obtém face baseada no humor
  * @param previous Face anterior
  * @param current Face atual
@@ -213,6 +228,7 @@ String Mood::setFace(String previous, String current) {
     currentFace = current;
     return currentFace;
   }
+<<<<<<< HEAD
 =======
  * Returns current mood
  */
@@ -275,11 +291,16 @@ String Mood::getFace(String mood) {
   }
 
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
   return currentFace;
 }
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
  * Getters para cada face
  */
 String Mood::getHappy() { return Mood::happy; }
@@ -290,6 +311,7 @@ String Mood::getLooking1() { return Mood::looking1; }
 String Mood::getLooking2() { return Mood::looking2; }
 String Mood::getNeutral() { return Mood::neutral; }
 String Mood::getSleeping() { return Mood::sleeping; }
+<<<<<<< HEAD
 =======
  * Checks if moods match one another.
  * If they're similar, return true.
@@ -347,3 +369,5 @@ String Mood::getNeutral() { return instance->neutral; }
  */
 String Mood::getSleeping() { return instance->sleeping; }
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406

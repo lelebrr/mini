@@ -1,10 +1,14 @@
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
  * ARQUIVO LEGADO - MANTIDO PARA REFERÊNCIA
  */
 
 /**
  * webui.cpp: Implementação da Interface Web antiga
+<<<<<<< HEAD
 =======
  * Minigotchi: An even smaller Pwnagotchi
  * Copyright (C) 2024 dj1ch
@@ -26,11 +30,16 @@
 /**
  * webui.cpp: handles creation of network and webUI
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
  */
 
 #include "webui.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 WebUI::WebUI() {
     // Construtor
 }
@@ -41,6 +50,7 @@ WebUI::~WebUI() {
 
 void WebUI::begin() {
     // Inicia servidor web
+<<<<<<< HEAD
 =======
 bool WebUI::running = false;
 
@@ -246,4 +256,6 @@ void WebUI::updateWhitelist(String newWhitelist) {
   // add last element after last comma
   Config::whitelist.push_back(newWhitelist.substring(start).c_str());
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 }

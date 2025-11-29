@@ -8,6 +8,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
@@ -71,6 +72,8 @@ O sistema requer um cartão microSD (FAT32) para salvar configurações, captura
 >>>>>>> origin/waveshare-s3-amoled-evil-portal-final
 =======
 >>>>>>> origin/waveshare-s3-amoled-final-polish
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 # 📘 Guia de Instalação
 
 ## 1. Preparação do Ambiente
@@ -91,6 +94,7 @@ Crie a seguinte estrutura de pastas na raiz do SD:
 /
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ├── arquivos_cartao_sd/     (Copie o conteúdo desta pasta do repo para a raiz)
 =======
 ├── sd_card_files/          (Copie o conteúdo desta pasta do repo para a raiz)
@@ -98,11 +102,15 @@ Crie a seguinte estrutura de pastas na raiz do SD:
 =======
 ├── sd_card_files/          (Copie o conteúdo desta pasta do repo para a raiz)
 >>>>>>> origin/waveshare-s3-amoled-final-polish
+=======
+├── arquivos_cartao_sd/     (Copie o conteúdo desta pasta do repo para a raiz)
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 │   ├── evil_portal/        (Templates HTML)
 │   ├── boot_pt.wav         (Áudios)
 │   ├── listening_pt.wav
 │   ├── success_pt.wav
 │   └── error_pt.wav
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 │   └── wifi_config.txt     (Edite com suas credenciais)
@@ -119,6 +127,11 @@ Crie a seguinte estrutura de pastas na raiz do SD:
 >>>>>>> origin/waveshare-s3-amoled-evil-portal-final
 =======
 >>>>>>> origin/waveshare-s3-amoled-final-polish
+=======
+│   └── wifi_config.txt     (Edite com suas credenciais)
+├── capturas/               (Será criada automaticamente)
+└── fila_envio/             (Será criada automaticamente)
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 ```
 
 **Exemplo de `wifi_config.txt`:**
@@ -137,6 +150,7 @@ KEY=SuaChaveWpaSec
 
 ## 4. Troubleshooting
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 *   **Tela preta?** Verifique bateria e cabo USB. O PMU (AXP2101) pode precisar de reset (segure PWR 10s).
@@ -172,3 +186,8 @@ KEY=SuaChaveWpaSec
 *   **Sem áudio?** Verifique se os arquivos `.wav` estão na raiz do SD e são 16kHz 16-bit Mono.
 *   **SD não monta?** Tente outro cartão ou formate novamente (FAT32).
 >>>>>>> origin/waveshare-s3-amoled-final-polish
+=======
+*   **Tela preta?** Verifique bateria e cabo USB. O PMU (AXP2101) pode precisar de reset (segure PWR 10s).
+*   **Sem áudio?** Verifique se os arquivos `.wav` estão na pasta correta (`arquivos_cartao_sd`).
+*   **SD não monta?** Tente outro cartão ou formate novamente (FAT32).
+>>>>>>> origin/waveshare-s3-amoled-full-review-406

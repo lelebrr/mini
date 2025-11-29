@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 /*
  * ARQUIVO LEGADO - MANTIDO PARA REFERÊNCIA
  */
@@ -18,6 +21,7 @@ void platformio_init() {
     // XPowersPMU power;
     // ...
 }
+<<<<<<< HEAD
 =======
 #include "platformio.h"
 #include <Arduino.h>
@@ -66,3 +70,5 @@ void platformio_debug(const char* message) {
     Serial.println(message);
 }
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406

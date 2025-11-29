@@ -1,10 +1,14 @@
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
  * ARQUIVO LEGADO - MANTIDO PARA REFERÊNCIA
  */
 
 /**
  * mood.h: arquivo de cabeçalho para mood.cpp
+<<<<<<< HEAD
 =======
  * Minigotchi: An even smaller Pwnagotchi
  * Copyright (C) 2024 dj1ch
@@ -26,12 +30,17 @@
 /**
  * mood.h: header files for mood.cpp
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
  */
 
 #ifndef MOOD_H
 #define MOOD_H
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 #include <Arduino.h>
 
 class Mood {
@@ -58,6 +67,7 @@ public:
   String getFull(String face);
   String getMood(String face);
   String setFace(String previous, String current);
+<<<<<<< HEAD
 =======
 #include "config.h"
 #include "display.h"
@@ -81,6 +91,8 @@ public:
   bool checkMood(String previous, String current);
 
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
   String getHappy();
   String getSad();
   String getBroken();
@@ -89,6 +101,7 @@ public:
   String getLooking2();
   String getNeutral();
   String getSleeping();
+<<<<<<< HEAD
 <<<<<<< HEAD
 };
 
@@ -115,3 +128,8 @@ private:
 
 #endif // MOOD_H
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+};
+
+#endif
+>>>>>>> origin/waveshare-s3-amoled-full-review-406

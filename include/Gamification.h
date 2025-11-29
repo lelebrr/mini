@@ -8,6 +8,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
@@ -47,6 +48,8 @@ struct Trophy {
 >>>>>>> origin/pwntamagotchi-br-final-90-features
 =======
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 /**
  * Gamification.h
  * Sistema de RPG/Progresso para o dispositivo.
@@ -62,6 +65,7 @@ struct Trophy {
 #include "FS.h"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
@@ -75,6 +79,8 @@ struct Trophy {
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
 =======
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 
 struct GameStats {
     uint32_t xp;
@@ -88,6 +94,7 @@ struct GameStats {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     uint32_t handshakes_total;
     uint32_t missions_completed;
 =======
@@ -112,6 +119,8 @@ struct GameStats {
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
 =======
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 };
 
 class Gamification {
@@ -119,6 +128,7 @@ private:
     static GameStats stats;
     static const char* saveFile;
     static uint32_t last_tick;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -165,6 +175,8 @@ public:
 >>>>>>> origin/pwntamagotchi-br-final-90-features
 =======
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 
 public:
     /**
@@ -184,6 +196,7 @@ public:
     /**
      * Carrega estatísticas do arquivo binário.
      */
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> origin/pwn-tamagotchi-br-release
@@ -206,11 +219,14 @@ public:
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
 =======
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
     static void load() {
         if (SD_MMC.exists(saveFile)) {
             File file = SD_MMC.open(saveFile, FILE_READ);
             file.read((uint8_t*)&stats, sizeof(GameStats));
             file.close();
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -241,6 +257,8 @@ public:
 >>>>>>> origin/pwntamagotchi-br-final-90-features
 =======
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
             Serial.printf("[Game] Dados carregados: Lvl %d, XP %d\n", stats.level, stats.xp);
         }
     }
@@ -248,6 +266,7 @@ public:
     /**
      * Salva estatísticas no arquivo binário.
      */
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> origin/pwn-tamagotchi-br-release
@@ -263,6 +282,8 @@ public:
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
 =======
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
     static void save() {
         File file = SD_MMC.open(saveFile, FILE_WRITE);
         if (file) {
@@ -278,6 +299,7 @@ public:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     /**
      * Atualiza o contador de tempo (chamar no loop principal).
@@ -301,11 +323,17 @@ public:
      * Atualiza o contador de tempo (chamar no loop principal).
      */
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+    /**
+     * Atualiza o contador de tempo (chamar no loop principal).
+     */
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
     static void tick() {
         if (millis() - last_tick >= 1000) {
             stats.age_seconds++;
             last_tick = millis();
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -344,6 +372,8 @@ public:
 >>>>>>> origin/pwntamagotchi-br-final-90-features
 =======
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
             // Auto-salvar a cada minuto para não desgastar o SD
             if (stats.age_seconds % 60 == 0) {
                 save();
@@ -355,6 +385,7 @@ public:
      * Adiciona experiência e verifica level up.
      * @param amount Quantidade de XP.
      */
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> origin/pwn-tamagotchi-br-release
@@ -370,10 +401,13 @@ public:
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
 =======
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
     static void addXP(int amount) {
         stats.xp += amount;
         stats.interactions++;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -402,6 +436,8 @@ public:
 >>>>>>> origin/pwntamagotchi-br-final-90-features
 =======
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
         // Curva simples: Nível * 100 XP necessário para o próximo
         uint32_t required = stats.level * 100;
         if (stats.xp >= required) {
@@ -409,6 +445,7 @@ public:
             stats.level++;
             Serial.println("[Game] LEVEL UP!");
             // Aqui poderia tocar um som especial
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> origin/pwn-tamagotchi-br-release
@@ -426,10 +463,13 @@ public:
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
 =======
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
         }
         save();
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -512,6 +552,8 @@ std::vector<Trophy> Gamification::trophies;
 >>>>>>> origin/pwntamagotchi-br-final-90-features
 =======
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
     static String getLevelStr() {
         return "Nvl " + String(stats.level);
     }
@@ -533,6 +575,7 @@ const char* Gamification::saveFile = "/game_stats.bin";
 uint32_t Gamification::last_tick = 0;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
@@ -546,5 +589,7 @@ uint32_t Gamification::last_tick = 0;
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
 =======
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 
 #endif

@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
 /*
  * ARQUIVO LEGADO - MANTIDO PARA REFERÊNCIA
  */
@@ -19,6 +22,7 @@
 // ...
 
 #endif
+<<<<<<< HEAD
 =======
 // User setup file for TFT_eSPI
 
@@ -63,3 +67,5 @@
 #define TFT_GREEN 0x07E0
 #define TFT_BLUE  0x001F
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406

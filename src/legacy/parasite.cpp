@@ -1,10 +1,14 @@
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
  * ARQUIVO LEGADO - MANTIDO PARA REFERÊNCIA
  */
 
 /**
  * parasite.cpp: Lida com a funcionalidade do modo parasita
+<<<<<<< HEAD
 =======
  * Minigotchi: An even smaller Pwnagotchi
  * Copyright (C) 2024 dj1ch
@@ -26,6 +30,8 @@
 /**
  * parasite.cpp: handles running parasite mode related tasks
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
  */
 
 #include "parasite.h"
@@ -34,6 +40,9 @@ int Parasite::channel = 0;
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
  * Envia o status de desautenticação para o Pwnagotchi
  * @param status Status de deauth
  * @param ap AP selecionado (opcional)
@@ -68,6 +77,7 @@ void Parasite::readData() {
 
     if (doc.containsKey("channel")) {
       Parasite::channel = doc["channel"];
+<<<<<<< HEAD
 =======
  * Reads data from Parasite mode on the Minigotchi
  */
@@ -96,12 +106,17 @@ void Parasite::readData() {
     } else if (Parasite::channel == 0 && curChan > 0) {
       Parasite::sendChannelStatus(RANDOM_CHANNEL);
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
     }
   }
 }
 
 /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
  * Envia nome do parasita para o Pwnagotchi
  */
 void Parasite::sendName() {
@@ -114,6 +129,7 @@ void Parasite::sendName() {
     Serial.println(output);
   }
 }
+<<<<<<< HEAD
 =======
  * Shows current channel
  * @param status Channel, either synced or unsynced
@@ -259,3 +275,5 @@ void Parasite::formatData(char *buf, const char *data, size_t bufSize) {
   strncat(buf, "...", bufSize - strlen(buf) - 1);
 }
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
