@@ -1,13 +1,21 @@
 #ifndef WIFI_TOOLS_H
 #define WIFI_TOOLS_H
 
+/**
+ * WiFiTools.h
+ * Ferramentas WiFi com caminhos traduzidos.
+ */
+
 #include <Arduino.h>
 #include <WiFi.h>
 #include <esp_wifi.h>
+#include <SD_MMC.h>
+#include "FS.h"
 #include <vector>
 #include "core/PwnPet.h"
 #include "core/Gamification.h"
 
+#define MAX_SNIFFED 50 // Aumentado para 50
 // Estrutura para dispositivos encontrados
 struct WiFiDevice {
     String mac;
@@ -20,11 +28,7 @@ class WiFiTools {
 public:
     static std::vector<WiFiDevice> nearby_devices;
 
-    static void startSniffer() {
-        WiFi.mode(WIFI_MODE_APSTA); // APSTA permite injeção + WebUI
-        esp_wifi_set_promiscuous(true);
-        esp_wifi_set_promiscuous_rx_cb(&promiscuous_rx_cb);
-    }
+
 
     static void promiscuous_rx_cb(void* buf, wifi_promiscuous_pkt_type_t type) {
         wifi_promiscuous_pkt_t* pkt = (wifi_promiscuous_pkt_t*)buf;
@@ -57,7 +61,14 @@ public:
                 if (!found) {
                     nearby_devices.push_back({String(macStr), "Unknown", pkt->rx_ctrl.rssi, millis()});
                     // Limita tamanho
-                    if (nearby_devices.size() > 50) nearby_devices.erase(nearby_devices.begin());
+                    if (nearby_devices.size() > MAX_SNIFFED) nearby_devices.erase(nearby_devices.begin());
+
+                    // Log em /arquivos_cartao_sd/macs_detectados.txt
+                    File f = SD_MMC.open("/arquivos_cartao_sd/macs_detectados.txt", FILE_APPEND);
+                    if (f) {
+                        f.printf("%s,%d,%lu\n", macStr, pkt->rx_ctrl.rssi, millis());
+                        f.close();
+                    }
                 }
             }
         }
@@ -92,6 +103,45 @@ public:
                 }
             }
         }
+    }
+    static void startSniffer() {
+        WiFi.mode(WIFI_MODE_APSTA); // APSTA permite injeção + WebUI
+        esp_wifi_set_promiscuous(true);
+        esp_wifi_set_promiscuous_rx_cb(&promiscuous_rx_cb);
+    }
+
+    static void stopSniffer() {
+        esp_wifi_set_promiscuous(false);
+    }
+
+    static void saveHandshake(String ssid, String bssid) {
+        // Caminho: /arquivos_cartao_sd/capturas/
+        String filename = "/arquivos_cartao_sd/capturas/" + ssid + ".pcap";
+        if (!SD_MMC.exists("/arquivos_cartao_sd/capturas")) SD_MMC.mkdir("/arquivos_cartao_sd/capturas");
+
+        File f = SD_MMC.open(filename, FILE_WRITE);
+        if (f) {
+            f.println("PCAP DUMMY HEADER");
+            f.close();
+        }
+    }
+
+    static String getSystemStats() {
+        float temp = temperatureRead();
+        uint32_t free_heap = esp_get_free_heap_size();
+        uint32_t uptime = millis() / 1000;
+        char buffer[64];
+        snprintf(buffer, sizeof(buffer), "Temp: %.0fC RAM: %dKB\nUp: %ds", temp, free_heap/1024, uptime);
+        return String(buffer);
+    }
+
+    static String getSnifferText() {
+        String s = "Dispositivos:\n";
+        for (auto &dev : nearby_devices) {
+            s += dev.mac + " (" + String(dev.rssi) + ")\n";
+        }
+        if (nearby_devices.empty()) s += "Nenhum...";
+        return s;
     }
 };
 

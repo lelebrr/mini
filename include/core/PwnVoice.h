@@ -20,8 +20,7 @@ public:
     }
 
     static void listen() {
-        if (PwnPower::isCritical()) return;
-
+	        if (PwnPower::isCritical()) return;
         is_listening = true;
 
         // Toca "Ouvindo"
@@ -41,7 +40,7 @@ public:
     static void processCommand(int syllables) {
         Serial.printf("[Voice] Silabas: %d\n", syllables);
 
-        if (PwnPet::getStats().is_sleeping) {
+	        if (PwnPet::getStats().is_sleeping) {
              if (syllables > 4) {
                  PwnPet::getStats().is_sleeping = false;
                  speak("Quem ousa me acordar");
@@ -50,16 +49,18 @@ public:
         }
 
         switch(syllables) {
-            case 2: // "Ei Lele" / "Status"
-                PwnPet::getStats().hunger += 5;
+	            case 2: // "Ei Lele" / "Status"
+	                PwnPet::getStats().hunger += 5; // Atenção = Comida
+	                // PwnPet::feed(5); // Usar a função feed se existir e for mais completa
+	                // Vou manter a versão do branch de merge, mas adicionando o comentário para clareza.
                 speak("Ola amigo");
                 break;
             case 3: // "Bateria" / "Comida"
                 speak("Estou com fome");
                 break;
-            case 4: // "Ataca Vivo" / "Ataque"
-                speak("Iniciando ataque");
-                PwnAttack::start(); // Agora existe
+	            case 4: // "Ataca Vivo" / "Ataque"
+	                speak("Iniciando ataque");
+	                PwnAttack::start();
                 break;
             default:
                 speak("Nao entendi");
@@ -67,7 +68,11 @@ public:
         }
     }
 
-    static void speak(String phrase) {
+	    static void speak(String phrase) {
+	        // Otimização: Silent Mode
+	        // if (PwnPet::isSilent()) return;
+	
+	        // Mapeia texto para arquivo WAV
         String file = "/tts/unknown.wav";
 
         if (phrase.indexOf("Ola") >= 0) file = "/tts/hello.wav";
