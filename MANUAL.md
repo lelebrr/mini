@@ -5,6 +5,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
@@ -76,6 +77,8 @@ Acesse via navegador para controle total.
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 =======
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-evil-portal-final
 # 📖 Manual de Uso
 
 ## 🗣️ Comandos de Voz (Offline)
@@ -95,6 +98,7 @@ Clique no botão **"Voz"** e fale próximo ao microfone. O sistema detecta o nú
 1.  Clique no botão vermelho **"EVIL PORTAL"**.
 2.  O dispositivo criará uma rede Wi-Fi aberta (Ex: "Cafe_Gratis_WiFi").
 3.  Qualquer pessoa que conectar será redirecionada para a página falsa (Template).
+<<<<<<< HEAD
 4.  Se a vítima digitar a senha, ela será salva em `/arquivos_cartao_sd/credenciais_capturadas.txt`.
 5.  O Pwnagotchi ficará feliz `(^_^)`.
 
@@ -119,12 +123,24 @@ Para enviar handshakes capturados para quebra de senha online:
     ```
 4.  No dispositivo, clique em **"Upload"**.
 5.  O sistema conectará ao WiFi e enviará todos os arquivos `.pcap` da pasta `/capturas` e `/fila_envio`.
+=======
+4.  Se a vítima digitar a senha, ela será salva em `/captured_creds.txt` no SD.
+5.  O Pwnagotchi ficará feliz `(^_^)`.
+
+## 📤 Manual Upload
+
+1.  O sistema captura handshakes passivamente ou via Sniffer.
+2.  Eles ficam salvos em `/handshakes/`.
+3.  Para enviar para cracking, clique em **"Upload"**.
+4.  O dispositivo conecta no WiFi definido em `wifi_config.txt` e envia os arquivos.
+>>>>>>> origin/waveshare-s3-amoled-evil-portal-final
 
 ## 🎮 Gamificação
 
 *   **XP:** Ganhe experiência usando voz e capturando redes.
 *   **Nível:** Suba de nível para desbloquear... respeito do seu Pwnagotchi.
 *   **Status:** Acompanhe seu progresso na tela principal.
+<<<<<<< HEAD
 
 ## 🔋 Economia de Energia
 
@@ -146,3 +162,5 @@ Para enviar handshakes capturados para quebra de senha online:
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
 =======
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-evil-portal-final

@@ -6,6 +6,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
@@ -269,6 +270,8 @@ O sistema utiliza o AXP2101 para gerenciar as tensões. O driver `PwnPower` conf
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
 =======
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-evil-portal-final
 # ⚙️ Hardware e Pinos
 
 ## Especificações Técnicas
@@ -316,6 +319,7 @@ Endereço 0x20. Controla Reset e Energia dos periféricos.
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/mini-lele-v2-rebrand
 =======
 >>>>>>> origin/pwn-tamagotchi-br-release
@@ -331,3 +335,5 @@ Endereço 0x20. Controla Reset e Energia dos periféricos.
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
 =======
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-evil-portal-final

