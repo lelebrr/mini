@@ -27,6 +27,7 @@ lvgl/lvgl @ ^8.3.11
 <<<<<<< HEAD
 # PlatformIO specific
 platformio/framework-arduinoespressif32 @ ^3.20004.0
+<<<<<<< HEAD
 Arduino_GFX_Library
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
@@ -75,3 +76,7 @@ me-no-dev/AsyncTCP @ ^1.1.1
 https://github.com/me-no-dev/ESPAsyncWebServer.git
 WiFiClientSecure
 HTTPClient
+=======
+bblanchon/ArduinoJson @ ^6.21.3
+Arduino_GFX_Library
+>>>>>>> origin/waveshare-esp32-s3-amoled-fix
