@@ -42,6 +42,7 @@ typedef struct {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /*
 >>>>>>> main
@@ -101,6 +102,8 @@ struct _coeff_div {
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
  * Clock coefficient structure
  */
 struct _coeff_div {
@@ -121,6 +124,7 @@ struct _coeff_div {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/waveshare-esp32-s3-amoled-fix
 =======
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
@@ -132,6 +136,8 @@ struct _coeff_div {
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
 };
 
 /* codec hifi mclk clock divider coefficients */
@@ -203,6 +209,7 @@ static const struct _coeff_div coeff_div[] = {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     {1024000, 32000, 0x01, 0x03, 0x01, 0x01, 0x01, 0x00, 0xff, 0x04, 0x10, 0x10},
 =======
     {1024000, 32000, 0x01, 0x03, 0x01, 0x01, 0x00, 0x00, 0xff, 0x04, 0x10, 0x10},
@@ -222,6 +229,9 @@ static const struct _coeff_div coeff_div[] = {
 =======
     {1024000, 32000, 0x01, 0x03, 0x01, 0x01, 0x00, 0x00, 0xff, 0x04, 0x10, 0x10},
 >>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+    {1024000, 32000, 0x01, 0x03, 0x01, 0x01, 0x00, 0x00, 0xff, 0x04, 0x10, 0x10},
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
 
     /* 44.1k */
     {11289600, 44100, 0x01, 0x00, 0x01, 0x01, 0x00, 0x00, 0xff, 0x04, 0x10, 0x10},
@@ -285,6 +295,7 @@ static inline esp_err_t es8311_read_reg(es8311_handle_t dev, uint8_t reg_addr, u
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 * procura pelo coeficiente na tabela coeff_div[]
 =======
 * look for the coefficient in coeff_div[] table
@@ -304,6 +315,9 @@ static inline esp_err_t es8311_read_reg(es8311_handle_t dev, uint8_t reg_addr, u
 =======
 * look for the coefficient in coeff_div[] table
 >>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+* look for the coefficient in coeff_div[] table
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
 */
 static int get_coeff(uint32_t mclk, uint32_t rate)
 {
@@ -326,6 +340,7 @@ esp_err_t es8311_sample_frequency_config(es8311_handle_t dev, int mclk_frequency
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     /* Obtém coeficientes de clock da tabela */
     int coeff = get_coeff(mclk_frequency, sample_frequency);
 
@@ -342,11 +357,14 @@ esp_err_t es8311_sample_frequency_config(es8311_handle_t dev, int mclk_frequency
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
     /* Get clock coefficients from coefficient table */
     int coeff = get_coeff(mclk_frequency, sample_frequency);
 
     if (coeff < 0) {
         ESP_LOGE(TAG, "Unable to configure sample rate %dHz with %dHz MCLK", sample_frequency, mclk_frequency);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -363,11 +381,14 @@ esp_err_t es8311_sample_frequency_config(es8311_handle_t dev, int mclk_frequency
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
         return ESP_ERR_INVALID_ARG;
     }
 
     const struct _coeff_div *const selected_coeff = &coeff_div[coeff];
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -454,6 +475,8 @@ esp_err_t es8311_sample_frequency_config(es8311_handle_t dev, int mclk_frequency
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
     /* register 0x02 */
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_CLK_MANAGER_REG02, &regv), TAG, "I2C read/write error");
     regv &= 0x07;
@@ -479,6 +502,7 @@ esp_err_t es8311_sample_frequency_config(es8311_handle_t dev, int mclk_frequency
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/waveshare-esp32-s3-amoled-fix
 =======
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
@@ -490,6 +514,8 @@ esp_err_t es8311_sample_frequency_config(es8311_handle_t dev, int mclk_frequency
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
     regv &= 0xE0;
 
     if (selected_coeff->bclk_div < 19) {
@@ -498,6 +524,7 @@ esp_err_t es8311_sample_frequency_config(es8311_handle_t dev, int mclk_frequency
         regv |= (selected_coeff->bclk_div) << 0;
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -581,6 +608,8 @@ esp_err_t es8311_sample_frequency_config(es8311_handle_t dev, int mclk_frequency
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
     ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, regv), TAG, "I2C read/write error");
 
     /* register 0x07 */
@@ -591,6 +620,7 @@ esp_err_t es8311_sample_frequency_config(es8311_handle_t dev, int mclk_frequency
 
     /* register 0x08 */
     ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG08, selected_coeff->lrck_l), TAG, "I2C read/write error");
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -607,6 +637,8 @@ esp_err_t es8311_sample_frequency_config(es8311_handle_t dev, int mclk_frequency
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
 
     return ESP_OK;
 }
@@ -636,6 +668,7 @@ static esp_err_t es8311_clock_config(es8311_handle_t dev, const es8311_clock_con
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> origin/waveshare-esp32-s3-amoled-fix
@@ -649,10 +682,13 @@ static esp_err_t es8311_clock_config(es8311_handle_t dev, const es8311_clock_con
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
     uint8_t reg01 = 0x3F; // Enable all clocks
     int mclk_hz;
 
     /* Select clock source for internal MCLK and determine its frequency */
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -760,10 +796,13 @@ static esp_err_t es8311_clock_config(es8311_handle_t dev, const es8311_clock_con
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
     if (clk_cfg->mclk_from_mclk_pin) {
         mclk_hz = clk_cfg->mclk_frequency;
     } else {
         mclk_hz = clk_cfg->sample_frequency * (int)res * 2;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -799,6 +838,8 @@ static esp_err_t es8311_clock_config(es8311_handle_t dev, const es8311_clock_con
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
         reg01 |= BIT(7); // Select BCLK (a.k.a. SCK) pin
     }
 
@@ -808,6 +849,7 @@ static esp_err_t es8311_clock_config(es8311_handle_t dev, const es8311_clock_con
     ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG01, reg01), TAG, "I2C read/write error");
 
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_CLK_MANAGER_REG06, &reg06), TAG, "I2C read/write error");
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -920,11 +962,14 @@ static esp_err_t es8311_clock_config(es8311_handle_t dev, const es8311_clock_con
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
     if (clk_cfg->sclk_inverted) {
         reg06 |= BIT(5);
     } else {
         reg06 &= ~BIT(5);
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1075,6 +1120,11 @@ static esp_err_t es8311_clock_config(es8311_handle_t dev, const es8311_clock_con
 
     /* Configure clock dividers */
 >>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "I2C read/write error");
+
+    /* Configure clock dividers */
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
     return es8311_sample_frequency_config(dev, mclk_hz, clk_cfg->sample_frequency);
 }
 
@@ -1129,6 +1179,7 @@ static esp_err_t es8311_fmt_config(es8311_handle_t dev, const es8311_resolution_
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> origin/waveshare-esp32-s3-amoled-fix
@@ -1142,6 +1193,8 @@ static esp_err_t es8311_fmt_config(es8311_handle_t dev, const es8311_resolution_
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
     ESP_LOGI(TAG, "ES8311 in Slave mode and I2S format");
     uint8_t reg00;
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_RESET_REG00, &reg00), TAG, "I2C read/write error");
@@ -1155,6 +1208,7 @@ static esp_err_t es8311_fmt_config(es8311_handle_t dev, const es8311_resolution_
     ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_SDPIN_REG09, reg09), TAG, "I2C read/write error");
     ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_SDPOUT_REG0A, reg0a), TAG, "I2C read/write error");
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1270,11 +1324,14 @@ static esp_err_t es8311_fmt_config(es8311_handle_t dev, const es8311_resolution_
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
     return ESP_OK;
 }
 
 esp_err_t es8311_microphone_config(es8311_handle_t dev, bool digital_mic)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1310,6 +1367,8 @@ esp_err_t es8311_microphone_config(es8311_handle_t dev, bool digital_mic)
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
     uint8_t reg14 = 0x1A; // enable analog MIC and max PGA gain
 
     /* PDM digital microphone enable or disable */
@@ -1318,6 +1377,7 @@ esp_err_t es8311_microphone_config(es8311_handle_t dev, bool digital_mic)
     }
     es8311_write_reg(dev, ES8311_ADC_REG17, 0xC8); // Set ADC gain @todo move this to ADC config section
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1428,6 +1488,8 @@ esp_err_t es8311_microphone_config(es8311_handle_t dev, bool digital_mic)
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
     return es8311_write_reg(dev, ES8311_SYSTEM_REG14, reg14);
 }
 
@@ -1435,6 +1497,7 @@ esp_err_t es8311_init(es8311_handle_t dev, const es8311_clock_config_t *const cl
 {
     ESP_RETURN_ON_FALSE(
         (clk_cfg->sample_frequency >= 8000) && (clk_cfg->sample_frequency <= 96000),
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1470,6 +1533,8 @@ esp_err_t es8311_init(es8311_handle_t dev, const es8311_clock_config_t *const cl
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
         ESP_ERR_INVALID_ARG, TAG, "ES8311 init needs frequency in interval [8000; 96000] Hz"
     );
     if (!clk_cfg->mclk_from_mclk_pin) {
@@ -1496,6 +1561,7 @@ esp_err_t es8311_init(es8311_handle_t dev, const es8311_clock_config_t *const cl
     ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_ADC_REG1C, 0x6A), TAG, "I2C read/write error"); // ADC Equalizer bypass, cancel DC offset in digital domain
     ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_DAC_REG37, 0x08), TAG, "I2C read/write error"); // Bypass DAC equalizer - NOT default
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1624,6 +1690,8 @@ esp_err_t es8311_init(es8311_handle_t dev, const es8311_clock_config_t *const cl
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
     return ESP_OK;
 }
 
@@ -1669,6 +1737,7 @@ esp_err_t es8311_voice_volume_set(es8311_handle_t dev, int volume, int *volume_s
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     // fornece ao usuário o volume real definido
 =======
     // provide user with real volume set
@@ -1745,6 +1814,9 @@ esp_err_t es8311_voice_volume_set(es8311_handle_t dev, int volume, int *volume_s
 =======
     // provide user with real volume set
 >>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+    // provide user with real volume set
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
     if (volume_set != NULL) {
         *volume_set = volume;
     }
@@ -1776,6 +1848,7 @@ esp_err_t es8311_voice_volume_get(es8311_handle_t dev, int *volume)
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "Erro leitura/escrita I2C");
 =======
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "I2C read/write error");
@@ -1859,6 +1932,10 @@ esp_err_t es8311_voice_volume_get(es8311_handle_t dev, int *volume)
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "I2C read/write error");
 
 >>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "I2C read/write error");
+
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
     if (reg32 == 0) {
         *volume = 0;
     } else {
@@ -1892,6 +1969,7 @@ esp_err_t es8311_voice_mute(es8311_handle_t dev, bool mute)
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "Erro leitura/escrita I2C");
 =======
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "I2C read/write error");
@@ -1975,6 +2053,10 @@ esp_err_t es8311_voice_mute(es8311_handle_t dev, bool mute)
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "I2C read/write error");
 
 >>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "I2C read/write error");
+
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
     if (mute) {
         reg31 |= BIT(6) | BIT(5);
     } else {
@@ -1986,6 +2068,7 @@ esp_err_t es8311_voice_mute(es8311_handle_t dev, bool mute)
 
 esp_err_t es8311_microphone_gain_set(es8311_handle_t dev, es8311_mic_gain_t gain_db)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2057,11 +2140,15 @@ esp_err_t es8311_microphone_gain_set(es8311_handle_t dev, es8311_mic_gain_t gain
 =======
     return es8311_write_reg(dev, ES8311_ADC_REG16, gain_db); // ADC gain scale up
 >>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+    return es8311_write_reg(dev, ES8311_ADC_REG16, gain_db); // ADC gain scale up
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
 }
 
 esp_err_t es8311_voice_fade(es8311_handle_t dev, const es8311_fade_t fade)
 {
     uint8_t reg37;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2155,6 +2242,9 @@ esp_err_t es8311_voice_fade(es8311_handle_t dev, const es8311_fade_t fade)
 =======
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG37, &reg37), TAG, "I2C read/write error");
 >>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG37, &reg37), TAG, "I2C read/write error");
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
     reg37 &= 0x0F;
     reg37 |= (fade << 4);
     return es8311_write_reg(dev, ES8311_DAC_REG37, reg37);
@@ -2163,6 +2253,7 @@ esp_err_t es8311_voice_fade(es8311_handle_t dev, const es8311_fade_t fade)
 esp_err_t es8311_microphone_fade(es8311_handle_t dev, const es8311_fade_t fade)
 {
     uint8_t reg15;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2261,6 +2352,9 @@ esp_err_t es8311_microphone_fade(es8311_handle_t dev, const es8311_fade_t fade)
 =======
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "I2C read/write error");
 >>>>>>> origin/waveshare-s3-amoled-fix-v2
+=======
+    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "I2C read/write error");
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
     reg15 &= 0x0F;
     reg15 |= (fade << 4);
     return es8311_write_reg(dev, ES8311_ADC_REG15, reg15);

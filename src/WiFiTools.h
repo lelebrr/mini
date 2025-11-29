@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include <WiFi.h>
 #include <esp_wifi.h>
+<<<<<<< HEAD
 #include <SD_MMC.h>
 #include "FS.h"
 <<<<<<< HEAD
@@ -24,10 +25,21 @@ struct SniffedDevice {
 };
 std::vector<SniffedDevice> nearby_devices;
 >>>>>>> origin/waveshare-s3-amoled-final-polish
+=======
+
+// Simple Sniffer Callback
+// Note: In Arduino/ESP32, promiscuous mode requires care with buffer handling.
+// We will store just the last few MACs seen to display on UI.
+
+#define MAX_SNIFFED 10
+String sniffed_macs[MAX_SNIFFED];
+int sniff_idx = 0;
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
 
 class WiFiTools {
 public:
     static void promiscuous_rx_cb(void* buf, wifi_promiscuous_pkt_type_t type) {
+<<<<<<< HEAD
 <<<<<<< HEAD
         wifi_promiscuous_pkt_t* packet = (wifi_promiscuous_pkt_t*)buf;
         // Keep simple: Detect Management Frames (Probe Requests)
@@ -79,6 +91,18 @@ public:
             }
         }
 >>>>>>> origin/waveshare-s3-amoled-final-polish
+=======
+        wifi_promiscuous_pkt_t* packet = (wifi_promiscuous_pkt_t*)buf;
+        wifi_pkt_rx_ctrl_t ctrl = (wifi_pkt_rx_ctrl_t)packet->rx_ctrl;
+
+        // Filter for Probe Requests (Type 0, Subtype 4)
+        // This is a simplified check, actual packet parsing is complex.
+        // We will just log existence for "Activity" visual
+
+        // MAC header is at packet->payload
+        // uint8_t* mac_addr = packet->payload + 10; // Source address position varies by frame type
+        // Just increment a counter for visualization "Activity"
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
     }
 
     static void startSniffer() {
@@ -86,13 +110,17 @@ public:
         esp_wifi_set_promiscuous(true);
         esp_wifi_set_promiscuous_rx_cb(&promiscuous_rx_cb);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         Serial.println("Sniffer Ativo");
 >>>>>>> origin/waveshare-s3-amoled-final-polish
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
     }
 
     static void stopSniffer() {
         esp_wifi_set_promiscuous(false);
+<<<<<<< HEAD
 <<<<<<< HEAD
     }
 
@@ -144,6 +172,29 @@ public:
         return s;
     }
 >>>>>>> origin/waveshare-s3-amoled-final-polish
+=======
+    }
+
+    static void scanAndPrint() {
+        int n = WiFi.scanNetworks();
+        Serial.printf("WiFi Scan: %d redes\n", n);
+    }
+
+    // Helper to get system stats for "memtemp"
+    static String getSystemStats() {
+        // Temp
+        float temp = temperatureRead();
+        // RAM
+        uint32_t free_heap = esp_get_free_heap_size();
+        uint32_t total_heap = esp_get_free_heap_size() + 1; // Approx
+        // Uptime
+        uint32_t uptime = millis() / 1000;
+
+        char buffer[64];
+        sprintf(buffer, "Temp: %.1fC | RAM: %dKB\nUp: %ds", temp, free_heap/1024, uptime);
+        return String(buffer);
+    }
+>>>>>>> origin/waveshare-s3-amoled-full-plugins
 };
 
 #endif
