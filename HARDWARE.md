@@ -24,14 +24,18 @@ O **Mini Lele** é projetado especificamente para o kit de desenvolvimento abaix
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-release
+=======
+>>>>>>> origin/mini-lele-v2-legendary-missing-assets
 | CS | 12 | Chip Select |
 | SCK | 11 | Clock |
 | D0 | 4 | Data 0 |
 | D1 | 5 | Data 1 |
 | D2 | 6 | Data 2 |
 | D3 | 7 | Data 3 |
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 =======
@@ -68,11 +72,14 @@ O **Mini Lele** é projetado especificamente para o kit de desenvolvimento abaix
 >>>>>>> origin/mini-lele-v2-legendary-final-sync
 =======
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
+=======
+>>>>>>> origin/mini-lele-v2-legendary-missing-assets
 | RST | Ext. 0 | Controlado via TCA9554 (Pino 0) |
 
 ### Touch (I2C)
 | Sinal | GPIO | Notas |
 | :--- | :--- | :--- |
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -118,6 +125,11 @@ O **Mini Lele** é projetado especificamente para o kit de desenvolvimento abaix
 | SCL | 39 | Barramento I2C compartilhado |
 | INT | - | Polling ou Interrupção (Configurável) |
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
+=======
+| SDA | 15 | Barramento I2C compartilhado |
+| SCL | 14 | Barramento I2C compartilhado |
+| INT | 21 | Polling ou Interrupção (Configurável) |
+>>>>>>> origin/mini-lele-v2-legendary-missing-assets
 | RST | Ext. 1 | Controlado via TCA9554 (Pino 1) |
 
 ### Áudio (I2S)
@@ -130,14 +142,18 @@ O **Mini Lele** é projetado especificamente para o kit de desenvolvimento abaix
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/mini-lele-v2-legendary-final-release
+=======
+>>>>>>> origin/mini-lele-v2-legendary-missing-assets
 | MCLK | 16 | Master Clock |
 | BCLK | 9 | Bit Clock |
 | LRCK | 45 | Word Select (WS) |
 | DOUT | 10 | Speaker Out |
 | DIN | 8 | Mic In |
 | PA_EN | 46 | Enable Amplificador (TCA9554) |
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 =======
@@ -174,6 +190,8 @@ O **Mini Lele** é projetado especificamente para o kit de desenvolvimento abaix
 >>>>>>> origin/mini-lele-v2-legendary-final-sync
 =======
 >>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
+=======
+>>>>>>> origin/mini-lele-v2-legendary-missing-assets
 
 ### Periféricos I2C (Endereços)
 *   **AXP2101 (PMU):** `0x34`
