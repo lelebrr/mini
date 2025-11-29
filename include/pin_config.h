@@ -17,6 +17,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * Mini Lele - Waveshare ESP32-S3-Touch-AMOLED-1.8
 	 * Hardware: SH8601 QSPI, FT3168 I2C, AXP2101 I2C, ES8311 I2S
 	 */
@@ -44,11 +45,14 @@
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 =======
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
  * Mapeamento de Pinos para Waveshare ESP32-S3-Touch-AMOLED-1.8
  *
  * Hardware:
  * - MCU: ESP32-S3 (N16R8)
  * - Tela: 1.8" AMOLED (SH8601) - QSPI
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -66,6 +70,9 @@
 =======
  * - Touch: FT3168 ou GT1151 - I2C
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
+=======
+ * - Touch: FT3168 - I2C
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
  * - PMU: AXP2101 - I2C
  * - Áudio: ES8311 - I2S
  * - IMU: QMI8658 - I2C
@@ -80,6 +87,7 @@
 #define LCD_SDIO1  7   // Data 1
 #define LCD_SDIO2  8   // Data 2
 #define LCD_SDIO3  9   // Data 3
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -147,10 +155,15 @@
 =======
 #define LCD_RST    -1  // Controlado pelo Expander IO Pin 0
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
+=======
+// O Reset do LCD é controlado pelo Pino 0 do Expansor IO (TCA9554)
+#define LCD_RST    -1
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
 
 #define LCD_WIDTH  368
 #define LCD_HEIGHT 448
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -234,12 +247,17 @@
 =======
 // --- Barramento I2C (Interno) ---
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
+=======
+// --- Barramento I2C (Interno) ---
+// Compartilhado por: Touch, PMU, Expansor IO, IMU
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
 #define IIC_SDA    38
 #define IIC_SCL    39
 #define D_IIC_SDA  38
 #define D_IIC_SCL  39
 
 // Endereços I2C dos Dispositivos
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -269,6 +287,8 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
 #define AXP2101_SLAVE_ADDRESS 0x34         // Gerenciamento de Energia
 #define FT3168_DEVICE_ADDRESS 0x38         // Controlador de Touch
 #define ESP_IO_EXPANDER_I2C_TCA9554_ADDRESS_000 0x20 // Expansor de IO
@@ -290,6 +310,7 @@
 
 // --- Cartão SD (SDMMC Slot 1) ---
 // Modo 1-Bit (Padrão da placa)
+<<<<<<< HEAD
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
 >>>>>>> origin/pwntamagotchi-br-final-90-features
@@ -297,10 +318,13 @@
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 =======
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
 #define SDMMC_CLK  12
 #define SDMMC_CMD  11
 #define SDMMC_DATA 13
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -538,12 +562,15 @@
 =======
 >>>>>>> origin/mini-lele-v2-rebrand
 =======
+=======
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
 // --- Cores (Formato RGB565) ---
 #define BLACK   0x0000
 #define WHITE   0xFFFF
 #define RED     0xF800
 #define GREEN   0x07E0
 #define BLUE    0x001F
+<<<<<<< HEAD
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
@@ -555,3 +582,5 @@
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 =======
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr

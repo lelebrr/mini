@@ -10,6 +10,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
@@ -41,6 +42,8 @@
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 =======
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
  */
 
 #include <Arduino.h>
@@ -49,6 +52,7 @@
 #include "FS.h"
 #include <math.h>
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -85,6 +89,8 @@ extern ESP_IOExpander *expander; // Disponível no main.cpp
 extern ESP_IOExpander *expander; // Disponível no main.cpp
 
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
 struct WavHeader {
     char riff[4];             // "RIFF"
     uint32_t overall_size;    // Tamanho do arquivo - 8
@@ -102,6 +108,7 @@ struct WavHeader {
 };
 
 class AudioHandler {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -151,12 +158,17 @@ public:
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 =======
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
+=======
+public:
+    static void playWav(const char* filename) {
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
         // Ajuste de caminho para nova estrutura em Português
         String path = String("/arquivos_cartao_sd") + filename;
 
         File file = SD_MMC.open(path);
         if (!file) {
             Serial.printf("[Audio] Erro: Arquivo %s nao encontrado\n", path.c_str());
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -181,6 +193,8 @@ public:
 =======
             setAmpPower(false);
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
             return;
         }
 
@@ -190,6 +204,7 @@ public:
         if (memcmp(header.riff, "RIFF", 4) != 0) {
             Serial.println("[Audio] Erro: Cabeçalho WAV invalido");
             file.close();
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -233,10 +248,16 @@ public:
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 =======
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
+=======
+            return;
+        }
+
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
         size_t bytes_read = 0;
         size_t bytes_written = 0;
         uint8_t buffer[1024];
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -257,12 +278,17 @@ public:
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 =======
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
+=======
+        i2s_set_sample_rates(I2S_NUM_0, header.sample_rate);
+
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
         while (file.available()) {
             bytes_read = file.read(buffer, sizeof(buffer));
             i2s_write(I2S_NUM_0, buffer, bytes_read, &bytes_written, portMAX_DELAY);
         }
         file.close();
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -298,11 +324,14 @@ public:
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
         memset(buffer, 0, sizeof(buffer));
         i2s_write(I2S_NUM_0, buffer, sizeof(buffer), &bytes_written, portMAX_DELAY);
     }
 
     static bool recordWav(const char* filename, int max_duration_sec, bool use_vad = true) {
+<<<<<<< HEAD
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
@@ -314,6 +343,8 @@ public:
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 =======
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
         String path = String("/arquivos_cartao_sd") + filename;
 
         File file = SD_MMC.open(path, FILE_WRITE);
@@ -403,6 +434,7 @@ public:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         // Desligar ou colocar em idle se necessário
 =======
 >>>>>>> origin/pwn-tamagotchi-br-release
@@ -421,6 +453,8 @@ public:
 =======
         // Desligar ou colocar em idle se necessário
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
         return true;
     }
 };

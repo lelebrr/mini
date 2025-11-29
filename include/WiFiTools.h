@@ -15,6 +15,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/mini-lele-v2-rebrand
 =======
@@ -25,6 +26,8 @@
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 =======
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
 /**
  * WiFiTools.h
  * Ferramentas WiFi com caminhos traduzidos.
@@ -36,6 +39,7 @@
 #include <SD_MMC.h>
 #include "FS.h"
 #include <vector>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -119,11 +123,14 @@ struct WiFiDevice {
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 =======
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
 
 #define MAX_SNIFFED 10
 
 struct SniffedDevice {
     String mac;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -158,10 +165,13 @@ struct SniffedDevice {
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 =======
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
     int rssi;
     unsigned long last_seen;
 };
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -383,6 +393,8 @@ public:
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 =======
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
 std::vector<SniffedDevice> nearby_devices;
 
 class WiFiTools {
@@ -427,6 +439,7 @@ public:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/merge-ready-mini-lele-v2
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
@@ -456,10 +469,13 @@ public:
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 =======
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
                 }
             }
         }
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -507,6 +523,11 @@ public:
     static void startSniffer() {
         WiFi.disconnect();
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
+=======
+
+    static void startSniffer() {
+        WiFi.disconnect();
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
         esp_wifi_set_promiscuous(true);
         esp_wifi_set_promiscuous_rx_cb(&promiscuous_rx_cb);
     }
@@ -546,6 +567,7 @@ public:
     }
 };
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -620,3 +642,6 @@ std::vector<WiFiDevice> WiFiTools::nearby_devices;
 =======
 #endif
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
+=======
+#endif
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr

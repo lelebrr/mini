@@ -4,6 +4,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
@@ -104,6 +105,8 @@
 =======
 =======
 >>>>>>> origin/pwntamagotchi-br-final-90-features
+=======
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
 #ifndef LV_CONF_H
 #define LV_CONF_H
 
@@ -159,6 +162,7 @@
 
 #endif /*LV_CONF_H*/
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
@@ -170,3 +174,5 @@
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 =======
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr

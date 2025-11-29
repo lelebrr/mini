@@ -4,6 +4,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
@@ -73,6 +74,8 @@ Acesse via navegador para controle total.
 >>>>>>> origin/pwntamagotchi-br-final-90-features
 =======
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
+=======
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
 # 📖 Manual de Uso
 
 ## 🗣️ Comandos de Voz (Offline)
@@ -129,6 +132,7 @@ Para enviar handshakes capturados para quebra de senha online:
 *   **Acordar:** Toque na tela para ligar novamente.
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/pwn-tamagotchi-br-release
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
@@ -140,3 +144,5 @@ Para enviar handshakes capturados para quebra de senha online:
 >>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
 =======
 >>>>>>> origin/pwntamagotchi-br-v2-webui-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
