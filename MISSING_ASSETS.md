@@ -1,7 +1,7 @@
 # Arquivos e Assets Necessários (Cartão SD) – Mini Lele
 
 Este documento lista todos os arquivos que o firmware **Mini Lele v2.0** espera encontrar no cartão **microSD** para funcionar completamente.  
-O repositório contém o código‑fonte, mas a maior parte dos áudios, imagens e alguns arquivos de configuração devem ser gerados por você.
+O repositório contém o código‑fonte e um script (`generate_sd_structure.sh`) que gera a estrutura mínima do SD com vários arquivos de áudio de exemplo, mas você provavelmente vai querer gerar suas próprias vozes/imagens personalizadas.
 
 ---
 
@@ -38,6 +38,9 @@ Isso criará um diretório `sd_out/` com a estrutura mínima a ser copiada para 
 Estes arquivos são usados para feedback sonoro do Pet e para alguns eventos do sistema.  
 Formato recomendado: **WAV 16 kHz, 16‑bit, Mono**.
 
+O script `generate_sd_structure.sh` já cria versões simples (bips) com esses nomes, apenas para que o firmware não quebre caso você ainda não tenha gerado TTS real.  
+Para uma experiência melhor, gere áudios com voz natural seguindo os textos sugeridos abaixo e substitua os arquivos gerados automaticamente.
+
 | Caminho no SD                         | Descrição                  | Sugestão de texto para TTS            |
 |--------------------------------------|----------------------------|---------------------------------------|
 | `/arquivos_cartao_sd/tts/hello.wav`  | Saudação inicial           | “Olá, eu sou o Mini Lele!”           |
@@ -52,7 +55,7 @@ Formato recomendado: **WAV 16 kHz, 16‑bit, Mono**.
 Notas importantes:
 
 - Os arquivos na pasta `tts/` ficam dentro de `arquivos_cartao_sd/`.
-- Arquivos como `/boot_pt.wav`, `/success_pt.wav` e `/error_pt.wav` ficam diretamente na **raiz** do cartão.
+- Arquivos como `/boot_pt.wav`, `/success_pt.wav` e `/error_pt.wav` ficam diretamente na **raiz** do cartão (o script já cria versões básicas tanto na raiz quanto dentro de `arquivos_cartao_sd/` para compatibilidade).
 - O arquivo `/arquivos_cartao_sd/voice/input.wav` (ou similar) é normalmente criado e sobrescrito automaticamente pelo firmware – você não precisa criá‑lo.
 
 ---
@@ -90,13 +93,15 @@ Exemplos (podem variar conforme o repositório):
 | Caminho no SD                                              | Descrição                    |
 |------------------------------------------------------------|-----------------------------|
 | `/arquivos_cartao_sd/evil_portal/01_wifi_update.html`      | Página fake de “atualização de Wi‑Fi” |
-| `/arquivos_cartao_sd/evil_portal/02_feed_mini_lele.html`   | Página temática para “alimentar o Pet” |
+| `/arquivos_cartao_sd/evil_portal/02_pwnagotchi_feed.html`  | Página temática estilo “alimentar o Pet” |
 | `/arquivos_cartao_sd/evil_portal/03_cafe_gratis.html`      | “Wi‑Fi grátis” de cafeteria (para testes) |
+
+No repositório já existem vários templates em `arquivos_cartao_sd/evil_portal/`, e o script `generate_sd_structure.sh` copia esses arquivos automaticamente para `sd_out/arquivos_cartao_sd/evil_portal/`.
 
 Você pode:
 
-- Abrir os exemplos que vêm no repositório (dentro de `arquivos_cartao_sd/evil_portal`)
-- Copiá‑los para o SD
+- Rodar `generate_sd_structure.sh` e copiar o conteúdo de `sd_out/` para o SD
+- Abrir/editar os exemplos que vêm no repositório
 - Criar seus próprios templates (sempre com foco educacional e sem copiar marcas/identidades reais de terceiros)
 
 ---
@@ -110,7 +115,7 @@ Alguns arquivos são lidos e/ou gerados automaticamente pelo Mini Lele:
 | `/config.json`                            | JSON      | Configurações gerais do sistema (criado/atualizado em runtime)           |
 | `/pwn_pet_save.json`                      | JSON      | Dados do Pet (XP, nível, estados) (criado em runtime)                    |
 | `/game_stats.bin`                         | Binário   | Estatísticas de jogo e histórico (criado em runtime)                     |
-| `/arquivos_cartao_sd/wifi_config.txt`     | Texto     | Credenciais de Wi‑Fi e KEY para upload de handshakes (criar manualmente) |
+| `/arquivos_cartao_sd/wifi_config.txt`     | Texto     | Credenciais de Wi‑Fi e KEY para upload de handshakes (o script cria um exemplo, mas você deve ajustar para a sua rede) |
 | `/arquivos_cartao_sd/credenciais_capturadas.txt` | Texto | Log de credenciais capturadas pelo Evil Portal (criado em runtime)       |
 | `/arquivos_cartao_sd/macs_detectados.txt` | Texto     | Log dos MACs vistos pelo sniffer (criado em runtime)                     |
 
@@ -171,11 +176,11 @@ Para evitar erros de digitação em caminhos e nomes:
 Antes de ligar o Mini Lele, confirme:
 
 - [ ] Cartão SD formatado em **FAT32**
-- [ ] Pastas `arquivos_cartao_sd/`, `capturas/` e `fila_envio/` existem
-- [ ] `wifi_config.txt` criado se você pretende usar upload online
-- [ ] Arquivos de áudio básicos (`boot_pt.wav`, `success_pt.wav`, `error_pt.wav`) presentes
+- [ ] Pastas `arquivos_cartao_sd/`, `capturas/` e `fila_envio/` existem (o script já cria essa estrutura em `sd_out/`)
+- [ ] `wifi_config.txt` ajustado com SSID/Senha reais da sua rede (um exemplo é criado pelo script)
+- [ ] Arquivos de áudio básicos (`boot_pt.wav`, `success_pt.wav`, `error_pt.wav`) estão audíveis e em PT‑BR (placeholders são criados pelo script, mas o ideal é substituí‑los por TTS real)
 - [ ] (Opcional) Faces personalizadas em `custom-faces/`
-- [ ] Templates de Evil Portal copiados para `arquivos_cartao_sd/evil_portal/`
+- [ ] Templates de Evil Portal disponíveis em `arquivos_cartao_sd/evil_portal/` (copiados automaticamente pelo script)
 
 Se algo estiver faltando, o firmware pode:
 
