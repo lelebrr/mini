@@ -10,6 +10,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Gerencia 120 configurações com persistência no SD
 =======
 // Gerencia 100 configurações com persistência no SD
@@ -20,6 +21,9 @@
 =======
 // Gerencia 100 configurações com persistência no SD
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+// Gerencia 120 configurações com persistência no SD
+>>>>>>> origin/mini-lele-v2-legendary-final-drivers
 
 class ConfigManager {
 private:
@@ -29,6 +33,7 @@ private:
     bool _dirty = false;
 
     ConfigManager() {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -46,6 +51,10 @@ private:
         // Aloca 8KB para JSON (Suficiente para ~100 chaves)
         doc = new DynamicJsonDocument(8192);
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+        // Aumentado para 16KB para acomodar 120 chaves + strings longas
+        doc = new DynamicJsonDocument(16384);
+>>>>>>> origin/mini-lele-v2-legendary-final-drivers
     }
 
 public:
@@ -82,6 +91,7 @@ public:
     void createDefaults() {
         JsonObject root = doc->to<JsonObject>();
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -300,11 +310,60 @@ public:
 >>>>>>> origin/mini-lele-v2-complete-verified
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+        // --- 1. SYSTEM IDENTITY ---
+        root["sys_device_name"] = "PwnTamagotchi BR - Legendary";
+        root["sys_hostname"] = "minilele";
+        root["sys_wifi_mode"] = "AP";
+        root["sys_ap_ssid"] = "Mini-Lele";
+        root["sys_ap_pass"] = "minilele";
+        root["sys_web_user"] = "admin";
+        root["sys_web_pass"] = "admin";
+
+        // --- 2. LEGENDARY FEATURES (14 Toggles) ---
+        root["leg_clone_celular"] = false; // Evil Twin inteligente
+        root["leg_pwn_radar"] = true; // UI
+        root["leg_conquistas_br"] = true; // Achievements
+        root["leg_modo_fantasma"] = false; // 03h-06h stealth
+        root["leg_loot_box"] = true; // 06:66 (07:06)
+        root["leg_auto_hashcat"] = false; // PCAP convert
+        root["leg_crypto_miner"] = false; // Zoeira Monero
+        root["leg_karaoke_8bit"] = false; // Fun
+        root["leg_pwn_do_dia"] = true; // Daily target
+        root["leg_modo_exame"] = false; // Blank screen
+        root["leg_capture_wpa_ent"] = true; // EAPOL Enterprise
+        root["leg_pwnversario"] = true; // Birthday logic
+        root["leg_uber_pwn"] = false; // Stats per km
+        root["leg_desligar_brasil"] = false; // Mass Deauth (Dangerous)
+
+        // --- 3. PET (Gameplay) ---
+        root["pet_name"] = "PwnBaby";
+        root["pet_voice_enabled"] = true;
+        root["pet_hunger_rate"] = 1;
+        root["pet_happiness_decay"] = 1;
+        root["pet_evolution_enabled"] = true;
+        root["pet_sfx_volume"] = 80;
+        root["pet_wake_word"] = "ei_pwn";
+
+        // --- 4. ATTACKS ---
+        root["atk_auto_scan"] = true;
+        root["atk_deauth_enabled"] = false;
+        root["atk_evil_portal"] = false;
+
+        // --- 5. POWER ---
+        root["pwr_deep_sleep_enabled"] = true;
+        root["pwr_battery_critical"] = 10;
+
+        // --- 6. WEBUI ---
+        root["web_theme"] = "cyber_favela";
+        root["web_live_logs"] = true;
+>>>>>>> origin/mini-lele-v2-legendary-final-drivers
 
         save();
     }
 
     void validateMissingKeys() {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -392,10 +451,18 @@ public:
         if (!root.containsKey("web_theme")) { root["web_theme"] = "cyber_favela"; changed = true; }
         if (!root.containsKey("sys_web_user")) { root["sys_web_user"] = "admin"; changed = true; }
         // Adicionar outras verificações críticas aqui
+=======
+        bool changed = false;
+        JsonObject root = doc->as<JsonObject>();
+
+        if (!root.containsKey("leg_pwn_radar")) { root["leg_pwn_radar"] = true; changed = true; }
+        if (!root.containsKey("sys_device_name")) { root["sys_device_name"] = "PwnTamagotchi BR - Legendary"; changed = true; }
+>>>>>>> origin/mini-lele-v2-legendary-final-drivers
 
         if (changed) save();
     }
 
+<<<<<<< HEAD
     // Getters Genéricos
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -404,6 +471,8 @@ public:
 >>>>>>> origin/mini-lele-v2-complete-verified
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-drivers
     template <typename T>
     T get(const char* key) {
         return (*doc)[key].as<T>();
@@ -411,6 +480,7 @@ public:
 
     String getString(const char* key) {
         return (*doc)[key].as<String>();
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -441,10 +511,22 @@ public:
     }
 
     // Retorna JSON bruto para a WebAPI
+=======
+    }
+
+    template <typename T>
+    void set(const char* key, T value) {
+        (*doc)[key] = value;
+        _dirty = true;
+        save();
+    }
+
+>>>>>>> origin/mini-lele-v2-legendary-final-drivers
     void getJSON(String &output) {
         serializeJson(*doc, output);
     }
 
+<<<<<<< HEAD
     // Atualiza do JSON recebido da WebAPI
     void updateFromJSON(String json) {
 <<<<<<< HEAD
@@ -454,6 +536,9 @@ public:
 >>>>>>> origin/mini-lele-v2-complete-verified
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+    void updateFromJSON(String json) {
+>>>>>>> origin/mini-lele-v2-legendary-final-drivers
         DeserializationError error = deserializeJson(*doc, json);
         if (!error) save();
     }

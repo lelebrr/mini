@@ -20,6 +20,7 @@ O **Mini Lele** é projetado especificamente para o kit de desenvolvimento abaix
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 | CS | 12 | Chip Select |
 | SCK | 11 | Clock |
 | D0 | 4 | Data 0 |
@@ -31,6 +32,8 @@ O **Mini Lele** é projetado especificamente para o kit de desenvolvimento abaix
 >>>>>>> origin/mini-lele-v2-complete-verified
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-drivers
 | CS | 4 | Chip Select |
 | SCK | 5 | Clock |
 | D0 | 6 | Data 0 |
@@ -39,16 +42,20 @@ O **Mini Lele** é projetado especificamente para o kit de desenvolvimento abaix
 | D3 | 9 | Data 3 |
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/merge-ready-mini-lele-v2
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-drivers
 | RST | Ext. 0 | Controlado via TCA9554 (Pino 0) |
 
 ### Touch (I2C)
 | Sinal | GPIO | Notas |
 | :--- | :--- | :--- |
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -70,11 +77,17 @@ O **Mini Lele** é projetado especificamente para o kit de desenvolvimento abaix
 | SCL | 39 | Barramento I2C compartilhado |
 | INT | - | Polling ou Interrupção (Configurável) |
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+| SDA | 38 | Barramento I2C compartilhado |
+| SCL | 39 | Barramento I2C compartilhado |
+| INT | - | Polling ou Interrupção (Configurável) |
+>>>>>>> origin/mini-lele-v2-legendary-final-drivers
 | RST | Ext. 1 | Controlado via TCA9554 (Pino 1) |
 
 ### Áudio (I2S)
 | Sinal | GPIO | Notas |
 | :--- | :--- | :--- |
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -89,6 +102,8 @@ O **Mini Lele** é projetado especificamente para o kit de desenvolvimento abaix
 >>>>>>> origin/mini-lele-v2-complete-verified
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-drivers
 | MCLK | 2 | Master Clock |
 | BCLK | 41 | Bit Clock |
 | LRCK | 42 | Word Select (WS) |
@@ -97,11 +112,14 @@ O **Mini Lele** é projetado especificamente para o kit de desenvolvimento abaix
 | PA_EN | Ext. 6 | Enable Amplificador (TCA9554) |
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/merge-ready-mini-lele-v2
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-drivers
 
 ### Periféricos I2C (Endereços)
 *   **AXP2101 (PMU):** `0x34`

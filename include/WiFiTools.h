@@ -3,6 +3,7 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 /**
  * WiFiTools.h
  * Ferramentas WiFi com caminhos traduzidos.
@@ -22,6 +23,8 @@
 =======
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-drivers
 #include <Arduino.h>
 #include <WiFi.h>
 #include <esp_wifi.h>
@@ -30,13 +33,17 @@
 #include "core/Gamification.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/mini-lele-v2-complete-verified
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-drivers
 // Estrutura para dispositivos encontrados
 struct WiFiDevice {
     String mac;
     String vendor; // Placeholder
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -50,6 +57,8 @@ struct SniffedDevice {
 >>>>>>> origin/mini-lele-v2-complete-verified
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-drivers
     int rssi;
     unsigned long last_seen;
 };
@@ -57,29 +66,38 @@ struct SniffedDevice {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/mini-lele-v2-complete-verified
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-drivers
 class WiFiTools {
 public:
     static std::vector<WiFiDevice> nearby_devices;
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-drivers
     static void startSniffer() {
         WiFi.mode(WIFI_MODE_APSTA); // APSTA permite injeção + WebUI
         esp_wifi_set_promiscuous(true);
         esp_wifi_set_promiscuous_rx_cb(&promiscuous_rx_cb);
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/mini-lele-v2-complete-verified
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-drivers
 
     static void promiscuous_rx_cb(void* buf, wifi_promiscuous_pkt_type_t type) {
         wifi_promiscuous_pkt_t* pkt = (wifi_promiscuous_pkt_t*)buf;
@@ -114,6 +132,7 @@ public:
                     // Limita tamanho
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                     if (nearby_devices.size() > MAX_SNIFFED) nearby_devices.erase(nearby_devices.begin());
 
                     // Log em /arquivos_cartao_sd/macs_detectados.txt
@@ -128,6 +147,9 @@ public:
 =======
                     if (nearby_devices.size() > 50) nearby_devices.erase(nearby_devices.begin());
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+                    if (nearby_devices.size() > 50) nearby_devices.erase(nearby_devices.begin());
+>>>>>>> origin/mini-lele-v2-legendary-final-drivers
                 }
             }
         }
@@ -159,6 +181,7 @@ public:
                     Gamification::registerHandshake();
 
                     // TODO: Salvar PCAP
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -206,10 +229,13 @@ public:
 >>>>>>> origin/mini-lele-v2-complete-verified
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-drivers
                 }
             }
         }
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -269,12 +295,17 @@ std::vector<WiFiDevice> WiFiTools::nearby_devices;
 =======
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-drivers
 };
 
 std::vector<WiFiDevice> WiFiTools::nearby_devices;
 
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/mini-lele-v2-complete-verified
 =======
 >>>>>>> origin/mini-lele-v2-final-verified
+=======
+>>>>>>> origin/mini-lele-v2-legendary-final-drivers
