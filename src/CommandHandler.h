@@ -5,9 +5,13 @@
 #include <XPowersLib.h>
 #include "AudioHandler.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "FaceHandler.h"
 =======
 >>>>>>> origin/waveshare-s3-amoled-offline-voice
+=======
+#include "FaceHandler.h"
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 
 extern XPowersPMU power; // From main.cpp
 extern Arduino_GFX *gfx; // From main.cpp
@@ -20,10 +24,14 @@ public:
         switch (count) {
             case 1:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
                 // "Luz" -> COOL face
                 Serial.println("CMD: [1] Alternar Luz");
                 gfx->Display_Brightness(255);
                 FaceHandler::setFace(FACE_COOL);
+<<<<<<< HEAD
 =======
                 // "Luz" / "Som" / "Sim"
                 // Toggle Brightness
@@ -32,11 +40,16 @@ public:
                 // Since we don't have read-back easily on GFX without tracking:
                 gfx->Display_Brightness(255); // Just force High for demo
 >>>>>>> origin/waveshare-s3-amoled-offline-voice
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
                 AudioHandler::playWav("/success_pt.wav");
                 break;
 
             case 2:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
                 // "Status" -> HAPPY
                 Serial.println("CMD: [2] Status");
                 FaceHandler::setFace(FACE_HAPPY);
@@ -50,6 +63,7 @@ public:
                 {
                     int pct = power.getBatteryPercent();
                     Serial.printf("Bateria: %d%%\n", pct);
+<<<<<<< HEAD
 =======
                 // "Status" / "Liga"
                 Serial.println("CMD: [2] Status");
@@ -64,11 +78,14 @@ public:
                     Serial.printf("Bateria: %d%%\n", pct);
                     // In a real scenario, we'd play number WAVs here
 >>>>>>> origin/waveshare-s3-amoled-offline-voice
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
                 }
                 AudioHandler::playWav("/success_pt.wav");
                 break;
 
             default:
+<<<<<<< HEAD
 <<<<<<< HEAD
                 // Error -> CONFUSED/SAD
                 Serial.println("CMD: Desconhecido");
@@ -76,6 +93,11 @@ public:
 =======
                 Serial.println("CMD: Desconhecido / Ruido");
 >>>>>>> origin/waveshare-s3-amoled-offline-voice
+=======
+                // Error -> CONFUSED/SAD
+                Serial.println("CMD: Desconhecido");
+                FaceHandler::setFace(FACE_SAD);
+>>>>>>> origin/waveshare-s3-amoled-review-complete
                 AudioHandler::playWav("/error_pt.wav");
                 break;
         }

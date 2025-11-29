@@ -8,6 +8,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
@@ -85,6 +86,8 @@ Acesse via navegador para controle total.
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-full-review-406
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 # 📖 Manual de Uso
 
 ## 🗣️ Comandos de Voz (Offline)
@@ -107,6 +110,7 @@ Clique no botão **"Voz"** e fale próximo ao microfone. O sistema detecta o nú
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 4.  Se a vítima digitar a senha, ela será salva em `/arquivos_cartao_sd/credenciais_capturadas.txt`.
 =======
 4.  Se a vítima digitar a senha, ela será salva em `/captured_creds.txt` no SD.
@@ -114,6 +118,9 @@ Clique no botão **"Voz"** e fale próximo ao microfone. O sistema detecta o nú
 =======
 4.  Se a vítima digitar a senha, ela será salva em `/arquivos_cartao_sd/credenciais_capturadas.txt`.
 >>>>>>> origin/waveshare-s3-amoled-full-review-406
+=======
+4.  Se a vítima digitar a senha, ela será salva em `/captured_creds.txt` no SD.
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 5.  O Pwnagotchi ficará feliz `(^_^)`.
 
 ## 🕵️ Sniffer WiFi (Wall of Flippers)
@@ -123,6 +130,7 @@ Clique no botão **"Voz"** e fale próximo ao microfone. O sistema detecta o nú
 3. A tela exibirá uma lista em tempo real de endereços MAC próximos (dispositivos buscando WiFi).
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 4. Os dados são salvos em `/arquivos_cartao_sd/macs_detectados.txt`.
 =======
 4. Os dados são salvos em `/sniffed_macs.txt`.
@@ -130,6 +138,9 @@ Clique no botão **"Voz"** e fale próximo ao microfone. O sistema detecta o nú
 =======
 4. Os dados são salvos em `/arquivos_cartao_sd/macs_detectados.txt`.
 >>>>>>> origin/waveshare-s3-amoled-full-review-406
+=======
+4. Os dados são salvos em `/sniffed_macs.txt`.
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 
 ## 📤 Manual Upload (WPA-SEC)
 
@@ -139,6 +150,7 @@ Para enviar handshakes capturados para quebra de senha online:
 2.  Copie sua **Key**.
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 3.  Edite o arquivo `/arquivos_cartao_sd/wifi_config.txt` no cartão SD:
 =======
 3.  Edite o arquivo `wifi_config.txt` no cartão SD:
@@ -146,12 +158,16 @@ Para enviar handshakes capturados para quebra de senha online:
 =======
 3.  Edite o arquivo `/arquivos_cartao_sd/wifi_config.txt` no cartão SD:
 >>>>>>> origin/waveshare-s3-amoled-full-review-406
+=======
+3.  Edite o arquivo `wifi_config.txt` no cartão SD:
+>>>>>>> origin/waveshare-s3-amoled-review-complete
     ```
     SSID=SeuWiFi
     PASS=SuaSenha
     KEY=ColeSuaKeyAqui
     ```
 4.  No dispositivo, clique em **"Upload"**.
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 5.  O sistema conectará ao WiFi e enviará todos os arquivos `.pcap` da pasta `/capturas` e `/fila_envio`.
@@ -172,6 +188,9 @@ Para enviar handshakes capturados para quebra de senha online:
 =======
 5.  O sistema conectará ao WiFi e enviará todos os arquivos `.pcap` da pasta `/capturas` e `/fila_envio`.
 >>>>>>> origin/waveshare-s3-amoled-full-review-406
+=======
+5.  O sistema conectará ao WiFi e enviará todos os arquivos `.pcap` da pasta `/handshakes` e `/upload_queue`.
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 
 ## 🎮 Gamificação
 
@@ -181,13 +200,17 @@ Para enviar handshakes capturados para quebra de senha online:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/waveshare-s3-amoled-full-review-406
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 
 ## 🔋 Economia de Energia
 
 *   **Screen Saver:** A tela desliga automaticamente após 30 segundos de inatividade.
 *   **Acordar:** Toque na tela para ligar novamente.
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -211,3 +234,5 @@ Para enviar handshakes capturados para quebra de senha online:
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-full-review-406
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete

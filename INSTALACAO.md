@@ -9,6 +9,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
@@ -74,6 +75,8 @@ O sistema requer um cartão microSD (FAT32) para salvar configurações, captura
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-full-review-406
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 # 📘 Guia de Instalação
 
 ## 1. Preparação do Ambiente
@@ -95,6 +98,7 @@ Crie a seguinte estrutura de pastas na raiz do SD:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ├── arquivos_cartao_sd/     (Copie o conteúdo desta pasta do repo para a raiz)
 =======
 ├── sd_card_files/          (Copie o conteúdo desta pasta do repo para a raiz)
@@ -105,6 +109,9 @@ Crie a seguinte estrutura de pastas na raiz do SD:
 =======
 ├── arquivos_cartao_sd/     (Copie o conteúdo desta pasta do repo para a raiz)
 >>>>>>> origin/waveshare-s3-amoled-full-review-406
+=======
+├── sd_card_files/          (Copie o conteúdo desta pasta do repo para a raiz)
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 │   ├── evil_portal/        (Templates HTML)
 │   ├── boot_pt.wav         (Áudios)
 │   ├── listening_pt.wav
@@ -113,16 +120,20 @@ Crie a seguinte estrutura de pastas na raiz do SD:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 │   └── wifi_config.txt     (Edite com suas credenciais)
 ├── capturas/               (Será criada automaticamente)
 └── fila_envio/             (Será criada automaticamente)
 =======
 =======
 >>>>>>> origin/waveshare-s3-amoled-final-polish
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 ├── handshakes/             (Será criada automaticamente)
 ├── upload_queue/           (Será criada automaticamente)
 ├── wifi_config.txt         (Crie este arquivo com suas credenciais WiFi para upload)
 └── captured_creds.txt      (Onde as senhas do Evil Portal serão salvas)
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> origin/waveshare-s3-amoled-evil-portal-final
 =======
@@ -132,6 +143,8 @@ Crie a seguinte estrutura de pastas na raiz do SD:
 ├── capturas/               (Será criada automaticamente)
 └── fila_envio/             (Será criada automaticamente)
 >>>>>>> origin/waveshare-s3-amoled-full-review-406
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 ```
 
 **Exemplo de `wifi_config.txt`:**
@@ -150,6 +163,7 @@ KEY=SuaChaveWpaSec
 
 ## 4. Troubleshooting
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -191,3 +205,8 @@ KEY=SuaChaveWpaSec
 *   **Sem áudio?** Verifique se os arquivos `.wav` estão na pasta correta (`arquivos_cartao_sd`).
 *   **SD não monta?** Tente outro cartão ou formate novamente (FAT32).
 >>>>>>> origin/waveshare-s3-amoled-full-review-406
+=======
+*   **Tela preta?** Verifique se a bateria está conectada ou se o cabo USB fornece energia suficiente. O PMU (AXP2101) pode precisar de um ciclo de energia.
+*   **Sem áudio?** Verifique se os arquivos `.wav` estão na raiz do SD e são 16kHz 16-bit Mono.
+*   **SD não monta?** Tente outro cartão ou formate novamente (FAT32).
+>>>>>>> origin/waveshare-s3-amoled-review-complete

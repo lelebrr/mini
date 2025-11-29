@@ -6,6 +6,7 @@
 #include <esp_wifi.h>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <SD_MMC.h>
 #include "FS.h"
 <<<<<<< HEAD
@@ -20,6 +21,10 @@ String sniffed_macs[MAX_SNIFFED];
 int sniff_idx = 0;
 <<<<<<< HEAD
 =======
+=======
+#include <SD_MMC.h>
+#include "FS.h"
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 #include <vector>
 
 // Sniffer Globals
@@ -30,6 +35,7 @@ struct SniffedDevice {
     unsigned long last_seen;
 };
 std::vector<SniffedDevice> nearby_devices;
+<<<<<<< HEAD
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 
@@ -43,10 +49,13 @@ int sniff_idx = 0;
 >>>>>>> origin/waveshare-s3-amoled-full-plugins
 =======
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 
 class WiFiTools {
 public:
     static void promiscuous_rx_cb(void* buf, wifi_promiscuous_pkt_type_t type) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -59,6 +68,8 @@ public:
         // This callback is in ISR context (careful!)
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
         if (type != WIFI_PKT_MGMT) return; // Only Management Frames
 
         wifi_promiscuous_pkt_t* packet = (wifi_promiscuous_pkt_t*)buf;
@@ -102,6 +113,7 @@ public:
                 }
             }
         }
+<<<<<<< HEAD
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
         wifi_promiscuous_pkt_t* packet = (wifi_promiscuous_pkt_t*)buf;
@@ -117,12 +129,15 @@ public:
 >>>>>>> origin/waveshare-s3-amoled-full-plugins
 =======
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
     }
 
     static void startSniffer() {
         WiFi.disconnect();
         esp_wifi_set_promiscuous(true);
         esp_wifi_set_promiscuous_rx_cb(&promiscuous_rx_cb);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -133,10 +148,14 @@ public:
 >>>>>>> origin/waveshare-s3-amoled-full-plugins
 =======
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
+=======
+        Serial.println("Sniffer Ativo");
+>>>>>>> origin/waveshare-s3-amoled-review-complete
     }
 
     static void stopSniffer() {
         esp_wifi_set_promiscuous(false);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -158,6 +177,8 @@ public:
             Serial.printf("Handshake salvo: %s\n", filename.c_str());
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
         Serial.println("Sniffer Parado");
     }
 
@@ -169,9 +190,12 @@ public:
         if (f) {
             f.println("PCAP DUMMY"); // Real implementation requires libpcap logic
             f.close();
+<<<<<<< HEAD
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
         }
     }
 
@@ -185,7 +209,10 @@ public:
     }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 
     static String getSnifferText() {
         String s = "Dispositivos:\n";
@@ -195,6 +222,7 @@ public:
         if (nearby_devices.empty()) s += "Nenhum...";
         return s;
     }
+<<<<<<< HEAD
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
     }
@@ -221,6 +249,8 @@ public:
 >>>>>>> origin/waveshare-s3-amoled-full-plugins
 =======
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 };
 
 #endif

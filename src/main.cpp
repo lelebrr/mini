@@ -17,6 +17,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/pwn-tamagotchi-legendary-edition-final
 =======
@@ -1545,6 +1546,8 @@ void loop() {
 >>>>>>> origin/waveshare-s3-amoled-offline-voice
 =======
 >>>>>>> origin/waveshare-s3-amoled-ptbr-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 #include "Arduino_GFX_Library.h"
 #include "Arduino_DriveBus_Library.h"
 #include <ESP_IOExpander_Library.h>
@@ -1553,6 +1556,7 @@ void loop() {
 #include <SD_MMC.h>
 #include "es8311.h"
 #include <driver/i2s.h>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1578,6 +1582,8 @@ void loop() {
 >>>>>>> origin/waveshare-s3-amoled-full-review-406
 =======
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 #include "XPowersLib.h"
 #include <SensorQMI8658.hpp>
 #include "AudioHandler.h"
@@ -1589,15 +1595,19 @@ void loop() {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-full-review-406
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 #include "Gamification.h"
 #include "WiFiTools.h"
 #include "OnlineCrack.h"
 #include "EvilPortal.h"
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1660,6 +1670,12 @@ SemaphoreHandle_t gui_mutex;
 
 // --- Objetos Globais ---
 >>>>>>> origin/waveshare-s3-amoled-ptbr-final
+=======
+// --- Mutex for Thread Safety ---
+SemaphoreHandle_t gui_mutex;
+
+// --- Objects ---
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 Arduino_DataBus *bus = new Arduino_ESP32QSPI(
   LCD_CS /* CS */, LCD_SCLK /* SCK */, LCD_SDIO0 /* SDIO0 */, LCD_SDIO1 /* SDIO1 */,
   LCD_SDIO2 /* SDIO2 */, LCD_SDIO3 /* SDIO3 */);
@@ -1671,6 +1687,7 @@ std::shared_ptr<Arduino_IIC_DriveBus> IIC_Bus =
   std::make_shared<Arduino_HWIIC>(IIC_SDA, IIC_SCL, &Wire);
 
 ESP_IOExpander *expander = NULL;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1700,10 +1717,13 @@ ESP_IOExpander *expander = NULL;
 >>>>>>> origin/waveshare-s3-amoled-offline-voice
 =======
 >>>>>>> origin/waveshare-s3-amoled-ptbr-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 XPowersPMU power;
 SensorQMI8658 qmi;
 IMUdata acc;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 // --- Touch ---
 <<<<<<< HEAD
@@ -1736,6 +1756,9 @@ XPowersPMU power;
 =======
 // --- Touch (FT3168) ---
 >>>>>>> origin/waveshare-s3-amoled-ptbr-final
+=======
+// --- Touch ---
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 void Arduino_IIC_Touch_Interrupt(void);
 std::unique_ptr<Arduino_IIC> FT3168(new Arduino_FT3x68(IIC_Bus, FT3168_DEVICE_ADDRESS,
                                                        DRIVEBUS_DEFAULT_VALUE, TP_INT, Arduino_IIC_Touch_Interrupt));
@@ -1744,6 +1767,7 @@ void Arduino_IIC_Touch_Interrupt(void) {
   FT3168->IIC_Interrupt_Flag = true;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1803,6 +1827,8 @@ void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
 =======
 >>>>>>> origin/waveshare-s3-amoled-offline-voice
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 // --- UI Objects ---
 lv_obj_t *label_status;
 lv_obj_t *label_battery;
@@ -1815,19 +1841,26 @@ lv_obj_t *label_btn;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 lv_obj_t *label_instr;
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-full-review-406
+=======
+lv_obj_t *label_instr;
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 lv_obj_t *label_game;
 lv_obj_t *label_sys;
 lv_obj_t *btn_tools;
 lv_obj_t *btn_portal;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/waveshare-s3-amoled-full-review-406
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 lv_obj_t *btn_sniffer;
 
 // --- Global States ---
@@ -1835,6 +1868,7 @@ bool sniffer_active = false;
 unsigned long last_interaction = 0;
 bool screen_on = true;
 
+<<<<<<< HEAD
 // --- Helpers ---
 void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p) {
   uint32_t w = (area->x2 - area->x1 + 1);
@@ -1871,10 +1905,13 @@ lv_obj_t *btn_tools; // New
 lv_obj_t *label_instr;
 >>>>>>> origin/waveshare-s3-amoled-offline-voice
 
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 // --- Helper Functions ---
 void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p) {
   uint32_t w = (area->x2 - area->x1 + 1);
   uint32_t h = (area->y2 - area->y1 + 1);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1897,11 +1934,14 @@ void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color
 >>>>>>> origin/waveshare-s3-amoled-offline-voice
 =======
 >>>>>>> origin/waveshare-s3-amoled-ptbr-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 #if (LV_COLOR_16_SWAP != 0)
   gfx->draw16bitBeRGBBitmap(area->x1, area->y1, (uint16_t *)&color_p->full, w, h);
 #else
   gfx->draw16bitRGBBitmap(area->x1, area->y1, (uint16_t *)&color_p->full, w, h);
 #endif
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1935,12 +1975,15 @@ void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color
 =======
 
 >>>>>>> origin/waveshare-s3-amoled-ptbr-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
   lv_disp_flush_ready(disp);
 }
 
 void my_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data) {
     int32_t touchX = FT3168->IIC_Read_Device_Value(FT3168->Arduino_IIC_Touch::Value_Information::TOUCH_COORDINATE_X);
     int32_t touchY = FT3168->IIC_Read_Device_Value(FT3168->Arduino_IIC_Touch::Value_Information::TOUCH_COORDINATE_Y);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1979,10 +2022,13 @@ void my_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data) {
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
 =======
 >>>>>>> origin/waveshare-s3-amoled-offline-voice
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
     FT3168->IIC_Interrupt_Flag = true;
     if (touchX > 0 && touchY > 0) {
         data->state = LV_INDEV_STATE_PR;
         data->point.x = touchX; data->point.y = touchY;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2011,11 +2057,15 @@ void my_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data) {
 >>>>>>> origin/waveshare-s3-amoled-offline-voice
 =======
 >>>>>>> origin/waveshare-s3-amoled-ptbr-final
+=======
+        last_interaction = millis(); // Reset screensaver
+>>>>>>> origin/waveshare-s3-amoled-review-complete
     } else {
         data->state = LV_INDEV_STATE_REL;
     }
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2136,6 +2186,9 @@ esp_err_t audio_init() {
 =======
 =======
 >>>>>>> origin/waveshare-s3-amoled-full-review-406
+=======
+// --- Thread Safe UI Update Helpers ---
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 void ui_set_face(FaceType type) {
     if (xSemaphoreTake(gui_mutex, portMAX_DELAY)) {
         FaceHandler::setFace(type);
@@ -2154,18 +2207,42 @@ void ui_set_label(lv_obj_t* label, const char* text) {
 void voice_processing_task(void * param) {
     ui_set_face(FACE_LOOK_R);
     AudioHandler::playWav("/listening_pt.wav");
+<<<<<<< HEAD
 
     // Caminho ajustado: /arquivos_cartao_sd/recording.wav
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
     bool recorded = AudioHandler::recordWav("/recording.wav", 4, true);
 
     if (recorded) {
         ui_set_face(FACE_INTENSE);
         int syllables = OfflineVoice::analyzeCommand("/recording.wav");
         if (syllables > 0) {
+<<<<<<< HEAD
+=======
+            // Command processing might touch hardware/SD, not UI directly usually
+            // but if it does, it needs mutex?
+            // CommandHandler uses playWav and FaceHandler::setFace.
+            // We need to ensure CommandHandler is safe or wrap calls.
+            // For now, CommandHandler calls FaceHandler::setFace which is NOT protected inside logic.
+            // Let's protect the call here or inside FaceHandler.
+            // BETTER: Update CommandHandler to use the new ui_set_face.
+            // Since CommandHandler is a separate class, we should make FaceHandler internal mutex?
+            // Or just wrap the call:
+
+            // NOTE: CommandHandler logic mixed UI and Logic. Refactoring needed for perfection.
+            // For this iteration, we accept CommandHandler will call FaceHandler.
+            // Let's protect the whole block or rely on FaceHandler being fast.
+            // Actually, we must protect it.
+>>>>>>> origin/waveshare-s3-amoled-review-complete
             if (xSemaphoreTake(gui_mutex, portMAX_DELAY)) {
                  CommandHandler::processSyllables(syllables);
                  xSemaphoreGive(gui_mutex);
             }
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/waveshare-s3-amoled-review-complete
             Gamification::addXP(10);
         } else {
             ui_set_face(FACE_BORED);
@@ -2173,6 +2250,7 @@ void voice_processing_task(void * param) {
         }
     } else {
         ui_set_face(FACE_SAD);
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 =======
@@ -2258,10 +2336,13 @@ void voice_processing_task(void * param) {
 >>>>>>> origin/waveshare-s3-amoled-full-review-406
 =======
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
         AudioHandler::playWav("/error_pt.wav");
     }
 
     vTaskDelay(3000 / portTICK_PERIOD_MS);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2313,10 +2394,16 @@ void voice_processing_task(void * param) {
     }
 
 >>>>>>> origin/waveshare-s3-amoled-offline-voice
+=======
+    ui_set_face(FACE_NEUTRAL);
+    ui_set_label(label_btn, "Falar Comando");
+
+>>>>>>> origin/waveshare-s3-amoled-review-complete
     vTaskDelete(NULL);
 }
 
 static void event_handler_voice_btn(lv_event_t * e) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2352,6 +2439,9 @@ static void event_handler_voice_btn(lv_event_t * e) {
     lv_event_code_t code = lv_event_get_code(e);
     if(code == LV_EVENT_CLICKED) {
 >>>>>>> origin/waveshare-s3-amoled-offline-voice
+=======
+    if (lv_event_get_code(e) == LV_EVENT_CLICKED) {
+>>>>>>> origin/waveshare-s3-amoled-review-complete
         lv_label_set_text(label_btn, "Ouvindo...");
         xTaskCreate(voice_processing_task, "VoiceTask", 8192, NULL, 1, NULL);
     }
@@ -2364,11 +2454,15 @@ static void event_handler_voice_btn(lv_event_t * e) {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 // --- Sniffer Toggle ---
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-full-review-406
+=======
+// --- Sniffer Toggle ---
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 static void event_handler_sniffer_btn(lv_event_t * e) {
     if (lv_event_get_code(e) == LV_EVENT_CLICKED) {
         if (!sniffer_active) {
@@ -2387,11 +2481,15 @@ static void event_handler_sniffer_btn(lv_event_t * e) {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 // --- Portal Toggle ---
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-full-review-406
+=======
+// --- Portal Toggle ---
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 static void event_handler_portal_btn(lv_event_t * e) {
     if (lv_event_get_code(e) == LV_EVENT_CLICKED) {
         if (!EvilPortal::isRunning()) {
@@ -2401,6 +2499,7 @@ static void event_handler_portal_btn(lv_event_t * e) {
             EvilPortal::stop();
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             lv_label_set_text(lv_obj_get_child(btn_portal, 0), "EVIL PORTAL");
 =======
             lv_label_set_text(lv_obj_get_child(btn_portal, 0), "Evil Portal");
@@ -2408,10 +2507,14 @@ static void event_handler_portal_btn(lv_event_t * e) {
 =======
             lv_label_set_text(lv_obj_get_child(btn_portal, 0), "EVIL PORTAL");
 >>>>>>> origin/waveshare-s3-amoled-full-review-406
+=======
+            lv_label_set_text(lv_obj_get_child(btn_portal, 0), "Evil Portal");
+>>>>>>> origin/waveshare-s3-amoled-review-complete
         }
     }
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -2419,15 +2522,26 @@ static void event_handler_portal_btn(lv_event_t * e) {
 void upload_task(void * param) {
     ui_set_face(FACE_UPLOAD);
     ui_set_label(label_status, "Conectando e Enviando...");
+=======
+// --- Upload Task ---
+void upload_task(void * param) {
+    ui_set_face(FACE_UPLOAD);
+    ui_set_label(label_status, "Enviando Cracks...");
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 
     int sent = OnlineCrack::uploadAll();
 
     if (sent >= 0) {
+<<<<<<< HEAD
         char buf[32]; snprintf(buf, sizeof(buf), "Sucesso! Enviados: %d", sent);
+=======
+        char buf[32]; snprintf(buf, sizeof(buf), "Enviados: %d", sent);
+>>>>>>> origin/waveshare-s3-amoled-review-complete
         ui_set_label(label_status, buf);
         ui_set_face(FACE_COOL);
         AudioHandler::playWav("/success_pt.wav");
     } else {
+<<<<<<< HEAD
         ui_set_label(label_status, "Erro: WiFi ou Config");
         ui_set_face(FACE_BROKEN);
         AudioHandler::playWav("/error_pt.wav");
@@ -2510,10 +2624,20 @@ void upload_task(void * param) {
     FaceHandler::setFace(FACE_NEUTRAL);
     lv_label_set_text(label_status, "Sistema Pronto");
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
+=======
+        ui_set_label(label_status, "Falha WiFi/Config");
+        ui_set_face(FACE_BROKEN);
+        AudioHandler::playWav("/error_pt.wav");
+    }
+    vTaskDelay(3000 / portTICK_PERIOD_MS);
+    ui_set_face(FACE_NEUTRAL);
+    ui_set_label(label_status, "Sistema Pronto");
+>>>>>>> origin/waveshare-s3-amoled-review-complete
     vTaskDelete(NULL);
 }
 
 static void event_handler_upload_btn(lv_event_t * e) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2533,10 +2657,14 @@ static void event_handler_upload_btn(lv_event_t * e) {
     lv_event_code_t code = lv_event_get_code(e);
     if(code == LV_EVENT_CLICKED) {
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
+=======
+    if (lv_event_get_code(e) == LV_EVENT_CLICKED) {
+>>>>>>> origin/waveshare-s3-amoled-review-complete
         xTaskCreate(upload_task, "UploadTask", 8192, NULL, 1, NULL);
     }
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2559,10 +2687,13 @@ void show_battery_details() {
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
 =======
 >>>>>>> origin/waveshare-s3-amoled-offline-voice
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 // --- Audio Init ---
 esp_err_t audio_init() {
   es8311_handle_t es_handle = es8311_create(0, ES8311_ADDRRES_0);
   if (!es_handle) return ESP_FAIL;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2582,11 +2713,14 @@ esp_err_t audio_init() {
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
 =======
 >>>>>>> origin/waveshare-s3-amoled-offline-voice
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 
   const es8311_clock_config_t es_clk = {
     .mclk_inverted = false, .sclk_inverted = false, .mclk_from_mclk_pin = true,
     .mclk_frequency = 16000 * 256, .sample_frequency = 16000
   };
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2606,10 +2740,13 @@ esp_err_t audio_init() {
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
 =======
 >>>>>>> origin/waveshare-s3-amoled-offline-voice
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
   es8311_init(es_handle, &es_clk, ES8311_RESOLUTION_16, ES8311_RESOLUTION_16);
   es8311_voice_volume_set(es_handle, 70, NULL);
   es8311_microphone_gain_set(es_handle, ES8311_MIC_GAIN_18DB);
   es8311_microphone_config(es_handle, false);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2636,6 +2773,8 @@ esp_err_t audio_init() {
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
 =======
 >>>>>>> origin/waveshare-s3-amoled-offline-voice
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 
   i2s_config_t i2s_config = {
     .mode = (i2s_mode_t)(I2S_MODE_MASTER | I2S_MODE_TX | I2S_MODE_RX),
@@ -2661,6 +2800,7 @@ esp_err_t audio_init() {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/waveshare-s3-amoled-evil-portal-final
 =======
 >>>>>>> origin/waveshare-s3-amoled-faces-offline
@@ -2676,12 +2816,15 @@ esp_err_t audio_init() {
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
 =======
 >>>>>>> origin/waveshare-s3-amoled-offline-voice
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
   return ESP_OK;
 }
 
 // --- Setup ---
 void setup() {
   Serial.begin(115200);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3034,6 +3177,13 @@ void loop() {
 
   // PMU
 >>>>>>> origin/waveshare-s3-amoled-offline-voice
+=======
+  gui_mutex = xSemaphoreCreateMutex();
+
+  Wire.begin(IIC_SDA, IIC_SCL);
+
+  // PMU
+>>>>>>> origin/waveshare-s3-amoled-review-complete
   power.begin(Wire, AXP2101_SLAVE_ADDRESS, IIC_SDA, IIC_SCL);
   power.setChargeTargetVoltage(3);
   power.enableBattDetection();
@@ -3050,6 +3200,7 @@ void loop() {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   // IO Expander
 >>>>>>> origin/waveshare-s3-amoled-evil-portal-final
@@ -3070,6 +3221,9 @@ void loop() {
 =======
   // IO Expander
 >>>>>>> origin/waveshare-s3-amoled-offline-voice
+=======
+  // IO Expander
+>>>>>>> origin/waveshare-s3-amoled-review-complete
   expander = new ESP_IOExpander_TCA95xx_8bit((i2c_port_t)0, ESP_IO_EXPANDER_I2C_TCA9554_ADDRESS_000, IIC_SCL, IIC_SDA);
   if(expander) {
       expander->init(); expander->begin();
@@ -3086,6 +3240,7 @@ void loop() {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   // IMU
 >>>>>>> origin/waveshare-s3-amoled-evil-portal-final
@@ -3106,6 +3261,9 @@ void loop() {
 =======
   // IMU
 >>>>>>> origin/waveshare-s3-amoled-offline-voice
+=======
+  // IMU
+>>>>>>> origin/waveshare-s3-amoled-review-complete
   qmi.begin(Wire, QMI8658_L_SLAVE_ADDRESS, IIC_SDA, IIC_SCL);
   qmi.configAccelerometer(SensorQMI8658::ACC_RANGE_4G, SensorQMI8658::ACC_ODR_1000Hz, SensorQMI8658::LPF_MODE_0);
   qmi.enableAccelerometer();
@@ -3117,6 +3275,7 @@ void loop() {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   // Display
 >>>>>>> origin/waveshare-s3-amoled-evil-portal-final
@@ -3137,10 +3296,14 @@ void loop() {
 =======
   // Display
 >>>>>>> origin/waveshare-s3-amoled-offline-voice
+=======
+  // Display
+>>>>>>> origin/waveshare-s3-amoled-review-complete
   gfx->begin();
   gfx->fillScreen(BLACK);
   gfx->Display_Brightness(200);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3162,11 +3325,14 @@ void loop() {
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
 =======
 >>>>>>> origin/waveshare-s3-amoled-offline-voice
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
   // Touch
   FT3168->begin();
   FT3168->IIC_Write_Device_State(FT3168->Arduino_IIC_Touch::Device::TOUCH_POWER_MODE, FT3168->Arduino_IIC_Touch::Device_Mode::TOUCH_POWER_MONITOR);
 
   // SD
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3217,10 +3383,22 @@ void loop() {
   SD_MMC.begin("/sdcard", true);
 
 >>>>>>> origin/waveshare-s3-amoled-offline-voice
+=======
+  SD_MMC.setPins(SDMMC_CLK, SDMMC_CMD, SDMMC_DATA);
+  if (!SD_MMC.begin("/sdcard", true)) {
+      Serial.println("SD Card Failed!");
+      // UI fallback?
+  }
+
+  Gamification::init();
+  EvilPortal::init();
+
+>>>>>>> origin/waveshare-s3-amoled-review-complete
   // Audio
   audio_init();
 
   // LVGL
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3242,6 +3420,8 @@ void loop() {
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
 =======
 >>>>>>> origin/waveshare-s3-amoled-offline-voice
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
   lv_init();
   uint32_t screenWidth = gfx->width();
   uint32_t screenHeight = gfx->height();
@@ -3258,6 +3438,7 @@ void loop() {
   indev_drv.type = LV_INDEV_TYPE_POINTER; indev_drv.read_cb = my_touchpad_read;
   lv_indev_drv_register(&indev_drv);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3293,12 +3474,20 @@ void loop() {
 >>>>>>> origin/waveshare-s3-amoled-full-review-406
 =======
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
+=======
+  // --- UI Layout ---
+  // Note: No mutex needed here as no tasks are running yet
+  lv_obj_t *scr = lv_scr_act();
+
+  // Dashboard Header
+>>>>>>> origin/waveshare-s3-amoled-review-complete
   lv_obj_t *header_cont = lv_obj_create(scr);
   lv_obj_set_size(header_cont, 360, 50);
   lv_obj_align(header_cont, LV_ALIGN_TOP_MID, 0, 0);
   lv_obj_set_style_bg_color(header_cont, lv_color_hex(0x222222), 0);
 
   label_sys = lv_label_create(header_cont);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3320,6 +3509,9 @@ void loop() {
 =======
   lv_label_set_text(label_sys, "Init...");
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
+=======
+  lv_label_set_text(label_sys, "Init...");
+>>>>>>> origin/waveshare-s3-amoled-review-complete
   lv_obj_align(label_sys, LV_ALIGN_LEFT_MID, 5, 0);
   lv_obj_set_style_text_color(label_sys, lv_color_white(), 0);
 
@@ -3333,6 +3525,7 @@ void loop() {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/waveshare-s3-amoled-full-review-406
   label_game = lv_label_create(scr);
@@ -3341,11 +3534,22 @@ void loop() {
 
   label_status = lv_label_create(scr);
   lv_label_set_text(label_status, "Sistema Pronto");
+=======
+  // Game Stats
+  label_game = lv_label_create(scr);
+  lv_label_set_text(label_game, "Lvl 1 | 0 XP");
+  lv_obj_align(label_game, LV_ALIGN_TOP_MID, 0, 55);
+
+  // Status
+  label_status = lv_label_create(scr);
+  lv_label_set_text(label_status, "Pronto");
+>>>>>>> origin/waveshare-s3-amoled-review-complete
   lv_obj_align(label_status, LV_ALIGN_TOP_MID, 0, 80);
   lv_label_set_long_mode(label_status, LV_LABEL_LONG_WRAP);
   lv_obj_set_width(label_status, 300);
   lv_obj_set_style_text_align(label_status, LV_TEXT_ALIGN_CENTER, 0);
 
+<<<<<<< HEAD
   FaceHandler::init(scr);
   FaceHandler::setFace(FACE_NEUTRAL);
 
@@ -3392,10 +3596,13 @@ void loop() {
 =======
 
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
   // Face
   FaceHandler::init(scr);
   FaceHandler::setFace(FACE_NEUTRAL);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   // Buttons Row 1 (Voice & Upload)
@@ -3416,11 +3623,18 @@ void loop() {
   lv_obj_align(btn_voice, LV_ALIGN_BOTTOM_LEFT, 20, -20);
   lv_obj_set_size(btn_voice, 140, 60);
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
+=======
+  // Buttons
+  btn_voice = lv_btn_create(scr);
+  lv_obj_align(btn_voice, LV_ALIGN_BOTTOM_LEFT, 10, -80);
+  lv_obj_set_size(btn_voice, 110, 60);
+>>>>>>> origin/waveshare-s3-amoled-review-complete
   lv_obj_add_event_cb(btn_voice, event_handler_voice_btn, LV_EVENT_ALL, NULL);
   label_btn = lv_label_create(btn_voice);
   lv_label_set_text(label_btn, "Voz");
   lv_obj_center(label_btn);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
   btn_tools = lv_btn_create(scr);
 <<<<<<< HEAD
@@ -3446,6 +3660,11 @@ void loop() {
   lv_obj_align(btn_tools, LV_ALIGN_BOTTOM_RIGHT, -20, -20);
   lv_obj_set_size(btn_tools, 140, 60);
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
+=======
+  btn_tools = lv_btn_create(scr);
+  lv_obj_align(btn_tools, LV_ALIGN_BOTTOM_RIGHT, -10, -80);
+  lv_obj_set_size(btn_tools, 110, 60);
+>>>>>>> origin/waveshare-s3-amoled-review-complete
   lv_obj_add_event_cb(btn_tools, event_handler_upload_btn, LV_EVENT_ALL, NULL);
   lv_obj_t *label_tool = lv_label_create(btn_tools);
   lv_label_set_text(label_tool, "Upload");
@@ -3455,11 +3674,14 @@ void loop() {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   // New: Sniffer Btn (Center Row 1)
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-full-review-406
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
   btn_sniffer = lv_btn_create(scr);
   lv_obj_align(btn_sniffer, LV_ALIGN_BOTTOM_MID, 0, -80);
   lv_obj_set_size(btn_sniffer, 110, 60);
@@ -3470,15 +3692,19 @@ void loop() {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   // Button Row 2 (Portal)
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-full-review-406
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
   btn_portal = lv_btn_create(scr);
   lv_obj_align(btn_portal, LV_ALIGN_BOTTOM_MID, 0, -10);
   lv_obj_set_size(btn_portal, 340, 60);
   lv_obj_set_style_bg_color(btn_portal, lv_color_hex(0xFF0000), 0);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -3492,11 +3718,14 @@ void loop() {
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-full-review-406
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
   lv_obj_add_event_cb(btn_portal, event_handler_portal_btn, LV_EVENT_ALL, NULL);
   lv_obj_t *label_portal = lv_label_create(btn_portal);
   lv_label_set_text(label_portal, "EVIL PORTAL");
   lv_obj_center(label_portal);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3576,6 +3805,9 @@ void loop() {
   lv_obj_align(label_instr, LV_ALIGN_BOTTOM_MID, 0, -30);
 
 >>>>>>> origin/waveshare-s3-amoled-offline-voice
+=======
+  last_interaction = millis();
+>>>>>>> origin/waveshare-s3-amoled-review-complete
   AudioHandler::playWav("/boot_pt.wav");
 }
 
@@ -3587,8 +3819,12 @@ void loop() {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/waveshare-s3-amoled-full-review-406
+=======
+  // --- LVGL Thread Safety Lock ---
+>>>>>>> origin/waveshare-s3-amoled-review-complete
   if (xSemaphoreTake(gui_mutex, portMAX_DELAY)) {
       lv_timer_handler();
       xSemaphoreGive(gui_mutex);
@@ -3597,6 +3833,7 @@ void loop() {
   Gamification::tick();
   EvilPortal::loop();
 
+<<<<<<< HEAD
   if (screen_on && (millis() - last_interaction > 30000)) {
       gfx->Display_Brightness(0);
       screen_on = false;
@@ -3625,10 +3862,23 @@ void loop() {
   lv_timer_handler();
   Gamification::tick();
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
+=======
+  // --- Power Management (Screen Saver) ---
+  if (screen_on && (millis() - last_interaction > 30000)) { // 30s timeout
+      gfx->Display_Brightness(0);
+      screen_on = false;
+      Serial.println("Screen Saver: Active");
+  } else if (!screen_on && (millis() - last_interaction < 30000)) {
+      gfx->Display_Brightness(200);
+      screen_on = true;
+      Serial.println("Screen Saver: Wake");
+  }
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 
   static uint32_t last_ui_update = 0;
   if (millis() - last_ui_update > 1000) {
       last_ui_update = millis();
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 <<<<<<< HEAD
@@ -3637,6 +3887,10 @@ void loop() {
 <<<<<<< HEAD
 =======
 >>>>>>> origin/waveshare-s3-amoled-full-review-406
+=======
+
+      // Protect string generation and UI update
+>>>>>>> origin/waveshare-s3-amoled-review-complete
       if (xSemaphoreTake(gui_mutex, portMAX_DELAY)) {
           if (EvilPortal::isRunning()) {
               char buf[32]; snprintf(buf, sizeof(buf), "Portal ATIVO\nVitimas: %d", EvilPortal::getCapturedCount());
@@ -3663,6 +3917,7 @@ void loop() {
   }
 
   delay(5);
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> origin/waveshare-s3-amoled-complete-ptbr
 =======
@@ -3791,4 +4046,6 @@ void loop() {
 
   delay(5);
 >>>>>>> origin/waveshare-s3-amoled-ptbr-final
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 }

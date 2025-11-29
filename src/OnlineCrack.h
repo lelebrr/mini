@@ -5,6 +5,7 @@
 #include <WiFi.h>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
 #include <HTTPClient.h>
@@ -14,14 +15,19 @@
 // Simple config loader for WiFi
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 #include <WiFiClientSecure.h>
 #include <SD_MMC.h>
 #include "FS.h"
 
 // Config loader
+<<<<<<< HEAD
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 struct WiFiConfig {
     String ssid;
     String pass;
@@ -32,6 +38,7 @@ class OnlineCrack {
 public:
     static WiFiConfig loadConfig() {
         WiFiConfig cfg;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         cfg.ssid = "SSID_AQUI";
@@ -47,6 +54,11 @@ public:
         cfg.pass = "SENHA_AQUI";
         cfg.wpa_sec_key = "KEY_AQUI";
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
+=======
+        cfg.ssid = "";
+        cfg.pass = "";
+        cfg.wpa_sec_key = "";
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 
         if (SD_MMC.exists("/wifi_config.txt")) {
             File f = SD_MMC.open("/wifi_config.txt");
@@ -64,6 +76,7 @@ public:
         return cfg;
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -94,14 +107,19 @@ public:
             Serial.println("Erro: Configure /wifi_config.txt no SD");
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
     static int uploadAll() {
         WiFiConfig cfg = loadConfig();
 
         if (cfg.ssid == "" || cfg.wpa_sec_key == "") {
             Serial.println("Erro: Configure SSID e KEY em /wifi_config.txt");
+<<<<<<< HEAD
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
             return -1;
         }
 
@@ -122,10 +140,13 @@ public:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         Serial.println("\nWiFi Conectado! Iniciando Upload...");
 
         File root = SD_MMC.open("/upload_queue");
 =======
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
         Serial.println("\nWiFi Conectado! Iniciando Real Upload (wpa-sec)...");
 
         File root = SD_MMC.open("/upload_queue");
@@ -133,18 +154,22 @@ public:
              root = SD_MMC.open("/handshakes"); // Fallback to handshakes folder if queue empty
         }
 
+<<<<<<< HEAD
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
         Serial.println("\nWiFi Conectado! Iniciando Upload...");
 
         File root = SD_MMC.open("/upload_queue");
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
         File file = root.openNextFile();
         int count = 0;
 
         while (file) {
             if (!file.isDirectory()) {
                 String filename = String(file.name());
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -172,6 +197,8 @@ public:
                 http.end();
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
                 // Only upload .pcap or .hccapx
                 if (filename.endsWith(".pcap") || filename.endsWith(".hccapx")) {
                     if (uploadFile(file, cfg.wpa_sec_key)) {
@@ -183,9 +210,12 @@ public:
                         Serial.printf("FALHA: %s\n", filename.c_str());
                     }
                 }
+<<<<<<< HEAD
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
             }
             file = root.openNextFile();
         }
@@ -195,7 +225,10 @@ public:
     }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 
 private:
     static bool uploadFile(File& file, String key) {
@@ -254,9 +287,12 @@ private:
 
         return success;
     }
+<<<<<<< HEAD
 >>>>>>> origin/waveshare-s3-amoled-final-polish
 =======
 >>>>>>> origin/waveshare-s3-amoled-manual-upload
+=======
+>>>>>>> origin/waveshare-s3-amoled-review-complete
 };
 
 #endif
