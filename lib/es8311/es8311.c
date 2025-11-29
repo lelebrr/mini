@@ -22,11 +22,14 @@ typedef struct {
 /*
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /*
 >>>>>>> main
 =======
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+>>>>>>> origin/mini-lele-v2-complete-verified
  * Estrutura de coeficiente de clock
  */
 struct _coeff_div {
@@ -214,11 +217,14 @@ esp_err_t es8311_sample_frequency_config(es8311_handle_t dev, int mclk_frequency
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_CLK_MANAGER_REG06, &regv), TAG, "Erro leitura/escrita I2C");
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> main
 =======
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+>>>>>>> origin/mini-lele-v2-complete-verified
     regv &= 0xE0;
 
     if (selected_coeff->bclk_div < 19) {
@@ -239,6 +245,7 @@ esp_err_t es8311_sample_frequency_config(es8311_handle_t dev, int mclk_frequency
     ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG08, selected_coeff->lrck_l), TAG, "Erro leitura/escrita I2C");
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_CLK_MANAGER_REG07, &regv), TAG, "Erro leitura/escrita I2C");
     regv &= 0xC0;
@@ -251,6 +258,8 @@ esp_err_t es8311_sample_frequency_config(es8311_handle_t dev, int mclk_frequency
 >>>>>>> main
 =======
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+>>>>>>> origin/mini-lele-v2-complete-verified
 
     return ESP_OK;
 }
@@ -258,6 +267,7 @@ esp_err_t es8311_sample_frequency_config(es8311_handle_t dev, int mclk_frequency
 static esp_err_t es8311_clock_config(es8311_handle_t dev, const es8311_clock_config_t *const clk_cfg, es8311_resolution_t res)
 {
     uint8_t reg06;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -273,10 +283,13 @@ static esp_err_t es8311_clock_config(es8311_handle_t dev, const es8311_clock_con
 >>>>>>> main
 =======
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+>>>>>>> origin/mini-lele-v2-complete-verified
     uint8_t reg01 = 0x3F; // Habilita todos os clocks
     int mclk_hz;
 
     /* Seleciona fonte de clock para MCLK interno e determina sua frequência */
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -284,10 +297,13 @@ static esp_err_t es8311_clock_config(es8311_handle_t dev, const es8311_clock_con
 >>>>>>> main
 =======
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+>>>>>>> origin/mini-lele-v2-complete-verified
     if (clk_cfg->mclk_from_mclk_pin) {
         mclk_hz = clk_cfg->mclk_frequency;
     } else {
         mclk_hz = clk_cfg->sample_frequency * (int)res * 2;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -308,6 +324,8 @@ static esp_err_t es8311_clock_config(es8311_handle_t dev, const es8311_clock_con
 >>>>>>> main
 =======
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+>>>>>>> origin/mini-lele-v2-complete-verified
         reg01 |= BIT(7); // Seleciona pino BCLK (a.k.a. SCK)
     }
 
@@ -319,16 +337,20 @@ static esp_err_t es8311_clock_config(es8311_handle_t dev, const es8311_clock_con
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_CLK_MANAGER_REG06, &reg06), TAG, "Erro leitura/escrita I2C");
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> main
 =======
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+>>>>>>> origin/mini-lele-v2-complete-verified
     if (clk_cfg->sclk_inverted) {
         reg06 |= BIT(5);
     } else {
         reg06 &= ~BIT(5);
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "Erro leitura/escrita I2C");
@@ -359,6 +381,11 @@ static esp_err_t es8311_clock_config(es8311_handle_t dev, const es8311_clock_con
 
     /* Configura divisores de clock */
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "Erro leitura/escrita I2C");
+
+    /* Configura divisores de clock */
+>>>>>>> origin/mini-lele-v2-complete-verified
     return es8311_sample_frequency_config(dev, mclk_hz, clk_cfg->sample_frequency);
 }
 
@@ -393,6 +420,7 @@ static esp_err_t es8311_fmt_config(es8311_handle_t dev, const es8311_resolution_
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     ESP_LOGI(TAG, "ES8311 in Slave mode and I2S format");
     uint8_t reg00;
@@ -414,6 +442,8 @@ static esp_err_t es8311_fmt_config(es8311_handle_t dev, const es8311_resolution_
 >>>>>>> main
 =======
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+>>>>>>> origin/mini-lele-v2-complete-verified
     ESP_LOGI(TAG, "ES8311 em modo Slave e formato I2S");
     uint8_t reg00;
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_RESET_REG00, &reg00), TAG, "Erro leitura/escrita I2C");
@@ -429,16 +459,20 @@ static esp_err_t es8311_fmt_config(es8311_handle_t dev, const es8311_resolution_
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> main
 =======
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+>>>>>>> origin/mini-lele-v2-complete-verified
     return ESP_OK;
 }
 
 esp_err_t es8311_microphone_config(es8311_handle_t dev, bool digital_mic)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -457,6 +491,8 @@ esp_err_t es8311_microphone_config(es8311_handle_t dev, bool digital_mic)
 >>>>>>> main
 =======
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+>>>>>>> origin/mini-lele-v2-complete-verified
     uint8_t reg14 = 0x1A; // habilita MIC analógico e ganho PGA máximo
 
     /* Habilita ou desabilita microfone digital PDM */
@@ -467,11 +503,14 @@ esp_err_t es8311_microphone_config(es8311_handle_t dev, bool digital_mic)
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> main
 =======
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+>>>>>>> origin/mini-lele-v2-complete-verified
     return es8311_write_reg(dev, ES8311_SYSTEM_REG14, reg14);
 }
 
@@ -479,6 +518,7 @@ esp_err_t es8311_init(es8311_handle_t dev, const es8311_clock_config_t *const cl
 {
     ESP_RETURN_ON_FALSE(
         (clk_cfg->sample_frequency >= 8000) && (clk_cfg->sample_frequency <= 96000),
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -515,6 +555,8 @@ esp_err_t es8311_init(es8311_handle_t dev, const es8311_clock_config_t *const cl
 >>>>>>> main
 =======
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+>>>>>>> origin/mini-lele-v2-complete-verified
         ESP_ERR_INVALID_ARG, TAG, "ES8311 init precisa de frequência no intervalo [8000; 96000] Hz"
     );
     if (!clk_cfg->mclk_from_mclk_pin) {
@@ -543,11 +585,14 @@ esp_err_t es8311_init(es8311_handle_t dev, const es8311_clock_config_t *const cl
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> main
 =======
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+>>>>>>> origin/mini-lele-v2-complete-verified
     return ESP_OK;
 }
 
@@ -573,6 +618,7 @@ esp_err_t es8311_voice_volume_set(es8311_handle_t dev, int volume, int *volume_s
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     // fornece ao usuário o volume real definido
 =======
     // provide user with real volume set
@@ -589,6 +635,9 @@ esp_err_t es8311_voice_volume_set(es8311_handle_t dev, int volume, int *volume_s
 =======
     // fornece ao usuário o volume real definido
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+    // fornece ao usuário o volume real definido
+>>>>>>> origin/mini-lele-v2-complete-verified
     if (volume_set != NULL) {
         *volume_set = volume;
     }
@@ -598,6 +647,7 @@ esp_err_t es8311_voice_volume_set(es8311_handle_t dev, int volume, int *volume_s
 esp_err_t es8311_voice_volume_get(es8311_handle_t dev, int *volume)
 {
     uint8_t reg32;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "Erro leitura/escrita I2C");
@@ -616,6 +666,9 @@ esp_err_t es8311_voice_volume_get(es8311_handle_t dev, int *volume)
 =======
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "Erro leitura/escrita I2C");
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "Erro leitura/escrita I2C");
+>>>>>>> origin/mini-lele-v2-complete-verified
 
     if (reg32 == 0) {
         *volume = 0;
@@ -628,6 +681,7 @@ esp_err_t es8311_voice_volume_get(es8311_handle_t dev, int *volume)
 esp_err_t es8311_voice_mute(es8311_handle_t dev, bool mute)
 {
     uint8_t reg31;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "Erro leitura/escrita I2C");
@@ -646,6 +700,9 @@ esp_err_t es8311_voice_mute(es8311_handle_t dev, bool mute)
 =======
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "Erro leitura/escrita I2C");
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "Erro leitura/escrita I2C");
+>>>>>>> origin/mini-lele-v2-complete-verified
 
     if (mute) {
         reg31 |= BIT(6) | BIT(5);
@@ -660,8 +717,11 @@ esp_err_t es8311_microphone_gain_set(es8311_handle_t dev, es8311_mic_gain_t gain
 {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+>>>>>>> origin/mini-lele-v2-complete-verified
     return es8311_write_reg(dev, ES8311_ADC_REG16, gain_db); // Escala ganho ADC
 }
 
@@ -669,6 +729,7 @@ esp_err_t es8311_voice_fade(es8311_handle_t dev, const es8311_fade_t fade)
 {
     uint8_t reg37;
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG37, &reg37), TAG, "Erro leitura/escrita I2C");
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
     return es8311_write_reg(dev, ES8311_ADC_REG16, gain_db); // ADC gain scale up
@@ -695,6 +756,8 @@ esp_err_t es8311_voice_fade(es8311_handle_t dev, const es8311_fade_t fade)
 >>>>>>> main
 =======
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+>>>>>>> origin/mini-lele-v2-complete-verified
     reg37 &= 0x0F;
     reg37 |= (fade << 4);
     return es8311_write_reg(dev, ES8311_DAC_REG37, reg37);
@@ -703,6 +766,7 @@ esp_err_t es8311_voice_fade(es8311_handle_t dev, const es8311_fade_t fade)
 esp_err_t es8311_microphone_fade(es8311_handle_t dev, const es8311_fade_t fade)
 {
     uint8_t reg15;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "Erro leitura/escrita I2C");
@@ -721,6 +785,9 @@ esp_err_t es8311_microphone_fade(es8311_handle_t dev, const es8311_fade_t fade)
 =======
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "Erro leitura/escrita I2C");
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "Erro leitura/escrita I2C");
+>>>>>>> origin/mini-lele-v2-complete-verified
     reg15 &= 0x0F;
     reg15 |= (fade << 4);
     return es8311_write_reg(dev, ES8311_ADC_REG15, reg15);

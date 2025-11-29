@@ -8,10 +8,14 @@
 
 // Singleton Config Manager
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Gerencia 120 configurações com persistência no SD
 =======
 // Gerencia 100 configurações com persistência no SD
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+// Gerencia 100 configurações com persistência no SD
+>>>>>>> origin/mini-lele-v2-complete-verified
 
 class ConfigManager {
 private:
@@ -22,12 +26,17 @@ private:
 
     ConfigManager() {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	        // Aumentado para 16KB para acomodar 120 chaves + strings longas
 	        doc = new DynamicJsonDocument(16384);
 =======
         // Aloca 8KB para JSON (Suficiente para ~100 chaves)
         doc = new DynamicJsonDocument(8192);
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+        // Aloca 8KB para JSON (Suficiente para ~100 chaves)
+        doc = new DynamicJsonDocument(8192);
+>>>>>>> origin/mini-lele-v2-complete-verified
     }
 
 public:
@@ -64,6 +73,7 @@ public:
     void createDefaults() {
         JsonObject root = doc->to<JsonObject>();
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	        // --- 1. SYSTEM IDENTITY ---
 	        root["sys_device_name"] = "PwnTamagotchi BR - Legendary";
@@ -178,6 +188,8 @@ public:
 	        root["atk_beacon_spam_timer"] = 5; // Opt 97 (min)
 	        root["atk_target_manufacturer"] = "Apple,Samsung";
 =======
+=======
+>>>>>>> origin/mini-lele-v2-complete-verified
         // --- 1. PET (Gameplay) ---
         root["pet_name"] = "PwnBaby"; // Default mantido
         root["pet_voice_enabled"] = true;
@@ -269,12 +281,16 @@ public:
         root["pet_allow_badusb"] = false;
         root["pet_allow_swear_words"] = false; // Family friendly?
         root["sys_factory_reset"] = false;
+<<<<<<< HEAD
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+>>>>>>> origin/mini-lele-v2-complete-verified
 
         save();
     }
 
     void validateMissingKeys() {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	        // Checa se falta alguma chave e adiciona (para upgrades de versão)
 	        bool changed = false;
@@ -349,6 +365,8 @@ public:
         if (changed) save();
    	    // Getters Genéricos
 =======
+=======
+>>>>>>> origin/mini-lele-v2-complete-verified
         // Checa se falta alguma chave e adiciona (para upgrades de versão)
         bool changed = false;
         JsonObject root = doc->as<JsonObject>();
@@ -361,7 +379,10 @@ public:
     }
 
     // Getters Genéricos
+<<<<<<< HEAD
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+>>>>>>> origin/mini-lele-v2-complete-verified
     template <typename T>
     T get(const char* key) {
         return (*doc)[key].as<T>();
@@ -369,6 +390,7 @@ public:
 
     String getString(const char* key) {
         return (*doc)[key].as<String>();
+<<<<<<< HEAD
 <<<<<<< HEAD
     }	    // Setters
 	    template <typename T>
@@ -382,6 +404,8 @@ public:
         serializeJson(*doc, output);
     }	    // Atualiza do JSON recebido da WebAPI void updateFromJSON(String json) {
 =======
+=======
+>>>>>>> origin/mini-lele-v2-complete-verified
     }
 
     // Setters
@@ -399,7 +423,10 @@ public:
 
     // Atualiza do JSON recebido da WebAPI
     void updateFromJSON(String json) {
+<<<<<<< HEAD
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+>>>>>>> origin/mini-lele-v2-complete-verified
         DeserializationError error = deserializeJson(*doc, json);
         if (!error) save();
     }

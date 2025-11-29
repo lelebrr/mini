@@ -7,9 +7,13 @@
 #include "core/PwnPet.h"
 #include "core/PwnPower.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "core/PwnAttack.h"
 =======
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+#include "core/PwnAttack.h"
+>>>>>>> origin/mini-lele-v2-complete-verified
 
 // Comandos de Voz Mapeados (Offline - Contagem de Sílabas)
 
@@ -24,6 +28,7 @@ public:
 
     static void listen() {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	        if (PwnPower::isCritical()) return;
 =======
         // Otimização 15: Não ouve se bateria crítica
@@ -33,6 +38,10 @@ public:
         // Se fosse always-on listening, verificaríamos screen state.
 
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+        if (PwnPower::isCritical()) return;
+
+>>>>>>> origin/mini-lele-v2-complete-verified
         is_listening = true;
 
         // Toca "Ouvindo"
@@ -43,9 +52,12 @@ public:
 
         is_listening = false;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         // Otimização 26: DSP off (feito no recordWav auto shutdown)
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+>>>>>>> origin/mini-lele-v2-complete-verified
 
         if (ok) {
             int syllables = OfflineVoice::analyzeCommand("/voice/input.wav");
@@ -57,12 +69,16 @@ public:
         Serial.printf("[Voice] Silabas: %d\n", syllables);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	        if (PwnPet::getStats().is_sleeping) {
 =======
         // Se Pet estiver dormindo (Modo Zzz), ignora ou acorda?
         if (PwnPet::getStats().is_sleeping) {
              // Acorda se gritar (muitas silabas)?
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+        if (PwnPet::getStats().is_sleeping) {
+>>>>>>> origin/mini-lele-v2-complete-verified
              if (syllables > 4) {
                  PwnPet::getStats().is_sleeping = false;
                  speak("Quem ousa me acordar");
@@ -72,6 +88,7 @@ public:
 
         switch(syllables) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	            case 2: // "Ei Lele" / "Status"
 	                PwnPet::getStats().hunger += 5; // Atenção = Comida
 	                // PwnPet::feed(5); // Usar a função feed se existir e for mais completa
@@ -80,11 +97,16 @@ public:
             case 2: // "Ei Pwn" / "Status"
                 PwnPet::feed(5); // Atenção = Comida
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+            case 2: // "Ei Lele" / "Status"
+                PwnPet::getStats().hunger += 5;
+>>>>>>> origin/mini-lele-v2-complete-verified
                 speak("Ola amigo");
                 break;
             case 3: // "Bateria" / "Comida"
                 speak("Estou com fome");
                 break;
+<<<<<<< HEAD
 <<<<<<< HEAD
 	            case 4: // "Ataca Vivo" / "Ataque"
 	                speak("Iniciando ataque");
@@ -94,6 +116,11 @@ public:
                 speak("Iniciando ataque");
                 // PwnAttack::start();
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+            case 4: // "Ataca Vivo" / "Ataque"
+                speak("Iniciando ataque");
+                PwnAttack::start(); // Agora existe
+>>>>>>> origin/mini-lele-v2-complete-verified
                 break;
             default:
                 speak("Nao entendi");
@@ -101,6 +128,7 @@ public:
         }
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	    static void speak(String phrase) {
 	        // Otimização: Silent Mode
@@ -115,6 +143,9 @@ public:
 
         // Mapeia texto para arquivo WAV
 >>>>>>> origin/merge-ready-mini-lele-v2
+=======
+    static void speak(String phrase) {
+>>>>>>> origin/mini-lele-v2-complete-verified
         String file = "/tts/unknown.wav";
 
         if (phrase.indexOf("Ola") >= 0) file = "/tts/hello.wav";
