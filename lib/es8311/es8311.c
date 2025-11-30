@@ -21,69 +21,9 @@ typedef struct {
 
 /*
 <<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 =======
 /*
 >>>>>>> main
-=======
->>>>>>> origin/merge-ready-mini-lele-v2
-=======
->>>>>>> origin/mini-lele-v2-complete-verified
-=======
->>>>>>> origin/mini-lele-v2-final-verified
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
->>>>>>> origin/mini-lele-v2-rebrand
-=======
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
  * Estrutura de coeficiente de clock
  */
 struct _coeff_div {
@@ -99,81 +39,6 @@ struct _coeff_div {
     uint8_t bclk_div;     /* divisor sclk */
     uint8_t adc_osr;      /* osr adc */
     uint8_t dac_osr;      /* osr dac */
-<<<<<<< HEAD
-=======
-=======
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
->>>>>>> origin/waveshare-s3-amoled-faces-offline
-=======
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
->>>>>>> origin/waveshare-s3-amoled-fix-v2
-=======
->>>>>>> origin/waveshare-s3-amoled-full-plugins
-=======
->>>>>>> origin/waveshare-s3-amoled-manual-upload
-=======
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
->>>>>>> origin/waveshare-s3-amoled-ptbr-final
-=======
->>>>>>> origin/waveshare-s3-amoled-review-complete
-=======
->>>>>>> origin/waveshare-s3-amoled-voice-ptbr
- * Clock coefficient structure
- */
-struct _coeff_div {
-    uint32_t mclk;        /* mclk frequency */
-    uint32_t rate;        /* sample rate */
-    uint8_t pre_div;      /* the pre divider with range from 1 to 8 */
-    uint8_t pre_multi;    /* the pre multiplier with 0: 1x, 1: 2x, 2: 4x, 3: 8x selection */
-    uint8_t adc_div;      /* adcclk divider */
-    uint8_t dac_div;      /* dacclk divider */
-    uint8_t fs_mode;      /* double speed or single speed, =0, ss, =1, ds */
-    uint8_t lrck_h;       /* adclrck divider and daclrck divider */
-    uint8_t lrck_l;
-    uint8_t bclk_div;     /* sclk divider */
-    uint8_t adc_osr;      /* adc osr */
-    uint8_t dac_osr;      /* dac osr */
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> origin/waveshare-esp32-s3-amoled-fix
-=======
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
->>>>>>> origin/waveshare-s3-amoled-faces-offline
-=======
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
->>>>>>> origin/waveshare-s3-amoled-fix-v2
-=======
->>>>>>> origin/waveshare-s3-amoled-full-plugins
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-=======
->>>>>>> origin/waveshare-s3-amoled-manual-upload
-=======
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
->>>>>>> origin/waveshare-s3-amoled-ptbr-final
-=======
->>>>>>> origin/waveshare-s3-amoled-review-complete
-=======
->>>>>>> origin/waveshare-s3-amoled-voice-ptbr
 };
 
 /* codec hifi mclk clock divider coefficients */
@@ -239,59 +104,7 @@ static const struct _coeff_div coeff_div[] = {
     {3072000, 32000, 0x03, 0x03, 0x01, 0x01, 0x00, 0x00, 0xff, 0x04, 0x10, 0x10},
     {2048000, 32000, 0x01, 0x02, 0x01, 0x01, 0x00, 0x00, 0xff, 0x04, 0x10, 0x10},
     {1536000, 32000, 0x03, 0x03, 0x01, 0x01, 0x01, 0x00, 0x7f, 0x02, 0x10, 0x10},
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
     {1024000, 32000, 0x01, 0x03, 0x01, 0x01, 0x01, 0x00, 0xff, 0x04, 0x10, 0x10},
-=======
-    {1024000, 32000, 0x01, 0x03, 0x01, 0x01, 0x00, 0x00, 0xff, 0x04, 0x10, 0x10},
->>>>>>> origin/waveshare-esp32-s3-amoled-fix
-=======
-    {1024000, 32000, 0x01, 0x03, 0x01, 0x01, 0x00, 0x00, 0xff, 0x04, 0x10, 0x10},
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
-    {1024000, 32000, 0x01, 0x03, 0x01, 0x01, 0x00, 0x00, 0xff, 0x04, 0x10, 0x10},
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
-    {1024000, 32000, 0x01, 0x03, 0x01, 0x01, 0x00, 0x00, 0xff, 0x04, 0x10, 0x10},
->>>>>>> origin/waveshare-s3-amoled-faces-offline
-=======
-    {1024000, 32000, 0x01, 0x03, 0x01, 0x01, 0x00, 0x00, 0xff, 0x04, 0x10, 0x10},
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
-    {1024000, 32000, 0x01, 0x03, 0x01, 0x01, 0x00, 0x00, 0xff, 0x04, 0x10, 0x10},
->>>>>>> origin/waveshare-s3-amoled-fix-v2
-=======
-    {1024000, 32000, 0x01, 0x03, 0x01, 0x01, 0x00, 0x00, 0xff, 0x04, 0x10, 0x10},
->>>>>>> origin/waveshare-s3-amoled-full-plugins
-=======
-    {1024000, 32000, 0x01, 0x03, 0x01, 0x01, 0x01, 0x00, 0xff, 0x04, 0x10, 0x10},
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-=======
-    {1024000, 32000, 0x01, 0x03, 0x01, 0x01, 0x00, 0x00, 0xff, 0x04, 0x10, 0x10},
->>>>>>> origin/waveshare-s3-amoled-manual-upload
-=======
-    {1024000, 32000, 0x01, 0x03, 0x01, 0x01, 0x00, 0x00, 0xff, 0x04, 0x10, 0x10},
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
-    {1024000, 32000, 0x01, 0x03, 0x01, 0x01, 0x00, 0x00, 0xff, 0x04, 0x10, 0x10},
->>>>>>> origin/waveshare-s3-amoled-ptbr-final
-=======
-    {1024000, 32000, 0x01, 0x03, 0x01, 0x01, 0x00, 0x00, 0xff, 0x04, 0x10, 0x10},
->>>>>>> origin/waveshare-s3-amoled-review-complete
-=======
-    {1024000, 32000, 0x01, 0x03, 0x01, 0x01, 0x00, 0x00, 0xff, 0x04, 0x10, 0x10},
->>>>>>> origin/waveshare-s3-amoled-voice-ptbr
 
     /* 44.1k */
     {11289600, 44100, 0x01, 0x00, 0x01, 0x01, 0x00, 0x00, 0xff, 0x04, 0x10, 0x10},
@@ -349,59 +162,7 @@ static inline esp_err_t es8311_read_reg(es8311_handle_t dev, uint8_t reg_addr, u
 }
 
 /*
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 * procura pelo coeficiente na tabela coeff_div[]
-=======
-* look for the coefficient in coeff_div[] table
->>>>>>> origin/waveshare-esp32-s3-amoled-fix
-=======
-* look for the coefficient in coeff_div[] table
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
-* look for the coefficient in coeff_div[] table
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
-* look for the coefficient in coeff_div[] table
->>>>>>> origin/waveshare-s3-amoled-faces-offline
-=======
-* look for the coefficient in coeff_div[] table
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
-* look for the coefficient in coeff_div[] table
->>>>>>> origin/waveshare-s3-amoled-fix-v2
-=======
-* look for the coefficient in coeff_div[] table
->>>>>>> origin/waveshare-s3-amoled-full-plugins
-=======
-* procura pelo coeficiente na tabela coeff_div[]
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-=======
-* look for the coefficient in coeff_div[] table
->>>>>>> origin/waveshare-s3-amoled-manual-upload
-=======
-* look for the coefficient in coeff_div[] table
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
-* look for the coefficient in coeff_div[] table
->>>>>>> origin/waveshare-s3-amoled-ptbr-final
-=======
-* look for the coefficient in coeff_div[] table
->>>>>>> origin/waveshare-s3-amoled-review-complete
-=======
-* look for the coefficient in coeff_div[] table
->>>>>>> origin/waveshare-s3-amoled-voice-ptbr
 */
 static int get_coeff(uint32_t mclk, uint32_t rate)
 {
@@ -418,111 +179,16 @@ esp_err_t es8311_sample_frequency_config(es8311_handle_t dev, int mclk_frequency
 {
     uint8_t regv;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
     /* Obtém coeficientes de clock da tabela */
     int coeff = get_coeff(mclk_frequency, sample_frequency);
 
     if (coeff < 0) {
         ESP_LOGE(TAG, "Incapaz de configurar taxa de amostragem %dHz com %dHz MCLK", sample_frequency, mclk_frequency);
-<<<<<<< HEAD
-=======
-=======
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
->>>>>>> origin/waveshare-s3-amoled-faces-offline
-=======
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
->>>>>>> origin/waveshare-s3-amoled-fix-v2
-=======
->>>>>>> origin/waveshare-s3-amoled-full-plugins
-=======
->>>>>>> origin/waveshare-s3-amoled-manual-upload
-=======
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
->>>>>>> origin/waveshare-s3-amoled-ptbr-final
-=======
->>>>>>> origin/waveshare-s3-amoled-review-complete
-=======
->>>>>>> origin/waveshare-s3-amoled-voice-ptbr
-    /* Get clock coefficients from coefficient table */
-    int coeff = get_coeff(mclk_frequency, sample_frequency);
-
-    if (coeff < 0) {
-        ESP_LOGE(TAG, "Unable to configure sample rate %dHz with %dHz MCLK", sample_frequency, mclk_frequency);
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> origin/waveshare-esp32-s3-amoled-fix
-=======
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
->>>>>>> origin/waveshare-s3-amoled-faces-offline
-=======
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
->>>>>>> origin/waveshare-s3-amoled-fix-v2
-=======
->>>>>>> origin/waveshare-s3-amoled-full-plugins
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-=======
->>>>>>> origin/waveshare-s3-amoled-manual-upload
-=======
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
->>>>>>> origin/waveshare-s3-amoled-ptbr-final
-=======
->>>>>>> origin/waveshare-s3-amoled-review-complete
-=======
->>>>>>> origin/waveshare-s3-amoled-voice-ptbr
         return ESP_ERR_INVALID_ARG;
     }
 
     const struct _coeff_div *const selected_coeff = &coeff_div[coeff];
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
     /* registro 0x02 */
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_CLK_MANAGER_REG02, &regv), TAG, "Erro leitura/escrita I2C");
     regv &= 0x07;
@@ -544,134 +210,9 @@ esp_err_t es8311_sample_frequency_config(es8311_handle_t dev, int mclk_frequency
     /* registro 0x06 */
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_CLK_MANAGER_REG06, &regv), TAG, "Erro leitura/escrita I2C");
 <<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 =======
 
 >>>>>>> main
-=======
->>>>>>> origin/merge-ready-mini-lele-v2
-=======
->>>>>>> origin/mini-lele-v2-complete-verified
-=======
->>>>>>> origin/mini-lele-v2-final-verified
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
->>>>>>> origin/mini-lele-v2-rebrand
-=======
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
-=======
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
->>>>>>> origin/waveshare-s3-amoled-faces-offline
-=======
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
->>>>>>> origin/waveshare-s3-amoled-fix-v2
-=======
->>>>>>> origin/waveshare-s3-amoled-full-plugins
-=======
->>>>>>> origin/waveshare-s3-amoled-manual-upload
-=======
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
->>>>>>> origin/waveshare-s3-amoled-ptbr-final
-=======
->>>>>>> origin/waveshare-s3-amoled-review-complete
-=======
->>>>>>> origin/waveshare-s3-amoled-voice-ptbr
-    /* register 0x02 */
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_CLK_MANAGER_REG02, &regv), TAG, "I2C read/write error");
-    regv &= 0x07;
-    regv |= (selected_coeff->pre_div - 1) << 5;
-    regv |= selected_coeff->pre_multi << 3;
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG02, regv), TAG, "I2C read/write error");
-
-    /* register 0x03 */
-    const uint8_t reg03 = (selected_coeff->fs_mode << 6) | selected_coeff->adc_osr;
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG03, reg03), TAG, "I2C read/write error");
-
-    /* register 0x04 */
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG04, selected_coeff->dac_osr), TAG, "I2C read/write error");
-
-    /* register 0x05 */
-    const uint8_t reg05 = ((selected_coeff->adc_div - 1) << 4) | (selected_coeff->dac_div - 1);
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG05, reg05), TAG, "I2C read/write error");
-
-    /* register 0x06 */
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_CLK_MANAGER_REG06, &regv), TAG, "I2C read/write error");
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> origin/waveshare-esp32-s3-amoled-fix
-=======
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
->>>>>>> origin/waveshare-s3-amoled-faces-offline
-=======
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
->>>>>>> origin/waveshare-s3-amoled-fix-v2
-=======
->>>>>>> origin/waveshare-s3-amoled-full-plugins
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-=======
->>>>>>> origin/waveshare-s3-amoled-manual-upload
-=======
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
->>>>>>> origin/waveshare-s3-amoled-ptbr-final
-=======
->>>>>>> origin/waveshare-s3-amoled-review-complete
-=======
->>>>>>> origin/waveshare-s3-amoled-voice-ptbr
     regv &= 0xE0;
 
     if (selected_coeff->bclk_div < 19) {
@@ -680,21 +221,6 @@ esp_err_t es8311_sample_frequency_config(es8311_handle_t dev, int mclk_frequency
         regv |= (selected_coeff->bclk_div) << 0;
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
     ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, regv), TAG, "Erro leitura/escrita I2C");
 
     /* registro 0x07 */
@@ -706,22 +232,6 @@ esp_err_t es8311_sample_frequency_config(es8311_handle_t dev, int mclk_frequency
     /* registro 0x08 */
     ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG08, selected_coeff->lrck_l), TAG, "Erro leitura/escrita I2C");
 <<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 =======
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_CLK_MANAGER_REG07, &regv), TAG, "Erro leitura/escrita I2C");
     regv &= 0xC0;
@@ -732,105 +242,6 @@ esp_err_t es8311_sample_frequency_config(es8311_handle_t dev, int mclk_frequency
     ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG08, selected_coeff->lrck_l), TAG, "Erro leitura/escrita I2C");
 
 >>>>>>> main
-=======
->>>>>>> origin/merge-ready-mini-lele-v2
-=======
->>>>>>> origin/mini-lele-v2-complete-verified
-=======
->>>>>>> origin/mini-lele-v2-final-verified
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
->>>>>>> origin/mini-lele-v2-rebrand
-=======
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
-=======
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
->>>>>>> origin/waveshare-s3-amoled-faces-offline
-=======
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
->>>>>>> origin/waveshare-s3-amoled-fix-v2
-=======
->>>>>>> origin/waveshare-s3-amoled-full-plugins
-=======
->>>>>>> origin/waveshare-s3-amoled-manual-upload
-=======
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
->>>>>>> origin/waveshare-s3-amoled-ptbr-final
-=======
->>>>>>> origin/waveshare-s3-amoled-review-complete
-=======
->>>>>>> origin/waveshare-s3-amoled-voice-ptbr
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, regv), TAG, "I2C read/write error");
-
-    /* register 0x07 */
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_CLK_MANAGER_REG07, &regv), TAG, "I2C read/write error");
-    regv &= 0xC0;
-    regv |= selected_coeff->lrck_h << 0;
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG07, regv), TAG, "I2C read/write error");
-
-    /* register 0x08 */
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG08, selected_coeff->lrck_l), TAG, "I2C read/write error");
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> origin/waveshare-esp32-s3-amoled-fix
-=======
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
->>>>>>> origin/waveshare-s3-amoled-faces-offline
-=======
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
->>>>>>> origin/waveshare-s3-amoled-fix-v2
-=======
->>>>>>> origin/waveshare-s3-amoled-full-plugins
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-=======
->>>>>>> origin/waveshare-s3-amoled-manual-upload
-=======
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
->>>>>>> origin/waveshare-s3-amoled-ptbr-final
-=======
->>>>>>> origin/waveshare-s3-amoled-review-complete
-=======
->>>>>>> origin/waveshare-s3-amoled-voice-ptbr
 
     return ESP_OK;
 }
@@ -839,251 +250,31 @@ static esp_err_t es8311_clock_config(es8311_handle_t dev, const es8311_clock_con
 {
     uint8_t reg06;
 <<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> origin/waveshare-esp32-s3-amoled-fix
-=======
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
->>>>>>> origin/waveshare-s3-amoled-faces-offline
-=======
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
->>>>>>> origin/waveshare-s3-amoled-fix-v2
-=======
->>>>>>> origin/waveshare-s3-amoled-full-plugins
-=======
->>>>>>> origin/waveshare-s3-amoled-manual-upload
-=======
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
->>>>>>> origin/waveshare-s3-amoled-ptbr-final
-=======
->>>>>>> origin/waveshare-s3-amoled-review-complete
-=======
->>>>>>> origin/waveshare-s3-amoled-voice-ptbr
     uint8_t reg01 = 0x3F; // Enable all clocks
     int mclk_hz;
 
     /* Select clock source for internal MCLK and determine its frequency */
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 
 >>>>>>> origin/mini-lele-v2-complete-verified
 
 >>>>>>> origin/mini-lele-v2-final-verified
 >>>>>>> main
-=======
->>>>>>> origin/merge-ready-mini-lele-v2
-=======
->>>>>>> origin/mini-lele-v2-complete-verified
-=======
->>>>>>> origin/mini-lele-v2-final-verified
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
->>>>>>> origin/mini-lele-v2-rebrand
-=======
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
     uint8_t reg01 = 0x3F; // Habilita todos os clocks
     int mclk_hz;
 
     /* Seleciona fonte de clock para MCLK interno e determina sua frequência */
 <<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 =======
 
 >>>>>>> main
-=======
->>>>>>> origin/merge-ready-mini-lele-v2
-=======
->>>>>>> origin/mini-lele-v2-complete-verified
-=======
->>>>>>> origin/mini-lele-v2-final-verified
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
->>>>>>> origin/mini-lele-v2-rebrand
-=======
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
->>>>>>> origin/waveshare-esp32-s3-amoled-fix
-=======
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
->>>>>>> origin/waveshare-s3-amoled-faces-offline
-=======
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
->>>>>>> origin/waveshare-s3-amoled-fix-v2
-=======
->>>>>>> origin/waveshare-s3-amoled-full-plugins
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-=======
->>>>>>> origin/waveshare-s3-amoled-manual-upload
-=======
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
->>>>>>> origin/waveshare-s3-amoled-ptbr-final
-=======
->>>>>>> origin/waveshare-s3-amoled-review-complete
-=======
->>>>>>> origin/waveshare-s3-amoled-voice-ptbr
     if (clk_cfg->mclk_from_mclk_pin) {
         mclk_hz = clk_cfg->mclk_frequency;
     } else {
         mclk_hz = clk_cfg->sample_frequency * (int)res * 2;
 <<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> origin/waveshare-esp32-s3-amoled-fix
-=======
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
->>>>>>> origin/waveshare-s3-amoled-faces-offline
-=======
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
->>>>>>> origin/waveshare-s3-amoled-fix-v2
-=======
->>>>>>> origin/waveshare-s3-amoled-full-plugins
-=======
->>>>>>> origin/waveshare-s3-amoled-manual-upload
-=======
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
->>>>>>> origin/waveshare-s3-amoled-ptbr-final
-=======
->>>>>>> origin/waveshare-s3-amoled-review-complete
-=======
->>>>>>> origin/waveshare-s3-amoled-voice-ptbr
         reg01 |= BIT(7); // Select BCLK (a.k.a. SCK) pin
     }
 
@@ -1093,56 +284,12 @@ static esp_err_t es8311_clock_config(es8311_handle_t dev, const es8311_clock_con
     ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG01, reg01), TAG, "I2C read/write error");
 
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_CLK_MANAGER_REG06, &reg06), TAG, "I2C read/write error");
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 
 >>>>>>> origin/mini-lele-v2-complete-verified
 
 >>>>>>> origin/mini-lele-v2-final-verified
 >>>>>>> main
-=======
->>>>>>> origin/merge-ready-mini-lele-v2
-=======
->>>>>>> origin/mini-lele-v2-complete-verified
-=======
->>>>>>> origin/mini-lele-v2-final-verified
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
->>>>>>> origin/mini-lele-v2-rebrand
-=======
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
         reg01 |= BIT(7); // Seleciona pino BCLK (a.k.a. SCK)
     }
 
@@ -1153,115 +300,15 @@ static esp_err_t es8311_clock_config(es8311_handle_t dev, const es8311_clock_con
 
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_CLK_MANAGER_REG06, &reg06), TAG, "Erro leitura/escrita I2C");
 <<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 =======
 
 >>>>>>> main
-=======
->>>>>>> origin/merge-ready-mini-lele-v2
-=======
->>>>>>> origin/mini-lele-v2-complete-verified
-=======
->>>>>>> origin/mini-lele-v2-final-verified
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
->>>>>>> origin/mini-lele-v2-rebrand
-=======
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
->>>>>>> origin/waveshare-esp32-s3-amoled-fix
-=======
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
->>>>>>> origin/waveshare-s3-amoled-faces-offline
-=======
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
->>>>>>> origin/waveshare-s3-amoled-fix-v2
-=======
->>>>>>> origin/waveshare-s3-amoled-full-plugins
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-=======
->>>>>>> origin/waveshare-s3-amoled-manual-upload
-=======
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
->>>>>>> origin/waveshare-s3-amoled-ptbr-final
-=======
->>>>>>> origin/waveshare-s3-amoled-review-complete
-=======
->>>>>>> origin/waveshare-s3-amoled-voice-ptbr
     if (clk_cfg->sclk_inverted) {
         reg06 |= BIT(5);
     } else {
         reg06 &= ~BIT(5);
     }
 <<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
     ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "Erro leitura/escrita I2C");
 
     /* Configura divisores de clock */
@@ -1285,146 +332,6 @@ static esp_err_t es8311_clock_config(es8311_handle_t dev, const es8311_clock_con
     /* Configura divisores de clock */
 >>>>>>> origin/mini-lele-v2-final-verified
 >>>>>>> main
-=======
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "Erro leitura/escrita I2C");
-
-    /* Configura divisores de clock */
->>>>>>> origin/merge-ready-mini-lele-v2
-=======
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "Erro leitura/escrita I2C");
-
-    /* Configura divisores de clock */
->>>>>>> origin/mini-lele-v2-complete-verified
-=======
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "Erro leitura/escrita I2C");
-
-    /* Configura divisores de clock */
->>>>>>> origin/mini-lele-v2-final-verified
-=======
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "Erro leitura/escrita I2C");
-
-    /* Configura divisores de clock */
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "Erro leitura/escrita I2C");
-
-    /* Configura divisores de clock */
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "Erro leitura/escrita I2C");
-
-    /* Configura divisores de clock */
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "Erro leitura/escrita I2C");
-
-    /* Configura divisores de clock */
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "Erro leitura/escrita I2C");
-
-    /* Configura divisores de clock */
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "Erro leitura/escrita I2C");
-
-    /* Configura divisores de clock */
->>>>>>> origin/mini-lele-v2-rebrand
-=======
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "Erro leitura/escrita I2C");
-
-    /* Configura divisores de clock */
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "Erro leitura/escrita I2C");
-
-    /* Configura divisores de clock */
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "Erro leitura/escrita I2C");
-
-    /* Configura divisores de clock */
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "Erro leitura/escrita I2C");
-
-    /* Configura divisores de clock */
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "Erro leitura/escrita I2C");
-
-    /* Configura divisores de clock */
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "Erro leitura/escrita I2C");
-
-    /* Configura divisores de clock */
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "I2C read/write error");
-
-    /* Configure clock dividers */
->>>>>>> origin/waveshare-esp32-s3-amoled-fix
-=======
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "I2C read/write error");
-
-    /* Configure clock dividers */
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "I2C read/write error");
-
-    /* Configure clock dividers */
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "I2C read/write error");
-
-    /* Configure clock dividers */
->>>>>>> origin/waveshare-s3-amoled-faces-offline
-=======
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "I2C read/write error");
-
-    /* Configure clock dividers */
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "I2C read/write error");
-
-    /* Configure clock dividers */
->>>>>>> origin/waveshare-s3-amoled-fix-v2
-=======
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "I2C read/write error");
-
-    /* Configure clock dividers */
->>>>>>> origin/waveshare-s3-amoled-full-plugins
-=======
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "Erro leitura/escrita I2C");
-
-    /* Configura divisores de clock */
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-=======
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "I2C read/write error");
-
-    /* Configure clock dividers */
->>>>>>> origin/waveshare-s3-amoled-manual-upload
-=======
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "I2C read/write error");
-
-    /* Configure clock dividers */
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "I2C read/write error");
-
-    /* Configure clock dividers */
->>>>>>> origin/waveshare-s3-amoled-ptbr-final
-=======
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "I2C read/write error");
-
-    /* Configure clock dividers */
->>>>>>> origin/waveshare-s3-amoled-review-complete
-=======
-    ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_CLK_MANAGER_REG06, reg06), TAG, "I2C read/write error");
-
-    /* Configure clock dividers */
->>>>>>> origin/waveshare-s3-amoled-voice-ptbr
     return es8311_sample_frequency_config(dev, mclk_hz, clk_cfg->sample_frequency);
 }
 
@@ -1458,59 +365,7 @@ static esp_err_t es8311_fmt_config(es8311_handle_t dev, const es8311_resolution_
     uint8_t reg0a = 0; // SDP Out
 
 <<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> origin/waveshare-esp32-s3-amoled-fix
-=======
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
->>>>>>> origin/waveshare-s3-amoled-faces-offline
-=======
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
->>>>>>> origin/waveshare-s3-amoled-fix-v2
-=======
->>>>>>> origin/waveshare-s3-amoled-full-plugins
-=======
->>>>>>> origin/waveshare-s3-amoled-manual-upload
-=======
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
->>>>>>> origin/waveshare-s3-amoled-ptbr-final
-=======
->>>>>>> origin/waveshare-s3-amoled-review-complete
-=======
->>>>>>> origin/waveshare-s3-amoled-voice-ptbr
     ESP_LOGI(TAG, "ES8311 in Slave mode and I2S format");
     uint8_t reg00;
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_RESET_REG00, &reg00), TAG, "I2C read/write error");
@@ -1524,55 +379,11 @@ static esp_err_t es8311_fmt_config(es8311_handle_t dev, const es8311_resolution_
     ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_SDPIN_REG09, reg09), TAG, "I2C read/write error");
     ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_SDPOUT_REG0A, reg0a), TAG, "I2C read/write error");
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 >>>>>>> origin/mini-lele-v2-complete-verified
 
 >>>>>>> origin/mini-lele-v2-final-verified
 >>>>>>> main
-=======
->>>>>>> origin/merge-ready-mini-lele-v2
-=======
->>>>>>> origin/mini-lele-v2-complete-verified
-=======
->>>>>>> origin/mini-lele-v2-final-verified
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
->>>>>>> origin/mini-lele-v2-rebrand
-=======
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
     ESP_LOGI(TAG, "ES8311 em modo Slave e formato I2S");
     uint8_t reg00;
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_RESET_REG00, &reg00), TAG, "Erro leitura/escrita I2C");
@@ -1587,140 +398,16 @@ static esp_err_t es8311_fmt_config(es8311_handle_t dev, const es8311_resolution_
     ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_SDPOUT_REG0A, reg0a), TAG, "Erro leitura/escrita I2C");
 
 <<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 =======
 
 >>>>>>> main
-=======
->>>>>>> origin/merge-ready-mini-lele-v2
-=======
->>>>>>> origin/mini-lele-v2-complete-verified
-=======
->>>>>>> origin/mini-lele-v2-final-verified
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
->>>>>>> origin/mini-lele-v2-rebrand
-=======
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
->>>>>>> origin/waveshare-esp32-s3-amoled-fix
-=======
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
->>>>>>> origin/waveshare-s3-amoled-faces-offline
-=======
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
->>>>>>> origin/waveshare-s3-amoled-fix-v2
-=======
->>>>>>> origin/waveshare-s3-amoled-full-plugins
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-=======
->>>>>>> origin/waveshare-s3-amoled-manual-upload
-=======
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
->>>>>>> origin/waveshare-s3-amoled-ptbr-final
-=======
->>>>>>> origin/waveshare-s3-amoled-review-complete
-=======
->>>>>>> origin/waveshare-s3-amoled-voice-ptbr
     return ESP_OK;
 }
 
 esp_err_t es8311_microphone_config(es8311_handle_t dev, bool digital_mic)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> origin/waveshare-esp32-s3-amoled-fix
-=======
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
->>>>>>> origin/waveshare-s3-amoled-faces-offline
-=======
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
->>>>>>> origin/waveshare-s3-amoled-fix-v2
-=======
->>>>>>> origin/waveshare-s3-amoled-full-plugins
-=======
->>>>>>> origin/waveshare-s3-amoled-manual-upload
-=======
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
->>>>>>> origin/waveshare-s3-amoled-ptbr-final
-=======
->>>>>>> origin/waveshare-s3-amoled-review-complete
-=======
->>>>>>> origin/waveshare-s3-amoled-voice-ptbr
     uint8_t reg14 = 0x1A; // enable analog MIC and max PGA gain
 
     /* PDM digital microphone enable or disable */
@@ -1729,55 +416,11 @@ esp_err_t es8311_microphone_config(es8311_handle_t dev, bool digital_mic)
     }
     es8311_write_reg(dev, ES8311_ADC_REG17, 0xC8); // Set ADC gain @todo move this to ADC config section
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 >>>>>>> origin/mini-lele-v2-complete-verified
 
 >>>>>>> origin/mini-lele-v2-final-verified
 >>>>>>> main
-=======
->>>>>>> origin/merge-ready-mini-lele-v2
-=======
->>>>>>> origin/mini-lele-v2-complete-verified
-=======
->>>>>>> origin/mini-lele-v2-final-verified
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
->>>>>>> origin/mini-lele-v2-rebrand
-=======
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
     uint8_t reg14 = 0x1A; // habilita MIC analógico e ganho PGA máximo
 
     /* Habilita ou desabilita microfone digital PDM */
@@ -1787,81 +430,9 @@ esp_err_t es8311_microphone_config(es8311_handle_t dev, bool digital_mic)
     es8311_write_reg(dev, ES8311_ADC_REG17, 0xC8); // Define ganho ADC
 
 <<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 =======
 
 >>>>>>> main
-=======
->>>>>>> origin/merge-ready-mini-lele-v2
-=======
->>>>>>> origin/mini-lele-v2-complete-verified
-=======
->>>>>>> origin/mini-lele-v2-final-verified
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
->>>>>>> origin/mini-lele-v2-rebrand
-=======
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
->>>>>>> origin/waveshare-esp32-s3-amoled-fix
-=======
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
->>>>>>> origin/waveshare-s3-amoled-faces-offline
-=======
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
->>>>>>> origin/waveshare-s3-amoled-fix-v2
-=======
->>>>>>> origin/waveshare-s3-amoled-full-plugins
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-=======
->>>>>>> origin/waveshare-s3-amoled-manual-upload
-=======
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
->>>>>>> origin/waveshare-s3-amoled-ptbr-final
-=======
->>>>>>> origin/waveshare-s3-amoled-review-complete
-=======
->>>>>>> origin/waveshare-s3-amoled-voice-ptbr
     return es8311_write_reg(dev, ES8311_SYSTEM_REG14, reg14);
 }
 
@@ -1870,59 +441,7 @@ esp_err_t es8311_init(es8311_handle_t dev, const es8311_clock_config_t *const cl
     ESP_RETURN_ON_FALSE(
         (clk_cfg->sample_frequency >= 8000) && (clk_cfg->sample_frequency <= 96000),
 <<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> origin/waveshare-esp32-s3-amoled-fix
-=======
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
->>>>>>> origin/waveshare-s3-amoled-faces-offline
-=======
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
->>>>>>> origin/waveshare-s3-amoled-fix-v2
-=======
->>>>>>> origin/waveshare-s3-amoled-full-plugins
-=======
->>>>>>> origin/waveshare-s3-amoled-manual-upload
-=======
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
->>>>>>> origin/waveshare-s3-amoled-ptbr-final
-=======
->>>>>>> origin/waveshare-s3-amoled-review-complete
-=======
->>>>>>> origin/waveshare-s3-amoled-voice-ptbr
         ESP_ERR_INVALID_ARG, TAG, "ES8311 init needs frequency in interval [8000; 96000] Hz"
     );
     if (!clk_cfg->mclk_from_mclk_pin) {
@@ -1949,55 +468,11 @@ esp_err_t es8311_init(es8311_handle_t dev, const es8311_clock_config_t *const cl
     ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_ADC_REG1C, 0x6A), TAG, "I2C read/write error"); // ADC Equalizer bypass, cancel DC offset in digital domain
     ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_DAC_REG37, 0x08), TAG, "I2C read/write error"); // Bypass DAC equalizer - NOT default
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 >>>>>>> origin/mini-lele-v2-complete-verified
 
 >>>>>>> origin/mini-lele-v2-final-verified
 >>>>>>> main
-=======
->>>>>>> origin/merge-ready-mini-lele-v2
-=======
->>>>>>> origin/mini-lele-v2-complete-verified
-=======
->>>>>>> origin/mini-lele-v2-final-verified
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
->>>>>>> origin/mini-lele-v2-rebrand
-=======
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
         ESP_ERR_INVALID_ARG, TAG, "ES8311 init precisa de frequência no intervalo [8000; 96000] Hz"
     );
     if (!clk_cfg->mclk_from_mclk_pin) {
@@ -2025,81 +500,9 @@ esp_err_t es8311_init(es8311_handle_t dev, const es8311_clock_config_t *const cl
     ESP_RETURN_ON_ERROR(es8311_write_reg(dev, ES8311_DAC_REG37, 0x08), TAG, "Erro leitura/escrita I2C"); // Bypass equalizador DAC - NÃO padrão
 
 <<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 =======
 
 >>>>>>> main
-=======
->>>>>>> origin/merge-ready-mini-lele-v2
-=======
->>>>>>> origin/mini-lele-v2-complete-verified
-=======
->>>>>>> origin/mini-lele-v2-final-verified
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
->>>>>>> origin/mini-lele-v2-rebrand
-=======
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
->>>>>>> origin/waveshare-esp32-s3-amoled-fix
-=======
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
->>>>>>> origin/waveshare-s3-amoled-faces-offline
-=======
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
->>>>>>> origin/waveshare-s3-amoled-fix-v2
-=======
->>>>>>> origin/waveshare-s3-amoled-full-plugins
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-=======
->>>>>>> origin/waveshare-s3-amoled-manual-upload
-=======
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
->>>>>>> origin/waveshare-s3-amoled-ptbr-final
-=======
->>>>>>> origin/waveshare-s3-amoled-review-complete
-=======
->>>>>>> origin/waveshare-s3-amoled-voice-ptbr
     return ESP_OK;
 }
 
@@ -2124,34 +527,6 @@ esp_err_t es8311_voice_volume_set(es8311_handle_t dev, int volume, int *volume_s
     }
 
 <<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
     // fornece ao usuário o volume real definido
 =======
     // provide user with real volume set
@@ -2165,90 +540,6 @@ esp_err_t es8311_voice_volume_set(es8311_handle_t dev, int volume, int *volume_s
     // fornece ao usuário o volume real definido
 >>>>>>> origin/mini-lele-v2-final-verified
 >>>>>>> main
-=======
-    // fornece ao usuário o volume real definido
->>>>>>> origin/merge-ready-mini-lele-v2
-=======
-    // fornece ao usuário o volume real definido
->>>>>>> origin/mini-lele-v2-complete-verified
-=======
-    // fornece ao usuário o volume real definido
->>>>>>> origin/mini-lele-v2-final-verified
-=======
-    // fornece ao usuário o volume real definido
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
-    // fornece ao usuário o volume real definido
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
-    // fornece ao usuário o volume real definido
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
-    // fornece ao usuário o volume real definido
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
-    // fornece ao usuário o volume real definido
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
-    // fornece ao usuário o volume real definido
->>>>>>> origin/mini-lele-v2-rebrand
-=======
-    // fornece ao usuário o volume real definido
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
-    // fornece ao usuário o volume real definido
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
-    // fornece ao usuário o volume real definido
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
-    // fornece ao usuário o volume real definido
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
-    // fornece ao usuário o volume real definido
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
-    // fornece ao usuário o volume real definido
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
-    // provide user with real volume set
->>>>>>> origin/waveshare-esp32-s3-amoled-fix
-=======
-    // provide user with real volume set
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
-    // provide user with real volume set
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
-    // provide user with real volume set
->>>>>>> origin/waveshare-s3-amoled-faces-offline
-=======
-    // provide user with real volume set
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
-    // provide user with real volume set
->>>>>>> origin/waveshare-s3-amoled-fix-v2
-=======
-    // provide user with real volume set
->>>>>>> origin/waveshare-s3-amoled-full-plugins
-=======
-    // fornece ao usuário o volume real definido
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-=======
-    // provide user with real volume set
->>>>>>> origin/waveshare-s3-amoled-manual-upload
-=======
-    // provide user with real volume set
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
-    // provide user with real volume set
->>>>>>> origin/waveshare-s3-amoled-ptbr-final
-=======
-    // provide user with real volume set
->>>>>>> origin/waveshare-s3-amoled-review-complete
-=======
-    // provide user with real volume set
->>>>>>> origin/waveshare-s3-amoled-voice-ptbr
     if (volume_set != NULL) {
         *volume_set = volume;
     }
@@ -2259,34 +550,6 @@ esp_err_t es8311_voice_volume_get(es8311_handle_t dev, int *volume)
 {
     uint8_t reg32;
 <<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "Erro leitura/escrita I2C");
 =======
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "I2C read/write error");
@@ -2300,104 +563,7 @@ esp_err_t es8311_voice_volume_get(es8311_handle_t dev, int *volume)
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "Erro leitura/escrita I2C");
 >>>>>>> origin/mini-lele-v2-final-verified
 >>>>>>> main
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/merge-ready-mini-lele-v2
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/mini-lele-v2-complete-verified
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/mini-lele-v2-final-verified
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/mini-lele-v2-rebrand
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
 
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "I2C read/write error");
-
->>>>>>> origin/waveshare-esp32-s3-amoled-fix
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "I2C read/write error");
-
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "I2C read/write error");
-
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "I2C read/write error");
-
->>>>>>> origin/waveshare-s3-amoled-faces-offline
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "I2C read/write error");
-
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "I2C read/write error");
-
->>>>>>> origin/waveshare-s3-amoled-fix-v2
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "I2C read/write error");
-
->>>>>>> origin/waveshare-s3-amoled-full-plugins
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "Erro leitura/escrita I2C");
-
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "I2C read/write error");
-
->>>>>>> origin/waveshare-s3-amoled-manual-upload
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "I2C read/write error");
-
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "I2C read/write error");
-
->>>>>>> origin/waveshare-s3-amoled-ptbr-final
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "I2C read/write error");
-
->>>>>>> origin/waveshare-s3-amoled-review-complete
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG32, &reg32), TAG, "I2C read/write error");
-
->>>>>>> origin/waveshare-s3-amoled-voice-ptbr
     if (reg32 == 0) {
         *volume = 0;
     } else {
@@ -2410,34 +576,6 @@ esp_err_t es8311_voice_mute(es8311_handle_t dev, bool mute)
 {
     uint8_t reg31;
 <<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "Erro leitura/escrita I2C");
 =======
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "I2C read/write error");
@@ -2451,104 +589,7 @@ esp_err_t es8311_voice_mute(es8311_handle_t dev, bool mute)
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "Erro leitura/escrita I2C");
 >>>>>>> origin/mini-lele-v2-final-verified
 >>>>>>> main
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/merge-ready-mini-lele-v2
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/mini-lele-v2-complete-verified
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/mini-lele-v2-final-verified
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/mini-lele-v2-rebrand
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
 
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "I2C read/write error");
-
->>>>>>> origin/waveshare-esp32-s3-amoled-fix
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "I2C read/write error");
-
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "I2C read/write error");
-
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "I2C read/write error");
-
->>>>>>> origin/waveshare-s3-amoled-faces-offline
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "I2C read/write error");
-
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "I2C read/write error");
-
->>>>>>> origin/waveshare-s3-amoled-fix-v2
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "I2C read/write error");
-
->>>>>>> origin/waveshare-s3-amoled-full-plugins
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "Erro leitura/escrita I2C");
-
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "I2C read/write error");
-
->>>>>>> origin/waveshare-s3-amoled-manual-upload
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "I2C read/write error");
-
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "I2C read/write error");
-
->>>>>>> origin/waveshare-s3-amoled-ptbr-final
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "I2C read/write error");
-
->>>>>>> origin/waveshare-s3-amoled-review-complete
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG31, &reg31), TAG, "I2C read/write error");
-
->>>>>>> origin/waveshare-s3-amoled-voice-ptbr
     if (mute) {
         reg31 |= BIT(6) | BIT(5);
     } else {
@@ -2561,138 +602,13 @@ esp_err_t es8311_voice_mute(es8311_handle_t dev, bool mute)
 esp_err_t es8311_microphone_gain_set(es8311_handle_t dev, es8311_mic_gain_t gain_db)
 {
 <<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/merge-ready-mini-lele-v2
-=======
->>>>>>> origin/mini-lele-v2-complete-verified
-=======
->>>>>>> origin/mini-lele-v2-final-verified
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
->>>>>>> origin/mini-lele-v2-rebrand
-=======
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
     return es8311_write_reg(dev, ES8311_ADC_REG16, gain_db); // Escala ganho ADC
-=======
-    return es8311_write_reg(dev, ES8311_ADC_REG16, gain_db); // ADC gain scale up
->>>>>>> origin/waveshare-esp32-s3-amoled-fix
-=======
-    return es8311_write_reg(dev, ES8311_ADC_REG16, gain_db); // ADC gain scale up
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
-    return es8311_write_reg(dev, ES8311_ADC_REG16, gain_db); // ADC gain scale up
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
-    return es8311_write_reg(dev, ES8311_ADC_REG16, gain_db); // ADC gain scale up
->>>>>>> origin/waveshare-s3-amoled-faces-offline
-=======
-    return es8311_write_reg(dev, ES8311_ADC_REG16, gain_db); // ADC gain scale up
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
-    return es8311_write_reg(dev, ES8311_ADC_REG16, gain_db); // ADC gain scale up
->>>>>>> origin/waveshare-s3-amoled-fix-v2
-=======
-    return es8311_write_reg(dev, ES8311_ADC_REG16, gain_db); // ADC gain scale up
->>>>>>> origin/waveshare-s3-amoled-full-plugins
-=======
-    return es8311_write_reg(dev, ES8311_ADC_REG16, gain_db); // Escala ganho ADC
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-=======
-    return es8311_write_reg(dev, ES8311_ADC_REG16, gain_db); // ADC gain scale up
->>>>>>> origin/waveshare-s3-amoled-manual-upload
-=======
-    return es8311_write_reg(dev, ES8311_ADC_REG16, gain_db); // ADC gain scale up
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
-    return es8311_write_reg(dev, ES8311_ADC_REG16, gain_db); // ADC gain scale up
->>>>>>> origin/waveshare-s3-amoled-ptbr-final
-=======
-    return es8311_write_reg(dev, ES8311_ADC_REG16, gain_db); // ADC gain scale up
->>>>>>> origin/waveshare-s3-amoled-review-complete
-=======
-    return es8311_write_reg(dev, ES8311_ADC_REG16, gain_db); // ADC gain scale up
->>>>>>> origin/waveshare-s3-amoled-voice-ptbr
 }
 
 esp_err_t es8311_voice_fade(es8311_handle_t dev, const es8311_fade_t fade)
 {
     uint8_t reg37;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG37, &reg37), TAG, "Erro leitura/escrita I2C");
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 =======
     return es8311_write_reg(dev, ES8311_ADC_REG16, gain_db); // ADC gain scale up
 
@@ -2716,75 +632,6 @@ esp_err_t es8311_voice_fade(es8311_handle_t dev, const es8311_fade_t fade)
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG37, &reg37), TAG, "Erro leitura/escrita I2C");
 >>>>>>> origin/mini-lele-v2-final-verified
 >>>>>>> main
-=======
->>>>>>> origin/merge-ready-mini-lele-v2
-=======
->>>>>>> origin/mini-lele-v2-complete-verified
-=======
->>>>>>> origin/mini-lele-v2-final-verified
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
->>>>>>> origin/mini-lele-v2-rebrand
-=======
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG37, &reg37), TAG, "I2C read/write error");
->>>>>>> origin/waveshare-esp32-s3-amoled-fix
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG37, &reg37), TAG, "I2C read/write error");
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG37, &reg37), TAG, "I2C read/write error");
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG37, &reg37), TAG, "I2C read/write error");
->>>>>>> origin/waveshare-s3-amoled-faces-offline
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG37, &reg37), TAG, "I2C read/write error");
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG37, &reg37), TAG, "I2C read/write error");
->>>>>>> origin/waveshare-s3-amoled-fix-v2
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG37, &reg37), TAG, "I2C read/write error");
->>>>>>> origin/waveshare-s3-amoled-full-plugins
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG37, &reg37), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG37, &reg37), TAG, "I2C read/write error");
->>>>>>> origin/waveshare-s3-amoled-manual-upload
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG37, &reg37), TAG, "I2C read/write error");
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG37, &reg37), TAG, "I2C read/write error");
->>>>>>> origin/waveshare-s3-amoled-ptbr-final
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG37, &reg37), TAG, "I2C read/write error");
->>>>>>> origin/waveshare-s3-amoled-review-complete
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_DAC_REG37, &reg37), TAG, "I2C read/write error");
->>>>>>> origin/waveshare-s3-amoled-voice-ptbr
     reg37 &= 0x0F;
     reg37 |= (fade << 4);
     return es8311_write_reg(dev, ES8311_DAC_REG37, reg37);
@@ -2793,34 +640,6 @@ esp_err_t es8311_voice_fade(es8311_handle_t dev, const es8311_fade_t fade)
 esp_err_t es8311_microphone_fade(es8311_handle_t dev, const es8311_fade_t fade)
 {
     uint8_t reg15;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 <<<<<<< HEAD
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "Erro leitura/escrita I2C");
 =======
@@ -2835,90 +654,6 @@ esp_err_t es8311_microphone_fade(es8311_handle_t dev, const es8311_fade_t fade)
     ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "Erro leitura/escrita I2C");
 >>>>>>> origin/mini-lele-v2-final-verified
 >>>>>>> main
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/merge-ready-mini-lele-v2
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/mini-lele-v2-complete-verified
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/mini-lele-v2-final-verified
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/mini-lele-v2-rebrand
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "I2C read/write error");
->>>>>>> origin/waveshare-esp32-s3-amoled-fix
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "I2C read/write error");
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "I2C read/write error");
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "I2C read/write error");
->>>>>>> origin/waveshare-s3-amoled-faces-offline
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "I2C read/write error");
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "I2C read/write error");
->>>>>>> origin/waveshare-s3-amoled-fix-v2
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "I2C read/write error");
->>>>>>> origin/waveshare-s3-amoled-full-plugins
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "Erro leitura/escrita I2C");
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "I2C read/write error");
->>>>>>> origin/waveshare-s3-amoled-manual-upload
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "I2C read/write error");
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "I2C read/write error");
->>>>>>> origin/waveshare-s3-amoled-ptbr-final
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "I2C read/write error");
->>>>>>> origin/waveshare-s3-amoled-review-complete
-=======
-    ESP_RETURN_ON_ERROR(es8311_read_reg(dev, ES8311_ADC_REG15, &reg15), TAG, "I2C read/write error");
->>>>>>> origin/waveshare-s3-amoled-voice-ptbr
     reg15 &= 0x0F;
     reg15 |= (fade << 4);
     return es8311_write_reg(dev, ES8311_ADC_REG15, reg15);

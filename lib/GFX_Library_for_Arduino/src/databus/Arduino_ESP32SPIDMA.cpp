@@ -1,6 +1,6 @@
 #include "Arduino_ESP32SPIDMA.h"
 
-#if defined(ESP32) && (CONFIG_IDF_TARGET_ESP32 || CONFIG_IDF_TARGET_ESP32S2 || CONFIG_IDF_TARGET_ESP32S3 || CONFIG_IDF_TARGET_ESP32C2 || CONFIG_IDF_TARGET_ESP32C3 || CONFIG_IDF_TARGET_ESP32C6 || CONFIG_IDF_TARGET_ESP32H2 || CONFIG_IDF_TARGET_ESP32P4 || CONFIG_IDF_TARGET_ESP32C5)
+#if defined(ESP32)
 
 /**
  * @brief Arduino_ESP32SPIDMA
@@ -75,7 +75,7 @@ bool Arduino_ESP32SPIDMA::begin(int32_t speed, int8_t dataMode)
     digitalWrite(_cs, HIGH); // disable chip select
   }
 
-#if (CONFIG_IDF_TARGET_ESP32 || CONFIG_IDF_TARGET_ESP32S2 || CONFIG_IDF_TARGET_ESP32S3 || CONFIG_IDF_TARGET_ESP32C6 || CONFIG_IDF_TARGET_ESP32P4 || CONFIG_IDF_TARGET_ESP32C5)
+#if (CONFIG_IDF_TARGET_ESP32 || CONFIG_IDF_TARGET_ESP32S2 || CONFIG_IDF_TARGET_ESP32S3)
   // set fastIO variables
   if (_dc >= 32)
   {
@@ -83,20 +83,14 @@ bool Arduino_ESP32SPIDMA::begin(int32_t speed, int8_t dataMode)
     _dcPortSet = (PORTreg_t)GPIO_OUT1_W1TS_REG;
     _dcPortClr = (PORTreg_t)GPIO_OUT1_W1TC_REG;
   }
-  else if (_dc != GFX_NOT_DEFINED)
-  {
-    _dcPinMask = digitalPinToBitMask(_dc);
-    _dcPortSet = (PORTreg_t)GPIO_OUT_W1TS_REG;
-    _dcPortClr = (PORTreg_t)GPIO_OUT_W1TC_REG;
-  }
-#else
-  if (_dc != GFX_NOT_DEFINED)
-  {
-    _dcPinMask = digitalPinToBitMask(_dc);
-    _dcPortSet = (PORTreg_t)GPIO_OUT_W1TS_REG;
-    _dcPortClr = (PORTreg_t)GPIO_OUT_W1TC_REG;
-  }
+  else
 #endif
+      if (_dc != GFX_NOT_DEFINED)
+  {
+    _dcPinMask = digitalPinToBitMask(_dc);
+    _dcPortSet = (PORTreg_t)GPIO_OUT_W1TS_REG;
+    _dcPortClr = (PORTreg_t)GPIO_OUT_W1TC_REG;
+  }
 
 #if (CONFIG_IDF_TARGET_ESP32 || CONFIG_IDF_TARGET_ESP32S2 || CONFIG_IDF_TARGET_ESP32S3)
   if (_cs >= 32)
@@ -105,20 +99,14 @@ bool Arduino_ESP32SPIDMA::begin(int32_t speed, int8_t dataMode)
     _csPortSet = (PORTreg_t)GPIO_OUT1_W1TS_REG;
     _csPortClr = (PORTreg_t)GPIO_OUT1_W1TC_REG;
   }
-  else if (_cs != GFX_NOT_DEFINED)
-  {
-    _csPinMask = digitalPinToBitMask(_cs);
-    _csPortSet = (PORTreg_t)GPIO_OUT_W1TS_REG;
-    _csPortClr = (PORTreg_t)GPIO_OUT_W1TC_REG;
-  }
-#else
-  if (_cs != GFX_NOT_DEFINED)
-  {
-    _csPinMask = digitalPinToBitMask(_cs);
-    _csPortSet = (PORTreg_t)GPIO_OUT_W1TS_REG;
-    _csPortClr = (PORTreg_t)GPIO_OUT_W1TC_REG;
-  }
+  else
 #endif
+      if (_cs != GFX_NOT_DEFINED)
+  {
+    _csPinMask = digitalPinToBitMask(_cs);
+    _csPortSet = (PORTreg_t)GPIO_OUT_W1TS_REG;
+    _csPortClr = (PORTreg_t)GPIO_OUT_W1TC_REG;
+  }
 
   spi_bus_config_t buscfg = {
       .mosi_io_num = _mosi,
@@ -836,29 +824,27 @@ void Arduino_ESP32SPIDMA::writeYCbCrPixels(uint8_t *yData, uint8_t *cbData, uint
     uint16_t *dest = _buffer16;
     uint16_t *dest2 = dest + w;
 
-    uint8_t pxCb, pxCr;
-    int16_t pxR, pxG, pxB, pxY;
-
     uint16_t out_bits = w << 5;
     bool poll_started = false;
     for (int row = 0; row < rows; ++row)
     {
       for (int col = 0; col < cols; ++col)
       {
-        pxCb = *cbData++;
-        pxCr = *crData++;
-        pxR = CR2R16[pxCr];
-        pxG = -CB2G16[pxCb] - CR2G16[pxCr];
-        pxB = CB2B16[pxCb];
+        uint8_t cb = *cbData++;
+        uint8_t cr = *crData++;
+        int16_t r = CR2R16[cr];
+        int16_t g = -CB2G16[cb] - CR2G16[cr];
+        int16_t b = CB2B16[cb];
+        int16_t y;
 
-        pxY = Y2I16[*yData++];
-        *dest++ = CLIPRBE[pxY + pxR] | CLIPGBE[pxY + pxG] | CLIPBBE[pxY + pxB];
-        pxY = Y2I16[*yData++];
-        *dest++ = CLIPRBE[pxY + pxR] | CLIPGBE[pxY + pxG] | CLIPBBE[pxY + pxB];
-        pxY = Y2I16[*yData2++];
-        *dest2++ = CLIPRBE[pxY + pxR] | CLIPGBE[pxY + pxG] | CLIPBBE[pxY + pxB];
-        pxY = Y2I16[*yData2++];
-        *dest2++ = CLIPRBE[pxY + pxR] | CLIPGBE[pxY + pxG] | CLIPBBE[pxY + pxB];
+        y = Y2I16[*yData++];
+        *dest++ = CLIPRBE[y + r] | CLIPGBE[y + g] | CLIPBBE[y + b];
+        y = Y2I16[*yData++];
+        *dest++ = CLIPRBE[y + r] | CLIPGBE[y + g] | CLIPBBE[y + b];
+        y = Y2I16[*yData2++];
+        *dest2++ = CLIPRBE[y + r] | CLIPGBE[y + g] | CLIPBBE[y + b];
+        y = Y2I16[*yData2++];
+        *dest2++ = CLIPRBE[y + r] | CLIPGBE[y + g] | CLIPBBE[y + b];
       }
       yData += w;
       yData2 += w;
@@ -1020,4 +1006,4 @@ GFX_INLINE void Arduino_ESP32SPIDMA::POLL_END()
   spi_device_polling_end(_handle, portMAX_DELAY);
 }
 
-#endif // #if defined(ESP32) && (CONFIG_IDF_TARGET_ESP32 || CONFIG_IDF_TARGET_ESP32S2 || CONFIG_IDF_TARGET_ESP32S3 || CONFIG_IDF_TARGET_ESP32C2 || CONFIG_IDF_TARGET_ESP32C3 || CONFIG_IDF_TARGET_ESP32C6 || CONFIG_IDF_TARGET_ESP32H2 || CONFIG_IDF_TARGET_ESP32P4 || CONFIG_IDF_TARGET_ESP32C5)
+#endif // #if defined(ESP32)

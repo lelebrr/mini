@@ -4,12 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/**
- * This file is just to keep the compatibility with the old version of the library. Please use the file `esp_io_expander.hpp` instead.
- */
+#ifndef ESP_IOEXPANDER_LIBRARY_H
+#define ESP_IOEXPANDER_LIBRARY_H
 
-#pragma once
+#include "ESP_IOExpander.h"
 
-#warning "This file is deprecated. Please use the file `esp_io_expander.hpp` instead."
+#include "chip/TCA95xx_8bit.h"
+#include "chip/TCA95xx_16bit.h"
+#include "chip/HT8574.h"
+#include "chip/CH422G.h"
 
-#include "esp_io_expander.hpp"
+#endif

@@ -1,615 +1,117 @@
 #pragma once
 
-/**
- * pin_config.h
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-	 * Mini Lele - Waveshare ESP32-S3-Touch-AMOLED-1.8
-	 * Hardware: SH8601 QSPI, FT3168 I2C, AXP2101 I2C, ES8311 I2S
-	 */
-	
-	// --- Display QSPI (SH8601) ---
-	#define LCD_CS     12
-	#define LCD_SCK    11
-	#define LCD_D0     4
-	#define LCD_D1     5
-	#define LCD_D2     6
-	#define LCD_D3     7
-	#define LCD_RST    -1 // Reset via TCA9554 Pin 0
-=======
-=======
->>>>>>> origin/mini-lele-v2-complete-verified
-=======
->>>>>>> origin/mini-lele-v2-final-verified
-=======
->>>>>>> origin/mini-lele-v2-rebrand
-=======
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
- * Mapeamento de Pinos para Waveshare ESP32-S3-Touch-AMOLED-1.8
+/*
+ * Mini Lele / Waveshare ESP32-S3-Touch-AMOLED-1.8
+ * Hardware: SH8601 QSPI, FT3168/GT1151 I2C, AXP2101 I2C, ES8311 I2S,
+ *           QMI8658 I2C, PCF85063 I2C, TCA9554 I2C.
  *
- * Hardware:
- * - MCU: ESP32-S3 (N16R8)
- * - Tela: 1.8" AMOLED (SH8601) - QSPI
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
- * - Touch: FT3168 ou GT1151 - I2C
-=======
- * - Touch: FT3168 - I2C
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
- * - Touch: FT3168 ou GT1151 - I2C
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
- * - Touch: FT3168 ou GT1151 - I2C
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
- * - Touch: FT3168 ou GT1151 - I2C
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
- * - Touch: FT3168 - I2C
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
- * - Touch: FT3168 - I2C
->>>>>>> origin/waveshare-s3-amoled-full-review-406
- * - PMU: AXP2101 - I2C
- * - Áudio: ES8311 - I2S
- * - IMU: QMI8658 - I2C
- * - Expansor IO: TCA9554 - I2C
+ * Fonte da verdade de mapeamento de pinos para o firmware.
  */
 
-// --- Display QSPI (SH8601) ---
-// Resolução: 368x448 pixels
-#define LCD_CS     4   // Chip Select
-#define LCD_SCLK   5   // Clock
-#define LCD_SDIO0  6   // Data 0
-#define LCD_SDIO1  7   // Data 1
-#define LCD_SDIO2  8   // Data 2
-#define LCD_SDIO3  9   // Data 3
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define LCD_RST    -1  // Controlado pelo Expander IO Pin 0
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> origin/merge-ready-mini-lele-v2
-=======
->>>>>>> origin/mini-lele-v2-complete-verified
-=======
->>>>>>> origin/mini-lele-v2-final-verified
-=======
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
- * Mini Lele - Waveshare ESP32-S3-Touch-AMOLED-1.8
- * Hardware: SH8601 QSPI, FT3168 I2C, AXP2101 I2C, ES8311 I2S
- */
+// -----------------------------------------------------------------------------
+// Display QSPI (SH8601)
+// -----------------------------------------------------------------------------
 
-// --- Display QSPI (SH8601) ---
-#define LCD_CS     12
-#define LCD_SCK    11
-#define LCD_D0     4
-#define LCD_D1     5
-#define LCD_D2     6
-#define LCD_D3     7
-#define LCD_RST    -1 // Reset via TCA9554 Pin 0
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
->>>>>>> origin/mini-lele-v2-rebrand
-=======
-// O Reset do LCD é controlado pelo Pino 0 do Expansor IO (TCA9554)
+#define LCD_CS     12  // Chip Select
+#define LCD_SCLK   11  // Clock
+#define LCD_SDIO0  4   // Data 0
+#define LCD_SDIO1  5   // Data 1
+#define LCD_SDIO2  6   // Data 2
+#define LCD_SDIO3  7   // Data 3
+
+// Reset controlado via expansor TCA9554 (P0), não ligado direto ao ESP32-S3
 #define LCD_RST    -1
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
-#define LCD_RST    -1  // Controlado pelo Expander IO Pin 0
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
-#define LCD_RST    -1  // Controlado pelo Expander IO Pin 0
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
-#define LCD_RST    -1  // Controlado pelo Expander IO Pin 0
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
-// O Reset do LCD é controlado pelo Pino 0 do Expansor IO (TCA9554)
-#define LCD_RST    -1
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
-// O Reset do LCD é controlado pelo Pino 0 do Expansor IO (TCA9554)
-#define LCD_RST    -1
->>>>>>> origin/waveshare-s3-amoled-full-review-406
 
 #define LCD_WIDTH  368
 #define LCD_HEIGHT 448
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-// --- I2C (Shared Bus: Touch, PMU, Audio, IMU, Expander, RTC) ---
-	#define IIC_SDA    15
-	#define IIC_SCL    14
-	
-	// --- Touchscreen (FT3168) ---
-	#define TOUCH_SDA  15
-	#define TOUCH_SCL  14
-	#define TOUCH_INT  21
-	#define TOUCH_RST  -1 // Via TCA9554 Pin 1
-	#define FT3168_ADDR 0x38
-	
-	// --- PMU (AXP2101) ---
-	#define PMU_SDA    15
-	#define PMU_SCL    14
-	#define AXP2101_SLAVE_ADDRESS 0x34
-	
-	// --- Audio (ES8311) ---
-	#define ES8311_ADDR 0x18
-	#define I2S_MCLK   16
-	#define I2S_BCLK   9
-	#define I2S_LRCK   45
-	#define I2S_DOUT   10
-	#define I2S_DIN    8
-	#define PA_EN      46
-	
-	// --- IMU (QMI8658) ---
-	#define IMU_SDA    15
-	#define IMU_SCL    14
-	#define QMI8658_ADDR 0x6B
-	
-	// --- RTC (PCF85063) ---
-	#define RTC_ADDR   0x51
-	
-	// --- SD Card (SDMMC Slot 0 Remapped) ---
-	// Using 1-bit mode. Pinos 1 e 2 são UART0 TX/RX.
-	// Requer ARDUINO_USB_CDC_ON_BOOT=1.
-	#define SDMMC_CLK  2
-	#define SDMMC_CMD  1
-	#define SDMMC_D0   42 // Safe fallback for 1-bit mode
-	
-	// --- System ---
-	#define PIN_BOOT   0
-	
-	// --- Cores Cyberpunk BR ---
-	#define COLOR_NEON_PURPLE 0x801F // Roxo
-	#define COLOR_NEON_GREEN  0x07E0 // Verde Matrix
-	#define COLOR_NEON_YELLOW 0xFFE0 // Amarelo
-	#define COLOR_DARK_BG     0x0000
-=======
-=======
->>>>>>> origin/mini-lele-v2-complete-verified
-=======
->>>>>>> origin/mini-lele-v2-final-verified
-=======
->>>>>>> origin/mini-lele-v2-rebrand
-// --- Barramento I2C (Interno) ---
-=======
-// --- Barramento I2C (Interno) ---
-// Compartilhado por: Touch, PMU, Expansor IO, IMU
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
-// --- Barramento I2C (Interno) ---
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
-// --- Barramento I2C (Interno) ---
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
-// --- Barramento I2C (Interno) ---
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
-// --- Barramento I2C (Interno) ---
-// Compartilhado por: Touch, PMU, Expansor IO, IMU
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
-// --- Barramento I2C (Interno) ---
-// Compartilhado por: Touch, PMU, Expansor IO, IMU
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-#define IIC_SDA    38
-#define IIC_SCL    39
-#define D_IIC_SDA  38
-#define D_IIC_SCL  39
+// -----------------------------------------------------------------------------
+// Barramento I2C principal (Touch, PMU, Expansor IO, IMU, RTC, ES8311 ctrl)
+// -----------------------------------------------------------------------------
 
-// Endereços I2C dos Dispositivos
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-#define AXP2101_SLAVE_ADDRESS 0x34
-#define FT3168_DEVICE_ADDRESS 0x38
-#define GT1151_DEVICE_ADDRESS 0x14 // Endereço comum para GT1151 (ou 0x5D)
-#define ESP_IO_EXPANDER_I2C_TCA9554_ADDRESS_000 0x20
-#define QMI8658_L_SLAVE_ADDRESS 0x6B
-#define ES8311_ADDRRES_0      0x18
-
-// --- Áudio (ES8311 + I2S) ---
-#define BCLKPIN    41
-#define WSPIN      42
-#define DIPIN      1
-#define DOPIN      40
-#define MCLKPIN    2
-
-// --- Cartão SD (SDMMC Slot 1) ---
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-#define AXP2101_SLAVE_ADDRESS 0x34         // Gerenciamento de Energia
-#define FT3168_DEVICE_ADDRESS 0x38         // Controlador de Touch
-#define ESP_IO_EXPANDER_I2C_TCA9554_ADDRESS_000 0x20 // Expansor de IO
-#define QMI8658_L_SLAVE_ADDRESS 0x6B       // Acelerômetro/Giroscópio
-#define ES8311_ADDRRES_0      0x18         // Codec de Áudio
-
-// --- Touch (FT3168) ---
-// Reset controlado pelo Pino 1 do Expansor IO
-#define TP_INT     -1  // Interrupção (usamos polling)
-#define TOUCH_CS   -1
-
-// --- Áudio (ES8311 + I2S) ---
-// Microfone (Entrada) e Alto-falante (Saída)
-#define BCLKPIN    41
-#define WSPIN      42
-#define DIPIN      1   // Data In (Do Mic)
-#define DOPIN      40  // Data Out (Para Speaker)
-#define MCLKPIN    2   // Master Clock (Gerado pelo ESP32)
-
-// --- Cartão SD (SDMMC Slot 1) ---
-// Modo 1-Bit (Padrão da placa)
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-#define SDMMC_CLK  12
-#define SDMMC_CMD  11
-#define SDMMC_DATA 13
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-// --- Cores Cyberpunk BR ---
-#define COLOR_NEON_PURPLE 0x801F // Roxo
-#define COLOR_NEON_GREEN  0x07E0 // Verde Matrix
-#define COLOR_NEON_YELLOW 0xFFE0 // Amarelo
-#define COLOR_DARK_BG     0x0000
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> origin/merge-ready-mini-lele-v2
-=======
->>>>>>> origin/mini-lele-v2-complete-verified
-=======
->>>>>>> origin/mini-lele-v2-final-verified
-=======
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-// --- I2C (Shared Bus: Touch, PMU, Audio, IMU, Expander, RTC) ---
-=======
-// --- I2C (Shared Bus: Touch, PMU, Audio, IMU, Expander) ---
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
 #define IIC_SDA    15
 #define IIC_SCL    14
+#define D_IIC_SDA  IIC_SDA
+#define D_IIC_SCL  IIC_SCL
 
-// --- Touchscreen (FT3168) ---
-#define TOUCH_SDA  15
-#define TOUCH_SCL  14
-#define TOUCH_INT  21
-#define TOUCH_RST  -1 // Via TCA9554 Pin 1
-#define FT3168_ADDR 0x38
+// -----------------------------------------------------------------------------
+// Endereços I2C
+// -----------------------------------------------------------------------------
 
-// --- PMU (AXP2101) ---
-#define PMU_SDA    15
-#define PMU_SCL    14
-#define AXP2101_SLAVE_ADDRESS 0x34
+#define AXP2101_SLAVE_ADDRESS                     0x34
+#define FT3168_DEVICE_ADDRESS                     0x38
+#define GT1151_DEVICE_ADDRESS                     0x14   // Variante comum (ou 0x5D)
+#define ESP_IO_EXPANDER_I2C_TCA9554_ADDRESS_000   0x20
+#define QMI8658_L_SLAVE_ADDRESS                   0x6B
+#define ES8311_ADDRRES_0                          0x18
 
-// --- Audio (ES8311) ---
-#define ES8311_ADDR 0x18
-#define I2S_MCLK   16
-#define I2S_BCLK   9
-#define I2S_LRCK   45
-#define I2S_DOUT   10
-#define I2S_DIN    8
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define PA_EN      46 // GPIO Direto (Snippet confirms PA 46)
-=======
+// Aliases convenientes usados pelo código
+#define ES8311_ADDR                               0x18
+#define FT3168_ADDR                               FT3168_DEVICE_ADDRESS
+#define QMI8658_ADDR                              QMI8658_L_SLAVE_ADDRESS
+
+// -----------------------------------------------------------------------------
+// Touch (FT3168 / GT1151)
+// -----------------------------------------------------------------------------
+
+#define TP_INT     21   // Interrupção (active low)
+
+#define TOUCH_SDA  IIC_SDA
+#define TOUCH_SCL  IIC_SCL
+#define TOUCH_INT  TP_INT
+// Reset via TCA9554 P1
+#define TOUCH_RST  -1
+
+// -----------------------------------------------------------------------------
+// Áudio (ES8311 + I2S)
+// -----------------------------------------------------------------------------
+
+// Pinos I2S conforme documentação da Waveshare
+#define I2S_MCK_IO 16
+#define I2S_BCK_IO 9
+#define I2S_DI_IO  10
+#define I2S_WS_IO  45
+#define I2S_DO_IO  8
+
+// Aliases compatíveis com exemplos antigos
+#define MCLKPIN    16
+#define BCLKPIN    9
+#define WSPIN      45
+#define DOPIN      10
+#define DIPIN      8
+
+// Enable do amplificador de áudio (PA)
 #define PA_EN      46
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
-#define PA_EN      46 // GPIO Direto (Snippet confirms PA 46)
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
-#define PA_EN      46 // GPIO Direto (Snippet confirms PA 46)
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
-#define PA_EN      46 // GPIO Direto (Snippet confirms PA 46)
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
-#define PA_EN      -1 // Via TCA9554 Pin 6
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
+#define PA         46
 
-// --- IMU (QMI8658) ---
-#define IMU_SDA    15
-#define IMU_SCL    14
-#define QMI8658_ADDR 0x6B
+// -----------------------------------------------------------------------------
+// Cartão SD (SDMMC, modo 1-bit – usado para logs, handshakes, etc.)
+// -----------------------------------------------------------------------------
 
-<<<<<<< HEAD
-// --- RTC (PCF85063) ---
-#define RTC_ADDR   0x51
-
-// --- SD Card (SDMMC Slot 0 Remapped) ---
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-// Using 1-bit mode. Pinos 1 e 2 são UART0 TX/RX,
-// então só funciona com USB CDC para debug.
+// Usa os pinos 1 e 2, por isso o debug é feito via USB CDC.
 #define SDMMC_CLK  2
 #define SDMMC_CMD  1
-#define SDMMC_D0   42 // Tentativa educada baseada em pinos livres/comuns
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-// Using 1-bit mode. Pinos 1 e 2 são UART0 TX/RX.
-// Requer ARDUINO_USB_CDC_ON_BOOT=1.
-#define SDMMC_CLK  2
-#define SDMMC_CMD  1
-#define SDMMC_D0   42 // Safe fallback for 1-bit mode
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
- * PwnTamagotchi BR - Edição Lendária
- * Hardware Target: ESP32-S3-WROOM-1-N16R8 Custom Board
- */
+#define SDMMC_D0   42
+#define SDMMC_DATA SDMMC_D0
 
-// --- Display ST7701S (Interface RGB 8-bit / Parallel) ---
-// Note: User prompt listed "RGB 8-bit" but provided pins for a full RGB interface.
-// We map them to standard 16-bit RGB 565 logic where possible or 8-bit generic.
-// Groups: 45-48, 38-41, 15-18, 11-14, 21, 10, 9.
+// -----------------------------------------------------------------------------
+// Sistema / botões
+// -----------------------------------------------------------------------------
 
-// Control Signals
-#define LCD_CS     8
-#define LCD_DC     40 // Usually unused in pure RGB, but ST7701 needs it for SPI init
-#define LCD_RST    39
-#define LCD_WR     47 // SPI SCL for Init
-#define LCD_RD     -1
+#define PIN_BOOT   0   // BOOT button (GPIO0)
 
-// RGB Interface Signals (Mapped to prompt's groups)
-#define LCD_DE     21
-#define LCD_VSYNC  10
-#define LCD_HSYNC  9
-#define LCD_PCLK   14 // From 11-14 group
+// -----------------------------------------------------------------------------
+// Cores RGB565 básicas
+//   (só definimos se ainda não existirem para evitar conflitos com
+//    bibliotecas gráficas como Arduino_GFX)
+// -----------------------------------------------------------------------------
 
-// Data Pins (R0-R4, G0-G5, B0-B4 for RGB565)
-// Group 45-48
-#define LCD_R0     45
-#define LCD_R1     46
-#define LCD_R2     48 // 47 is WR
-#define LCD_R3     38
-
-// Group 38-41 (38 used above, 39=RST, 40=DC, 41 available)
-#define LCD_R4     41
-
-// Group 15-18
-#define LCD_G0     15
-#define LCD_G1     16
-#define LCD_G2     17
-#define LCD_G3     18
-
-// Group 11-14 (14 is PCLK)
-#define LCD_G4     11
-#define LCD_G5     12
-#define LCD_B0     13
-
-// Spares or re-using high bits if 8-bit mode intended (Driver will ignore unused)
-#define LCD_B1     -1
-#define LCD_B2     -1
-#define LCD_B3     -1
-#define LCD_B4     -1
-
-#define LCD_WIDTH  320
-#define LCD_HEIGHT 240
-
-// --- Touchscreen (GT1151 I2C) ---
-#define TOUCH_SDA  6
-#define TOUCH_SCL  7
-#define TOUCH_INT  5
-#define TOUCH_RST  4
-#define GT1151_ADDR 0x14
-
-// --- Áudio (ES8311 I2S + I2C) ---
-#define ES8311_ADDR 0x18
-#define I2S_BCLK   1
-#define I2S_LRCK   2
-#define I2S_DIN    3
-#define I2S_DOUT   42
-
-// --- IMU (QMI8658 I2C) ---
-#define IMU_SDA    6
-#define IMU_SCL    7
-#define IMU_INT1   0
-#define QMI8658_ADDR 0x6B
-
-// --- SD Card (SPI) ---
-#define SD_CLK     36
-#define SD_CMD     35
-#define SD_D0      37
-#define SD_D1      34
-#define SD_D2      33
-#define SD_D3      38
-#define SD_CS      21
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
-// --- SD Card (SDMMC Slot 0 - Onboard) ---
-#define SDMMC_CLK  2
-#define SDMMC_CMD  1
-#define SDMMC_D0   40 // Verify if used? usually on these boards it's 1-bit mode if not specified
-// Actually Waveshare schematic often uses 1-bit mode if pins limited.
-// Let's assume 1-bit mode on standard slot 0 D0 pin if not explicitly D0-D3
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-
-// --- System ---
-#define PIN_BOOT   0
-#define COLOR_NEON_PURPLE 0x801F
-#define COLOR_NEON_GREEN  0x07E0
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
->>>>>>> origin/mini-lele-v2-rebrand
-=======
-=======
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-// --- Cores (Formato RGB565) ---
+// Definimos cores básicas apenas se a biblioteca gráfica não tiver suas próprias
+// definições RGB565 (como é o caso da Arduino_GFX). Isso evita warnings de redefinição.
+#ifndef RGB565_BLACK
 #define BLACK   0x0000
 #define WHITE   0xFFFF
 #define RED     0xF800
 #define GREEN   0x07E0
 #define BLUE    0x001F
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
+#endif

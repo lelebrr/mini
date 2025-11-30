@@ -1,4 +1,4 @@
-#if defined(TARGET_RP2040) || defined(PICO_RP2350)
+#if defined(TARGET_RP2040)
 
 #ifndef _ARDUINO_RPIPICOPAR8_H_
 #define _ARDUINO_RPIPICOPAR8_H_
@@ -47,4 +47,4 @@ private:
 
 #endif // _ARDUINO_RPIPICOPAR8_H_
 
-#endif // #if defined(TARGET_RP2040) || defined(PICO_RP2350)
+#endif // #if defined(TARGET_RP2040)

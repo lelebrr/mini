@@ -484,12 +484,9 @@ void Arduino_Canvas_Indexed::drawIndexedBitmap(
   }
 }
 
-void Arduino_Canvas_Indexed::flush(bool force_flush)
+void Arduino_Canvas_Indexed::flush()
 {
-  if (_output)
-  {
-    _output->drawIndexedBitmap(_output_x, _output_y, _framebuffer, _color_index, WIDTH, HEIGHT);
-  }
+  _output->drawIndexedBitmap(_output_x, _output_y, _framebuffer, _color_index, WIDTH, HEIGHT);
 }
 
 uint8_t *Arduino_Canvas_Indexed::getFramebuffer()

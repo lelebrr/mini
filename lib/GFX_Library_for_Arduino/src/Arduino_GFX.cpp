@@ -25,6 +25,33 @@
 #if defined(LITTLE_FOOT_PRINT)
 Arduino_GFX::Arduino_GFX(int16_t w, int16_t h) : WIDTH(w), HEIGHT(h)
 #else
+// Arduino_GFX::Arduino_GFX(int16_t w, int16_t h) : Arduino_G(w, h)
+// #endif // !defined(LITTLE_FOOT_PRINT)
+// {
+//   _width = WIDTH;
+//   _height = HEIGHT;
+//   _max_x = _width - 1;  ///< x zero base bound
+//   _max_y = _height - 1; ///< y zero base bound
+//   _min_text_x = 0;
+//   _min_text_y = 0;
+//   _max_text_x = _max_x;
+//   _max_text_y = _max_y;
+//   cursor_x = 0;
+//   cursor_y = 0;
+//   textcolor = 0xFFFF;
+//   textbgcolor = 0xFFFF;
+//   textsize_x = 1;
+//   textsize_y = 1;
+//   text_pixel_margin = 0;
+//   _rotation = 0;
+//   wrap = true;
+// #if !defined(ATTINY_CORE)
+//   gfxFont = NULL;
+// #if defined(U8G2_FONT_SUPPORT)
+//   u8g2Font = NULL;
+// #endif // defined(U8G2_FONT_SUPPORT)
+// #endif // !defined(ATTINY_CORE)
+// }
 Arduino_GFX::Arduino_GFX(int16_t w, int16_t h) : Arduino_G(w, h)
 #endif // !defined(LITTLE_FOOT_PRINT)
 {
@@ -32,18 +59,11 @@ Arduino_GFX::Arduino_GFX(int16_t w, int16_t h) : Arduino_G(w, h)
   _height = HEIGHT;
   _max_x = _width - 1;  ///< x zero base bound
   _max_y = _height - 1; ///< y zero base bound
-  _min_text_x = 0;
-  _min_text_y = 0;
-  _max_text_x = _max_x;
-  _max_text_y = _max_y;
-  cursor_x = 0;
-  cursor_y = 0;
-  textcolor = 0xFFFF;
-  textbgcolor = 0xFFFF;
-  textsize_x = 1;
-  textsize_y = 1;
-  text_pixel_margin = 0;
   _rotation = 0;
+  cursor_y = cursor_x = 0;
+  textsize_x = textsize_y = 1;
+  text_pixel_margin = 0;
+  textcolor = textbgcolor = 0xFFFF;
   wrap = true;
 #if !defined(ATTINY_CORE)
   gfxFont = NULL;
@@ -1480,16 +1500,16 @@ void Arduino_GFX::draw3bitRGBBitmap(int16_t x, int16_t y,
     {
       if (offset & 1)
       {
-        d = (((c & 0b100) ? RGB565_RED : 0) |
-             ((c & 0b010) ? RGB565_LIME : 0) |
-             ((c & 0b001) ? RGB565_BLUE : 0));
+        d = (((c & 0b100) ? RED : 0) |
+             ((c & 0b010) ? GREEN : 0) |
+             ((c & 0b001) ? BLUE : 0));
       }
       else
       {
         c = bitmap[idx++];
-        d = (((c & 0b100000) ? RGB565_RED : 0) |
-             ((c & 0b010000) ? RGB565_LIME : 0) |
-             ((c & 0b001000) ? RGB565_BLUE : 0));
+        d = (((c & 0b100000) ? RED : 0) |
+             ((c & 0b010000) ? GREEN : 0) |
+             ((c & 0b001000) ? BLUE : 0));
       }
       writePixel(x + i, y, d);
       offset++;
@@ -1620,7 +1640,7 @@ void Arduino_GFX::draw16bitBeRGBBitmap(int16_t x, int16_t y,
 */
 /**************************************************************************/
 void Arduino_GFX::draw16bitBeRGBBitmapR1(int16_t x, int16_t y,
-                                         uint16_t *bitmap, int16_t w, int16_t h)
+                                       uint16_t *bitmap, int16_t w, int16_t h)
 {
   int32_t offset = 0;
   uint16_t p;
@@ -1958,11 +1978,11 @@ void Arduino_GFX::u8g2_font_decode_len(uint8_t len, uint8_t is_foreground, uint1
         }
         if (is_foreground)
         {
-          writeFillRect(x, y, curW, 1, color);
+          writeFillRectPreclipped(x, y, curW, 1, color);
         }
         else if (bg != color)
         {
-          writeFillRect(x, y, curW, 1, bg);
+          writeFillRectPreclipped(x, y, curW, 1, bg);
         }
       }
     }
@@ -1982,13 +2002,13 @@ void Arduino_GFX::u8g2_font_decode_len(uint8_t len, uint8_t is_foreground, uint1
         }
         if (is_foreground)
         {
-          writeFillRect(x, y, curW - text_pixel_margin,
-                        textsize_y - text_pixel_margin, color);
+          writeFillRectPreclipped(x, y, curW - text_pixel_margin,
+                                  textsize_y - text_pixel_margin, color);
         }
         else if (bg != color)
         {
-          writeFillRect(x, y, curW - text_pixel_margin,
-                        textsize_y - text_pixel_margin, bg);
+          writeFillRectPreclipped(x, y, curW - text_pixel_margin,
+                                  textsize_y - text_pixel_margin, bg);
         }
       }
     }
@@ -2085,7 +2105,7 @@ void Arduino_GFX::drawChar(int16_t x, int16_t y, unsigned char c,
       {
         curH -= textsize_y;
       }
-      writeFillRect(x, curY, curW, curH, bg);
+      writeFillRectPreclipped(x, curY, curW, curH, bg);
     }
     if (textsize_x == 1 && textsize_y == 1)
     {
@@ -2130,7 +2150,7 @@ void Arduino_GFX::drawChar(int16_t x, int16_t y, unsigned char c,
             {
               if (bits & 0x80)
               {
-                writeFillRect(curX, curY, textsize_x - text_pixel_margin, textsize_y - text_pixel_margin, color);
+                writeFillRectPreclipped(curX, curY, textsize_x - text_pixel_margin, textsize_y - text_pixel_margin, color);
               }
             }
           }
@@ -2247,25 +2267,18 @@ void Arduino_GFX::drawChar(int16_t x, int16_t y, unsigned char c,
               {
                 if (text_pixel_margin > 0)
                 {
-                  if (bg != color)
-                  {
-                    writeFillRect(curX, y + j * textsize_y, textsize_x - text_pixel_margin, textsize_y - text_pixel_margin, color);
-                    writeFillRect(curX + textsize_x - text_pixel_margin, y + j * textsize_y, text_pixel_margin, textsize_y, bg);
-                    writeFillRect(curX, y + ((j + 1) * textsize_y) - text_pixel_margin, textsize_x - text_pixel_margin, text_pixel_margin, bg);
-                  }
-                  else // (bg == color), no background color
-                  {
-                    writeFillRect(curX, y + j * textsize_y, textsize_x - text_pixel_margin, textsize_y - text_pixel_margin, color);
-                  }
+                  writeFillRectPreclipped(curX, y + j * textsize_y, textsize_x - text_pixel_margin, textsize_y - text_pixel_margin, color);
+                  writeFillRectPreclipped(curX + textsize_x - text_pixel_margin, y + j * textsize_y, text_pixel_margin, textsize_y, bg);
+                  writeFillRectPreclipped(curX, y + ((j + 1) * textsize_y) - text_pixel_margin, textsize_x - text_pixel_margin, text_pixel_margin, bg);
                 }
                 else
                 {
-                  writeFillRect(curX, curY, textsize_x, textsize_y, color);
+                  writeFillRectPreclipped(curX, curY, textsize_x, textsize_y, color);
                 }
               }
               else if (bg != color)
               {
-                writeFillRect(curX, curY, textsize_x, textsize_y, bg);
+                writeFillRectPreclipped(curX, curY, textsize_x, textsize_y, bg);
               }
             }
           }
@@ -2281,7 +2294,7 @@ void Arduino_GFX::drawChar(int16_t x, int16_t y, unsigned char c,
           {
             curH -= textsize_y;
           }
-          writeFillRect(curX, y, textsize_x, curH, bg);
+          writeFillRectPreclipped(curX, y, textsize_x, curH, bg);
         }
       }
     }
@@ -2315,7 +2328,7 @@ size_t Arduino_GFX::write(uint8_t c)
         uint8_t gw = pgm_read_byte(&glyph->width),
                 xa = pgm_read_byte(&glyph->xAdvance);
         int8_t xo = pgm_read_sbyte(&glyph->xOffset);
-        if (wrap && ((cursor_x + (((int16_t)xo + gw) * textsize_x) - 1) > _max_text_x))
+        if (wrap && ((cursor_x + ((xo + gw) * textsize_x) - 1) > _max_text_x))
         {
           cursor_x = _min_text_x; // Reset x to zero, advance y by one line
           cursor_y += (int16_t)textsize_y * pgm_read_byte(&gfxFont->yAdvance);
@@ -2588,7 +2601,7 @@ void Arduino_GFX::setFont(const GFXfont *f)
   @brief  flush framebuffer to output (for Canvas or NeoPixel sub-class)
 */
 /**************************************************************************/
-void Arduino_GFX::flush(bool force_flush)
+void Arduino_GFX::flush()
 {
 }
 #endif // !defined(ATTINY_CORE)
@@ -3081,13 +3094,13 @@ bool Arduino_GFX::enableRoundMode()
       {
         s += r2 * ((++xt << 2) + 2);
       }
-      // writePixelPreclipped(r - xt, r - yt, RGB565_RED);
+      // writePixelPreclipped(r - xt, r - yt, RED);
       _roundMinX[r - yt] = r - xt - 1;
-      // writePixelPreclipped(r - xt, r + yt - 1, RGB565_RED);
+      // writePixelPreclipped(r - xt, r + yt - 1, RED);
       _roundMinX[r + yt - 1] = r - xt - 1;
-      // writePixelPreclipped(r + xt - 1, r - yt, RGB565_BLUE);
+      // writePixelPreclipped(r + xt - 1, r - yt, BLUE);
       _roundMaxX[r - yt] = r + xt;
-      // writePixelPreclipped(r + xt - 1, r + yt - 1, RGB565_BLUE);
+      // writePixelPreclipped(r + xt - 1, r + yt - 1, BLUE);
       _roundMaxX[r + yt - 1] = r + xt;
       s -= (--yt) * r2 << 2;
     } while (r2 * xt <= r2 * yt);
@@ -3109,17 +3122,36 @@ bool Arduino_GFX::enableRoundMode()
       ddF_x += 2;
       s += ddF_x;
 
-      // writePixel(r - yt, r + xt - 1, RGB565_RED);
+      // writePixel(r - yt, r + xt - 1, RED);
       _roundMinX[r + xt - 1] = r - yt - 1;
-      // writePixel(r - yt, r - xt, RGB565_RED);
+      // writePixel(r - yt, r - xt, RED);
       _roundMinX[r - xt] = r - yt - 1;
-      // writePixel(r + yt - 1, r + xt - 1, RGB565_BLUE);
+      // writePixel(r + yt - 1, r + xt - 1, BLUE);
       _roundMaxX[r + xt - 1] = r + yt;
-      // writePixel(r + yt - 1, r - xt, RGB565_BLUE);
+      // writePixel(r + yt - 1, r - xt, BLUE);
       _roundMaxX[r - xt] = r + yt;
     }
     // endWrite();
 
     return true;
   }
+}
+/**
+ * @brief Display screen brightness setting
+ * @param brightness :0-255
+ * @return 
+ * @Date 2023-09-11 11:27:04
+ */
+void Arduino_GFX::Display_Brightness(uint8_t brightness)
+{
+}
+
+/**
+ * @brief Set the strong contrast of the display screen (Sunlight Readability Enhancement)
+ * @param Contrast
+ * @return 
+ * @Date 2023-09-11 14:14:56
+ */
+void Arduino_GFX::SetContrast(uint8_t Contrast)
+{
 }
