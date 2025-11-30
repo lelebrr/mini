@@ -106,22 +106,12 @@
 //    bibliotecas gráficas como Arduino_GFX)
 // -----------------------------------------------------------------------------
 
-#ifndef BLACK
+// Definimos cores básicas apenas se a biblioteca gráfica não tiver suas próprias
+// definições RGB565 (como é o caso da Arduino_GFX). Isso evita warnings de redefinição.
+#ifndef RGB565_BLACK
 #define BLACK   0x0000
-#endif
-
-#ifndef WHITE
 #define WHITE   0xFFFF
-#endif
-
-#ifndef RED
 #define RED     0xF800
-#endif
-
-#ifndef GREEN
 #define GREEN   0x07E0
-#endif
-
-#ifndef BLUE
 #define BLUE    0x001F
 #endif
