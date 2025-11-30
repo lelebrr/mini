@@ -1,495 +1,233 @@
 #ifndef AUDIO_HANDLER_H
 #define AUDIO_HANDLER_H
 
-/**
- * AudioHandler.h
- * Manipulação de Áudio para ESP32-S3 (Gravação e Reprodução)
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
- * Otimizações:
- * 5. Mute hardware quando não em uso.
- * 26. Desligar DSP Task (via controle de estado).
- * 10. Sample rate configurável.
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
- */
-
 #include <Arduino.h>
-#include <driver/i2s.h>
 #include <SD_MMC.h>
 #include "FS.h"
-#include <math.h>
+#include <driver/i2s.h>
+#include "esp_heap_caps.h"
+#include "pin_config.h"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-// Definição de pinos de controle de áudio (assumindo Expander)
-extern ESP_IOExpander *expander; // Disponível no main.cpp
+extern ESP_IOExpander *expander;
 
-=======
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
-// Definição de pinos de controle de áudio (assumindo Expander)
-extern ESP_IOExpander *expander; // Disponível no main.cpp
-
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
-// Definição de pinos de controle de áudio (assumindo Expander)
-extern ESP_IOExpander *expander; // Disponível no main.cpp
-
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
-// Definição de pinos de controle de áudio (assumindo Expander)
-extern ESP_IOExpander *expander; // Disponível no main.cpp
-
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
-// Definição de pinos de controle de áudio (assumindo Expander)
-extern ESP_IOExpander *expander; // Disponível no main.cpp
-
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
-// Definição de pinos de controle de áudio (assumindo Expander)
-extern ESP_IOExpander *expander; // Disponível no main.cpp
-
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
+// Cabeçalho WAV simples (PCM 16 bits, mono)
 struct WavHeader {
-    char riff[4];             // "RIFF"
-    uint32_t overall_size;    // Tamanho do arquivo - 8
-    char wave[4];             // "WAVE"
-    char fmt_chunk_marker[4]; // "fmt "
-    uint32_t length_of_fmt;   // 16
-    uint16_t format_type;     // 1 (PCM)
-    uint16_t channels;        // 1 (Mono) ou 2 (Estéreo)
-    uint32_t sample_rate;     // Ex: 16000
-    uint32_t byterate;        // Taxa de bytes por segundo
-    uint16_t block_align;     // Alinhamento de bloco
-    uint16_t bits_per_sample; // 16 bits
-    char data_chunk_header[4]; // "data"
-    uint32_t data_size;       // Tamanho dos dados de áudio
+    char     riff[4];
+    uint32_t chunkSize;
+    char     wave[4];
+    char     fmt[4];
+    uint32_t subchunk1Size;
+    uint16_t audioFormat;
+    uint16_t numChannels;
+    uint32_t sampleRate;
+    uint32_t byteRate;
+    uint16_t blockAlign;
+    uint16_t bitsPerSample;
+    char     data[4];
+    uint32_t dataSize;
 };
 
 class AudioHandler {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-private:
+public:
+    static void initI2S() {
+        i2s_config_t i2s_config = {
+            .mode = (i2s_mode_t)(I2S_MODE_MASTER | I2S_MODE_TX | I2S_MODE_RX),
+            .sample_rate = 16000,
+            .bits_per_sample = I2S_BITS_PER_SAMPLE_16BIT,
+            .channel_format = I2S_CHANNEL_FMT_ONLY_LEFT,
+            .communication_format = I2S_COMM_FORMAT_STAND_I2S,
+            .intr_alloc_flags = ESP_INTR_FLAG_LEVEL1,
+            .dma_buf_count = 4,
+            .dma_buf_len = 256,
+            .use_apll = false,
+            .tx_desc_auto_clear = true,
+            .fixed_mclk = 0
+        };
+
+        i2s_pin_config_t pin_config = {
+            .m_ck_io = I2S_MCK_IO,
+            .bck_io_num = I2S_BCK_IO,
+            .ws_io_num = I2S_WS_IO,
+            .data_out_num = I2S_DO_IO,
+            .data_in_num = I2S_DI_IO
+        };
+
+        i2s_driver_install(I2S_NUM_0, &i2s_config, 0, nullptr);
+        i2s_set_pin(I2S_NUM_0, &pin_config);
+    }
+
     static void setAmpPower(bool on) {
-        if (expander) {
-            // Pino 6 assumido como controle do Amplificador/Audio Power
-            expander->digitalWrite(6, on ? HIGH : LOW);
-        }
+        if (!expander) return;
+        expander->digitalWrite(6, on ? HIGH : LOW);
     }
 
-public:
-    static void playWav(const char* filename) {
-        // Otimização 17 & 5: Liga o AMP e unmute
-        setAmpPower(true);
-        // es8311_voice_mute(false); // Assumindo função driver disponível ou I2S handles
+    // Resolve caminho para compatibilidade:
+    //  - se começar com "/arquivos_cartao_sd" usa direto
+    //  - senão tenta primeiro o caminho original, depois prefixa "/arquivos_cartao_sd"
+    static File openForReadWithCompat(const char *filename) {
+        String path(filename);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-public:
-    static void playWav(const char* filename) {
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
-public:
-    static void playWav(const char* filename) {
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
-public:
-    static void playWav(const char* filename) {
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-        // Ajuste de caminho para nova estrutura em Português
-        String path = String("/arquivos_cartao_sd") + filename;
+        // Se já for absoluto para /arquivos_cartao_sd, usa direto
+        if (path.startsWith("/arquivos_cartao_sd")) {
+            return SD_MMC.open(path, FILE_READ);
+        }
 
-        File file = SD_MMC.open(path);
+        // Tenta exatamente o caminho recebido
+        File f = SD_MMC.open(path, FILE_READ);
+        if (f) return f;
+
+        // Tenta dentro de /arquivos_cartao_sd
+        String fallback = String("/arquivos_cartao_sd") + path;
+        return SD_MMC.open(fallback, FILE_READ);
+    }
+
+    static String buildWritePath(const char *filename) {
+        String path(filename);
+        if (path.startsWith("/arquivos_cartao_sd")) {
+            return path;
+        }
+        // Gravações do firmware usam pastas lógicas como "/voice",
+        // então prefixamos com /arquivos_cartao_sd para manter o layout novo.
+        if (path.startsWith("/voice") || path.startsWith("/tts")) {
+            return String("/arquivos_cartao_sd") + path;
+        }
+        // Caso genérico: grava exatamente onde foi pedido
+        return path;
+    }
+
+    static void playWav(const char *filename) {
+        File file = openForReadWithCompat(filename);
         if (!file) {
-            Serial.printf("[Audio] Erro: Arquivo %s nao encontrado\n", path.c_str());
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-            setAmpPower(false);
-=======
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
-            setAmpPower(false);
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
-            setAmpPower(false);
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
-            setAmpPower(false);
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
-            setAmpPower(false);
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
-            setAmpPower(false);
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
+            Serial.printf("[Audio] Falha ao abrir '%s'\n", filename);
             return;
         }
 
         WavHeader header;
-        file.read((uint8_t*)&header, sizeof(WavHeader));
-
-        if (memcmp(header.riff, "RIFF", 4) != 0) {
-            Serial.println("[Audio] Erro: Cabeçalho WAV invalido");
+        if (file.read((uint8_t *)&header, sizeof(WavHeader)) != sizeof(WavHeader)) {
+            Serial.println("[Audio] Cabeçalho WAV inválido (tamanho).");
             file.close();
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
+            return;
+        }
+
+        if (strncmp(header.riff, "RIFF", 4) != 0 ||
+            strncmp(header.wave, "WAVE", 4) != 0) {
+            Serial.println("[Audio] Arquivo WAV inválido (RIFF/WAVE).");
+            file.close();
+            return;
+        }
+
+        i2s_set_sample_rates(I2S_NUM_0, header.sampleRate);
+        setAmpPower(true);
+
+        const size_t bufSize = 512;
+        uint8_t *buffer = (uint8_t *)heap_caps_malloc(bufSize, MALLOC_CAP_DMA);
+        if (!buffer) {
+            Serial.println("[Audio] Falha ao alocar buffer.");
+            file.close();
             setAmpPower(false);
             return;
         }
 
-        // Otimização 10: Seta sample rate do arquivo
-        i2s_set_sample_rates(I2S_NUM_0, header.sample_rate);
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-            return;
+        size_t bytesRead;
+        size_t bytesWritten;
+        while ((bytesRead = file.read(buffer, bufSize)) > 0) {
+            i2s_write(I2S_NUM_0, buffer, bytesRead, &bytesWritten, portMAX_DELAY);
         }
 
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
-            return;
-        }
-
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
-            return;
-        }
-
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-        size_t bytes_read = 0;
-        size_t bytes_written = 0;
-        uint8_t buffer[1024];
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-        i2s_set_sample_rates(I2S_NUM_0, header.sample_rate);
-
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
-        i2s_set_sample_rates(I2S_NUM_0, header.sample_rate);
-
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
-        i2s_set_sample_rates(I2S_NUM_0, header.sample_rate);
-
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-        while (file.available()) {
-            bytes_read = file.read(buffer, sizeof(buffer));
-            i2s_write(I2S_NUM_0, buffer, bytes_read, &bytes_written, portMAX_DELAY);
-        }
+        heap_caps_free(buffer);
         file.close();
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-        // Zero buffer para evitar pop e flush
-        memset(buffer, 0, sizeof(buffer));
-        i2s_write(I2S_NUM_0, buffer, sizeof(buffer), &bytes_written, portMAX_DELAY);
-
-        // Otimização 5: Desliga AMP e I2S clock (via mute/idle)
         setAmpPower(false);
-        // es8311_voice_mute(true);
     }
 
-    static bool recordWav(const char* filename, int max_duration_sec, bool use_vad = true) {
-        // Liga o Microfone (Normalmente AMP não afeta Mic, mas verifica hardware)
-        // Se houver Bias de mic no expander, ligar aqui.
+    static bool recordWav(const char *filename, int max_seconds, bool use_vad = true) {
+        String path = buildWritePath(filename);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-        memset(buffer, 0, sizeof(buffer));
-        i2s_write(I2S_NUM_0, buffer, sizeof(buffer), &bytes_written, portMAX_DELAY);
-    }
-
-    static bool recordWav(const char* filename, int max_duration_sec, bool use_vad = true) {
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-        String path = String("/arquivos_cartao_sd") + filename;
-
-        File file = SD_MMC.open(path, FILE_WRITE);
-        if (!file) {
-            Serial.println("[Audio] Erro: Falha ao criar arquivo de gravacao");
-            return false;
-        }
-
-        int sample_rate = 16000;
-        int channels = 1;
-        int bits = 16;
-
-        WavHeader header;
-        memcpy(header.riff, "RIFF", 4);
-        header.overall_size = 0;
-        memcpy(header.wave, "WAVE", 4);
-        memcpy(header.fmt_chunk_marker, "fmt ", 4);
-        header.length_of_fmt = 16;
-        header.format_type = 1;
-        header.channels = channels;
-        header.sample_rate = sample_rate;
-        header.bits_per_sample = bits;
-        header.byterate = sample_rate * channels * (bits / 8);
-        header.block_align = channels * (bits / 8);
-        memcpy(header.data_chunk_header, "data", 4);
-        header.data_size = 0;
-
-        file.write((uint8_t*)&header, sizeof(WavHeader));
-
-        Serial.printf("[Audio] Gravando (Max %d s, VAD: %s)...\n", max_duration_sec, use_vad ? "LIGADO" : "DESLIGADO");
-
-        size_t bytes_read = 0;
-        uint8_t buffer[1024];
-        uint32_t total_bytes = 0;
-        uint32_t target_bytes = sample_rate * (bits/8) * channels * max_duration_sec;
-
-        i2s_set_sample_rates(I2S_NUM_0, sample_rate);
-
-        int silence_threshold = 500;
-        int silence_duration_ms = 0;
-        int max_silence_ms = 1500;
-        bool voice_detected = false;
-
-        while (total_bytes < target_bytes) {
-            esp_err_t result = i2s_read(I2S_NUM_0, buffer, sizeof(buffer), &bytes_read, portMAX_DELAY);
-            if (result != ESP_OK) break;
-
-            if (bytes_read > 0) {
-                if (use_vad) {
-                    long sum_squares = 0;
-                    int16_t* samples = (int16_t*)buffer;
-                    int num_samples = bytes_read / 2;
-
-                    for (int i = 0; i < num_samples; i++) {
-                        sum_squares += (samples[i] * samples[i]);
-                    }
-                    float rms = sqrt(sum_squares / num_samples);
-
-                    if (rms > silence_threshold) {
-                        silence_duration_ms = 0;
-                        voice_detected = true;
-                    } else {
-                        if (voice_detected) {
-                            silence_duration_ms += 32;
-                        }
-                    }
-
-                    if (voice_detected && silence_duration_ms > max_silence_ms) {
-                        break;
-                    }
-                }
-
-                file.write(buffer, bytes_read);
-                total_bytes += bytes_read;
+        // Garante que o diretório exista, se houver subpastas
+        int lastSlash = path.lastIndexOf('/');
+        if (lastSlash > 0) {
+            String dir = path.substring(0, lastSlash);
+            if (!SD_MMC.exists(dir)) {
+                SD_MMC.mkdir(dir);
             }
         }
 
-        header.overall_size = total_bytes + sizeof(WavHeader) - 8;
-        header.data_size = total_bytes;
+        File file = SD_MMC.open(path, FILE_WRITE);
+        if (!file) {
+            Serial.printf("[Audio] Falha ao criar '%s'\n", path.c_str());
+            return false;
+        }
+
+        WavHeader header;
+        memcpy(header.riff, "RIFF", 4);
+        memcpy(header.wave, "WAVE", 4);
+        memcpy(header.fmt, "fmt ", 4);
+        header.subchunk1Size = 16;
+        header.audioFormat   = 1;
+        header.numChannels   = 1;
+        header.sampleRate    = 16000;
+        header.bitsPerSample = 16;
+        header.byteRate      = header.sampleRate * header.numChannels * header.bitsPerSample / 8;
+        header.blockAlign    = header.numChannels * header.bitsPerSample / 8;
+        memcpy(header.data, "data", 4);
+        header.dataSize  = 0;
+        header.chunkSize = 36;
+
+        file.write((uint8_t *)&header, sizeof(WavHeader));
+
+        setAmpPower(true);
+
+        const size_t bufSize = 512;
+        int16_t *buffer = (int16_t *)heap_caps_malloc(bufSize * sizeof(int16_t), MALLOC_CAP_DMA);
+        if (!buffer) {
+            Serial.println("[Audio] Falha ao alocar buffer de gravação.");
+            file.close();
+            setAmpPower(false);
+            return false;
+        }
+
+        size_t bytesRead;
+        unsigned long start_ms        = millis();
+        long          energy_sum      = 0;
+        int           samples_window  = 0;
+        bool          voice_detected  = false;
+        const long    threshold_energy = 500;
+
+        while (millis() - start_ms < (unsigned long)max_seconds * 1000) {
+            i2s_read(I2S_NUM_0, buffer, bufSize * sizeof(int16_t), &bytesRead, portMAX_DELAY);
+            int samples = bytesRead / sizeof(int16_t);
+
+            for (int i = 0; i < samples; ++i) {
+                int16_t sample = buffer[i];
+                energy_sum += abs(sample);
+                samples_window++;
+
+                if (samples_window >= 1600) { // ~100 ms
+                    long avg_energy = energy_sum / samples_window;
+                    if (avg_energy > threshold_energy) {
+                        voice_detected = true;
+                    } else if (use_vad && voice_detected) {
+                        goto done_recording;
+                    }
+                    energy_sum     = 0;
+                    samples_window = 0;
+                }
+            }
+
+            file.write((uint8_t *)buffer, bytesRead);
+            header.dataSize += bytesRead;
+        }
+
+    done_recording:
+        heap_caps_free(buffer);
+
+        // Atualiza cabeçalho com tamanho final
         file.seek(0);
-        file.write((uint8_t*)&header, sizeof(WavHeader));
+        header.chunkSize = 36 + header.dataSize;
+        file.write((uint8_t *)&header, sizeof(WavHeader));
         file.close();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        // Desligar ou colocar em idle se necessário
-=======
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
-        // Desligar ou colocar em idle se necessário
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
-        // Desligar ou colocar em idle se necessário
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
-        // Desligar ou colocar em idle se necessário
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
-        // Desligar ou colocar em idle se necessário
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
-        // Desligar ou colocar em idle se necessário
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-        return true;
+        setAmpPower(false);
+        return voice_detected;
     }
 };
 
