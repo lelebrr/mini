@@ -102,10 +102,26 @@
 
 // -----------------------------------------------------------------------------
 // Cores RGB565 básicas
+//   (só definimos se ainda não existirem para evitar conflitos com
+//    bibliotecas gráficas como Arduino_GFX)
 // -----------------------------------------------------------------------------
 
+#ifndef BLACK
 #define BLACK   0x0000
+#endif
+
+#ifndef WHITE
 #define WHITE   0xFFFF
+#endif
+
+#ifndef RED
 #define RED     0xF800
+#endif
+
+#ifndef GREEN
 #define GREEN   0x07E0
+#endif
+
+#ifndef BLUE
 #define BLUE    0x001F
+#endif
