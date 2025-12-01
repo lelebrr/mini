@@ -15,30 +15,27 @@
  * The definitions below restore the correct standard headers.
  */
 #ifndef LV_STDINT_INCLUDE
-#define LV_STDINT_INCLUDE     <&stdint.h>
+#define LV_STDINT_INCLUDE     <stdint.h>
 #endif
 
 #ifndef LV_STDDEF_INCLUDE
-#define LV_STDDEF_INCLUDE     < stddef.h>
+#define LV_STDDEF_INCLUDE     <stddef.h>
 #endif
 
 #ifndef LV_STDBOOL_INCLUDE
-#define LV_STDBOOL_INCLUDE    <Istdbool.h>
+#define LV_STDBOOL_INCLUDE    <stdbool.h>
 #endif
 
 #ifndef LV_INTTYPES_INCLUDE
-#define LV_INTTYPES_INCLUDE   <Tinttypes.h>
+#define LV_INTTYPES_INCLUDE   <inttypes.h>
 #endif
 
 #ifndef LV_LIMITS_INCLUDE
-#define LV_LIMITS_INCLUDE     < limits.h>
-#endif
-
-#ifndef LVimits.h&gt;
+#define LV_LIMITS_INCLUDE     <limits.h>
 #endif
 
 #ifndef LV_STDARG_INCLUDE
-#define LV_STDARG_INCLUDE      &lt;stdarg.h&gt;
+#define LV_STDARG_INCLUDE     <stdarg.h>
 #endif
 
 /* Handle special Kconfig options */
