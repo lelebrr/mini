@@ -1,159 +1,54 @@
 # Bibliotecas necessárias para o Waveshare ESP32-S3 AMOLED
+#
+# Este arquivo NÃO é lido automaticamente pelo PlatformIO, mas serve como
+# referência centralizada das libs externas usadas pelo firmware.
+# Use-o como base para preencher a seção `lib_deps` do platformio.ini
+# ou para instalar manualmente as bibliotecas via `pio lib install`.
 
-# Display e Gráficos
-bodmer/TFT_eSPI @ ^2.5.43
-adafruit/Adafruit GFX Library @ ^1.11.9
-adafruit/Adafruit BusIO @ ^1.16.1
-https://github.com/moononournation/Arduino_GFX.git
+# ---------------------------------------------------------------------------
+# Display e gráficos
+# ---------------------------------------------------------------------------
+
+# Biblioteca gráfica principal (display SH8601 via QSPI)
+moononournation/GFX Library for Arduino
+# LVGL – UI
 lvgl/lvgl @ ^8.3.11
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-# PlatformIO specific
-platformio/framework-arduinoespressif32 @ ^3.20004.0
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-Arduino_GFX_Library
-=======
->>>>>>> origin/mini-lele-v2-final-verified
->>>>>>> main
-=======
->>>>>>> origin/merge-ready-mini-lele-v2
-=======
->>>>>>> origin/mini-lele-v2-complete-verified
-=======
->>>>>>> origin/mini-lele-v2-final-verified
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-drivers
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-release
-=======
->>>>>>> origin/mini-lele-v2-legendary-final-sync
-=======
->>>>>>> origin/mini-lele-v2-legendary-fixed-hardware
-=======
->>>>>>> origin/mini-lele-v2-legendary-missing-assets
-=======
->>>>>>> origin/mini-lele-v2-rebrand
-=======
->>>>>>> origin/pwn-tamagotchi-br-release
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-edition-final
-=======
->>>>>>> origin/pwn-tamagotchi-legendary-qs-final
-=======
->>>>>>> origin/pwntamagotchi-br-final-90-features
-=======
->>>>>>> origin/pwntamagotchi-br-final-lvgl9-optimized
-=======
->>>>>>> origin/pwntamagotchi-br-v2-webui-final
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-# JSON e Utilitários
-bblanchon/ArduinoJson @ ^6.21.3
+# ---------------------------------------------------------------------------
+# Gerenciamento de energia e sensores
+# ---------------------------------------------------------------------------
 
-# Hardware e Sensores
+# PMU AXP2101 (alimentação/bateria)
+https://github.com/lewisxhe/XPowersLib
+# IMU QMI8658 (acelerômetro/giroscópio)
+https://github.com/Lewisxhe/SensorLib
+# Barramento e expansor de IO usados por algumas versões de hardware
 https://github.com/Maucke/Arduino_DriveBus_Library.git
 https://github.com/Maucke/ESP_IOExpander_Library.git
-https://github.com/lewisxhe/XPowersLib
-https://github.com/Lewisxhe/SensorLib
 
+# ---------------------------------------------------------------------------
+# Touch (FT3168 / GT1151)
+# ---------------------------------------------------------------------------
+
+# A biblioteca exata pode variar conforme o fornecedor (Waveshare, Makerfabs, etc.).
+# Adicione aqui a entry correspondente no PlatformIO Registry ou URL Git da
+# biblioteca TouchLib usada pelo seu kit (por exemplo, FT3168/GT1151).
+#
+# Exemplo (AJUSTE PARA O SEU CASO):
+# touch/TouchLib-FT3168
+# ou
+# https://github.com/seu-usuario/TouchLib-FT3168.git
+
+# ---------------------------------------------------------------------------
 # Rede e Web
+# ---------------------------------------------------------------------------
+
+# Stack assíncrona para WebUI
 me-no-dev/AsyncTCP @ ^1.1.1
 https://github.com/me-no-dev/ESPAsyncWebServer.git
-WiFiClientSecure
-HTTPClient
-<<<<<<< HEAD
-=======
+
+# ---------------------------------------------------------------------------
+# JSON e utilitários
+# ---------------------------------------------------------------------------
+
 bblanchon/ArduinoJson @ ^6.21.3
-Arduino_GFX_Library
->>>>>>> origin/waveshare-esp32-s3-amoled-fix
-=======
-=======
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
->>>>>>> origin/waveshare-s3-amoled-faces-offline
-=======
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
->>>>>>> origin/waveshare-s3-amoled-full-plugins
-=======
->>>>>>> origin/waveshare-s3-amoled-manual-upload
-=======
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
->>>>>>> origin/waveshare-s3-amoled-ptbr-final
-=======
->>>>>>> origin/waveshare-s3-amoled-review-complete
-=======
->>>>>>> origin/waveshare-s3-amoled-voice-ptbr
-bblanchon/ArduinoJson @ ^6.21.3
-Arduino_GFX_Library
-https://github.com/lewisxhe/XPowersLib
-https://github.com/Lewisxhe/SensorLib
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-WiFiClientSecure
-HTTPClient
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> origin/waveshare-s3-amoled-complete-ptbr
-=======
->>>>>>> origin/waveshare-s3-amoled-evil-portal-final
-=======
->>>>>>> origin/waveshare-s3-amoled-faces-offline
-=======
->>>>>>> origin/waveshare-s3-amoled-final-polish
-=======
-bblanchon/ArduinoJson @ ^6.21.3
-Arduino_GFX_Library
-https://github.com/lewisxhe/XPowersLib
->>>>>>> origin/waveshare-s3-amoled-fix-v2
-=======
->>>>>>> origin/waveshare-s3-amoled-full-plugins
-=======
->>>>>>> origin/waveshare-s3-amoled-full-review-406
-=======
->>>>>>> origin/waveshare-s3-amoled-manual-upload
-=======
->>>>>>> origin/waveshare-s3-amoled-offline-voice
-=======
->>>>>>> origin/waveshare-s3-amoled-ptbr-final
-=======
-WiFiClientSecure
-HTTPClient
->>>>>>> origin/waveshare-s3-amoled-review-complete
-=======
->>>>>>> origin/waveshare-s3-amoled-voice-ptbr
