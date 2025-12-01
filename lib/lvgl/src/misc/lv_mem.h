@@ -3,8 +3,8 @@
  *
  */
 
-#ifndef LV_MEM_H
-#define LV_MEM_H
+#ifndef LV_LEGACY_MEM_H
+#define LV_LEGACY_MEM_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -15,34 +15,22 @@ extern "C" {
  *********************/
 #include "../lv_conf_internal.h"
 
-#include <stdint.h>
-#include <stddef.h>
-#include <string.h>
+/* Use the new stdlib-based memory API and string helpers */
+#include "../stdlib/lv_mem.h"
+#include "../stdlib/lv_string.h"
 
 #include "lv_types.h"
 
 /*********************
  *      DEFINES
- *********************/
+ ******************_code**new*<//
+/
 
 /**********************
  *      TYPEDEFS
  **********************/
 
-/**
- * Heap information structure.
- */
-typedef struct {
-    uint32_t total_size; /**< Total heap size*/
-    uint32_t free_cnt;
-    uint32_t free_size; /**< Size of available memory*/
-    uint32_t free_biggest_size;
-    uint32_t used_cnt;
-    uint32_t max_used; /**< Max size of Heap memory used*/
-    uint8_t used_pct; /**< Percentage used*/
-    uint8_t frag_pct; /**< Amount of fragmentation*/
-} lv_mem_monitor_t;
-
+/* Legacy temporary buffer descriptor kept for backwards compatibility. */
 typedef struct {
     void * p;
     uint16_t size;
@@ -54,52 +42,6 @@ typedef lv_mem_buf_t lv_mem_buf_arr_t[LV_MEM_BUF_MAX_NUM];
 /**********************
  * GLOBAL PROTOTYPES
  **********************/
-
-/**
- * Initialize the dyn_mem module (work memory and other variables)
- */
-void lv_mem_init(void);
-
-/**
- * Clean up the memory buffer which frees all the allocated memories.
- * @note It work only if `LV_MEM_CUSTOM == 0`
- */
-void lv_mem_deinit(void);
-
-/**
- * Allocate a memory dynamically
- * @param size size of the memory to allocate in bytes
- * @return pointer to the allocated memory
- */
-void * lv_mem_alloc(size_t size);
-
-/**
- * Free an allocated data
- * @param data pointer to an allocated memory
- */
-void lv_mem_free(void * data);
-
-/**
- * Reallocate a memory with a new size. The old content will be kept.
- * @param data pointer to an allocated memory.
- * Its content will be copied to the new memory block and freed
- * @param new_size the desired new size in byte
- * @return pointer to the new memory, NULL on failure
- */
-void * lv_mem_realloc(void * data_p, size_t new_size);
-
-/**
- *
- * @return
- */
-lv_res_t lv_mem_test(void);
-
-/**
- * Give information about the work memory of dynamic allocation
- * @param mon_p pointer to a lv_mem_monitor_t variable,
- *              the result of the analysis will be stored here
- */
-void lv_mem_monitor(lv_mem_monitor_t * mon_p);
 
 /**
  * Get a temporal buffer with the given size.
@@ -118,118 +60,23 @@ void lv_mem_buf_release(void * p);
  */
 void lv_mem_buf_free_all(void);
 
+/**********************
+ *      MACROS
+ **********************/
+
+/* Map legacy allocation API to the new stdlib-based functions */
+#define lv_mem_alloc(size)   lv_malloc(size)
+#define lv_mem_free(p)       lv_free(p)
+#define lv_mem_realloc(p, s) lv_realloc((p), (s))
+
 //! @cond Doxygen_Suppress
-
-#if LV_MEMCPY_MEMSET_STD
-
-/**
- * Wrapper for the standard memcpy
- * @param dst pointer to the destination buffer
- * @param src pointer to the source buffer
- * @param len number of byte to copy
- */
-static inline void * lv_memcpy(void * dst, const void * src, size_t len)
-{
-    return memcpy(dst, src, len);
-}
-
-/**
- * Wrapper for the standard memcpy
- * @param dst pointer to the destination buffer
- * @param src pointer to the source buffer
- * @param len number of byte to copy
- */
-static inline void * lv_memcpy_small(void * dst, const void * src, size_t len)
-{
-    return memcpy(dst, src, len);
-}
-
-/**
- * Wrapper for the standard memset
- * @param dst pointer to the destination buffer
- * @param v value to set [0..255]
- * @param len number of byte to set
- */
-static inline void lv_memset(void * dst, uint8_t v, size_t len)
-{
-    memset(dst, v, len);
-}
-
-/**
- * Wrapper for the standard memset with fixed 0x00 value
- * @param dst pointer to the destination buffer
- * @param len number of byte to set
- */
+/* For legacy code that called lv_memset_00 directly, provide a thin wrapper
+ * on top of lv_memzero implemented in lv_string.h. */
 static inline void lv_memset_00(void * dst, size_t len)
 {
-    memset(dst, 0x00, len);
+    lv_memzero(dst, len);
 }
-
-/**
- * Wrapper for the standard memset with fixed 0xFF value
- * @param dst pointer to the destination buffer
- * @param len number of byte to set
- */
-static inline void lv_memset_ff(void * dst, size_t len)
-{
-    memset(dst, 0xFF, len);
-}
-
-#else
-/**
- * Same as `memcpy` but optimized for 4 byte operation.
- * @param dst pointer to the destination buffer
- * @param src pointer to the source buffer
- * @param len number of byte to copy
- */
-void * /* LV_ATTRIBUTE_FAST_MEM */ lv_memcpy(void * dst, const void * src, size_t len);
-
-/**
- * Same as `memcpy` but optimized to copy only a few bytes.
- * @param dst pointer to the destination buffer
- * @param src pointer to the source buffer
- * @param len number of byte to copy
- */
-static inline void * LV_ATTRIBUTE_FAST_MEM lv_memcpy_small(void * dst, const void * src, size_t len)
-{
-    uint8_t * d8 = (uint8_t *)dst;
-    const uint8_t * s8 = (const uint8_t *)src;
-
-    while(len) {
-        *d8 = *s8;
-        d8++;
-        s8++;
-        len--;
-    }
-
-    return dst;
-}
-
-/**
- * Same as `memset` but optimized for 4 byte operation.
- * @param dst pointer to the destination buffer
- * @param v value to set [0..255]
- * @param len number of byte to set
- */
-void /* LV_ATTRIBUTE_FAST_MEM */ lv_memset(void * dst, uint8_t v, size_t len);
-
-/**
- * Same as `memset(dst, 0x00, len)` but optimized for 4 byte operation.
- * @param dst pointer to the destination buffer
- * @param len number of byte to set
- */
-void /* LV_ATTRIBUTE_FAST_MEM */ lv_memset_00(void * dst, size_t len);
-
-/**
- * Same as `memset(dst, 0xFF, len)` but optimized for 4 byte operation.
- * @param dst pointer to the destination buffer
- * @param len number of byte to set
- */
-void /* LV_ATTRIBUTE_FAST_MEM */ lv_memset_ff(void * dst, size_t len);
-
 //! @endcond
-
-#endif
 
 /**********************
  *      MACROS
@@ -239,4 +86,4 @@ void /* LV_ATTRIBUTE_FAST_MEM */ lv_memset_ff(void * dst, size_t len);
 } /*extern "C"*/
 #endif
 
-#endif /*LV_MEM_H*/
+#endif /*LV_LEGACY_MEM_H*/

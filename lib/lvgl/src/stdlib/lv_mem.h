@@ -159,6 +159,11 @@ void lv_mem_monitor(lv_mem_monitor_t * mon_p);
  *      MACROS
  **********************/
 
+/* Backwards compatibility with LVGL 8.x allocation API */
+#define lv_mem_alloc(size)   lv_malloc(size)
+#define lv_mem_free(p)       lv_free(p)
+#define lv_mem_realloc(p, s) lv_realloc((p), (s))
+
 #ifdef __cplusplus
 } /*extern "C"*/
 #endif

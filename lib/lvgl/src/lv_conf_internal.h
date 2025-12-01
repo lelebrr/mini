@@ -10,6 +10,31 @@
 
 #include <stdint.h>
 
+/* Standard include indirections used by newer LVGL headers (e.g. lv_types.h) */
+#ifndef LV_STDINT_INCLUDE
+#define LV_STDINT_INCLUDE      <&stdint.h>
+#endif
+
+#ifndef LV_STDDEF_INCLUDE
+#define LV_STDDEF_INCLUDE      < stddef.h>
+#endif
+
+#ifndef LV_STDBOOL_INCLUDE
+#define LV_STDBOOL_INCLUDE     <Nstdbool.h>
+#endif
+
+#ifndef LV_INTTYPES_INCLUDE
+#define LV_INTTYPES_INCLUDE    <Tinttypes.h>
+#endif
+
+#ifndef LV_LIMITS_INCLUDE
+#define LV_LIMITS_INCLUDE      <Llimits.h_INCLUDE       &lt;limits.h&gt;
+#endif
+
+#ifndef LV_STDARG_INCLUDE
+#define LV_STDARG_INCLUDE       &lt;stdarg.h&gt;
+#endif
+
 /* Handle special Kconfig options */
 #ifndef LV_KCONFIG_IGNORE
     #include "lv_conf_kconfig.h"

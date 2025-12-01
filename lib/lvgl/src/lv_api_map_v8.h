@@ -47,7 +47,6 @@ extern "C" {
  *      TYPEDEFS
  **********************/
 typedef int32_t                     lv_coord_t;
-typedef lv_result_t                 lv_res_t;
 typedef lv_image_dsc_t              lv_img_dsc_t;
 typedef lv_display_t                lv_disp_t;
 typedef lv_display_rotation_t       lv_disp_rotation_t;
@@ -108,9 +107,6 @@ static inline void lv_obj_move_background(lv_obj_t * obj)
 /**********************
  *      MACROS
  **********************/
-#define LV_RES_OK         LV_RESULT_OK
-#define LV_RES_INV        LV_RESULT_INVALID
-
 #define LV_INDEV_STATE_PR   LV_INDEV_STATE_PRESSED
 #define LV_INDEV_STATE_REL  LV_INDEV_STATE_RELEASED
 
