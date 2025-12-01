@@ -13,6 +13,10 @@
 // Simple, clean LVGL + hardware bring-up for Waveshare ESP32-S3 Touch AMOLED.
 // This main.cpp is self-contained and does not depend on the conflicted legacy
 // PwnTamagotchi code.
+//
+// Nota: o arquivo lvgl_smoke_test.cpp fornece uma variante mínima de teste de
+// LVGL. Para usá-lo, defina a macro LVGL_SMOKE_TEST no build e o setup/loop
+// deste arquivo serão desativados (veja os #ifndef LVGL_SMOKE_TEST mais abaixo).
 
 // -----------------------------------------------------------------------------
 // Hardware globals
@@ -224,6 +228,9 @@ static void initLVGL() {
 // -----------------------------------------------------------------------------
 // Arduino setup/loop
 // -----------------------------------------------------------------------------
+// A versão padrão usa IMU, touch etc. Para um teste mínimo de LVGL, use
+// lvgl_smoke_test.cpp com a macro LVGL_SMOKE_TEST definida no build.
+#ifndef LVGL_SMOKE_TEST
 void setup() {
     Serial.begin(115200);
     delay(200);
@@ -272,3 +279,4 @@ void loop() {
 
     delay(5);
 }
+#endif  // LVGL_SMOKE_TEST
