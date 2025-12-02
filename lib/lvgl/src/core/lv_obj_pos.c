@@ -9,6 +9,7 @@
 #include "lv_obj.h"
 #include "lv_disp.h"
 #include "lv_refr.h"
+#include "lv_obj_event_private.h"
 #include "../misc/lv_gc.h"
 
 /*********************

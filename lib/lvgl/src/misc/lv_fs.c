@@ -7,6 +7,7 @@
  *      INCLUDES
  *********************/
 #include "lv_fs.h"
+#include "lv_fs_private.h"
 
 #include "../misc/lv_assert.h"
 #include "lv_ll.h"

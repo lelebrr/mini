@@ -87,12 +87,7 @@ typedef struct _lv_fs_drv_t {
 #endif
 } lv_fs_drv_t;
 
-typedef struct {
-    uint32_t start;
-    uint32_t end;
-    uint32_t file_position;
-    void * buffer;
-} lv_fs_file_cache_t;
+typedef struct _lv_fs_file_cache_t lv_fs_file_cache_t;
 
 typedef struct {
     void * file_d;

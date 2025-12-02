@@ -113,7 +113,7 @@ typedef lv_obj_t * (*lv_screen_create_cb_t)(void);
 
 typedef uint8_t lv_opa_t;
 
-typedef uint8_t lv_style_prop_t;
+
 
 typedef struct _lv_obj_class_t lv_obj_class_t;
 
@@ -147,7 +147,9 @@ typedef struct _lv_image_decoder_t lv_image_decoder_t;
 
 typedef struct _lv_image_decoder_dsc_t lv_image_decoder_dsc_t;
 
-typedef struct _lv_draw_image_dsc_t lv_draw_image_dsc_t;
+typedef struct _lv_draw_image_dsc_t lv_draw_image_dsc_code_tnew;</
+
+;
 
 typedef struct _lv_fragment_t lv_fragment_t;
 typedef struct _lv_fragment_class_t lv_fragment_class_t;
@@ -175,16 +177,14 @@ typedef struct _lv_image_cache_data_t lv_image_cache_data_t;
 
 typedef struct _lv_image_header_cache_data_t lv_image_header_cache_data_t;
 
-typedef struct _lv_draw_mask_t lv_draw_mask_t;
+
 
 typedef struct _lv_draw_label_hint_t lv_draw_label_hint_t;
 
 typedef struct _lv_draw_glyph_dsc_t lv_draw_glyph_dsc_t;
 
 typedef struct _lv_draw_image_sup_t lv_draw_image_sup_t;
-
 typedef struct _lv_draw_mask_rect_dsc_t lv_draw_mask_rect_dsc_t;
-
 typedef struct _lv_obj_style_t lv_obj_style_t;
 
 typedef struct _lv_obj_style_transition_dsc_t lv_obj_style_transition_dsc_t;
