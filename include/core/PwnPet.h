@@ -6,6 +6,9 @@
 #include <SD_MMC.h>
 #include "FS.h"
 #include "ConfigManager.h"
+#include "core/PwnPower.h"   // rtc_save (RAM RTC preservada no deep sleep)
+
+#define PWNPET_RTC_MAGIC 0x50574E31   // "PWN1"
 
 // Estágios de evolução do Pet
 enum PetStage {
@@ -56,6 +59,31 @@ public:
         stats.sleep_hours      = 0;
 
         load();
+
+        // Se o SD não tinha save mas a RAM RTC tem dados válidos (acordou de um
+        // deep sleep), restaura os stats rápidos de lá.
+        if (stats.level <= 1 && stats.xp == 0 && rtc_save.magic == PWNPET_RTC_MAGIC) {
+            loadFromRTC();
+            Serial.println("[Pet] Restaurado da RAM RTC (pós deep sleep).");
+        }
+        syncRTC();
+    }
+
+    // Espelha os stats na RAM RTC (barato — chamar ~1x/s). Sobrevive ao deep sleep.
+    static void syncRTC() {
+        rtc_save.magic      = PWNPET_RTC_MAGIC;
+        rtc_save.xp         = stats.xp;
+        rtc_save.level      = stats.level;
+        rtc_save.hunger     = stats.hunger;
+        rtc_save.handshakes = stats.handshakes_total;
+    }
+
+    static void loadFromRTC() {
+        stats.xp               = rtc_save.xp;
+        stats.level            = rtc_save.level;
+        stats.hunger           = rtc_save.hunger;
+        stats.handshakes_total = rtc_save.handshakes;
+        checkEvolution();
     }
 
     static void load() {
@@ -138,6 +166,18 @@ public:
         }
 
         checkEvolution();
+    }
+
+    // Interação física: "chacoalhar" alimenta e alegra o pet (com cooldown).
+    static bool onShake() {
+        static unsigned long last_shake = 0;
+        unsigned long now = millis();
+        if (now - last_shake < 1500) return false;  // debounce
+        last_shake = now;
+        feed(3);
+        stats.happiness = min(100, stats.happiness + 5);
+        Serial.println("[Pet] Chacoalhado! (+carinho)");
+        return true;
     }
 
     static void feed(int quality) {

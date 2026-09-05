@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="240" viewBox="0 0 1000 240" role="img" aria-label="Mini Lele">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a0e14"/><stop offset="1" stop-color="#0b1120"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#38ff9e"/><stop offset="1" stop-color="#b26bff"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.2" cy="0.1" r="0.9">
+      <stop offset="0" stop-color="#b26bff" stop-opacity="0.35"/><stop offset="1" stop-color="#b26bff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1000" height="240" rx="20" fill="url(#bg)"/>
+  <rect width="1000" height="240" rx="20" fill="url(#glow)"/>
+  <g transform="translate(48,60)">
+    <rect x="0" y="0" width="120" height="120" rx="26" fill="#121821" stroke="url(#accent)" stroke-width="2"/>
+    <text x="60" y="86" font-family="monospace" font-size="56" text-anchor="middle" fill="#38ff9e">^_^</text>
+  </g>
+  <g font-family="Segoe UI, Helvetica, Arial, sans-serif">
+    <text x="200" y="98" font-size="58" font-weight="800" fill="#e6f0ff">Mini&#160;Lele</text>
+    <text x="204" y="140" font-size="23" fill="#8394ab">Tamagotchi Hacker &#183; Pentest Wi&#8209;Fi &#183; ESP32&#8209;S3 AMOLED</text>
+    <g transform="translate(204,168)">
+      <rect x="0" y="0" width="86" height="30" rx="15" fill="#132018" stroke="#38ff9e" stroke-width="1.2"/>
+      <text x="43" y="20" font-size="15" text-anchor="middle" fill="#38ff9e" font-weight="700">v2.1</text>
+      <rect x="98" y="0" width="150" height="30" rx="15" fill="#1a1330" stroke="#b26bff" stroke-width="1.2"/>
+      <text x="173" y="20" font-size="15" text-anchor="middle" fill="#c79bff" font-weight="700">LVGL 9 &#183; PSRAM</text>
+      <rect x="256" y="0" width="150" height="30" rx="15" fill="#101a24" stroke="#4bd6ff" stroke-width="1.2"/>
+      <text x="331" y="20" font-size="15" text-anchor="middle" fill="#7fe0ff" font-weight="700">100% PT&#8209;BR</text>
+    </g>
+  </g>
+</svg>

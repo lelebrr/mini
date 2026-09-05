@@ -5,7 +5,7 @@
 #include <WiFi.h>
 #include <ESPAsyncWebServer.h>
 #include <AsyncTCP.h>
-#include <AsyncJson.h>
+#include <DNSServer.h>
 #include <ArduinoJson.h>
 #include <Update.h>
 #include <SD_MMC.h>
@@ -15,13 +15,17 @@
 #include "core/PwnPet.h"
 #include "core/PwnAttack.h"
 #include "core/PwnPower.h"
+#include "core/PwnBLE.h"
 #include "WiFiTools.h"
+#include "drivers/PwnRTC.h"
 
 class WebHandler {
 private:
     static AsyncWebServer  server;
     static AsyncWebSocket  ws;
     static ConfigManager  *config;
+    static DNSServer       dns;
+    static bool            dns_active;
 
 public:
     static void init() {
@@ -36,6 +40,9 @@ public:
             );
             Serial.print("[Web] AP Started: ");
             Serial.println(WiFi.softAPIP());
+            // Portal cativo: qualquer domínio cai na WebUI (facilita 1ª config).
+            dns.start(53, "*", WiFi.softAPIP());
+            dns_active = true;
         }
         if (mode == "STA" || mode == "AP_STA") {
             WiFi.begin(
@@ -100,8 +107,12 @@ public:
             doc["pwr_vbus"]     = PwnPower::isVbusIn();
             doc["pwr_charge_status"] = PwnPower::getChargeStatusStr();
             doc["pwr_hours"]    = PwnPower::getEstimatedHours();
+            doc["pwr_capacity"] = PwnPower::getBatteryCapacity();
             doc["wifi_mac"]    = WiFi.macAddress();
             doc["wifi_devices"] = (int)WiFiTools::nearby_devices.size();
+            doc["wifi_handshakes"] = (uint32_t)WiFiTools::getHandshakeCount();
+            doc["ble_devices"] = PwnBLE::getLastCount();
+            doc["rtc_time"]    = PwnRTC::getTimestamp();
             doc["heap_free"]   = ESP.getFreeHeap();
             doc["uptime"]      = (uint32_t)(millis() / 1000);
 
@@ -186,6 +197,11 @@ public:
             }
         );
 
+        // Redireciona URLs desconhecidas para a WebUI (portal cativo).
+        server.onNotFound([](AsyncWebServerRequest *request) {
+            request->redirect("/");
+        });
+
         // WebSocket
         ws.onEvent(onWsEvent);
         server.addHandler(&ws);
@@ -194,9 +210,15 @@ public:
         Serial.println("[Web] Server started on port 80");
     }
 
+    // Processa o DNS do portal cativo (chamar no loop principal).
+    static void loop() {
+        if (dns_active) dns.processNextRequest();
+    }
+
     // Encerra o servidor da WebUI. Necessário antes de subir o Evil Portal, que
     // também usa a porta 80 (os dois não podem coexistir).
     static void stop() {
+        if (dns_active) { dns.stop(); dns_active = false; }
         ws.closeAll();
         server.end();
         Serial.println("[Web] Server stopped.");
@@ -234,5 +256,7 @@ public:
 inline AsyncWebServer  WebHandler::server(80);
 inline AsyncWebSocket  WebHandler::ws("/ws");
 inline ConfigManager  *WebHandler::config = nullptr;
+inline DNSServer       WebHandler::dns;
+inline bool            WebHandler::dns_active = false;
 
 #endif

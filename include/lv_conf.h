@@ -27,6 +27,9 @@
 #define LV_USE_FLEX 1
 #define LV_USE_GRID 1
 #define LV_USE_ANIMIMG 1
+#define LV_USE_TILEVIEW 1
+#define LV_USE_BAR 1
+#define LV_USE_LABEL 1
 
 /* Text encoding */
 #define LV_TXT_ENC LV_TXT_ENC_UTF8

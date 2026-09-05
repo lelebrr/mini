@@ -72,6 +72,7 @@ private:
         root["pwr_charge_target_mv"]     = 4200;  // tensão de corte (padrão LiPo)
         root["pwr_low_warn_pct"]         = 10;    // aviso de bateria baixa
         root["pwr_low_shutdown_pct"]     = 5;     // desliga para proteger a célula
+        root["pwr_deep_sleep_after_sec"] = 300;   // deep sleep após X s ocioso (na bateria)
 
         // --- ATTACKS / WIFI ---
         root["atk_auto_scan"]         = true;
@@ -97,6 +98,8 @@ private:
         root["atk_probe_logging"]     = true;
         root["atk_beacon_spam_timer"] = 5;           // min
         root["atk_target_manufacturer"]= "Apple,Samsung";
+        root["atk_ble_scan"]          = false;       // varredura BLE periódica
+        root["atk_ble_interval_sec"]  = 30;          // intervalo da varredura BLE
 
         // --- SYSTEM / WEB ---
         root["sys_device_name"]   = "Mini Lele";
@@ -118,6 +121,7 @@ private:
         root["sys_led_notification"] = true;
         root["sys_haptic_feedback"]  = false;
         root["sys_factory_reset"]    = false;
+        root["sys_watchdog"]         = true;   // reinício automático se travar
 
         root["web_theme"]        = "cyber_favela";
         root["web_kiosk_mode"]   = false;

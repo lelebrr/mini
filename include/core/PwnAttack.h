@@ -48,8 +48,9 @@ public:
         }
 
         scan_active = true;
-        WiFiTools::startSniffer();
-        Serial.println("[Attack] Modo ataque iniciado (sniffer ligado).");
+        WiFiTools::beginNewCapture();      // novo arquivo .pcap
+        WiFiTools::startSniffer();          // passivo: preserva o AP/WebUI
+        Serial.println("[Attack] Modo ataque iniciado (sniffer + captura pcap).");
     }
 
     static void stop() {

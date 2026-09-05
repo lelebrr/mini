@@ -41,6 +41,7 @@ private:
     static bool         is_critical_flag;
     static bool         last_vbus;     // estado anterior do USB (para logs)
     static bool         last_charging;
+    static int          battery_capacity_mah;  // configurável (troca de célula)
 
 public:
     static void init() {
@@ -100,10 +101,27 @@ public:
         Serial.println("[Power] Carregador configurado: 100mA CC, 4.2V, term 25mA (LiPo 250mAh).");
     }
 
+    // Define a capacidade da bateria (mAh) usada nos cálculos de autonomia.
+    // Permite trocar a célula (ex.: 250 -> 500/1000 mAh) só mudando a config,
+    // sem recompilar. Também reajusta a corrente de carga sugerida (<=0,5C).
+    static void setBatteryCapacity(int mah) {
+        if (mah < 40) mah = 40;          // sanidade
+        battery_capacity_mah = mah;
+        Serial.printf("[Power] Capacidade da bateria: %d mAh.\n", mah);
+    }
+    static int getBatteryCapacity() { return battery_capacity_mah; }
+
+    // Corrente de carga máxima recomendada (0,5C) para a capacidade atual.
+    static int recommendedMaxChargeMa() { return battery_capacity_mah / 2; }
+
     // Permite mudar a corrente de carga em runtime (via WebUI/config).
     // Valores suportados: 100, 125, 150, 200 mA. Recomendado <= 125 mA p/ 250 mAh.
     static void setChargeCurrentMa(int ma) {
         if (!pmu_ok) return;
+        if (ma > recommendedMaxChargeMa()) {
+            Serial.printf("[Power] AVISO: %dmA > 0,5C (%dmAh). Recomendado <= %dmA.\n",
+                          ma, battery_capacity_mah, recommendedMaxChargeMa());
+        }
         switch (ma) {
             case 200: pmu.setChargerConstantCurr(XPOWERS_AXP2101_CHG_CUR_200MA); break;
             case 150: pmu.setChargerConstantCurr(XPOWERS_AXP2101_CHG_CUR_150MA); break;
@@ -189,8 +207,7 @@ public:
         int   pct = getBatteryPercent();
         float ma  = getSystemCurrent();
         if (pct <= 0 || ma <= 0.0f) return 0.0f;
-        const float capacity_mAh = 250.0f;
-        return (capacity_mAh * (pct / 100.0f)) / ma;
+        return ((float)battery_capacity_mah * (pct / 100.0f)) / ma;
     }
 
     static String getPowerStatus() {
