@@ -104,14 +104,20 @@ No Mini Lele, o cartão SD é usado para:
 - Logs (`macs_detectados.txt`, `credenciais_capturadas.txt`, etc.)
 - Arquivos TTS/voz e templates de portal cativo
 
-Configuração típica (modo 1‑bit):
+Configuração (modo 1‑bit) — **conforme wiki oficial Waveshare**:
 
-| Sinal | GPIO | Função/Notas                                       |
-|-------|------|----------------------------------------------------|
-| SD_CLK| 2    | Clock SDMMC (compartilhado com bootstrap/UART0)    |
-| SD_CMD| 1    | Comando (também pino da UART0 em modo alternativo) |
-| SD_D0 | 42   | Dados (modo 1‑bit)                                 |
+| Sinal   | GPIO / Pino   | Função/Notas                                       |
+|---------|---------------|----------------------------------------------------|
+| SD_CLK  | 2             | Clock (SCK)                                        |
+| SD_CMD  | 1             | Comando (DI/MOSI)                                  |
+| SD_D0   | **3**         | Dados (DO/MISO, modo 1‑bit) — **corrigido (era 42)** |
+| SD_CS   | **EXIO7**     | Chip‑select via expansor TCA9554 (colocar em HIGH) |
 
+> **Correção importante (v2.1):** a pinagem antiga listava `SD_D0 = 42`, o que
+> impedia a montagem do cartão. O valor correto é **GPIO3**. Além disso, o
+> chip‑select fica no **pino 7 do expansor TCA9554 (EXIO7)** e precisa ser
+> colocado em HIGH antes de `SD_MMC.begin()` (o firmware já faz isso no boot).
+>
 > Por usar os pinos 1 e 2, o debug é feito via **USB CDC**, e não pela UART0 tradicional.
 
 ---

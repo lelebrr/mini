@@ -15,6 +15,7 @@
 #include "core/PwnPet.h"
 #include "core/PwnAttack.h"
 #include "core/PwnPower.h"
+#include "WiFiTools.h"
 
 class WebHandler {
 private:
@@ -50,11 +51,11 @@ public:
             request->send(200, "text/html", index_html_raw);
         });
 
-        // API: Config Get
+        // API: Config Get (senhas mascaradas)
         server.on("/api/config", HTTP_GET, [](AsyncWebServerRequest *request) {
             if (!checkAuth(request)) return request->requestAuthentication();
             String json;
-            config->getJSON(json);
+            config->getJSONRedacted(json);
             request->send(200, "application/json", json);
         });
 
@@ -77,22 +78,35 @@ public:
         );
 
         // API: Status
+        // (Serializa com ArduinoJson direto para uma String — evita depender da
+        //  API do AsyncJsonResponse, que varia entre versões do ESPAsyncWebServer.)
         server.on("/api/status", HTTP_GET, [](AsyncWebServerRequest *request) {
-            auto *response = new AsyncJsonResponse();
-            JsonObject root = response->getRoot();
+            JsonDocument doc;
 
             PetStats pet = PwnPet::getStats();
-            root["pet_hunger"]    = pet.hunger;
-            root["pet_happiness"] = pet.happiness;
-            root["pet_level"]     = pet.level;
+            doc["pet_name"]      = pet.name;
+            doc["pet_hunger"]    = pet.hunger;
+            doc["pet_happiness"] = pet.happiness;
+            doc["pet_level"]     = pet.level;
+            doc["pet_xp"]        = pet.xp;
+            doc["pet_stage"]     = (int)pet.stage;
+            doc["pet_mood"]      = PwnPet::getMoodStr();
+            doc["pet_handshakes"] = pet.handshakes_total;
 
-            root["pwr_battery"] = PwnPower::getBatteryPercent();
-            root["pwr_current"] = PwnPower::getSystemCurrent();
-            root["wifi_mac"]    = WiFi.macAddress();
-            root["heap_free"]   = ESP.getFreeHeap();
+            doc["pwr_battery"] = PwnPower::getBatteryPercent();
+            doc["pwr_current"] = PwnPower::getSystemCurrent();
+            doc["pwr_voltage"] = PwnPower::getBatteryVoltage();
+            doc["pwr_charging"] = PwnPower::isCharging();
+            doc["pwr_vbus"]     = PwnPower::isVbusIn();
+            doc["pwr_charge_status"] = PwnPower::getChargeStatusStr();
+            doc["pwr_hours"]    = PwnPower::getEstimatedHours();
+            doc["wifi_mac"]    = WiFi.macAddress();
+            doc["wifi_devices"] = (int)WiFiTools::nearby_devices.size();
+            doc["heap_free"]   = ESP.getFreeHeap();
+            doc["uptime"]      = (uint32_t)(millis() / 1000);
 
-            response->setLength();
-            request->send(response);
+            String out; serializeJson(doc, out);
+            request->send(200, "application/json", out);
         });
 
         // API: File Manager (Listagem)
@@ -100,14 +114,14 @@ public:
             if (!checkAuth(request)) return request->requestAuthentication();
             String path = request->hasParam("path") ? request->getParam("path")->value() : "/";
 
-            auto *response = new AsyncJsonResponse(8192);
-            JsonArray root = response->getRoot().to<JsonArray>();
+            JsonDocument doc;
+            JsonArray root = doc.to<JsonArray>();
 
             File dir = SD_MMC.open(path);
             if (dir) {
                 File file = dir.openNextFile();
                 while (file) {
-                    JsonObject item = root.createNestedObject();
+                    JsonObject item = root.add<JsonObject>();
                     item["name"]  = String(file.name());
                     item["size"]  = file.size();
                     item["isDir"] = file.isDirectory();
@@ -116,8 +130,8 @@ public:
                 dir.close();
             }
 
-            response->setLength();
-            request->send(response);
+            String out; serializeJson(doc, out);
+            request->send(200, "application/json", out);
         });
 
         // API: Download simples
@@ -129,6 +143,14 @@ public:
             }
             String filepath = request->getParam("file")->value();
             request->send(SD_MMC, filepath, "application/octet-stream");
+        });
+
+        // API: Reboot
+        server.on("/api/reboot", HTTP_POST, [](AsyncWebServerRequest *request) {
+            if (!checkAuth(request)) return request->requestAuthentication();
+            request->send(200, "text/plain", "Rebooting");
+            delay(200);
+            ESP.restart();
         });
 
         // API: OTA Update
@@ -170,6 +192,14 @@ public:
 
         server.begin();
         Serial.println("[Web] Server started on port 80");
+    }
+
+    // Encerra o servidor da WebUI. Necessário antes de subir o Evil Portal, que
+    // também usa a porta 80 (os dois não podem coexistir).
+    static void stop() {
+        ws.closeAll();
+        server.end();
+        Serial.println("[Web] Server stopped.");
     }
 
     static bool checkAuth(AsyncWebServerRequest *request) {

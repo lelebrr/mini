@@ -109,10 +109,12 @@ public:
     }
 };
 
-DNSServer EvilPortal::dnsServer;
-AsyncWebServer EvilPortal::server(80);
-bool EvilPortal::is_running = false;
-String EvilPortal::current_template_path = "";
-int EvilPortal::captured_count = 0;
+// Definições `inline` (C++17): evita "multiple definition" quando o header é
+// incluído em mais de uma unidade de compilação (main.cpp + core_singletons.cpp).
+inline DNSServer      EvilPortal::dnsServer;
+inline AsyncWebServer EvilPortal::server(80);
+inline bool           EvilPortal::is_running = false;
+inline String         EvilPortal::current_template_path = "";
+inline int            EvilPortal::captured_count = 0;
 
 #endif

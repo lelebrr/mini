@@ -7,8 +7,9 @@
 #include <driver/i2s.h>
 #include "esp_heap_caps.h"
 #include "pin_config.h"
-
-extern ESP_IOExpander *expander;
+extern "C" {
+#include "es8311.h"
+}
 
 // Cabeçalho WAV simples (PCM 16 bits, mono)
 struct WavHeader {
@@ -29,6 +30,47 @@ struct WavHeader {
 
 class AudioHandler {
 public:
+    static bool audio_ok;   // definido em core_singletons.cpp
+
+    // Inicialização completa: I2S + codec ES8311. Segura — se o codec falhar,
+    // o dispositivo continua funcionando (áudio apenas desativado).
+    static bool init() {
+        pinMode(PA, OUTPUT);
+        digitalWrite(PA, LOW);      // amplificador começa mudo
+
+        initI2S();
+
+        // Inicializa o codec ES8311 (I2C, mesmo barramento do Wire).
+        es8311_handle_t es = es8311_create((i2c_port_t)0, ES8311_ADDR);
+        if (!es) {
+            Serial.println("[Audio] ES8311 não encontrado — áudio desativado.");
+            audio_ok = false;
+            return false;
+        }
+
+        const es8311_clock_config_t clk = {
+            .mclk_inverted     = false,
+            .sclk_inverted     = false,
+            .mclk_from_mclk_pin= true,
+            .mclk_frequency    = 16000 * 256,  // MCLK = 256 * fs
+            .sample_frequency  = 16000
+        };
+
+        if (es8311_init(es, &clk, ES8311_RESOLUTION_16, ES8311_RESOLUTION_16) != ESP_OK) {
+            Serial.println("[Audio] Falha ao inicializar ES8311 — áudio desativado.");
+            audio_ok = false;
+            return false;
+        }
+        es8311_sample_frequency_config(es, 16000 * 256, 16000);
+        es8311_voice_volume_set(es, 80, nullptr);
+        es8311_microphone_config(es, false);        // mic analógico
+        es8311_microphone_gain_set(es, (es8311_mic_gain_t)3);
+
+        audio_ok = true;
+        Serial.println("[Audio] ES8311 pronto.");
+        return true;
+    }
+
     static void initI2S() {
         i2s_config_t i2s_config = {
             .mode = (i2s_mode_t)(I2S_MODE_MASTER | I2S_MODE_TX | I2S_MODE_RX),
@@ -56,9 +98,10 @@ public:
         i2s_set_pin(I2S_NUM_0, &pin_config);
     }
 
+    // Liga/desliga o amplificador de áudio (PA) — GPIO46 na Waveshare AMOLED 1.8
+    // (o demo oficial 15_ES8311 usa pinMode(PA)/digitalWrite(PA), NÃO o expansor).
     static void setAmpPower(bool on) {
-        if (!expander) return;
-        expander->digitalWrite(6, on ? HIGH : LOW);
+        digitalWrite(PA, on ? HIGH : LOW);
     }
 
     // Resolve caminho para compatibilidade:
@@ -96,6 +139,7 @@ public:
     }
 
     static void playWav(const char *filename) {
+        if (!audio_ok) return;   // codec não inicializado
         File file = openForReadWithCompat(filename);
         if (!file) {
             Serial.printf("[Audio] Falha ao abrir '%s'\n", filename);
@@ -140,6 +184,7 @@ public:
     }
 
     static bool recordWav(const char *filename, int max_seconds, bool use_vad = true) {
+        if (!audio_ok) return false;   // codec não inicializado
         String path = buildWritePath(filename);
 
         // Garante que o diretório exista, se houver subpastas

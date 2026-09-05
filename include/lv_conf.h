@@ -12,10 +12,21 @@
 #define LV_COLOR_DEPTH 16
 #define LV_COLOR_16_SWAP 1
 
-/* Fonts used by the UI */
+/* Fonts used by the UI (todas referenciadas pela PwnUI/FaceHandler precisam
+ * estar habilitadas, caso contrário o link falha com "undefined reference"). */
+#define LV_FONT_MONTSERRAT_10 1
+#define LV_FONT_MONTSERRAT_12 1
 #define LV_FONT_MONTSERRAT_14 1
+#define LV_FONT_MONTSERRAT_16 1
 #define LV_FONT_MONTSERRAT_20 1
+#define LV_FONT_MONTSERRAT_28 1
+#define LV_FONT_MONTSERRAT_40 1
 #define LV_FONT_DEFAULT &lv_font_montserrat_14
+
+/* Recursos visuais usados pela UI redesenhada */
+#define LV_USE_FLEX 1
+#define LV_USE_GRID 1
+#define LV_USE_ANIMIMG 1
 
 /* Text encoding */
 #define LV_TXT_ENC LV_TXT_ENC_UTF8

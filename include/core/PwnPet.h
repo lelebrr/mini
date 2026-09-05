@@ -71,7 +71,7 @@ public:
             return;
         }
 
-        DynamicJsonDocument doc(2048);
+        JsonDocument doc;
         DeserializationError err = deserializeJson(doc, f);
         f.close();
         if (err) {
@@ -79,16 +79,16 @@ public:
             return;
         }
 
-        if (doc.containsKey("name"))  stats.name  = doc["name"].as<String>();
-        if (doc.containsKey("stage")) stats.stage = (PetStage)doc["stage"].as<int>();
-        if (doc.containsKey("xp"))    stats.xp    = doc["xp"].as<int>();
-        if (doc.containsKey("level")) stats.level = doc["level"].as<int>();
+        if (!doc["name"].isNull())  stats.name  = doc["name"].as<String>();
+        if (!doc["stage"].isNull()) stats.stage = (PetStage)doc["stage"].as<int>();
+        if (!doc["xp"].isNull())    stats.xp    = doc["xp"].as<int>();
+        if (!doc["level"].isNull()) stats.level = doc["level"].as<int>();
 
-        if (doc.containsKey("hunger"))      stats.hunger      = doc["hunger"].as<int>();
-        if (doc.containsKey("happiness"))   stats.happiness   = doc["happiness"].as<int>();
-        if (doc.containsKey("handshakes_total"))
+        if (!doc["hunger"].isNull())     stats.hunger     = doc["hunger"].as<int>();
+        if (!doc["happiness"].isNull())  stats.happiness  = doc["happiness"].as<int>();
+        if (!doc["handshakes_total"].isNull())
             stats.handshakes_total = doc["handshakes_total"].as<int>();
-        if (doc.containsKey("energy_mode"))
+        if (!doc["energy_mode"].isNull())
             stats.energy_mode = doc["energy_mode"].as<int>();
 
         Serial.printf("[Pet] Save carregado: %s (Lvl %d)\n",
@@ -96,7 +96,7 @@ public:
     }
 
     static void save() {
-        DynamicJsonDocument doc(2048);
+        JsonDocument doc;
         doc["name"]             = stats.name;
         doc["stage"]            = (int)stats.stage;
         doc["xp"]               = stats.xp;

@@ -21,10 +21,10 @@
 class ConfigManager {
 private:
     static ConfigManager *instance;
-    DynamicJsonDocument doc;
+    JsonDocument doc;                       // ArduinoJson 7: documento elástico
     const char *configPath = "/config.json";
 
-    ConfigManager() : doc(16384) {} // ~16 KB, suficiente para dezenas de chaves
+    ConfigManager() {}
 
     // Preenche um JsonObject com os valores padrão
     static void fillDefaults(JsonObject root) {
@@ -66,6 +66,12 @@ private:
         root["pwr_wifi_powersave"]       = true;
         root["pwr_peripheral_shutdown"]  = true;
         root["pwr_siesta_mode"]          = true;
+        // --- BATERIA / CARGA (LiPo PL502030 250mAh) ---
+        root["pwr_battery_capacity_mah"] = 250;   // capacidade da célula
+        root["pwr_charge_current_ma"]    = 100;   // 100/125/150/200 (<=125 ideal p/ 250mAh)
+        root["pwr_charge_target_mv"]     = 4200;  // tensão de corte (padrão LiPo)
+        root["pwr_low_warn_pct"]         = 10;    // aviso de bateria baixa
+        root["pwr_low_shutdown_pct"]     = 5;     // desliga para proteger a célula
 
         // --- ATTACKS / WIFI ---
         root["atk_auto_scan"]         = true;
@@ -124,7 +130,7 @@ private:
     void validateMissingKeys() {
         // Usa um documento temporário com os defaults e garante que
         // qualquer chave nova seja adicionada ao JSON existente.
-        DynamicJsonDocument defaults(8192);
+        JsonDocument defaults;
         JsonObject defRoot = defaults.to<JsonObject>();
         fillDefaults(defRoot);
 
@@ -133,7 +139,7 @@ private:
 
         for (JsonPair kv : defRoot) {
             const char *key = kv.key().c_str();
-            if (!root.containsKey(key)) {
+            if (root[key].isNull()) {
                 root[key] = kv.value();
                 changed = true;
             }
@@ -215,8 +221,23 @@ public:
         serializeJson(doc, output);
     }
 
+    // Versão para a WebUI: mascara campos sensíveis (senhas) para não trafegar
+    // credenciais em texto puro pela rede. O valor "********" é ignorado no
+    // updateFromJSON (mantém a senha atual, a menos que o usuário digite outra).
+    void getJSONRedacted(String &output) const {
+        JsonDocument copy;
+        copy.set(doc);  // cópia profunda
+        const char *secret_keys[] = {
+            "sys_web_pass", "sys_ap_pass", "sys_sta_pass"
+        };
+        for (const char *k : secret_keys) {
+            if (!copy[k].isNull()) copy[k] = "********";
+        }
+        serializeJson(copy, output);
+    }
+
     void updateFromJSON(const String &json) {
-        DynamicJsonDocument incoming(doc.capacity());
+        JsonDocument incoming;
         DeserializationError err = deserializeJson(incoming, json);
         if (err) {
             Serial.println("[Config] JSON inválido recebido via WebUI.");
@@ -227,6 +248,11 @@ public:
         JsonObject updates = incoming.as<JsonObject>();
 
         for (JsonPair kv : updates) {
+            // Ignora o placeholder de senha mascarada vindo da WebUI.
+            if (kv.value().is<const char *>() &&
+                String(kv.value().as<const char *>()) == "********") {
+                continue;
+            }
             root[kv.key().c_str()] = kv.value();
         }
 

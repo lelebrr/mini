@@ -3,20 +3,17 @@
 
 /**
  * FaceHandler.h
- * Gerenciador de "Faces" (Personalidade) estilo Pwnagotchi.
+ * Rostos (personalidade) estilo Pwnagotchi para o Mini Lele.
  *
- * Funcionalidades:
- * - Exibe rostos ASCII baseados no estado do sistema.
- * - Suporta carregamento de imagens PNG (implementação futura/comentada).
- * - Integração com LVGL para exibição na UI.
+ * IMPORTANTE (correção de design): a versão anterior usava kaomojis com
+ * caracteres Unicode exóticos (⌐ ■ ◕ ‿ …) que NÃO existem na fonte Montserrat
+ * do LVGL — apareciam como quadradinhos vazios. Aqui usamos apenas ASCII, que
+ * a Montserrat renderiza perfeitamente, num tamanho grande e com cor de acento.
  */
 
 #include <Arduino.h>
 #include <lvgl.h>
-#include <SD_MMC.h>
-#include "FS.h"
 
-// Enumeração das faces padrão
 enum FaceType {
     FACE_HAPPY,
     FACE_SAD,
@@ -44,85 +41,83 @@ enum FaceType {
 
 class FaceHandler {
 private:
-    static lv_obj_t* face_obj; // Objeto LVGL (Label ou Imagem)
-    static bool is_image;
-    static lv_obj_t* parent_screen;
+    static lv_obj_t *face_obj;
+    static lv_obj_t *parent_screen;
+    static FaceType  current;
 
-    // Mapeamento ASCII para cada face
-    static const char* getAscii(FaceType type) {
-        switch(type) {
-            case FACE_HAPPY: return "(^‿^)";
-            case FACE_SAD: return "(;_;)";
-            case FACE_NEUTRAL: return "(O_O)";
-            case FACE_LOOK_R: return "( ⚆_⚆)";
-            case FACE_LOOK_L: return "(☉_⚆)";
-            case FACE_LOOK_R_HAPPY: return "( ◕‿◕)";
-            case FACE_LOOK_L_HAPPY: return "(◕‿◕ )";
-            case FACE_SLEEP: return "(⇀‿‿↼)";
-            case FACE_AWAKE: return "(◕‿‿◕)";
-            case FACE_BORED: return "(-__-)";
-            case FACE_INTENSE: return "(°▃▃°)";
-            case FACE_COOL: return "(⌐■_■)";
-            case FACE_EXCITED: return "(ᵔ◡◡ᵔ)";
-            case FACE_GRATEFUL: return "(^▿▿^)";
-            case FACE_MOTIVATED: return "(☼▿▿☼)";
-            case FACE_DEMOTIVATED: return "(≖__≖)";
-            case FACE_LONELY: return "(ب__ب)";
-            case FACE_ANGRY: return "(-_-')";
-            case FACE_FRIEND: return "(♥▿▿♥)";
-            case FACE_BROKEN: return "(X_X)";
-            case FACE_DEBUG: return "(#_#)";
-            case FACE_UPLOAD: return "(1__0)";
-            default: return "(?)";
+    // Rostos ASCII (renderizáveis em qualquer fonte).
+    static const char *getAscii(FaceType type) {
+        switch (type) {
+            case FACE_HAPPY:          return "(^_^)";
+            case FACE_SAD:            return "(T_T)";
+            case FACE_NEUTRAL:        return "(o_o)";
+            case FACE_LOOK_R:         return "(o_ )";
+            case FACE_LOOK_L:         return "( _o)";
+            case FACE_LOOK_R_HAPPY:   return "(^_ )";
+            case FACE_LOOK_L_HAPPY:   return "( _^)";
+            case FACE_SLEEP:          return "(-_-)";
+            case FACE_AWAKE:          return "(O_O)";
+            case FACE_BORED:          return "(=_=)";
+            case FACE_INTENSE:        return "(>_<)";
+            case FACE_COOL:           return "(-_o)";
+            case FACE_EXCITED:        return "(*o*)";
+            case FACE_GRATEFUL:       return "(^u^)";
+            case FACE_MOTIVATED:      return "(oД o)";
+            case FACE_DEMOTIVATED:    return "(u_u)";
+            case FACE_LONELY:         return "(._.)";
+            case FACE_ANGRY:          return "(>_<)";
+            case FACE_FRIEND:         return "(^3^)";
+            case FACE_BROKEN:         return "(x_x)";
+            case FACE_DEBUG:          return "(#_#)";
+            case FACE_UPLOAD:         return "(1_0)";
+            default:                  return "(-_-)";
         }
     }
 
-    // Caminhos para arquivos de imagem (se existirem)
-    static const char* getFilename(FaceType type) {
-        switch(type) {
-            case FACE_HAPPY: return "/custom-faces/HAPPY.png";
-            case FACE_SAD: return "/custom-faces/SAD.png";
-            // ... Mapear outros conforme necessário
-            default: return NULL;
+    // Cor de acento por humor.
+    static lv_color_t getColor(FaceType type) {
+        switch (type) {
+            case FACE_HAPPY: case FACE_EXCITED: case FACE_GRATEFUL:
+            case FACE_FRIEND: case FACE_LOOK_R_HAPPY: case FACE_LOOK_L_HAPPY:
+                return lv_color_hex(0x38ff9e);   // verde neon
+            case FACE_SAD: case FACE_LONELY: case FACE_DEMOTIVATED:
+                return lv_color_hex(0x5aa9ff);   // azul
+            case FACE_ANGRY: case FACE_INTENSE: case FACE_BROKEN:
+                return lv_color_hex(0xff5a7a);   // vermelho
+            case FACE_COOL: case FACE_MOTIVATED:
+                return lv_color_hex(0xb26bff);   // roxo
+            case FACE_SLEEP: case FACE_BORED:
+                return lv_color_hex(0x7a8aa0);   // cinza
+            default:
+                return lv_color_hex(0xe6f0ff);   // branco suave
         }
     }
 
 public:
-    /**
-     * Inicializa o componente de Face na tela.
-     */
-    static void init(lv_obj_t* parent) {
+    static void init(lv_obj_t *parent) {
         parent_screen = parent;
         face_obj = lv_label_create(parent);
-        lv_label_set_text(face_obj, "(O_O)"); // Padrão
-        // Estilo: Fonte padrão grande (se disponível) ou padrão
-        // Nota: Idealmente usar uma fonte customizada maior
-        lv_obj_set_style_text_font(face_obj, &lv_font_montserrat_20, 0);
-        lv_obj_align(face_obj, LV_ALIGN_CENTER, 0, -50);
-        is_image = false;
+        lv_obj_set_style_text_font(face_obj, &lv_font_montserrat_40, 0);
+        lv_obj_set_style_text_color(face_obj, lv_color_hex(0x38ff9e), 0);
+        lv_label_set_text(face_obj, "(o_o)");
+        lv_obj_center(face_obj);
+        current = FACE_NEUTRAL;
     }
 
-    /**
-     * Define a face atual.
-     * Tenta carregar imagem, se falhar usa ASCII.
-     */
     static void setFace(FaceType type) {
-        // Implementação ASCII por robustez
-        if (is_image) {
-            lv_obj_del(face_obj);
-            face_obj = lv_label_create(parent_screen);
-            lv_obj_align(face_obj, LV_ALIGN_CENTER, 0, -50);
-            is_image = false;
-        }
-
-        const char* ascii = getAscii(type);
-        lv_label_set_text(face_obj, ascii);
+        if (!face_obj) return;
+        if (type == current) return;   // evita redraw desnecessário
+        current = type;
+        lv_label_set_text(face_obj, getAscii(type));
+        lv_obj_set_style_text_color(face_obj, getColor(type), 0);
     }
+
+    static FaceType getFace() { return current; }
 };
 
-// Inicialização estática
-lv_obj_t* FaceHandler::face_obj = NULL;
-bool FaceHandler::is_image = false;
-lv_obj_t* FaceHandler::parent_screen = NULL;
+// Definições `inline` (C++17): sem "multiple definition" ao incluir em várias TUs.
+inline lv_obj_t *FaceHandler::face_obj      = nullptr;
+inline lv_obj_t *FaceHandler::parent_screen = nullptr;
+inline FaceType  FaceHandler::current       = FACE_NEUTRAL;
 
 #endif

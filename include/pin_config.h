@@ -85,14 +85,25 @@
 #define PA         46
 
 // -----------------------------------------------------------------------------
-// Cartão SD (SDMMC, modo 1-bit – usado para logs, handshakes, etc.)
+// Cartão SD / TF (SDMMC, modo 1-bit – logs, handshakes, config, etc.)
 // -----------------------------------------------------------------------------
+//
+// Mapeamento OFICIAL Waveshare (wiki "TF card control pin description"):
+//   CS (SS)  -> EXIO7  (pino 7 do expansor TCA9554, NÃO um GPIO do ESP32)
+//   DI (CMD) -> GPIO1
+//   DO (D0)  -> GPIO3
+//   SCK (CLK)-> GPIO2
+//
+// IMPORTANTE: antes de SD_MMC.begin() é preciso colocar EXIO7 em HIGH via o
+// expansor (ver PwnPins::assertSdCs / setup em main.cpp). O debug é feito por
+// USB-CDC porque GPIO1/GPIO2 (UART0) são usados pelo cartão.
+#define SDMMC_CLK   2
+#define SDMMC_CMD   1
+#define SDMMC_D0    3     // CORRIGIDO: era 42 (errado). DO/MISO = GPIO3.
+#define SDMMC_DATA  SDMMC_D0
 
-// Usa os pinos 1 e 2, por isso o debug é feito via USB CDC.
-#define SDMMC_CLK  2
-#define SDMMC_CMD  1
-#define SDMMC_D0   42
-#define SDMMC_DATA SDMMC_D0
+// Chip-select do cartão fica no expansor de IO (TCA9554), pino 7.
+#define SD_CS_EXIO  7
 
 // -----------------------------------------------------------------------------
 // Sistema / botões

@@ -1,7 +1,7 @@
 # Mini Lele
 
 ![Status](https://img.shields.io/badge/status-ativo-brightgreen)
-![Versão](https://img.shields.io/badge/vers%C3%A3o-2.0.0-blue)
+![Versão](https://img.shields.io/badge/vers%C3%A3o-2.1.0-blue)
 ![Plataforma](https://img.shields.io/badge/plataforma-ESP32--S3-orange)
 ![Linguagem](https://img.shields.io/badge/linguagem-C%2B%2B%20%2F%20Arduino-informational)
 ![Licen%C3%A7a](https://img.shields.io/badge/licen%C3%A7a-GPLv3-important)
@@ -36,7 +36,7 @@ Ele combina:
 ## Visão geral
 
 - **Nome:** Mini Lele  
-- **Versão:** 2.0 (God Tier)  
+- **Versão:** 2.1 (God Tier — integrado, corrigido e otimizado)  
 - **Autor original:** Jules (Agent) – adaptado e documentado para PT‑BR  
 - **Placa alvo:** Waveshare ESP32‑S3‑Touch‑AMOLED‑1.8  
 - **Display:** 1.8" AMOLED, 368x448 (SH8601, interface QSPI)  
@@ -83,8 +83,11 @@ Sempre utilize apenas em redes **suas** ou com **autorização explícita**.
 
 ### 🌐 WebUI (Interface Web)
 
-- Painel responsivo acessível via navegador
-- Mais de **100 configurações** em tempo real:
+- Painel responsivo **100% autocontido** (sem depender de CDN): funciona
+  totalmente **offline** no modo AP, com tema neon, medidores circulares,
+  cartão de bateria/carga e animações.
+- Mais de **100 configurações** em tempo real, agrupadas por categoria (Pet,
+  Display, Energia/Bateria, Ataques/WiFi, Sistema, WebUI):
   - Nome do Pet, tema, brilho, economia de energia
   - Parâmetros de scan, filtros, potência de TX (quando suportado)
   - Controle do Evil Portal, listas de permissão/bloqueio (whitelist/blacklist)
@@ -98,6 +101,25 @@ Sempre utilize apenas em redes **suas** ou com **autorização explícita**.
 - Detecção offline de padrões sonoros simples
 - Comandos curtos, otimizados para funcionamento sem internet
 - Feedback por áudio (WAV 16 kHz) e animações na tela
+
+### 🔋 Bateria e carregamento (USB‑C)
+
+- Gerenciado por hardware pelo **PMU AXP2101** — basta conectar o cabo **USB‑C**
+  para carregar a bateria LiPo.
+- Otimizado para a célula **PL502030 250 mAh / 3,7 V**:
+  - Corrente de carga: **100 mA** (~0,4C, seguro para 250 mAh; ajustável em 100/125/150/200 mA)
+  - Tensão de corte: **4,2 V** (padrão LiPo)
+  - Corrente de término: **25 mA** (~0,1C)
+  - Detecção do pino **TS desligada** (a célula não tem termistor — obrigatório
+    para o carregamento funcionar corretamente)
+  - Desligamento de proteção em ~5% e aviso em ~10%
+- Monitoramento em tempo real (na tela e na WebUI): porcentagem, tensão, estado
+  de carga (CC/CV/completa), presença de USB‑C e autonomia estimada.
+- Modo crítico automático (reduz clock e desliga o Wi‑Fi em bateria baixa), com
+  saída automática do modo crítico quando o USB‑C é conectado.
+
+> ⚠️ A corrente de carga acima de 125 mA (0,5C) não é recomendada para uma célula
+> de 250 mAh. O padrão de 100 mA é o mais seguro.
 
 ### ⚙️ Performance e tecnologia
 
@@ -136,8 +158,11 @@ Detalhes completos de pinagem e chips: consulte `FULL_HARDWARE.md` e `HARDWARE.m
 Principais pastas do repositório:
 
 - `src/`
-  - Código-fonte principal (ex.: `main.cpp`)
-  - Inicialização do sistema, laço principal e integração entre módulos
+  - `main.cpp`: **integra todos os módulos** — inicializa hardware (expansor,
+    PMU/carga, display, touch FT3168, IMU, SD, LVGL) e sobe a camada de
+    aplicação (config, pet, gamificação, UI, áudio, WebUI) no `setup()`/`loop()`.
+  - `core_singletons.cpp`: definições dos membros estáticos dos módulos.
+  - `legacy/`: firmware antigo (não compilado — excluído via `build_src_filter`).
 - `include/`
   - Cabeçalhos e lógica de alto nível
   - `pin_config.h`: mapeamento completo de pinos da placa
@@ -166,6 +191,11 @@ Abaixo, um resumo:
    - VS Code + extensão **PlatformIO IDE**
    - Python 3.x instalado
    - Cabo USB‑C de boa qualidade
+   - **Internet na primeira compilação:** a maioria das bibliotecas é
+     vendorizada em `lib/`, mas três dependências são baixadas automaticamente
+     pelo PlatformIO no primeiro build (ficam em cache depois):
+     `XPowersLib` (PMU/bateria), `AsyncTCP` e `ESPAsyncWebServer` (WebUI/Portal).
+     O touch FT3168 usa um driver próprio interno (sem TouchLib).
 2. Clonar o repositório
    ```bash
    git clone https://github.com/seu-usuario/mini-lele.git
