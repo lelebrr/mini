@@ -192,7 +192,9 @@ def fallback_build_parse():
 def main():
     pio_db = try_pio_compiledb()
     if pio_db:
-        shutil.copy(pio_db, OUT)
+        entries = None
+        if os.path.normpath(pio_db) != os.path.normpath(OUT):
+            shutil.copy(pio_db, OUT)
         with open(OUT, encoding="utf-8") as fh:
             entries = json.load(fh)
         extras = write_compile_commands(entries, "via compiledb")
