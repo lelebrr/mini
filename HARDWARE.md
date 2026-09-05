@@ -150,7 +150,12 @@ Exemplos de uso no Mini Lele:
 
 - **P0:** Reset do display (LCD_RST)
 - **P1:** Reset do touch (TP_RST)
-- **P6:** Pode ser usado para PA_EN (amplificador), dependendo da revisão
+- **P2:** Alimentação de periféricos
+- **P6:** Rail de áudio (habilitado no boot)
+- **P7:** Chip‑select do cartão SD (**EXIO7** — colocado em HIGH antes de montar o SD)
+
+> ⚠️ O **enable do amplificador (PA)** NÃO fica no expansor: é o **GPIO46**
+> (`digitalWrite(PA, ...)`), conforme o demo oficial `15_ES8311`.
 
 Através do TCA9554, o firmware:
 

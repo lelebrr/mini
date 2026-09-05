@@ -1,0 +1,29 @@
+Mini Lele — firmware Tamagotchi Hacker / pentest Wi-Fi para ESP32-S3.
+Copyright (C) 2025 lelebrr e contribuidores do projeto Mini Lele.
+
+Este programa é software livre: você pode redistribuí-lo e/ou modificá-lo
+sob os termos da Licença Pública Geral GNU (GNU GPL), conforme publicada
+pela Free Software Foundation, na versão 3 da licença.
+
+Este programa é distribuído na esperança de que seja útil, mas SEM NENHUMA
+GARANTIA; sem sequer a garantia implícita de COMERCIALIZAÇÃO ou ADEQUAÇÃO A
+UM PROPÓSITO ESPECÍFICO. Consulte a Licença Pública Geral GNU para mais
+detalhes.
+
+O texto completo e oficial da GNU General Public License v3.0 está
+disponível em:
+
+    https://www.gnu.org/licenses/gpl-3.0.txt   (texto integral)
+    https://www.gnu.org/licenses/gpl-3.0.html  (versão em HTML)
+
+SPDX-License-Identifier: GPL-3.0-or-later
+
+--------------------------------------------------------------------------
+Aviso de uso responsável
+--------------------------------------------------------------------------
+Este firmware inclui ferramentas de análise e ataque de redes sem fio
+(sniffer, captura de handshakes, deauth, portal cativo). Elas são fornecidas
+EXCLUSIVAMENTE para fins educacionais e para uso em redes próprias ou com
+autorização explícita do responsável. O uso indevido pode ser ilegal na sua
+jurisdição. Ao usar este software, você assume total responsabilidade pelo
+seu uso e isenta os autores e contribuidores de qualquer dano.
