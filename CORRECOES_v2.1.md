@@ -89,6 +89,28 @@ Carregamento por **USB‑C** via **AXP2101** (`include/core/PwnPower.h`):
 
 ---
 
+## 5b. Novos recursos (v2.1)
+
+Implementados por cima das correções, todos opcionais e com degradação segura:
+
+| Recurso | Módulo | Destaque |
+|---------|--------|----------|
+| **Capacidade de bateria configurável** | PwnPower | `pwr_battery_capacity_mah` — troque a célula sem recompilar; cálculo de autonomia e limite de carga (0,5C) se ajustam sozinhos |
+| **Relógio real + NTP** | drivers/PwnRTC | PCF85063 na tela/logs; sincroniza por NTP no modo STA |
+| **Economia de energia** | core/PwnSleep | timeout de tela, auto‑dim, Eco, deep sleep acordando por toque (ext0) |
+| **Interação por movimento** | main + PwnPet::onShake | chacoalhar alimenta o pet (acelerômetro) |
+| **Persistência em RAM RTC** | PwnPet | stats sobrevivem ao deep sleep sem depender do SD |
+| **Captura `.pcap` real + EAPOL** | WiFiTools | pcap linktype 105, detecção de handshake, buffer no callback e gravação no loop (seguro) |
+| **Scanner BLE** | core/PwnBLE | varredura sob demanda; dispositivos viram "comida" |
+| **UI por gestos** | core/PwnUI | `tileview` com 3 telas (Pet/Wi‑Fi/Energia) + anti‑burn‑in |
+| **Botão físico** | main | clique = próxima tela · longo = deep sleep |
+| **Portal cativo na WebUI** | WebHandler | DNS redireciona qualquer URL para a config |
+| **Watchdog + buffer maior** | main | reinício automático se travar; LVGL 1/4 da tela em PSRAM |
+| **Rotação de logs** | WiFiTools | evita crescimento infinito no SD |
+
+Novas chaves de config: `pwr_battery_capacity_mah`, `pwr_charge_current_ma`,
+`pwr_deep_sleep_after_sec`, `atk_ble_scan`, `atk_ble_interval_sec`, `sys_watchdog`.
+
 ## 6. Observação honesta sobre testes
 
 As correções foram feitas com revisão estática rigorosa (pinagem conferida na
