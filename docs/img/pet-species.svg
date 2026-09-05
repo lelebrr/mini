@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="200" viewBox="0 0 900 200" role="img" aria-label="Espécies do pet por evolução">
+  <rect width="900" height="200" rx="16" fill="#05070c"/>
+  <text x="20" y="30" font-family="Segoe UI,sans-serif" font-size="16" font-weight="700" fill="#e6f0ff">O bicho muda de forma conforme evolui (rosto vetorial animado)</text>
+  <!-- cada célula: cartão + rosto vetorial + rótulo -->
+  <!-- EGG: ciclope -->
+  <g transform="translate(20,50)">
+    <rect width="112" height="120" rx="16" fill="#0b1120" stroke="#1a2230"/>
+    <circle cx="56" cy="52" r="20" fill="#38ff9e"/>
+    <path d="M40 84 Q56 96 72 84" stroke="#38ff9e" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <text x="56" y="114" font-family="Segoe UI,sans-serif" font-size="12" fill="#7a8aa0" text-anchor="middle">EGG</text>
+  </g>
+  <!-- BABY: olhões -->
+  <g transform="translate(144,50)">
+    <rect width="112" height="120" rx="16" fill="#0b1120" stroke="#1a2230"/>
+    <circle cx="40" cy="50" r="15" fill="#38ff9e"/><circle cx="72" cy="50" r="15" fill="#38ff9e"/>
+    <path d="M42 82 Q56 92 70 82" stroke="#38ff9e" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <text x="56" y="114" font-family="Segoe UI,sans-serif" font-size="12" fill="#7a8aa0" text-anchor="middle">BABY</text>
+  </g>
+  <!-- KID: padrão -->
+  <g transform="translate(268,50)">
+    <rect width="112" height="120" rx="16" fill="#0b1120" stroke="#1a2230"/>
+    <rect x="34" y="42" width="16" height="20" rx="8" fill="#38ff9e"/><rect x="62" y="42" width="16" height="20" rx="8" fill="#38ff9e"/>
+    <path d="M40 82 Q56 92 72 82" stroke="#38ff9e" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <text x="56" y="114" font-family="Segoe UI,sans-serif" font-size="12" fill="#7a8aa0" text-anchor="middle">KID</text>
+  </g>
+  <!-- TEEN -->
+  <g transform="translate(392,50)">
+    <rect width="112" height="120" rx="16" fill="#0b1120" stroke="#1a2230"/>
+    <rect x="35" y="44" width="14" height="18" rx="7" fill="#38ff9e"/><rect x="63" y="44" width="14" height="18" rx="7" fill="#38ff9e"/>
+    <path d="M40 82 Q56 90 72 82" stroke="#38ff9e" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <text x="56" y="114" font-family="Segoe UI,sans-serif" font-size="12" fill="#7a8aa0" text-anchor="middle">TEEN</text>
+  </g>
+  <!-- ADULT: amendoado -->
+  <g transform="translate(516,50)">
+    <rect width="112" height="120" rx="16" fill="#0b1120" stroke="#1a2230"/>
+    <ellipse cx="41" cy="52" rx="12" ry="7" fill="#38ff9e"/><ellipse cx="71" cy="52" rx="12" ry="7" fill="#38ff9e"/>
+    <path d="M38 82 Q56 94 74 82" stroke="#38ff9e" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <text x="56" y="114" font-family="Segoe UI,sans-serif" font-size="12" fill="#7a8aa0" text-anchor="middle">ADULT</text>
+  </g>
+  <!-- PWNLORD: afiado -->
+  <g transform="translate(640,50)">
+    <rect width="112" height="120" rx="16" fill="#0b1120" stroke="#1a2230"/>
+    <path d="M30 48 L52 54 L30 58 Z" fill="#b26bff"/><path d="M82 48 L60 54 L82 58 Z" fill="#b26bff"/>
+    <path d="M40 84 Q56 92 72 82" stroke="#b26bff" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <text x="56" y="114" font-family="Segoe UI,sans-serif" font-size="12" fill="#7a8aa0" text-anchor="middle">PWNLORD</text>
+  </g>
+  <!-- PWNGOD: óculos -->
+  <g transform="translate(764,50)">
+    <rect width="112" height="120" rx="16" fill="#0b1120" stroke="#1a2230"/>
+    <rect x="28" y="44" width="56" height="16" rx="4" fill="#0a0e14" stroke="#b26bff" stroke-width="2"/>
+    <path d="M40 82 Q56 92 72 82" stroke="#b26bff" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <text x="56" y="114" font-family="Segoe UI,sans-serif" font-size="11" fill="#c79bff" text-anchor="middle" font-weight="700">PWNGOD</text>
+  </g>
+</svg>

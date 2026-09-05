@@ -60,6 +60,11 @@ private:
     static FaceType current;
     static bool  enabled;
 
+    // "Espécie" — o formato do bicho muda conforme o estágio de evolução.
+    static float skWf, skHf, skSpf, skMwf;   // fatores de largura/altura/espaço/boca
+    static bool  oneEye;                       // EGG = ciclope (1 olho grande)
+    static int   curSkin;
+
     static float ez(float a, float b, float k) { return a + (b - a) * k; }
     static int   ri(int max) { return (int)(esp_random() % (max > 0 ? max : 1)); }
 
@@ -139,6 +144,7 @@ public:
         wantShades = false;
         current = FACE_NEUTRAL;
         enabled = true;
+        skWf = skHf = skSpf = skMwf = 1.0f; oneEye = false; curSkin = 2; // KID por padrão
 
         timer = lv_timer_create(tickCb, 33, nullptr);   // ~30 FPS
         render();
@@ -184,6 +190,24 @@ public:
 
     static FaceType getFace() { return current; }
 
+    // Define a "espécie"/aparência pelo estágio de evolução (0=EGG..6=PWNGOD).
+    // O bicho muda de forma conforme cresce, reforçando a sensação de vários pets.
+    static void setSkin(uint8_t stage) {
+        if (stage == curSkin) return;
+        curSkin = stage;
+        oneEye = false;
+        switch (stage) {
+            case 0: /*EGG   */ skWf = 1.9f; skHf = 1.9f; skSpf = 0;    skMwf = 0.55f; oneEye = true;  break; // ciclope fofo
+            case 1: /*BABY  */ skWf = 1.5f; skHf = 1.5f; skSpf = 0.85f;skMwf = 0.75f; break;  // olhões redondos
+            case 2: /*KID   */ skWf = 1.1f; skHf = 1.15f;skSpf = 1.0f; skMwf = 1.0f;  break;  // padrão
+            case 3: /*TEEN  */ skWf = 1.0f; skHf = 1.0f; skSpf = 1.05f;skMwf = 1.05f; break;
+            case 4: /*ADULT */ skWf = 1.15f;skHf = 0.72f;skSpf = 1.1f; skMwf = 1.2f;  break;  // olhos amendoados
+            case 5: /*PWNLORD*/skWf = 1.2f; skHf = 0.6f; skSpf = 1.15f;skMwf = 1.25f; break;  // olhar afiado
+            case 6: /*PWNGOD*/ skWf = 1.1f; skHf = 0.65f;skSpf = 1.1f; skMwf = 1.15f; wantShades = true; break;
+            default:          skWf = 1.0f; skHf = 1.0f; skSpf = 1.0f; skMwf = 1.0f;  break;
+        }
+    }
+
 private:
     static void tickCb(lv_timer_t *) {
         uint32_t now = millis();
@@ -221,22 +245,30 @@ private:
 
     static void render(float blinkF, float bob) {
         if (!eyeL) return;
-        int ew = eyeWmax;
-        int eh = LV_MAX(3, (int)(eyeHmax * (aEyeOpen / 100.0f) * blinkF));
-        int by = cy + (int)bob;
-        int ey = by - eyeYoff - eh / 2 + (int)gazeY;
+        int ew  = (int)(eyeWmax * skWf);
+        int eh  = LV_MAX(3, (int)(eyeHmax * skHf * (aEyeOpen / 100.0f) * blinkF));
+        int esp = (int)(eyeSp * skSpf);
+        int mW  = (int)(mouthW * skMwf);
+        int by  = cy + (int)bob;
+        int ey  = by - eyeYoff - eh / 2 + (int)gazeY;
 
         lv_obj_set_size(eyeL, ew, eh);
-        lv_obj_set_size(eyeR, ew, eh);
-        lv_obj_set_pos(eyeL, cx - eyeSp - ew / 2 + (int)gazeX, ey);
-        lv_obj_set_pos(eyeR, cx + eyeSp - ew / 2 + (int)gazeX, ey);
         lv_obj_set_style_bg_color(eyeL, curCol, 0);
-        lv_obj_set_style_bg_color(eyeR, curCol, 0);
+        if (oneEye) {                                   // EGG: ciclope (1 olho)
+            lv_obj_add_flag(eyeR, LV_OBJ_FLAG_HIDDEN);
+            lv_obj_set_pos(eyeL, cx - ew / 2 + (int)gazeX, ey);
+        } else {
+            lv_obj_clear_flag(eyeR, LV_OBJ_FLAG_HIDDEN);
+            lv_obj_set_size(eyeR, ew, eh);
+            lv_obj_set_style_bg_color(eyeR, curCol, 0);
+            lv_obj_set_pos(eyeL, cx - esp - ew / 2 + (int)gazeX, ey);
+            lv_obj_set_pos(eyeR, cx + esp - ew / 2 + (int)gazeX, ey);
+        }
 
         // Óculos escuros (cobre os olhos) no modo COOL/evoluído
-        if (wantShades) {
+        if (wantShades && !oneEye) {
             lv_obj_clear_flag(shades, LV_OBJ_FLAG_HIDDEN);
-            int sw = eyeSp * 2 + ew + 12, sh = eh + 8;
+            int sw = esp * 2 + ew + 12, sh = eh + 8;
             lv_obj_set_size(shades, sw, sh);
             lv_obj_set_pos(shades, cx - sw / 2 + (int)gazeX / 2, by - eyeYoff - sh / 2);
         } else {
@@ -248,17 +280,17 @@ private:
         if (aMOpen > 45) {
             lv_obj_add_flag(mouth, LV_OBJ_FLAG_HIDDEN);
             lv_obj_clear_flag(mouthO, LV_OBJ_FLAG_HIDDEN);
-            int d = LV_MAX(8, (int)(mouthW * 0.5f * (aMOpen / 100.0f)));
+            int d = LV_MAX(8, (int)(mW * 0.5f * (aMOpen / 100.0f)));
             lv_obj_set_size(mouthO, d, d);
             lv_obj_set_pos(mouthO, cx - d / 2, my - d / 2);
             lv_obj_set_style_bg_color(mouthO, curCol, 0);
         } else {
             lv_obj_add_flag(mouthO, LV_OBJ_FLAG_HIDDEN);
             lv_obj_clear_flag(mouth, LV_OBJ_FLAG_HIDDEN);
-            int curve = (int)(aMouth / 100.0f * (mouthW * 0.28f)); // + sorriso (∪), - bravo (∩)
-            mpts[0].x = cx - mouthW / 2;      mpts[0].y = my;
+            int curve = (int)(aMouth / 100.0f * (mW * 0.28f)); // + sorriso (∪), - bravo (∩)
+            mpts[0].x = cx - mW / 2;          mpts[0].y = my;
             mpts[1].x = cx;                   mpts[1].y = my + curve;
-            mpts[2].x = cx + mouthW / 2;      mpts[2].y = my;
+            mpts[2].x = cx + mW / 2;          mpts[2].y = my;
             lv_line_set_points(mouth, mpts, 3);
             lv_obj_set_style_line_color(mouth, curCol, 0);
         }
@@ -287,5 +319,9 @@ inline lv_color_t FaceHandler::curCol = {}, FaceHandler::tgtCol = {};
 inline bool FaceHandler::wantShades = false;
 inline FaceType FaceHandler::current = FACE_NEUTRAL;
 inline bool FaceHandler::enabled = true;
+inline float FaceHandler::skWf = 1.0f, FaceHandler::skHf = 1.0f,
+             FaceHandler::skSpf = 1.0f, FaceHandler::skMwf = 1.0f;
+inline bool FaceHandler::oneEye = false;
+inline int FaceHandler::curSkin = 2;
 
 #endif

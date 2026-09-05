@@ -61,7 +61,7 @@ para bateria LiPo.
 
 ## ✨ Destaques
 
-- 🐣 **Pet evolutivo** — Egg → Baby → Kid → Teen → Adult → PwnLord → **PwnGod**, alimentado por handshakes e atividade de rede.
+- 🐣 **Pet evolutivo e vivo** — bicho **procedural animado** (olhos e boca vetoriais que piscam, olham em volta e "respiram", com movimentos quase infinitos e leves), que **muda de espécie** conforme evolui: Egg → Baby → Kid → Teen → Adult → PwnLord → **PwnGod**.
 - 📡 **Captura Wi‑Fi real** — sniffer promíscuo, `.pcap` de verdade (linktype 105), detecção de **EAPOL/handshake**.
 - 🔵 **Scanner BLE** — dispositivos Bluetooth LE viram "comida" extra do pet.
 - 🔋 **Carga por USB‑C** — via AXP2101, com **capacidade de bateria configurável** (troque a célula sem recompilar).
@@ -239,8 +239,25 @@ flowchart LR
     EGG["🥚 EGG<br/>Lvl 1"] --> BABY["🐣 BABY<br/>Lvl 5"] --> KID["🐤 KID<br/>Lvl 10"] --> TEEN["🐥 TEEN<br/>Lvl 20"] --> ADULT["🐔 ADULT<br/>Lvl 30"] --> LORD["😎 PWNLORD<br/>Lvl 50"] --> GOD["👑 PWNGOD<br/>10k handshakes"]
 ```
 
+A cada estágio o bicho ganha uma **aparência diferente** (formato dos olhos e da
+boca), reforçando a sensação de criaturas distintas conforme cresce:
+
+<p align="center"><img src="docs/img/pet-species.svg" alt="Espécies do pet por evolução" width="100%"></p>
+
 Handshakes WPA (+XP), atividade de rede e carinho (chacoalhar) aumentam XP, fome
 e felicidade. Os stats persistem no SD **e** na RAM RTC (sobrevive ao deep sleep).
+
+### 🎞 Pet vivo (animação leve)
+
+O rosto é desenhado com **primitivas vetoriais do LVGL** (não usa imagens nem
+fontes), animado por um motor a ~30 FPS que combina, de forma aleatória e
+contínua: **piscar**, **olhar para os lados** (saccades), **respiração/balanço**
+e **transições suaves de expressão**. Como esses parâmetros se combinam ao acaso,
+o bicho praticamente nunca fica igual — parece realmente vivo.
+
+É **leve** porque só os poucos objetos que se movem são redesenhados (partial
+redraw do LVGL), sem alocação por quadro, e a animação **pausa sozinha** quando a
+tela apaga (economia de bateria).
 
 ---
 

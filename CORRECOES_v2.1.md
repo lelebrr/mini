@@ -111,6 +111,21 @@ Implementados por cima das correções, todos opcionais e com degradação segur
 Novas chaves de config: `pwr_battery_capacity_mah`, `pwr_charge_current_ma`,
 `pwr_deep_sleep_after_sec`, `atk_ble_scan`, `atk_ble_interval_sec`, `sys_watchdog`.
 
+## 5c. Pet procedural animado (novo)
+
+O `FaceHandler` deixou de usar rostos ASCII estáticos e passou a desenhar um
+**bicho vetorial vivo** (olhos + boca com primitivas do LVGL):
+
+- Motor de animação a **~30 FPS** combinando piscar, olhar em volta (saccades),
+  respiração/balanço e transições suaves de expressão — movimentos **quase
+  infinitos** por serem aleatórios e combináveis.
+- **Espécies por evolução** (`setSkin`): EGG (ciclope), BABY (olhões), KID, TEEN,
+  ADULT (amendoado), PWNLORD (afiado), PWNGOD (óculos) — o bicho muda de forma.
+- **Leve**: só os objetos que se mexem são redesenhados (partial redraw), sem
+  alocação por quadro; a animação **pausa** quando a tela apaga.
+- API mantida (`init`/`setFace`/`getFace` + novos `setSkin`/`setEnabled`), então
+  nenhum outro módulo precisou mudar.
+
 ## 6. Observação honesta sobre testes
 
 As correções foram feitas com revisão estática rigorosa (pinagem conferida na

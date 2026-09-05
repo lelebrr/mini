@@ -13,7 +13,10 @@
     <text x="22" y="33" font-family="monospace" font-size="15" fill="#e6f0ff">14:32</text>
     <text x="218" y="33" font-family="monospace" font-size="13" fill="#38ff9e" text-anchor="end">&#9889; 63%</text>
     <rect x="30" y="54" width="180" height="96" rx="14" fill="#121821" stroke="#38ff9e" stroke-opacity="0.5"/>
-    <text x="120" y="116" font-family="monospace" font-size="42" fill="#38ff9e" text-anchor="middle">(^_^)</text>
+    <!-- rosto vetorial animado (olhos + boca) -->
+    <rect x="100" y="82" width="16" height="22" rx="8" fill="#38ff9e"/>
+    <rect x="128" y="82" width="16" height="22" rx="8" fill="#38ff9e"/>
+    <path d="M104 122 Q122 134 140 122" stroke="#38ff9e" stroke-width="6" fill="none" stroke-linecap="round"/>
     <text x="120" y="176" font-family="Segoe UI,sans-serif" font-size="20" font-weight="800" fill="#e6f0ff" text-anchor="middle">PwnBaby</text>
     <text x="120" y="198" font-family="Segoe UI,sans-serif" font-size="12" font-weight="700" fill="#b26bff" text-anchor="middle" letter-spacing="2">FELIZ</text>
     <text x="30" y="228" font-family="Segoe UI,sans-serif" font-size="11" fill="#7a8aa0">FOME</text>

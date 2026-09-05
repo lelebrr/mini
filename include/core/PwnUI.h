@@ -137,6 +137,7 @@ public:
         lv_label_set_text_fmt(label_stats, "Lvl %d  •  XP %u  •  %s",
                               pet.level, (unsigned)g.xp, stages[stageIdx]);
 
+        FaceHandler::setSkin((uint8_t)pet.stage);   // "espécie" muda com a evolução
         if (pet.stage == PWNGOD)      FaceHandler::setFace(FACE_COOL);
         else if (pet.is_sleeping)     FaceHandler::setFace(FACE_SLEEP);
         else if (chg)                 FaceHandler::setFace(FACE_GRATEFUL);

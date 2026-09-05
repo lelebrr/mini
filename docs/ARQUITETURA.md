@@ -86,7 +86,7 @@ flowchart TD
 | **PwnBLE** | Varredura Bluetooth LE sob demanda (init/deinit p/ liberar RAM) |
 | **EvilPortal** | Portal cativo (DNS + AsyncWebServer) com templates no SD |
 | **AudioHandler** | I²S + codec ES8311, tocar/gravar WAV, VAD simples |
-| **FaceHandler** | Rostos ASCII (renderáveis) coloridos por humor |
+| **FaceHandler** | **Bicho procedural animado** — olhos/boca vetoriais (LVGL), motor ~30 FPS com piscar/olhar/respirar + transições de expressão; **espécies** que mudam a forma por estágio de evolução (`setSkin`); pausa quando a tela apaga |
 | **OfflineVoice / OnlineCrack** | Análise de sílabas · upload de capturas p/ wpa‑sec |
 
 ### Web (`include/web/`)
