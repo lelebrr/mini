@@ -115,7 +115,7 @@ static void smoke_init_display() {
     }
 
     smoke_gfx->fillScreen(BLACK);
-    smoke_gfx->Display_Brightness(200);
+    static_cast<Arduino_OLED *>(smoke_gfx)->setBrightness(200);
 
     Serial.printf("[SMOKE][DISPLAY] Resolution: %d x %d\n",
                   smoke_gfx->width(), smoke_gfx->height());
@@ -131,16 +131,16 @@ static void smoke_init_lvgl() {
 
     smoke_buf1 = static_cast<lv_color_t *>(
         heap_caps_malloc(buffer_pixels * sizeof(lv_color_t),
-                         MALLOC_CAP_SPIRAM | MALLOC_CAP_DMA));
+                         MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT));
     smoke_buf2 = static_cast<lv_color_t *>(
         heap_caps_malloc(buffer_pixels * sizeof(lv_color_t),
-                         MALLOC_CAP_SPIRAM | MALLOC_CAP_DMA));
+                         MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT));
 
     if (!smoke_buf1 || !smoke_buf2) {
-        Serial.println("[SMOKE][LVGL] Failed to allocate draw buffers.");
-        while (true) {
-            delay(1000);
-        }
+        // PSRAM não é DMA-capable no S3; se falhar, reinicia (não trava o boot).
+        Serial.println("[SMOKE][LVGL] Failed to allocate draw buffers. Restarting...");
+        delay(3000);
+        ESP.restart();
     }
 
     smoke_display = lv_display_create(LCD_WIDTH, LCD_HEIGHT);

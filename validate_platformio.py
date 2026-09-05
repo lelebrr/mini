@@ -13,6 +13,12 @@ import os
 import sys
 from pathlib import Path
 
+# Console Windows (cp1252) não suporta os emojis usados nos prints: sem isso o
+# script crasha com UnicodeEncodeError antes de executar qualquer checagem.
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 
 def check_file_exists(filepath: str, description: str) -> bool:
     """Verifica se um arquivo existe e imprime um resultado legível."""
@@ -155,6 +161,10 @@ def check_merge_markers() -> bool:
         "__pycache__",
         "sd_out",
         "sd_card_files",
+        # _quarantine/ guarda arquivos removidos do projeto (libs corrompidas,
+        # src/legacy/, etc.) que NAO devem ser checados por marcadores de merge
+        # ou por nenhuma regra do validate.
+        "_quarantine",
     }
 
     for path in root.rglob("*"):
@@ -164,9 +174,9 @@ def check_merge_markers() -> bool:
         rel = path.relative_to(root)
         parts = rel.parts
 
-        # Ignora diretórios auxiliares e código legado
-        if len(parts) >= 2 and parts[0] == "src" and parts[1] == "legacy":
-            continue
+        # A pasta src/legacy/ foi movida para _quarantine/ (era codigo morto com
+        # 5 setup()/5 loop() concatenados e 2k+ marcadores de merge). Marcadores
+        # de merge, se aparecerem, sao agora SEMPRE um bug real.
         if any(part in skip_dirs for part in parts):
             continue
 
@@ -188,7 +198,7 @@ def check_merge_markers() -> bool:
             print(f"   - {p}")
         return False
 
-    print("✅ Nenhum marcador de merge fora de src/legacy")
+    print("✅ Nenhum marcador de merge no projeto")
     return True
 
 

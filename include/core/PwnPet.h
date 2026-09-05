@@ -108,7 +108,10 @@ public:
         }
 
         if (!doc["name"].isNull())  stats.name  = doc["name"].as<String>();
-        if (!doc["stage"].isNull()) stats.stage = (PetStage)doc["stage"].as<int>();
+        if (!doc["stage"].isNull()) {
+            int s = doc["stage"].as<int>();
+            stats.stage = (s < EGG || s > PWNGOD) ? EGG : (PetStage)s;  // bounds-check
+        }
         if (!doc["xp"].isNull())    stats.xp    = doc["xp"].as<int>();
         if (!doc["level"].isNull()) stats.level = doc["level"].as<int>();
 

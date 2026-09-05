@@ -42,6 +42,13 @@ struct CapFrame {
     uint8_t  data[300];   // snap length (suficiente p/ EAPOL/beacon)
 };
 
+// Evento POD de dispositivo (probe request) — copiado no callback SEM heap;
+// a conversão para String/vector acontece depois, no loop principal (flush()).
+struct DevEvent {
+    uint8_t mac[6];
+    int8_t  rssi;
+};
+
 class WiFiTools {
 public:
     static std::vector<SniffedDevice> nearby_devices;
@@ -51,8 +58,16 @@ public:
     static CapFrame    cap_queue[CAP_QUEUE];
     static volatile int cap_head;
     static volatile int cap_tail;
+    // Fila de eventos de dispositivos (probe requests, POD — ISR-safe)
+    static const int   DEV_QUEUE = 32;
+    static DevEvent    dev_queue[DEV_QUEUE];
+    static volatile int dev_head;
+    static volatile int dev_tail;
     static volatile uint32_t eapol_count;
     static volatile uint32_t frames_captured;
+    // Spinlock compartilhado: callback roda na task do driver WiFi (outro core
+    // em relação ao loop), então filas/contadores precisam de seção crítica.
+    static portMUX_TYPE cap_mux;
     static bool        sniffing;
     static bool        pcap_header_written;
     static String      pcap_path;
@@ -102,8 +117,22 @@ public:
 
     // Drena o buffer para o SD (chamar no loop principal).
     static void flush() {
+        // 1) Eventos de dispositivos: TODO trabalho com heap/String fica AQUI
+        //    no loop — nunca no callback do driver WiFi (evita corrupção de heap).
+        while (dev_tail != dev_head) {
+            DevEvent e = dev_queue[dev_tail];
+            dev_tail = (dev_tail + 1) % DEV_QUEUE;
+            char macStr[18];
+            snprintf(macStr, sizeof(macStr), "%02X:%02X:%02X:%02X:%02X:%02X",
+                     e.mac[0], e.mac[1], e.mac[2], e.mac[3], e.mac[4], e.mac[5]);
+            updateDevice(macStr, e.rssi);
+        }
+
+        // 2) Frames -> pcap no SD.
         while (cap_tail != cap_head) {
             CapFrame &f = cap_queue[cap_tail];
+            // Timestamp "segundos" resolvido na drenagem: time() não é ISR-safe.
+            f.ts_sec = (uint32_t)time(nullptr);
             writeFrameToPcap(f);
             if (f.eapol) {
                 Serial.println("[Sniffer] EAPOL capturado -> handshake!");
@@ -157,7 +186,12 @@ public:
         return s;
     }
 
-    // ---- Callback promíscuo (RÁPIDO: só copia p/ RAM) ----
+    // ---- Callback promíscuo: roda na TASK do driver WiFi (não em ISR) ----
+    // taskENTER_CRITICAL_FROM_ISR não é necessário aqui (não é ISR), e
+    // IRAM_ATTR não funciona porque os globais (cap_queue/dev_queue/cap_mux)
+    // ficam em DRAM regular e o assembler Xtensa reclama com
+    // "dangerous relocation: l32r: literal placed after use". O critical
+    // section abaixo (FreeRTOS) já desabilita o preempção no caller.
     static void promiscuous_rx_cb(void *buf, wifi_promiscuous_pkt_type_t type) {
         auto *pkt  = (wifi_promiscuous_pkt_t *)buf;
         uint8_t *d = pkt->payload;
@@ -167,9 +201,9 @@ public:
         uint8_t ftype    = (d[0] & 0x0C) >> 2;   // 0 mgmt, 1 ctrl, 2 data
         uint8_t fsubtype = (d[0] & 0xF0) >> 4;
 
-        // Probe request (mgmt/4): atualiza lista de dispositivos (sem gravar SD aqui).
+        // Probe request (mgmt/4): enfileira evento POD — heap/String no flush().
         if (ftype == 0 && fsubtype == 4) {
-            updateDevice(d, pkt->rx_ctrl.rssi);
+            enqueueDev(d + 10, pkt->rx_ctrl.rssi);
             return;
         }
 
@@ -194,10 +228,7 @@ public:
     }
 
 private:
-    static void updateDevice(uint8_t *d, int rssi) {
-        char macStr[18];
-        snprintf(macStr, sizeof(macStr), "%02X:%02X:%02X:%02X:%02X:%02X",
-                 d[10], d[11], d[12], d[13], d[14], d[15]);
+    static void updateDevice(const char *macStr, int rssi) {
         String mac(macStr);
         for (auto &dev : nearby_devices) {
             if (dev.mac.equalsIgnoreCase(mac)) { dev.rssi = rssi; dev.last_seen = millis(); return; }
@@ -206,18 +237,31 @@ private:
         nearby_devices.push_back({mac, rssi, millis()});
     }
 
+    // Enfileira evento de dispositivo (POD, sem heap). Roda na task do WiFi.
+    static void enqueueDev(const uint8_t *mac, int rssi) {
+        int next = (dev_head + 1) % DEV_QUEUE;
+        if (next == dev_tail) return;                  // fila cheia -> descarta
+        portENTER_CRITICAL(&cap_mux);
+        DevEvent &e = dev_queue[dev_head];
+        memcpy(e.mac, mac, 6);
+        e.rssi = (int8_t)rssi;
+        dev_head = next;
+        portEXIT_CRITICAL(&cap_mux);
+    }
+
     static void enqueue(uint8_t *d, int len, bool eapol) {
         int next = (cap_head + 1) % CAP_QUEUE;
         if (next == cap_tail) return;                  // fila cheia -> descarta
+        portENTER_CRITICAL(&cap_mux);
         CapFrame &f = cap_queue[cap_head];
         f.len   = (len > (int)sizeof(f.data)) ? sizeof(f.data) : len;
         f.eapol = eapol;
-        f.ts_sec  = (uint32_t)time(nullptr);
-        f.ts_usec = micros() % 1000000UL;
+        f.ts_usec = micros() % 1000000UL;              // micros() é safe
         memcpy(f.data, d, f.len);
         cap_head = next;
         frames_captured++;
         if (eapol) eapol_count++;
+        portEXIT_CRITICAL(&cap_mux);
     }
 
     // Escreve um frame no arquivo .pcap (cabeçalho global na 1ª vez).

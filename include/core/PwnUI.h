@@ -132,8 +132,10 @@ public:
         lv_label_set_text(label_name, pet.name.c_str());
         lv_label_set_text(label_mood, PwnPet::getMoodStr().c_str());
         const char *stages[] = {"EGG","BABY","KID","TEEN","ADULT","PWNLORD","PWNGOD"};
+        int stageIdx = (int)pet.stage;   // bounds-check: save corrompido não pode OOB
+        if (stageIdx < 0 || stageIdx > PWNGOD) stageIdx = PWNGOD;
         lv_label_set_text_fmt(label_stats, "Lvl %d  •  XP %u  •  %s",
-                              pet.level, (unsigned)g.xp, stages[pet.stage]);
+                              pet.level, (unsigned)g.xp, stages[stageIdx]);
 
         if (pet.stage == PWNGOD)      FaceHandler::setFace(FACE_COOL);
         else if (pet.is_sleeping)     FaceHandler::setFace(FACE_SLEEP);

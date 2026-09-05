@@ -86,6 +86,7 @@ public:
                     }
                 }
             }
+            file.close();                     // fecha explicitamente (boa prática)
             file = root.openNextFile();
         }
 

@@ -1,0 +1,90 @@
+/*
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
+ * ARQUIVO LEGADO - MANTIDO PARA REFERÊNCIA
+ */
+
+/**
+ * channel.h: arquivo de cabeçalho para channel.cpp
+<<<<<<< HEAD
+=======
+ * Minigotchi: An even smaller Pwnagotchi
+ * Copyright (C) 2024 dj1ch
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/**
+ * channel.h: header files for channel.cpp
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
+ */
+
+#ifndef CHANNEL_H
+#define CHANNEL_H
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406
+#include <Arduino.h>
+#include <esp_wifi.h>
+
+#include "config.h"
+
+class Channel {
+public:
+  static int channel;
+  static void hop();
+};
+
+#endif
+<<<<<<< HEAD
+=======
+#include "config.h"
+#include "display.h"
+#include "minigotchi.h"
+#include "mood.h"
+#include "parasite.h"
+#include <WiFi.h>
+#include <esp_wifi.h>
+
+// forward declaration of mood class
+class Mood;
+
+class Channel {
+public:
+  static void init(int initChannel);
+  static void cycle();
+  static void switchChannel(int newChannel);
+  static int getChannel();
+  static void checkChannel(int channel);
+  static bool isValidChannel(int channel);
+  static int channelList[13]; // 13 channels
+
+private:
+  static Mood &mood;
+  static int randomIndex;
+  static int numChannels;
+  static int currentChannel;
+  static int newChannel;
+};
+
+#endif // CHANNEL_H
+>>>>>>> origin/waveshare-s3-amoled-complete-ptbr
+=======
+>>>>>>> origin/waveshare-s3-amoled-full-review-406

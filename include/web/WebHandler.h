@@ -55,7 +55,7 @@ public:
         // Página principal
         server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
             if (!checkAuth(request)) return request->requestAuthentication();
-            request->send(200, "text/html", index_html_raw);
+            request->send(200, "text/html", index_html);
         });
 
         // API: Config Get (senhas mascaradas)
@@ -136,6 +136,7 @@ public:
                     item["name"]  = String(file.name());
                     item["size"]  = file.size();
                     item["isDir"] = file.isDirectory();
+                    file.close();             // fecha explicitamente (boa prática)
                     file = dir.openNextFile();
                 }
                 dir.close();

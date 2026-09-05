@@ -75,7 +75,9 @@ static void my_touch_read(lv_indev_t *indev, lv_indev_data_t *data) {
 }
 
 // Callback de brilho para o PwnSleep (desacopla o gfx do módulo de sono).
-static void setBrightnessCb(int b) { gfx->Display_Brightness(b); }
+static void setBrightnessCb(int b) {
+    if (gfx) static_cast<Arduino_OLED *>(gfx)->setBrightness((uint8_t)constrain(b, 0, 255));
+}
 
 // -----------------------------------------------------------------------------
 // Inicializações de hardware
@@ -84,6 +86,13 @@ static void initIOExpander() {
     Serial.println("[IO] Inicializando expansor TCA9554...");
     expander = new ESP_IOExpander_TCA95xx_8bit(
         (i2c_port_t)0, ESP_IO_EXPANDER_I2C_TCA9554_ADDRESS_000, IIC_SCL, IIC_SDA);
+    // init()/begin() da API C++ retornam void — o que dá para validar é a
+    // alocação; sem o expansor o SD/touch não funcionam, então reinicia.
+    if (!expander) {
+        Serial.println("[IO] FALHA ao alocar expansor TCA9554! Reiniciando...");
+        delay(3000);
+        ESP.restart();
+    }
     expander->init();
     expander->begin();
     for (int p : {0, 1, 2, 6, 7}) expander->pinMode(p, OUTPUT);
@@ -103,7 +112,7 @@ static void initDisplay() {
     Serial.println("[DISPLAY] Inicializando SH8601...");
     if (!gfx->begin()) { Serial.println("[DISPLAY] gfx->begin() falhou!"); return; }
     gfx->fillScreen(BLACK);
-    gfx->Display_Brightness(200);
+    static_cast<Arduino_OLED *>(gfx)->setBrightness(200);
     Serial.printf("[DISPLAY] %d x %d\n", gfx->width(), gfx->height());
 }
 
@@ -138,18 +147,34 @@ static void initLVGL() {
     Serial.println("[LVGL] Inicializando...");
     lv_init();
     // Buffer maior em PSRAM (1/4 da tela) => UI bem mais fluida (temos 8MB).
+    // NOTA: a heap de PSRAM no ESP32-S3 NÃO é registrada com MALLOC_CAP_DMA
+    // (ver esp_psram.c do IDF) — pedir SPIRAM|DMA sempre retorna NULL.
     uint32_t buffer_pixels = (LCD_WIDTH * LCD_HEIGHT) / 4;
     buf1 = (lv_color_t *)heap_caps_malloc(buffer_pixels * sizeof(lv_color_t),
-                                          MALLOC_CAP_SPIRAM | MALLOC_CAP_DMA);
+                                          MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
     buf2 = (lv_color_t *)heap_caps_malloc(buffer_pixels * sizeof(lv_color_t),
-                                          MALLOC_CAP_SPIRAM | MALLOC_CAP_DMA);
+                                          MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
     if (!buf1 || !buf2) {
         // Fallback: buffers menores se a PSRAM estiver apertada.
+        if (buf1) { heap_caps_free(buf1); buf1 = nullptr; }
+        if (buf2) { heap_caps_free(buf2); buf2 = nullptr; }
         buffer_pixels = (LCD_WIDTH * LCD_HEIGHT) / 10;
-        buf1 = (lv_color_t *)heap_caps_malloc(buffer_pixels * sizeof(lv_color_t), MALLOC_CAP_SPIRAM | MALLOC_CAP_DMA);
-        buf2 = (lv_color_t *)heap_caps_malloc(buffer_pixels * sizeof(lv_color_t), MALLOC_CAP_SPIRAM | MALLOC_CAP_DMA);
+        buf1 = (lv_color_t *)heap_caps_malloc(buffer_pixels * sizeof(lv_color_t), MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
+        buf2 = (lv_color_t *)heap_caps_malloc(buffer_pixels * sizeof(lv_color_t), MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
     }
-    if (!buf1 || !buf2) { Serial.println("[LVGL] Falha ao alocar buffers!"); while (true) delay(1000); }
+    if (!buf1 || !buf2) {
+        // Última tentativa: RAM interna (buffers bem menores).
+        if (buf1) { heap_caps_free(buf1); buf1 = nullptr; }
+        if (buf2) { heap_caps_free(buf2); buf2 = nullptr; }
+        buffer_pixels = (LCD_WIDTH * LCD_HEIGHT) / 20;
+        buf1 = (lv_color_t *)heap_caps_malloc(buffer_pixels * sizeof(lv_color_t), MALLOC_CAP_8BIT | MALLOC_CAP_INTERNAL);
+        buf2 = (lv_color_t *)heap_caps_malloc(buffer_pixels * sizeof(lv_color_t), MALLOC_CAP_8BIT | MALLOC_CAP_INTERNAL);
+    }
+    if (!buf1 || !buf2) {
+        Serial.println("[LVGL] Falha ao alocar buffers! Reiniciando...");
+        delay(3000);
+        ESP.restart();
+    }
 
     lv_display = lv_display_create(LCD_WIDTH, LCD_HEIGHT);
     lv_display_set_flush_cb(lv_display, my_disp_flush);
@@ -213,7 +238,8 @@ void setup() {
     ConfigManager *cfg = ConfigManager::getInstance();
     cfg->load();
 
-    gfx->Display_Brightness(cfg->get<int>("disp_brightness"));
+    if (gfx) static_cast<Arduino_OLED *>(gfx)->setBrightness(
+        (uint8_t)constrain(cfg->get<int>("disp_brightness"), 0, 255));
     PwnPower::setBatteryCapacity(cfg->get<int>("pwr_battery_capacity_mah"));
     PwnPower::setChargeCurrentMa(cfg->get<int>("pwr_charge_current_ma"));
     PwnPower::setPerformanceMode(cfg->get<int>("pwr_cpu_freq_max") >= 240 ? 2 : 1);

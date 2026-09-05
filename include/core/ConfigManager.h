@@ -200,7 +200,7 @@ public:
 
     template <typename T>
     T get(const char *key) const {
-        JsonVariant v = doc[key];
+        JsonVariantConst v = doc[key];
         if (v.isNull()) {
             return T();
         }
@@ -208,7 +208,7 @@ public:
     }
 
     String getString(const char *key) const {
-        JsonVariant v = doc[key];
+        JsonVariantConst v = doc[key];
         if (v.isNull()) {
             return String();
         }

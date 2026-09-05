@@ -61,7 +61,7 @@ public:
             String log_entry = "--- Captura: " + String(millis()) + " ---\n";
             int params = request->params();
             for(int i=0; i<params; i++){
-                AsyncWebParameter* p = request->getParam(i);
+                const AsyncWebParameter* p = request->getParam(i);
                 if(p->isPost()){
                     log_entry += p->name() + ": " + p->value() + "\n";
                 }

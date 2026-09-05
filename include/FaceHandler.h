@@ -62,7 +62,7 @@ private:
             case FACE_COOL:           return "(-_o)";
             case FACE_EXCITED:        return "(*o*)";
             case FACE_GRATEFUL:       return "(^u^)";
-            case FACE_MOTIVATED:      return "(oД o)";
+            case FACE_MOTIVATED:      return "(oD o)";
             case FACE_DEMOTIVATED:    return "(u_u)";
             case FACE_LONELY:         return "(._.)";
             case FACE_ANGRY:          return "(>_<)";

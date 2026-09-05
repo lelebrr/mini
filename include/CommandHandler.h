@@ -9,12 +9,12 @@
  */
 
 #include <Arduino.h>
-#include <XPowersLib.h>
+#include <Arduino_GFX_Library.h>
+#include "core/PwnPower.h"
 #include "AudioHandler.h"
 #include "FaceHandler.h"
 
 // Referências externas para hardware (definidas no main.cpp)
-extern XPowersPMU power;
 extern Arduino_GFX *gfx;
 
 class CommandHandler {
@@ -31,7 +31,7 @@ public:
                 // Exemplo: "Luz", "Sim", "Pai", "Som"
                 // Ação: Alternar brilho da tela (Lanterna)
                 Serial.println("[Comando] Acao: Alternar Luz (1)");
-                gfx->Display_Brightness(255);
+                if (gfx) static_cast<Arduino_OLED *>(gfx)->setBrightness(255);
                 FaceHandler::setFace(FACE_COOL);
                 AudioHandler::playWav("/success_pt.wav");
                 break;
@@ -50,7 +50,7 @@ public:
                 Serial.println("[Comando] Acao: Bateria (3)");
                 FaceHandler::setFace(FACE_MOTIVATED);
                 {
-                    int pct = power.getBatteryPercent();
+                    int pct = PwnPower::getBatteryPercent();
                     Serial.printf("[Comando] Bateria: %d%%\n", pct);
                 }
                 AudioHandler::playWav("/success_pt.wav");

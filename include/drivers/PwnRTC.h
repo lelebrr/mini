@@ -86,7 +86,11 @@ public:
         tmv.tm_year = d.year - 1900; tmv.tm_mon = d.month - 1; tmv.tm_mday = d.day;
         tmv.tm_hour = d.hour; tmv.tm_min = d.minute; tmv.tm_sec = d.second;
         time_t t = mktime(&tmv);
-        struct timeval tv = { .tv_sec = t, .tv_usec = 0 };
+        // Evita designated initializer (exige C++20; é seguro com C++17 do toolchain,
+        // mas deixa o código portável para toolchains que ainda não padronizaram).
+        struct timeval tv;
+        tv.tv_sec  = t;
+        tv.tv_usec = 0;
         settimeofday(&tv, nullptr);
     }
 

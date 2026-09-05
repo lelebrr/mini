@@ -1,6 +1,17 @@
-# Name,   Type, SubType, Offset,  Size, Flags
-nvs,      data, nvs,     ,        0x4000,
-otadata,  data, ota,     ,        0x2000,
-phy_init, data, phy,     ,        0x1000,
-factory,  app,  factory, ,        10M,
-vfs,      data, fat,     ,        0x500000,
+# Name,   Type, SubType, Offset,   Size,     Flags
+# Layout válido para 16 MB (0x1000000) com OTA A/B.
+# O armazenamento de dados (config, capturas, logs) fica no CARTÃO SD, então
+# não precisamos de uma partição de arquivos grande na flash interna.
+#   nvs      20 KB   — configurações do sistema/Wi-Fi
+#   otadata   8 KB   — seleção da partição OTA ativa
+#   app0    7 MB     — firmware (slot A)  [ota_0]
+#   app1    7 MB     — firmware (slot B)  [ota_1]  (necessário para OTA)
+#   spiffs ~1.9 MB   — sobra utilizável na flash (opcional)
+#   coredump 64 KB   — dump de pânico p/ depuração
+# Soma: termina exatamente em 0x1000000 (16 MB).
+nvs,      data, nvs,      0x9000,   0x5000,
+otadata,  data, ota,      0xe000,   0x2000,
+app0,     app,  ota_0,    0x10000,  0x700000,
+app1,     app,  ota_1,    0x710000, 0x700000,
+spiffs,   data, spiffs,   0xE10000, 0x1E0000,
+coredump, data, coredump, 0xFF0000, 0x10000,

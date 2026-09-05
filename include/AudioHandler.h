@@ -11,8 +11,9 @@ extern "C" {
 #include "es8311.h"
 }
 
-// Cabeçalho WAV simples (PCM 16 bits, mono)
-struct WavHeader {
+// Cabeçalho WAV simples (PCM 16 bits, mono).
+// packed garante sizeof == 44 independente do compilador/padding.
+struct __attribute__((packed)) WavHeader {
     char     riff[4];
     uint32_t chunkSize;
     char     wave[4];
@@ -27,6 +28,7 @@ struct WavHeader {
     char     data[4];
     uint32_t dataSize;
 };
+static_assert(sizeof(WavHeader) == 44, "WavHeader deve ter exatamente 44 bytes");
 
 class AudioHandler {
 public:
@@ -41,7 +43,7 @@ public:
         initI2S();
 
         // Inicializa o codec ES8311 (I2C, mesmo barramento do Wire).
-        es8311_handle_t es = es8311_create((i2c_port_t)0, ES8311_ADDR);
+        es8311_handle_t es = es8311_create(0, ES8311_ADDR);
         if (!es) {
             Serial.println("[Audio] ES8311 não encontrado — áudio desativado.");
             audio_ok = false;
@@ -87,7 +89,7 @@ public:
         };
 
         i2s_pin_config_t pin_config = {
-            .m_ck_io = I2S_MCK_IO,
+            .mck_io_num = I2S_MCK_IO,
             .bck_io_num = I2S_BCK_IO,
             .ws_io_num = I2S_WS_IO,
             .data_out_num = I2S_DO_IO,
