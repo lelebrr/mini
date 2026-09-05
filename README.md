@@ -1,342 +1,361 @@
-# Mini Lele
+<!-- Banner -->
+<p align="center">
+  <img src="docs/img/banner.svg" alt="Mini Lele" width="100%">
+</p>
 
-![Status](https://img.shields.io/badge/status-ativo-brightgreen)
-![Versão](https://img.shields.io/badge/vers%C3%A3o-2.1.0-blue)
-![Plataforma](https://img.shields.io/badge/plataforma-ESP32--S3-orange)
-![Linguagem](https://img.shields.io/badge/linguagem-C%2B%2B%20%2F%20Arduino-informational)
-![Licen%C3%A7a](https://img.shields.io/badge/licen%C3%A7a-GPLv3-important)
+<p align="center">
+  <img src="https://img.shields.io/badge/status-ativo-brightgreen" alt="status">
+  <img src="https://img.shields.io/badge/versão-2.1.0-blue" alt="versão">
+  <img src="https://img.shields.io/badge/plataforma-ESP32--S3-orange" alt="plataforma">
+  <img src="https://img.shields.io/badge/UI-LVGL%209-purple" alt="lvgl">
+  <img src="https://img.shields.io/badge/linguagem-C%2B%2B%20%2F%20Arduino-informational" alt="linguagem">
+  <img src="https://img.shields.io/badge/licença-GPLv3-important" alt="licença">
+  <img src="https://img.shields.io/badge/idioma-PT--BR-success" alt="idioma">
+</p>
 
-O **Mini Lele** é um Tamagotchi Hacker + plataforma de pentest Wi‑Fi totalmente em **Português BR**, pensado para o kit **Waveshare ESP32‑S3‑Touch‑AMOLED‑1.8**.  
-Ele combina:
-
-- Pet virtual que evolui conforme você explora redes Wi‑Fi
-- Ferramentas reais de análise e ataque (para uso legal e educacional)
-- Interface Web completa (WebUI) com mais de 100 opções de configuração
-- Comandos de voz offline em PT‑BR
-- Design otimizado com LVGL e uso intensivo de PSRAM
-
----
-
-## 🧭 Índice
-
-- [Visão geral](#visão-geral)
-- [Funcionalidades principais](#funcionalidades-principais)
-- [Hardware suportado](#hardware-suportado)
-- [Arquitetura do projeto](#arquitetura-do-projeto)
-- [Instalação rápida](#instalação-rápida)
-- [Modos de operação de rede](#modos-de-operação-de-rede)
-- [Comandos de voz](#comandos-de-voz)
-- [Estrutura do cartão SD](#estrutura-do-cartão-sd)
-- [Documentação complementar](#documentação-complementar)
-- [Contribuindo com o projeto](#contribuindo-com-o-projeto)
-- [Aviso legal](#aviso-legal)
+<p align="center">
+  <b>Tamagotchi Hacker + laboratório de pentest Wi‑Fi de bolso</b>, 100% em Português‑BR,<br>
+  para a placa <b>Waveshare ESP32‑S3‑Touch‑AMOLED‑1.8</b>.
+</p>
 
 ---
 
-## Visão geral
+## 📑 Índice
 
-- **Nome:** Mini Lele  
-- **Versão:** 2.1 (God Tier — integrado, corrigido e otimizado)  
-- **Autor original:** Jules (Agent) – adaptado e documentado para PT‑BR  
-- **Placa alvo:** Waveshare ESP32‑S3‑Touch‑AMOLED‑1.8  
-- **Display:** 1.8" AMOLED, 368x448 (SH8601, interface QSPI)  
-- **Foco:** Pentest Wi‑Fi, gamificação e aprendizado de segurança ofensiva
-
-O Mini Lele foi pensado para quem quer:
-
-- Estudar protocolos Wi‑Fi de forma divertida
-- Ter um “companheiro hacker” de bolso
-- Ter um laboratório portátil com WebUI, sniffer, portal cativo e upload de handshakes
-
----
-
-## Funcionalidades principais
-
-### 🐣 Tamagotchi Hacker
-
-- Pet virtual que “se alimenta” de:
-  - Handshakes WPA2/WPA3
-  - Probes e atividade Wi‑Fi em geral
-- Sistema de **XP e níveis**, com múltiplas evoluções (Egg → Baby → Kid → Teen → Adult → “Deus do Pwn”).
-- Barras de:
-  - Fome
-  - Felicidade
-  - Energia / Bateria
-- Faces ASCII e/ou imagens customizadas que reagem ao seu estilo de uso.
-
-### 🛰 Ferramentas de pentest Wi‑Fi
-
-- Sniffer em modo promíscuo
-  - Lista APs e clientes próximos
-  - Gera arquivos `.pcap` no cartão SD para análise posterior
-- Deauth / ataques ativos
-  - Força reconexão de clientes para captura de handshakes
-  - Pode ser disparado manualmente ou quando o Pet está “com muita fome”
-- Evil Portal (Portal Cativo)
-  - Pontos de acesso falsos com templates HTML personalizáveis
-  - Registro de credenciais em arquivo de log no SD
-- Captura e organização de handshakes
-  - Diretório dedicado no SD
-  - Integração com upload manual/automático para serviços de cracking (ex.: wpa-sec)
-
-Sempre utilize apenas em redes **suas** ou com **autorização explícita**.
-
-### 🌐 WebUI (Interface Web)
-
-- Painel responsivo **100% autocontido** (sem depender de CDN): funciona
-  totalmente **offline** no modo AP, com tema neon, medidores circulares,
-  cartão de bateria/carga e animações.
-- Mais de **100 configurações** em tempo real, agrupadas por categoria (Pet,
-  Display, Energia/Bateria, Ataques/WiFi, Sistema, WebUI):
-  - Nome do Pet, tema, brilho, economia de energia
-  - Parâmetros de scan, filtros, potência de TX (quando suportado)
-  - Controle do Evil Portal, listas de permissão/bloqueio (whitelist/blacklist)
-- Gerenciador de arquivos do cartão SD:
-  - Upload/Download de `.pcap`, logs, templates HTML e arquivos de configuração
-- Logs ao vivo via WebSocket
-- Controles remotos básicos (iniciar/pausar scans, mudar modo, reiniciar, etc.)
-
-### 🗣 Voz offline (Português BR)
-
-- Detecção offline de padrões sonoros simples
-- Comandos curtos, otimizados para funcionamento sem internet
-- Feedback por áudio (WAV 16 kHz) e animações na tela
-
-### 🔋 Bateria e carregamento (USB‑C)
-
-- Gerenciado por hardware pelo **PMU AXP2101** — basta conectar o cabo **USB‑C**
-  para carregar a bateria LiPo.
-- Otimizado para a célula **PL502030 250 mAh / 3,7 V**:
-  - Corrente de carga: **100 mA** (~0,4C, seguro para 250 mAh; ajustável em 100/125/150/200 mA)
-  - Tensão de corte: **4,2 V** (padrão LiPo)
-  - Corrente de término: **25 mA** (~0,1C)
-  - Detecção do pino **TS desligada** (a célula não tem termistor — obrigatório
-    para o carregamento funcionar corretamente)
-  - Desligamento de proteção em ~5% e aviso em ~10%
-- Monitoramento em tempo real (na tela e na WebUI): porcentagem, tensão, estado
-  de carga (CC/CV/completa), presença de USB‑C e autonomia estimada.
-- Modo crítico automático (reduz clock e desliga o Wi‑Fi em bateria baixa), com
-  saída automática do modo crítico quando o USB‑C é conectado.
-
-> ⚠️ A corrente de carga acima de 125 mA (0,5C) não é recomendada para uma célula
-> de 250 mAh. O padrão de 100 mA é o mais seguro.
-
-### ⚙️ Performance e tecnologia
-
-- Framework: **Arduino** para ESP32‑S3
-- UI: **LVGL 9.x** (otimizada para PSRAM e double buffering)
-- Otimizações de compilador (`-O3`) e uso cuidadoso de PSRAM
-- Drivers específicos para:
-  - Display SH8601 (QSPI)
-  - Touch (FT3168 / GT1151)
-  - Codec de áudio ES8311
-  - PMU AXP2101
-  - IMU QMI8658
-  - Expansor I²C TCA9554
+- [Visão geral](#-visão-geral)
+- [Destaques](#-destaques)
+- [Prévia](#-prévia)
+- [Arquitetura](#-arquitetura)
+- [Sequência de boot](#-sequência-de-boot)
+- [Energia & carregamento](#-energia--carregamento-usb-c)
+- [Pipeline de captura Wi‑Fi](#-pipeline-de-captura-wi-fi)
+- [Evolução do pet](#-evolução-do-pet)
+- [Hardware & pinagem](#-hardware--pinagem)
+- [Instalação](#-instalação)
+- [WebUI & comandos](#-webui--comandos-de-voz)
+- [Referência de configuração](#-referência-de-configuração)
+- [Estrutura do repositório](#-estrutura-do-repositório)
+- [Roadmap](#-roadmap)
+- [Aviso legal](#-aviso-legal)
+- [Licença](#-licença)
 
 ---
 
-## Hardware suportado
+## 🧭 Visão geral
 
-Projeto desenhado para a placa:
+O **Mini Lele** combina um **pet virtual** que evolui conforme você explora o
+espectro Wi‑Fi/BLE com **ferramentas reais** de análise de redes — tudo numa
+tela AMOLED sensível ao toque, com WebUI, voz offline e gerenciamento de energia
+para bateria LiPo.
 
-- **Waveshare ESP32‑S3‑Touch‑AMOLED‑1.8**
-  - ESP32‑S3R8 (Dual‑Core, 240 MHz, 16 MB Flash, 8 MB PSRAM)
-  - Tela AMOLED 1.8" 368x448 (SH8601, QSPI)
-  - Touch capacitivo (FT3168 ou GT1151, I²C)
-  - Codec de áudio ES8311 + microfone + amplificador
-  - PMU AXP2101 com suporte a bateria LiPo 3.7 V
-  - IMU QMI8658 (acel. + giroscópio)
-  - Slot microSD (FAT32)
-
-Detalhes completos de pinagem e chips: consulte `FULL_HARDWARE.md` e `HARDWARE.md`.
-
----
-
-## Arquitetura do projeto
-
-Principais pastas do repositório:
-
-- `src/`
-  - `main.cpp`: **integra todos os módulos** — inicializa hardware (expansor,
-    PMU/carga, display, touch FT3168, IMU, SD, LVGL) e sobe a camada de
-    aplicação (config, pet, gamificação, UI, áudio, WebUI) no `setup()`/`loop()`.
-  - `core_singletons.cpp`: definições dos membros estáticos dos módulos.
-  - `legacy/`: firmware antigo (não compilado — excluído via `build_src_filter`).
-- `include/`
-  - Cabeçalhos e lógica de alto nível
-  - `pin_config.h`: mapeamento completo de pinos da placa
-  - `core/`: lógicas de jogo, gamificação, configuração, etc.
-  - `drivers/`: drivers de display, touch, PMU, áudio, IMU, SD, etc.
-  - `web/`: handlers da WebUI, APIs HTTP/WebSocket e templates embutidos
-- `lib/`
-  - Bibliotecas externas ou adaptadas (ES8311, expansor de IO, etc.)
-- `arquivos_cartao_sd/`
-  - Estrutura base de arquivos para o cartão SD (evil_portal, tts, voice, etc.)
-- `sd_card_files/`
-  - Versões/estruturas antigas – mantenha o foco em `arquivos_cartao_sd/` na versão atual
-- `generate_sd_structure.sh`
-  - Script para gerar automaticamente a estrutura mínima do SD em `sd_out/`
-- `platformio.ini`
-  - Configuração completa do ambiente `env:waveshare-esp32-s3-amoled`
+| | |
+|---|---|
+| **Placa** | Waveshare ESP32‑S3‑Touch‑AMOLED‑1.8 |
+| **MCU** | ESP32‑S3R8 · dual‑core 240 MHz · 8 MB PSRAM · 16 MB Flash |
+| **Tela** | AMOLED 1.8" 368×448 (SH8601, QSPI) + toque FT3168 |
+| **Sensores** | IMU QMI8658 · RTC PCF85063 · Codec ES8311 (mic/alto‑falante) |
+| **Energia** | PMU AXP2101 · carga LiPo por USB‑C · bateria configurável |
+| **UI** | LVGL 9 (PSRAM, double‑buffer) + WebUI offline responsiva |
 
 ---
 
-## Instalação rápida
+## ✨ Destaques
 
-Para detalhes completos, leia `INSTALACAO.md`.  
-Abaixo, um resumo:
-
-1. Pré‑requisitos
-   - VS Code + extensão **PlatformIO IDE**
-   - Python 3.x instalado
-   - Cabo USB‑C de boa qualidade
-   - **Internet na primeira compilação:** a maioria das bibliotecas é
-     vendorizada em `lib/`, mas três dependências são baixadas automaticamente
-     pelo PlatformIO no primeiro build (ficam em cache depois):
-     `XPowersLib` (PMU/bateria), `AsyncTCP` e `ESPAsyncWebServer` (WebUI/Portal).
-     O touch FT3168 usa um driver próprio interno (sem TouchLib).
-2. Clonar o repositório
-   ```bash
-   git clone https://github.com/seu-usuario/mini-lele.git
-   cd mini-lele
-   ```
-3. Preparar o cartão SD
-   - Formate em **FAT32**
-   - Rode:
-     ```bash
-     sh generate_sd_structure.sh
-     ```
-   - Copie o conteúdo de `sd_out/` para a raiz do cartão microSD
-4. Compilar e gravar o firmware
-   - Abra o projeto no VS Code
-   - Selecione o ambiente `waveshare-esp32-s3-amoled`
-   - Clique em:
-     - `Build` (compilar)
-     - `Upload` (gravar o firmware)
-5. Primeiro boot
-   - Insira o cartão SD na placa
-   - Conecte a bateria ou USB‑C
-   - Aguarde o boot do Mini Lele até aparecer a tela inicial do Pet
-
-Problemas comuns e soluções detalhadas: veja `INSTALACAO.md`.
+- 🐣 **Pet evolutivo** — Egg → Baby → Kid → Teen → Adult → PwnLord → **PwnGod**, alimentado por handshakes e atividade de rede.
+- 📡 **Captura Wi‑Fi real** — sniffer promíscuo, `.pcap` de verdade (linktype 105), detecção de **EAPOL/handshake**.
+- 🔵 **Scanner BLE** — dispositivos Bluetooth LE viram "comida" extra do pet.
+- 🔋 **Carga por USB‑C** — via AXP2101, com **capacidade de bateria configurável** (troque a célula sem recompilar).
+- 😴 **Economia de energia** — timeout de tela, auto‑dim, deep sleep com acordar por toque/movimento.
+- 🕹 **Interação física** — chacoalhar alimenta o pet (IMU); botão para trocar de tela.
+- 🕐 **Relógio real (RTC)** — hora certa na tela e nos logs, com sincronização NTP.
+- 🌐 **WebUI offline** — dashboard neon 100% autocontido (sem CDN), OTA, logs ao vivo, gerenciador de arquivos.
+- 🗣 **Voz offline PT‑BR** — comandos por contagem de sílabas + feedback em áudio.
+- 🖥 **Anti‑burn‑in** — deslocamento de pixels e dimming para preservar o AMOLED.
 
 ---
 
-## Modos de operação de rede
+## 🖼 Prévia
 
-O Mini Lele pode operar em dois modos principais:
+### Tela no dispositivo (navegação por gestos)
 
-### 1. Modo AP (padrão)
+<p align="center"><img src="docs/img/device-ui.svg" alt="Telas do dispositivo" width="100%"></p>
 
-- Cria um ponto de acesso próprio:
-  - **SSID:** `Mini-Lele`
-  - **Senha:** `minilele`
-- IP padrão: `192.168.4.1`
-- Acesse no navegador:
-  - `http://192.168.4.1`
-  - ou (quando suportado) `http://minilele.local`
+### WebUI (navegador — funciona offline no modo AP)
 
-Este modo é ideal para configuração inicial e uso totalmente offline.
+<p align="center"><img src="docs/img/webui.svg" alt="WebUI" width="100%"></p>
 
-### 2. Modo STA (cliente Wi‑Fi)
-
-- Configurável pela WebUI:
-  - Informe SSID, senha e, opcionalmente, configurações avançadas
-- O endereço IP obtido via DHCP é exibido na tela principal do Pet ou na aba de **Status** da WebUI
-- Permite:
-  - Upload automático/manual de handshakes
-  - Atualizações e integrações que dependam de rede local
+> 💡 Abra `webui_preview.html` no navegador para uma prévia interativa da WebUI.
 
 ---
 
-## Comandos de voz
+## 🧩 Arquitetura
 
-Os comandos de voz são baseados em padrões de som simples (número de sílabas/pulsos), otimizados para funcionar offline.
+```mermaid
+flowchart TB
+    subgraph HW["🔌 Hardware (I²C / QSPI / I²S / SDMMC)"]
+        EXP[TCA9554<br/>IO Expander]:::hw
+        DISP[SH8601 AMOLED]:::hw
+        TOUCH[FT3168 Touch]:::hw
+        PMU[AXP2101 PMU]:::hw
+        IMU[QMI8658 IMU]:::hw
+        RTCC[PCF85063 RTC]:::hw
+        AUDIO[ES8311 Codec]:::hw
+        SD[(microSD)]:::hw
+    end
 
-Exemplos (podem variar conforme configuração):
+    subgraph DRV["🧱 Drivers"]
+        TFT[TouchFT3168]:::drv
+        PRTC[PwnRTC]:::drv
+        GFX[Arduino_GFX + LVGL 9]:::drv
+    end
 
-- “**Ei Lele**” – acorda o sistema de escuta / ativa interação
-- “**Status**” – o Mini Lele fala (e mostra) o estado atual (XP, bateria, etc.)
-- “**Ataque**” – inicia um ciclo de varredura/ataque mais agressivo
+    subgraph CORE["🧠 Núcleo"]
+        CFG[ConfigManager<br/>config.json]:::core
+        PET[PwnPet]:::core
+        GAM[Gamification]:::core
+        POW[PwnPower<br/>bateria/carga]:::core
+        SLP[PwnSleep]:::core
+        UI[PwnUI<br/>tileview]:::core
+        VOICE[PwnVoice]:::core
+        ATK[PwnAttack]:::core
+    end
 
-Detalhes, ajustes finos e exemplos de arquivos de áudio estão descritos em `MANUAL.md` e `MISSING_ASSETS.md`.
+    subgraph FEAT["🛠 Ferramentas"]
+        WIFI[WiFiTools<br/>sniffer + pcap]:::feat
+        BLE[PwnBLE]:::feat
+        PORTAL[EvilPortal]:::feat
+        AUDH[AudioHandler]:::feat
+        WEB[WebHandler + WebUI]:::feat
+    end
 
----
+    HW --> DRV --> CORE --> FEAT
+    PMU --> POW
+    IMU --> PET
+    RTCC --> PRTC
+    AUDIO --> AUDH
+    SD --> CFG & WIFI & PET
+    WEB --> CFG
+    ATK --> WIFI & PORTAL
 
-## Estrutura do cartão SD
-
-Resumo (detalhado em `MISSING_ASSETS.md`):
-
-```text
-/
-├── arquivos_cartao_sd/
-│   ├── evil_portal/              # Templates HTML do portal cativo
-│   ├── tts/                      # Áudios TTS (WAV 16 kHz, 16-bit mono)
-│   ├── voice/                    # Gravações de entrada / processamento
-│   ├── wifi_config.txt           # Credenciais para upload (WPA-SEC etc.)
-│   ├── macs_detectados.txt       # Log do sniffer Wi‑Fi
-│   └── credenciais_capturadas.txt# Log de senhas do Evil Portal
-├── capturas/                     # Handshakes e .pcap salvos
-└── fila_envio/                   # Arquivos na fila de upload
+    classDef hw fill:#1a2230,stroke:#4bd6ff,color:#e6f0ff;
+    classDef drv fill:#151b26,stroke:#38ff9e,color:#e6f0ff;
+    classDef core fill:#161326,stroke:#b26bff,color:#e6f0ff;
+    classDef feat fill:#12211a,stroke:#38ff9e,color:#e6f0ff;
 ```
 
-Use `generate_sd_structure.sh` para criar essa estrutura automaticamente com placeholders.
+Veja **[docs/ARQUITETURA.md](docs/ARQUITETURA.md)** para o detalhamento de cada módulo.
 
 ---
 
-## Documentação complementar
+## 🔁 Sequência de boot
 
-Toda a documentação foi organizada em PT‑BR:
-
-- `INSTALACAO.md` – Guia passo a passo de instalação e preparação do ambiente
-- `MANUAL.md` – Manual de uso do Mini Lele (voz, WebUI, sniffer, Evil Portal, upload, gamificação)
-- `HARDWARE.md` – Resumo de hardware, pinagem principal e visão rápida
-- `FULL_HARDWARE.md` – Documentação completa de hardware (pinos, chips, tensões, observações)
-- `DISPLAY_GUIDE.md` – Guia detalhado de display AMOLED e touchscreen (drivers, sequências, debug)
-- `MISSING_ASSETS.md` – Lista de assets que precisam estar no SD (áudio, imagens, templates)
-- `README_PlatformIO.md` – Detalhes sobre o uso do PlatformIO com o Mini Lele
-- `TUTORIAL.md` – “Primeiros passos” com o Mini Lele (para iniciantes)
-- `CONTRIBUTING.md` – Como contribuir com o projeto
+```mermaid
+sequenceDiagram
+    autonumber
+    participant M as main::setup()
+    participant HW as Hardware
+    participant APP as Módulos
+    M->>HW: Wire.begin() + TCA9554 (reset display/touch, SD CS=HIGH)
+    M->>HW: PwnPower.init() → rails + carga AXP2101
+    M->>HW: SH8601 display + FT3168 touch + QMI8658 IMU
+    M->>HW: SD_MMC.begin() (1-bit)
+    M->>HW: LVGL init (buffers em PSRAM)
+    M->>APP: ConfigManager.load() (/config.json)
+    M->>APP: aplica capacidade/carga/brilho
+    M->>APP: RTC, Gamification, Pet, Audio, UI, Voz
+    M->>APP: PwnSleep + WebHandler (AP + WebUI)
+    M->>APP: NTP (se STA) + sniffer passivo (se auto)
+    M-->>M: loop() → LVGL, captura, energia, UI
+```
 
 ---
 
-## Contribuindo com o projeto
+## 🔋 Energia & carregamento (USB‑C)
 
-O Mini Lele é um projeto comunitário.  
-Você pode ajudar:
+O **AXP2101** cuida da carga por hardware — basta conectar o **USB‑C**. O firmware
+apenas aplica parâmetros **seguros** para a célula instalada.
 
-- Abrindo issues com bugs, ideias ou melhorias
-- Enviando Pull Requests:
-  - Novos templates de Evil Portal
-  - Melhorias na WebUI
-  - Novas animações/faces do Pet
-  - Otimizações de performance ou estabilidade
-- Melhorando a documentação e exemplos
+> 🔧 **Bateria inicial:** LiPo **PL502030 · 250 mAh · 3,7 V**.
+> A **capacidade é configurável** (`pwr_battery_capacity_mah`): ao trocar por uma
+> célula maior, basta alterar o valor na WebUI — **sem mexer no código**.
 
-Leia `CONTRIBUTING.md` para conhecer o fluxo sugerido de contribuição (branchs, estilo de código, testes, etc).
+| Parâmetro | Valor padrão | Observação |
+|-----------|--------------|------------|
+| Corrente de carga (CC) | **100 mA** (~0,4C) | ajustável: 100/125/150/200 mA · use ≤ 0,5C |
+| Tensão de corte | **4,2 V** | padrão LiPo de 1 célula |
+| Corrente de término | **25 mA** (~0,1C) | encerra a carga corretamente |
+| Detecção do pino TS | **desligada** | obrigatório p/ célula sem termistor |
+| Aviso / desligamento | **10% / 5%** | proteção da célula |
+
+```mermaid
+stateDiagram-v2
+    [*] --> EmBateria
+    EmBateria --> Carregando: USB‑C conectado
+    Carregando --> Completa: 4,2V / término 25mA
+    Completa --> EmBateria: USB‑C removido
+    Carregando --> EmBateria: USB‑C removido
+    EmBateria --> Critico: bateria < 10%
+    Critico --> Carregando: USB‑C conectado
+    Critico --> DeepSleep: ocioso + bateria baixa
+    EmBateria --> DeepSleep: ocioso (timeout)
+    DeepSleep --> EmBateria: toque / movimento
+    note right of Critico
+      Clock reduzido (Eco 80MHz)
+      Wi‑Fi desligado
+    end note
+```
+
+---
+
+## 📡 Pipeline de captura Wi‑Fi
+
+O callback promíscuo é **rápido** (só copia frames de interesse para a RAM); a
+gravação lenta no SD acontece no loop principal — evitando travar o driver Wi‑Fi.
+
+```mermaid
+flowchart LR
+    A[Rádio Wi‑Fi<br/>modo promíscuo]:::a --> B{Tipo de frame?}:::b
+    B -->|Probe Req| C[Atualiza lista<br/>de dispositivos]:::c
+    B -->|Beacon| D[Amostra p/ SSID]:::c
+    B -->|Data + EAPOL<br/>0x888E| E[Fila de captura<br/>RAM]:::e
+    C & D & E --> F[loop: WiFiTools.flush]:::f
+    F --> G[(.pcap no SD<br/>linktype 105)]:::g
+    E -->|handshake!| H[Pet ganha XP]:::h
+    classDef a fill:#12211a,stroke:#38ff9e,color:#e6f0ff;
+    classDef b fill:#161326,stroke:#b26bff,color:#e6f0ff;
+    classDef c fill:#1a2230,stroke:#4bd6ff,color:#e6f0ff;
+    classDef e fill:#211a12,stroke:#ffa53b,color:#e6f0ff;
+    classDef f fill:#151b26,stroke:#38ff9e,color:#e6f0ff;
+    classDef g fill:#1a2230,stroke:#4bd6ff,color:#e6f0ff;
+    classDef h fill:#12211a,stroke:#38ff9e,color:#e6f0ff;
+```
+
+---
+
+## 🐣 Evolução do pet
+
+```mermaid
+flowchart LR
+    EGG["🥚 EGG<br/>Lvl 1"] --> BABY["🐣 BABY<br/>Lvl 5"] --> KID["🐤 KID<br/>Lvl 10"] --> TEEN["🐥 TEEN<br/>Lvl 20"] --> ADULT["🐔 ADULT<br/>Lvl 30"] --> LORD["😎 PWNLORD<br/>Lvl 50"] --> GOD["👑 PWNGOD<br/>10k handshakes"]
+```
+
+Handshakes WPA (+XP), atividade de rede e carinho (chacoalhar) aumentam XP, fome
+e felicidade. Os stats persistem no SD **e** na RAM RTC (sobrevive ao deep sleep).
+
+---
+
+## 🧷 Hardware & pinagem
+
+> ⚠️ **Pinos corrigidos na v2.1** (conferidos na wiki oficial Waveshare):
+> `SD_D0 = GPIO3` (era 42) e **amplificador em GPIO46** (não no expansor).
+
+| Bloco | Sinais (GPIO) |
+|-------|---------------|
+| **Display QSPI (SH8601)** | CS 12 · SCLK 11 · SDIO0‑3 = 4/5/6/7 · RST via EXIO0 |
+| **I²C** (touch/PMU/IMU/RTC/IO) | SDA 15 · SCL 14 |
+| **Touch FT3168** | INT 21 · addr 0x38 |
+| **Áudio I²S (ES8311)** | MCLK 16 · BCLK 9 · WS 45 · DO 8 · DI 10 · **PA 46** |
+| **Cartão SD (SDMMC 1‑bit)** | CLK 2 · CMD 1 · **D0 3** · **CS = EXIO7** |
+| **Botão** | BOOT (GPIO0) |
+
+Endereços I²C: AXP2101 `0x34` · FT3168 `0x38` · TCA9554 `0x20` · QMI8658 `0x6B`
+· ES8311 `0x18` · PCF85063 `0x51`. Detalhes em **[HARDWARE.md](HARDWARE.md)** e
+**[FULL_HARDWARE.md](FULL_HARDWARE.md)**.
+
+---
+
+## 🚀 Instalação
+
+```bash
+git clone https://github.com/lelebrr/mini.git
+cd mini
+```
+
+1. **VS Code + PlatformIO IDE** e Python 3.x.
+2. **Primeira compilação precisa de internet:** a maioria das libs é vendorizada
+   em `lib/`, mas `XPowersLib`, `AsyncTCP` e `ESPAsyncWebServer` são baixadas
+   automaticamente (depois ficam em cache). O touch usa um driver interno próprio.
+3. Prepare o **cartão SD** (FAT32): rode `sh generate_sd_structure.sh` e copie
+   `sd_out/` para a raiz.
+4. Ambiente **`waveshare-esp32-s3-amoled`** → **Build** → **Upload**.
+5. Primeiro boot: acompanhe o log serial (USB‑CDC, `115200`).
+
+Guia completo em **[INSTALACAO.md](INSTALACAO.md)** · detalhes do PlatformIO em
+**[README_PlatformIO.md](README_PlatformIO.md)**.
+
+---
+
+## 🌐 WebUI & comandos de voz
+
+**WebUI** — modo AP padrão: SSID `Mini-Lele`, senha `minilele`, acesse
+`http://192.168.4.1` (portal cativo redireciona qualquer URL). Abas: Painel,
+Configurações (100+ opções agrupadas), Arquivos (upload/download), Sistema (OTA,
+reiniciar) e Logs ao vivo.
+
+**Voz (offline, PT‑BR)** — comandos por contagem de sílabas: "Status", "Bateria",
+"Ataque". Ver **[MANUAL.md](MANUAL.md)**.
+
+---
+
+## ⚙️ Referência de configuração
+
+Todas as chaves ficam em `/config.json` (SD) e são editáveis pela WebUI.
+
+| Grupo | Exemplos de chaves |
+|-------|--------------------|
+| 🐣 `pet_` | `pet_name`, `pet_voice_enabled`, `pet_hunger_rate` |
+| 🖥 `disp_` | `disp_brightness`, `disp_timeout_sec`, `disp_theme` |
+| 🔋 `pwr_` | **`pwr_battery_capacity_mah`**, `pwr_charge_current_ma`, `pwr_deep_sleep_enabled`, `pwr_deep_sleep_after_sec` |
+| 📡 `atk_` | `atk_auto_scan`, `atk_deauth_enabled`, `atk_evil_portal`, `atk_ble_scan` |
+| ⚙️ `sys_` | `sys_ap_ssid`, `sys_wifi_mode`, `sys_ntp_server`, `sys_timezone`, `sys_watchdog` |
+| 🌐 `web_` | `web_live_logs`, `web_theme` |
+
+---
+
+## 📂 Estrutura do repositório
+
+```
+mini/
+├── src/            main.cpp (integra tudo) · core_singletons.cpp · legacy/ (não compilado)
+├── include/
+│   ├── core/       PwnPet, PwnPower, PwnUI, PwnSleep, PwnBLE, PwnAttack, PwnVoice, ConfigManager
+│   ├── drivers/    TouchFT3168, PwnRTC, PwnIMU
+│   ├── web/        WebHandler, WebAssets (WebUI embutida)
+│   └── *.h         WiFiTools, EvilPortal, AudioHandler, Gamification, FaceHandler...
+├── lib/            bibliotecas vendorizadas (lvgl, ArduinoJson, Arduino_GFX, SensorLib, es8311...)
+├── docs/           documentação + diagramas/imagens
+├── demo/           exemplos oficiais Waveshare
+├── arquivos_cartao_sd/   estrutura base do cartão SD
+├── platformio.ini  ambiente de build
+└── generate_sd_structure.sh
+```
+
+---
+
+## 🗺 Roadmap
+
+- [x] Integração completa da arquitetura v2.0
+- [x] Carga USB‑C + capacidade configurável
+- [x] RTC/NTP, economia de energia, IMU, BLE
+- [x] Captura `.pcap` real + EAPOL
+- [x] WebUI offline + UI por gestos
+- [ ] Upload automático para wpa‑sec agendado
+- [ ] Temas de tela adicionais
+- [ ] Parser PMKID/hashcat 22000 no dispositivo
 
 ---
 
 ## ⚠️ Aviso legal
 
-Este firmware é fornecido **exclusivamente** para:
+Firmware **exclusivamente educacional**, para uso em redes **próprias** ou com
+**autorização explícita**. Deauth, captura de handshakes e portais cativos sem
+autorização são **ilegais** em muitos países. Ao usar o Mini Lele, você concorda
+em respeitar a legislação local e assume total responsabilidade pelo uso.
 
-- Estudos de segurança em redes **próprias**
-- Ambientes de laboratório controlados
-- Pesquisas e demonstrações educacionais
+---
 
-O uso de:
+## 📄 Licença
 
-- Ataques de deautenticação,
-- Captura de handshakes,
-- Portais cativos para coleta de credenciais,
+Distribuído sob a licença **GNU GPLv3** — veja [LICENSE](LICENSE).
 
-em redes ou dispositivos de terceiros **sem autorização explícita** é **ilegal** em diversos países.
-
-Ao utilizar o Mini Lele, você concorda em:
-
-- Respeitar a legislação local
-- Não responsabilizar os autores, mantenedores ou contribuidores por qualquer uso indevido
-
-Use com responsabilidade. Aprenda, ensine, compartilhe conhecimento – sem prejudicar outras pessoas.
+<p align="center"><sub>Feito com 💚 em Português‑BR · contribuições bem‑vindas (veja <a href="CONTRIBUTING.md">CONTRIBUTING.md</a>)</sub></p>
