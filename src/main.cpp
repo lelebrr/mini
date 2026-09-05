@@ -307,6 +307,7 @@ void loop() {
         PwnPower::monitor();
         PwnAttack::tick();
         PwnSleep::tick();           // economia de energia
+        FaceHandler::setEnabled(!PwnSleep::isScreenOff());  // pausa a animação c/ tela off
         if (!PwnSleep::isScreenOff()) PwnUI::update();  // não desenha com tela off
     }
 
