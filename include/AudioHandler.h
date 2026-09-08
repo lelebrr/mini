@@ -7,6 +7,7 @@
 #include <driver/i2s.h>
 #include "esp_heap_caps.h"
 #include "pin_config.h"
+#include <math.h>
 extern "C" {
 #include "es8311.h"
 }
@@ -43,7 +44,8 @@ public:
         initI2S();
 
         // Inicializa o codec ES8311 (I2C, mesmo barramento do Wire).
-        es8311_handle_t es = es8311_create(0, ES8311_ADDR);
+        // 0x18 = ES8311 I2C address (CE pin low)
+        es8311_handle_t es = es8311_create(0, 0x18);
         if (!es) {
             Serial.println("[Audio] ES8311 não encontrado — áudio desativado.");
             audio_ok = false;
@@ -105,6 +107,42 @@ public:
     static void setAmpPower(bool on) {
         digitalWrite(PA, on ? HIGH : LOW);
     }
+
+    // ------------------------------------------------------------------
+    // BEEP sintetizado (sem WAV) — ÚNICO retorno sonoro do sistema.
+    // Tom senoidal curto escrito direto no I2S, com envelope p/ evitar clique.
+    // ------------------------------------------------------------------
+    static void beep(int freq = 2200, int ms = 35, int volume = 55) {
+        if (!audio_ok) return;
+        const int sr = 16000;
+        i2s_set_sample_rates(I2S_NUM_0, sr);
+        setAmpPower(true);
+        const int total = sr * ms / 1000;
+        const int chunk = 256;
+        int16_t buf[chunk];
+        int amp = (int)(32767.0f * (constrain(volume, 0, 100) / 100.0f) * 0.6f);
+        size_t bw; int n = 0;
+        while (n < total) {
+            int c = (total - n) < chunk ? (total - n) : chunk;
+            for (int i = 0; i < c; ++i) {
+                int idx = n + i;
+                float env = 1.0f;
+                int rem = total - idx;
+                if (idx < 48)       env = idx / 48.0f;
+                else if (rem < 48)  env = rem / 48.0f;
+                buf[i] = (int16_t)(amp * env * sinf(2.0f*3.14159265f*freq*(float)idx/sr));
+            }
+            i2s_write(I2S_NUM_0, buf, c*sizeof(int16_t), &bw, portMAX_DELAY);
+            n += c;
+        }
+        int16_t zero[64] = {0};
+        i2s_write(I2S_NUM_0, zero, sizeof(zero), &bw, portMAX_DELAY);
+        setAmpPower(false);
+    }
+
+    // Beep duplo curto (confirmação / evento importante).
+    static void beepOk()   { beep(2000, 30); delay(20); beep(2600, 45); }
+    static void beepWarn() { beep(1200, 60); }
 
     // Resolve caminho para compatibilidade:
     //  - se começar com "/arquivos_cartao_sd" usa direto

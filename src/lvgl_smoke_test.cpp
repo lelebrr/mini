@@ -3,7 +3,7 @@
 #include <lvgl.h>
 
 #include <Arduino_GFX_Library.h>
-#include <ESP_IOExpander_Library.h>
+#include "drivers/TCA9554.h"   // expansor TCA9554 próprio (via Wire/driver_ng)
 #include "esp_heap_caps.h"
 
 #include "pin_config.h"
@@ -21,7 +21,7 @@
 // -----------------------------------------------------------------------------
 // Globais de hardware (mínimas para display)
 // -----------------------------------------------------------------------------
-static ESP_IOExpander *smoke_expander = nullptr;
+static TCA9554 smoke_expander;
 
 static Arduino_DataBus *smoke_bus = new Arduino_ESP32QSPI(
     LCD_CS,      // CS
@@ -36,10 +36,12 @@ static Arduino_GFX *smoke_gfx = new Arduino_SH8601(
     smoke_bus,
     LCD_RST,     // RST (-1: via IO expander)
     0,           // rotation
-    false,       // IPS
     LCD_WIDTH,
     LCD_HEIGHT
 );
+// Construtor da GFX Library >= 1.6.x: (bus, rst, rotation, w, h, offsets...).
+// O parâmetro 'ips' não existe mais; a chamada antiga passava 'false' como
+// largura e LCD_HEIGHT como col_offset (truncado de 448 para 192).
 
 // -----------------------------------------------------------------------------
 // Globais LVGL
@@ -78,30 +80,30 @@ static void smoke_disp_flush(lv_display_t *disp, const lv_area_t *area, uint8_t 
 static void smoke_init_ioexpander() {
     Serial.println("[SMOKE][IO] Initializing TCA9554 IO expander...");
 
-    smoke_expander = new ESP_IOExpander_TCA95xx_8bit(
-        (i2c_port_t)0,
-        ESP_IO_EXPANDER_I2C_TCA9554_ADDRESS_000,
-        IIC_SCL,
-        IIC_SDA
-    );
-    smoke_expander->init();
-    smoke_expander->begin();
+    // Driver próprio (drivers/TCA9554.h) via Wire (driver_ng). A lib externa
+    // ESP32_IO_Expander usava o driver I2C LEGADO (i2c_driver_install) e
+    // conflitava com o Wire -> abort() no boot.
+    bool ok = false;
+    for (int attempt = 1; attempt <= 3 && !ok; ++attempt) {
+        ok = smoke_expander.begin(Wire, ESP_IO_EXPANDER_I2C_TCA9554_ADDRESS_000);
+        if (!ok) { delay(10); }
+    }
+    if (!ok) {
+        Serial.println("[SMOKE][IO] TCA9554 NÃO respondeu no I2C!");
+    }
 
     // Pinos principais: 0/LCD_RST, 1/TOUCH_RST, 2/power, 6/audio power
-    smoke_expander->pinMode(0, OUTPUT);
-    smoke_expander->pinMode(1, OUTPUT);
-    smoke_expander->pinMode(2, OUTPUT);
-    smoke_expander->pinMode(6, OUTPUT);
+    for (uint8_t p : {0, 1, 2, 6}) smoke_expander.pinMode(p, OUTPUT);
 
-    smoke_expander->digitalWrite(0, LOW);
-    smoke_expander->digitalWrite(1, LOW);
-    smoke_expander->digitalWrite(2, LOW);
-    smoke_expander->digitalWrite(6, LOW);
+    smoke_expander.digitalWrite(0, LOW);
+    smoke_expander.digitalWrite(1, LOW);
+    smoke_expander.digitalWrite(2, LOW);
+    smoke_expander.digitalWrite(6, LOW);
     delay(20);
-    smoke_expander->digitalWrite(0, HIGH);
-    smoke_expander->digitalWrite(1, HIGH);
-    smoke_expander->digitalWrite(2, HIGH);
-    smoke_expander->digitalWrite(6, HIGH);
+    smoke_expander.digitalWrite(0, HIGH);
+    smoke_expander.digitalWrite(1, HIGH);
+    smoke_expander.digitalWrite(2, HIGH);
+    smoke_expander.digitalWrite(6, HIGH);
 
     Serial.println("[SMOKE][IO] IO expander ready.");
 }

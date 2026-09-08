@@ -20,6 +20,27 @@ Para uma descrição completa, consulte `FULL_HARDWARE.md`.
 - **RTC:** PCF85063 (relógio de tempo real, I²C)  
 - **Expansor IO:** TCA9554 (I²C)
 
+### 1.1 Versões da placa (V1 vs V2) — ⚠️ leia
+
+> Fonte oficial: <https://docs.waveshare.com/ESP32-S3-Touch-AMOLED-1.8> ·
+> produto: <https://www.waveshare.com/esp32-s3-touch-amoled-1.8.htm> ·
+> demos: <https://github.com/waveshareteam/ESP32-S3-Touch-AMOLED-1.8>
+
+A Waveshare **descontinuou a revisão V1** desta placa; desde **30/05/2026** as
+unidades enviadas são a **V2**, com chips de display e touch diferentes:
+
+| Versão | Display (QSPI) | Touch (I²C) | Firmware do Mini Lele |
+|--------|----------------|-------------|------------------------|
+| **V1** | SH8601 | FT3168 @ `0x38` | ✅ suportada (config atual — validada em hardware) |
+| **V2** | CO5300 | CST820 | ❌ exige portar drivers de display/touch |
+
+- A versão está impressa no **label traseiro** da placa.
+- A unidade usada no desenvolvimento é **V1** (comprovado: `SH8601` respondeu
+  via QSPI e o touch respondeu em `0x38` durante os testes de 09/2026).
+- Se uma placa **V2** for usada no futuro, portar o init do `CO5300` (a GFX
+  Library ≥1.6.x tem classe `Arduino_CO5300`) e o touch `CST820`/`CST2xxSE`
+  (demos oficiais em `examples/arduino-v2/` do repo acima).
+
 ---
 
 ## 2. Resumo de pinagem principal

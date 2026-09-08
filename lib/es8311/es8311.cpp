@@ -13,7 +13,16 @@
 #include "esp_err.h"
 #include "esp_check.h"
 #include "es8311_reg.h"
-#include "esp32-hal-i2c.h"
+// O es8311 driver original (do Waveshare demo 15_ES8311) usa i2cWrite/
+// i2cWriteReadNonStop do driver I2C legacy do Arduino. No core Arduino 3.x
+// esses simbolos nao estao implementados (ESP-IDF >= 5.4) e o Wire ja migrou
+// para o driver_ng, causando o erro "CONFLICT! driver_ng is not allowed
+// to be used with this old driver" no boot.
+//
+// Correcao: usamos o Wire global (driver_ng) e ignoramos o parametro
+// `port` da API publica (o projeto so usa i2c_port_t 0). O Wire e iniciado
+// em setup() com Wire.begin(IIC_SDA, IIC_SCL) e Wire.setClock(400000).
+#include "Wire.h"
 
 typedef struct {
     unsigned int port;
@@ -148,14 +157,20 @@ static inline esp_err_t es8311_write_reg(es8311_handle_t dev, uint8_t reg_addr, 
 {
     es8311_dev_t *es = (es8311_dev_t *) dev;
     const uint8_t write_buf[2] = {reg_addr, data};
-    return i2cWrite(es->port, es->dev_addr, write_buf, sizeof(write_buf), 1000);
+    Wire.beginTransmission(es->dev_addr);
+    Wire.write(write_buf, sizeof(write_buf));
+    return (Wire.endTransmission() == 0) ? ESP_OK : ESP_FAIL;
 }
 
 static inline esp_err_t es8311_read_reg(es8311_handle_t dev, uint8_t reg_addr, uint8_t *reg_value)
 {
     es8311_dev_t *es = (es8311_dev_t *) dev;
-    size_t readCount = 0;
-    return i2cWriteReadNonStop(es->port, es->dev_addr, &reg_addr, 1, reg_value, 1, 1000, &readCount);
+    Wire.beginTransmission(es->dev_addr);
+    Wire.write(&reg_addr, 1);
+    if (Wire.endTransmission(false) != 0) return ESP_FAIL;  // false = keep bus for read
+    if (Wire.requestFrom(es->dev_addr, (uint8_t)1) != 1) return ESP_FAIL;
+    *reg_value = Wire.read();
+    return ESP_OK;
 }
 
 /*

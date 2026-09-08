@@ -259,8 +259,10 @@ private:
         f.ts_usec = micros() % 1000000UL;              // micros() é safe
         memcpy(f.data, d, f.len);
         cap_head = next;
-        frames_captured++;
-        if (eapol) eapol_count++;
+        // '++' em variável volatile é deprecated em C++20 (-Wvolatile);
+        // escrita explícita equivalente (já dentro da seção crítica).
+        frames_captured = frames_captured + 1;
+        if (eapol) eapol_count = eapol_count + 1;
         portEXIT_CRITICAL(&cap_mux);
     }
 

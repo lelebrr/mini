@@ -32,7 +32,11 @@ struct RTC_SaveData {
 };
 
 // Definido em core_singletons.cpp (mantém-se na RAM RTC entre deep sleeps).
-extern RTC_DATA_ATTR RTC_SaveData rtc_save;
+// NOTA: o atributo de seção (.rtc.data) fica APENAS na definição. Colocar
+// RTC_DATA_ATTR também aqui no extern faz a mesma variável receber duas
+// seções diferentes (via __COUNTER__: .rtc.data.0 e .rtc.data.1), gerando
+// "ignoring attribute 'section' ... conflicts with previous" (-Wattributes).
+extern RTC_SaveData rtc_save;
 
 class PwnPower {
 private:

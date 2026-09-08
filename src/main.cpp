@@ -6,7 +6,7 @@
 #include "esp_task_wdt.h"
 
 #include <Arduino_GFX_Library.h>
-#include <ESP_IOExpander_Library.h>
+#include "drivers/TCA9554.h"   // expansor TCA9554 próprio (via Wire/driver_ng)
 #include <SensorQMI8658.hpp>
 #include "esp_heap_caps.h"
 
@@ -32,7 +32,7 @@
 // -----------------------------------------------------------------------------
 // Globais de hardware
 // -----------------------------------------------------------------------------
-ESP_IOExpander *expander = nullptr;
+TCA9554 expander;   // expansor de IO da placa (P0=LCD_RST, P1=TOUCH_RST, P2=power, P6=áudio, P7=SD CS)
 SensorQMI8658   qmi;
 static TouchFT3168 touchDev;
 static bool     imu_ok = false;
@@ -40,7 +40,11 @@ static bool     imu_ok = false;
 Arduino_DataBus *bus = new Arduino_ESP32QSPI(
     LCD_CS, LCD_SCLK, LCD_SDIO0, LCD_SDIO1, LCD_SDIO2, LCD_SDIO3);
 Arduino_GFX *gfx = new Arduino_SH8601(
-    bus, LCD_RST, 0 /*rotation*/, false /*IPS*/, LCD_WIDTH, LCD_HEIGHT);
+    bus, LCD_RST, 0 /*rotation*/, LCD_WIDTH, LCD_HEIGHT);
+// NOTA: na GFX Library >= 1.6.x o construtor é
+//   (bus, rst, rotation, w, h, col_off1, row_off1, col_off2, row_off2)
+// -- NÃO existe mais o parâmetro 'ips'. A chamada antiga passava 'false'
+// como largura (w=0) e LCD_HEIGHT (448) como col_offset (truncado p/ 192).
 
 // -----------------------------------------------------------------------------
 // LVGL
@@ -84,26 +88,28 @@ static void setBrightnessCb(int b) {
 // -----------------------------------------------------------------------------
 static void initIOExpander() {
     Serial.println("[IO] Inicializando expansor TCA9554...");
-    expander = new ESP_IOExpander_TCA95xx_8bit(
-        (i2c_port_t)0, ESP_IO_EXPANDER_I2C_TCA9554_ADDRESS_000, IIC_SCL, IIC_SDA);
-    // init()/begin() da API C++ retornam void — o que dá para validar é a
-    // alocação; sem o expansor o SD/touch não funcionam, então reinicia.
-    if (!expander) {
-        Serial.println("[IO] FALHA ao alocar expansor TCA9554! Reiniciando...");
-        delay(3000);
-        ESP.restart();
+    // Driver próprio (drivers/TCA9554.h) falando I2C pelo Wire (driver_ng).
+    // A lib externa ESP32_IO_Expander usava o driver I2C LEGADO do IDF
+    // (i2c_driver_install), que conflita com o Wire na mesma porta e derruba
+    // o firmware com abort() ("CONFLICT! driver_ng...") ainda no boot.
+    bool ok = false;
+    for (int attempt = 1; attempt <= 3 && !ok; ++attempt) {
+        ok = expander.begin(Wire, ESP_IO_EXPANDER_I2C_TCA9554_ADDRESS_000);
+        if (!ok) { delay(10); }
     }
-    expander->init();
-    expander->begin();
-    for (int p : {0, 1, 2, 6, 7}) expander->pinMode(p, OUTPUT);
-    expander->digitalWrite(0, LOW);
-    expander->digitalWrite(1, LOW);
-    expander->digitalWrite(2, HIGH);
-    expander->digitalWrite(6, HIGH);
+    if (!ok) {
+        Serial.println("[IO] TCA9554 NÃO respondeu no I2C! (SD/semáforo de reset afetados)");
+    }
+    // Sequência de power-on da Waveshare:
+    for (int p : {0, 1, 2, 6, 7}) expander.pinMode(p, OUTPUT);
+    expander.digitalWrite(0, LOW);    // LCD em reset
+    expander.digitalWrite(1, LOW);    // touch em reset
+    expander.digitalWrite(2, HIGH);   // liga power dos periféricos
+    expander.digitalWrite(6, HIGH);   // liga rail de áudio
     delay(20);
-    expander->digitalWrite(0, HIGH);
-    expander->digitalWrite(1, HIGH);
-    expander->digitalWrite(SD_CS_EXIO, HIGH);   // CS do SD em HIGH (demo oficial)
+    expander.digitalWrite(0, HIGH);   // solta LCD_RST
+    expander.digitalWrite(1, HIGH);   // solta TOUCH_RST
+    expander.digitalWrite(SD_CS_EXIO, HIGH);   // CS do SD em HIGH (demo oficial)
     delay(50);
     Serial.println("[IO] Expansor pronto (SD CS = HIGH).");
 }
@@ -275,7 +281,7 @@ void setup() {
         esp_task_wdt_add(NULL);
     }
 
-    if (cfg->get<bool>("sys_sound_on_boot")) AudioHandler::playWav("/boot_pt.wav");
+    if (cfg->get<bool>("sys_sound_on_boot")) AudioHandler::beep(1760, 70);
     Serial.println("[MAIN] Setup completo. Mini Lele vivo!");
 }
 

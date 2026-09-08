@@ -37,13 +37,25 @@
 // -----------------------------------------------------------------------------
 // Endereços I2C
 // -----------------------------------------------------------------------------
-
-#define AXP2101_SLAVE_ADDRESS                     0x34
+// Alguns desses nomes também são definidos nos headers das bibliotecas
+// (XPowersLib, ESP32_IO_Expander, SensorLib, es8311). Para evitar warnings de
+// redefinição em qualquer ordem de include, definimos só se ainda não existirem
+// e com a MESMA sequência de tokens usada pelas libs (redefinição idêntica é
+// permitida pelo padrão e não gera aviso).
+#ifndef AXP2101_SLAVE_ADDRESS
+#define AXP2101_SLAVE_ADDRESS                     (0x34)
+#endif
 #define FT3168_DEVICE_ADDRESS                     0x38
 #define GT1151_DEVICE_ADDRESS                     0x14   // Variante comum (ou 0x5D)
-#define ESP_IO_EXPANDER_I2C_TCA9554_ADDRESS_000   0x20
-#define QMI8658_L_SLAVE_ADDRESS                   0x6B
-#define ES8311_ADDRRES_0                          0x18
+#ifndef ESP_IO_EXPANDER_I2C_TCA9554_ADDRESS_000
+#define ESP_IO_EXPANDER_I2C_TCA9554_ADDRESS_000   (0x20)
+#endif
+#ifndef QMI8658_L_SLAVE_ADDRESS
+#define QMI8658_L_SLAVE_ADDRESS                   (0x6B)
+#endif
+#ifndef ES8311_ADDRRES_0
+#define ES8311_ADDRRES_0                          0x18u
+#endif
 
 // Aliases convenientes usados pelo código
 #define ES8311_ADDR                               0x18

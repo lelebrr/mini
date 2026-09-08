@@ -33,19 +33,38 @@ public:
 
     bool begin(TwoWire &wire = Wire, uint8_t addr = FT3168_DEVICE_ADDRESS) {
         _wire = &wire;
-        _addr = addr;
+        _ok = false;
 
-        // Confirma presença no barramento I2C.
-        _wire->beginTransmission(_addr);
-        if (_wire->endTransmission() != 0) {
-            Serial.println("[Touch] FT3168 não respondeu no I2C.");
-            _ok = false;
+        // Auto-detecção: FT3x68 fica em 0x38; GT1151/GT911 responde em
+        // 0x14 ou 0x5D dependendo do pino de seleção da placa.
+        const uint8_t candidates[] = { addr, 0x38, 0x14, 0x5D, 0x15, 0x5A };
+        for (uint8_t a : candidates) {
+            _wire->beginTransmission(a);
+            if (_wire->endTransmission() == 0) {
+                _addr = a;
+                _ok = true;
+                break;
+            }
+        }
+
+        // Ninguém respondeu? Varre o barramento inteiro para diagnóstico:
+        // mostra todos os dispositivos presentes (PMU, IMU, RTC, touch...).
+        if (!_ok) {
+            Serial.print("[Touch] Nenhum touch respondeu (cand. 0x38/0x14/0x5D/0x15/0x5A). Scan I2C:");
+            for (uint8_t a = 1; a < 127; ++a) {
+                _wire->beginTransmission(a);
+                if (_wire->endTransmission() == 0) {
+                    Serial.printf(" 0x%02X", a);
+                }
+            }
+            Serial.println();
             return false;
         }
 
+        Serial.printf("[Touch] Controlador em 0x%02X.\n", _addr);
+
         // Coloca o chip em modo normal de operação (registrador 0x00 = 0x00).
         writeReg(0x00, 0x00);
-        _ok = true;
         Serial.println("[Touch] FT3168 pronto.");
         return true;
     }
