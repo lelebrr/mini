@@ -1,0 +1,29 @@
+idf_component_register(
+    SRCS
+        app_main.c
+        hal/hal_i2c.c
+        hal/hal_pmu.c
+        hal/hal_tca9554.c
+        hal/hal_display.c
+        hal/hal_touch.c
+        hal/hal_rtc.c
+        hal/hal_imu.c
+        hal/hal_sd.c
+        hal/hal_audio.c
+        hal/hal_thermal.c
+        hal/hal_led.c
+        ui/ui_boot.c
+        ui/ui_home.c
+    INCLUDE_DIRS
+        .
+        ../include
+    REQUIRES
+        driver
+        fatfs
+        nvs_flash
+        esp_lcd
+        esp_timer
+        lvgl
+        tinyusb
+        esp_codec_dev
+)

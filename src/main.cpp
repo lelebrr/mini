@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <WiFi.h>
 #include <Wire.h>
 #include <lvgl.h>
 #include <SD_MMC.h>
@@ -28,6 +29,18 @@
 #include "AudioHandler.h"
 #include "EvilPortal.h"
 #include "web/WebHandler.h"
+#include "FaceHandler.h"
+#include "WpsBlue.h"
+#include "WpsRed.h"
+#include "BleBlue.h"
+#include "BleIds.h"
+#include "BleGatt.h"
+#include "EspNowScan.h"
+#include "core/PwnBLE.h"
+
+#ifndef BLACK
+#define BLACK 0x0000
+#endif
 
 // -----------------------------------------------------------------------------
 // Globais de hardware
@@ -94,7 +107,7 @@ static void initIOExpander() {
     // o firmware com abort() ("CONFLICT! driver_ng...") ainda no boot.
     bool ok = false;
     for (int attempt = 1; attempt <= 3 && !ok; ++attempt) {
-        ok = expander.begin(Wire, ESP_IO_EXPANDER_I2C_TCA9554_ADDRESS_000);
+        ok = expander.begin(Wire, TCA9554_ADDR);
         if (!ok) { delay(10); }
     }
     if (!ok) {
@@ -208,6 +221,7 @@ static void checkShake() {
     if (mag > 1.9f) {                                  // movimento brusco
         if (PwnPet::onShake()) FaceHandler::setFace(FACE_EXCITED);
         PwnSleep::notifyActivity();
+        BleIds::notifyMotion();   // IDS BLE: sinal de movimento p/ stalker
     }
 }
 
@@ -230,6 +244,154 @@ static void checkButton() {
 // setup / loop
 // -----------------------------------------------------------------------------
 #ifndef LVGL_SMOKE_TEST
+
+// ===========================================================================
+// Console serial WPS (BLUE inventario / RED laboratorio). Consulte docs/WPS.md.
+// ===========================================================================
+static bool wpsParseMac(const String& in, uint8_t out[6]) {
+    return sscanf(in.c_str(), "%hhx:%hhx:%hhx:%hhx:%hhx:%hhx",
+                  &out[0],&out[1],&out[2],&out[3],&out[4],&out[5]) == 6;
+}
+
+// Varredura BLUE: passa por canais 1..13 coletando IEs WPS de beacons.
+static void wpsChannelSweep(int seconds) {
+    bool was = WiFiTools::isSniffing();
+    if (!was) { WiFiTools::beginNewCapture(); WiFiTools::startSnifferPassive(); }
+    uint32_t end = millis() + (uint32_t)seconds * 1000;
+    int ch = 1;
+    while (millis() < end) {
+        esp_wifi_set_channel(ch, WIFI_SECOND_CHAN_NONE);
+        uint32_t t = millis();
+        while (millis() - t < 260) { WpsBlue::poll(); EspNowScan::poll(); delay(10); }
+        esp_task_wdt_reset();
+        if (++ch > 13) ch = 1;
+    }
+    WpsBlue::poll(); EspNowScan::poll();
+    if (!was) WiFiTools::stopSniffer();
+}
+
+static void wpsHandleCommand(String line) {
+    line.trim();
+    if (!line.startsWith("wps")) return;
+    String rest = line.substring(3); rest.trim();
+
+    if (rest.startsWith("scan")) {
+        int secs = 5; int sp = rest.indexOf(' ');
+        if (sp > 0) { int v = rest.substring(sp+1).toInt(); if (v > 0 && v <= 60) secs = v; }
+        Serial.printf("[wps] varredura BLUE %d s...\n", secs);
+        wpsChannelSweep(secs);
+        Serial.printf("[wps] %d AP(s), %d WPS-ON, %d WPS-LOCKED\n",
+                      WpsBlue::count(), WpsBlue::countWpsOn(), WpsBlue::countWpsLocked());
+    } else if (rest.startsWith("report") || rest.startsWith("list")) {
+        Serial.println(WpsBlue::reportSection());
+        WpsBlue::writeReport();
+    } else if (rest.startsWith("baseline")) {
+        WpsBlue::snapshotBaseline();
+        Serial.println("[wps] baseline salvo em /sd/wps/baseline.jsonl");
+    } else if (rest.startsWith("arm")) {
+        Serial.printf("[wps] ARM (GPIO%d) = %s\n", WPS_ARM_GPIO, WpsRed::isArmed() ? "ARMADO" : "desarmado");
+    } else if (rest.startsWith("allow")) {
+        Serial.printf("[wps] allowlist: %d BSSID(s)\n", WpsRed::loadAllowlist());
+    } else if (rest.startsWith("status")) {
+        Serial.printf("[wps] RED estado=%s restante=%ds\n", WpsRed::stateStr(), WpsRed::secondsRemaining());
+    } else if (rest.startsWith("stop")) {
+        WpsRed::abort("USER"); Serial.println("[wps] abort solicitado");
+    } else if (rest.startsWith("pbc") || rest.startsWith("pin") || rest.startsWith("vpin")) {
+        String mode = rest.startsWith("vpin") ? "vpin" : (rest.startsWith("pbc") ? "pbc" : "pin");
+        int sp = rest.indexOf(' ');
+        uint8_t bssid[6];
+        if (sp < 0 || !wpsParseMac(rest.substring(sp+1), bssid)) {
+            Serial.println("[wps] uso: wps <pbc|pin|vpin> AA:BB:CC:DD:EE:FF");
+            return;
+        }
+        if (mode == "pbc")  WpsRed::redPbc(bssid);
+        else if (mode == "pin") WpsRed::redPin(bssid);
+        else WpsRed::redVendorPinOneShot(bssid);
+    } else {
+        Serial.println("[wps] cmds: scan [s] | report | baseline | arm | allow | status | stop | pbc/pin/vpin MAC");
+    }
+}
+
+// Alertas do IDS BLE chegam na task do BT; NAO tocar LVGL de la.
+// Bufferiza aqui e a UI atualiza no loop (task principal).
+static volatile bool  g_ble_alert = false;
+static char           g_ble_alert_msg[96] = {0};
+static uint32_t       g_ble_alert_color = 0xFF3232;
+static void bleAlertBuffer(const char* msg, uint32_t color) {
+    strncpy(g_ble_alert_msg, msg, sizeof(g_ble_alert_msg) - 1);
+    g_ble_alert_msg[sizeof(g_ble_alert_msg) - 1] = 0;
+    g_ble_alert_color = color;
+    g_ble_alert = true;
+}
+
+static void bleHandleCommand(String line) {
+    line.trim();
+    if (!line.startsWith("ble")) return;
+    String rest = line.substring(3); rest.trim();
+    if (rest.startsWith("scan")) {
+        int secs = 4; int sp = rest.indexOf(' ');
+        if (sp > 0) { int v = rest.substring(sp+1).toInt(); if (v > 0 && v <= 30) secs = v; }
+        Serial.printf("[ble] scan %d s...\n", secs);
+        int n = PwnBLE::scan(secs);
+        Serial.printf("[ble] %d anuncio(s); inventario: %d device(s), %d HID\n",
+                      n, BleBlue::count(), BleBlue::countHid());
+    } else if (rest.startsWith("report") || rest.startsWith("list")) {
+        Serial.println(BleBlue::reportSection());
+        BleBlue::writeReport();
+    } else if (rest.startsWith("clear")) {
+        BleBlue::clear(); Serial.println("[ble] inventario limpo");
+    } else if (rest.startsWith("ids")) {
+        Serial.printf("[ble] IDS: %d alerta(s) ate agora\n", BleIds::alertCount());
+    } else if (rest.startsWith("gatt")) {
+        int sp = rest.indexOf(' '); uint8_t b[6];
+        if (sp>0 && sscanf(rest.substring(sp+1).c_str(),"%hhx:%hhx:%hhx:%hhx:%hhx:%hhx",&b[0],&b[1],&b[2],&b[3],&b[4],&b[5])==6) {
+            int r = BleGatt::audit(b);
+            if (r>=0) Serial.printf("[ble] gatt: %d characteristic(s); relatorio em /reports/gatt-*.md\n", r);
+            else if (r==-1) Serial.println("[ble] gatt RECUSADO: alvo fora da allowlist (/allowlist/ble.txt)");
+            else Serial.println("[ble] gatt: falha de conexao");
+        } else Serial.println("[ble] uso: ble gatt AA:BB:CC:DD:EE:FF (alvo tem de estar na allowlist)");
+    } else if (rest.startsWith("foxstop")) {
+        BleIds::foxhuntStop(); Serial.println("[ble] foxhunt off");
+    } else if (rest.startsWith("fox")) {
+        int sp = rest.indexOf(' '); uint8_t b[6];
+        if (sp>0 && sscanf(rest.substring(sp+1).c_str(),"%hhx:%hhx:%hhx:%hhx:%hhx:%hhx",&b[0],&b[1],&b[2],&b[3],&b[4],&b[5])==6) {
+            BleIds::foxhuntStart(b); Serial.println("[ble] foxhunt on (roda 'ble scan' p/ atualizar RSSI)");
+        } else Serial.println("[ble] uso: ble fox AA:BB:CC:DD:EE:FF");
+    } else {
+        Serial.println("[ble] cmds: scan [s] | report | clear | ids | gatt MAC | fox MAC | foxstop");
+    }
+}
+
+static void espnowHandleCommand(String line) {
+    line.trim();
+    if (!line.startsWith("espnow")) return;
+    String rest = line.substring(6); rest.trim();
+    if (rest.startsWith("scan")) {
+        int secs = 6; int sp = rest.indexOf(' ');
+        if (sp > 0) { int v = rest.substring(sp+1).toInt(); if (v>0 && v<=60) secs=v; }
+        Serial.printf("[espnow] varredura %d s...\n", secs);
+        wpsChannelSweep(secs);   // varre canais; alimenta WPS e ESP-NOW
+        Serial.printf("[espnow] %d peer(s)\n", EspNowScan::count());
+    } else if (rest.startsWith("report") || rest.startsWith("list")) {
+        Serial.println(EspNowScan::reportSection());
+        EspNowScan::writeReport();
+    } else if (rest.startsWith("clear")) {
+        EspNowScan::clear(); Serial.println("[espnow] inventario limpo");
+    } else {
+        Serial.println("[espnow] cmds: scan [s] | report | clear");
+    }
+}
+
+static void wpsSerialPoll() {
+    static String buf;
+    while (Serial.available()) {
+        char c = (char)Serial.read();
+        if (c == '\n' || c == '\r') {
+            if (buf.length()) { wpsHandleCommand(buf); bleHandleCommand(buf); espnowHandleCommand(buf); buf = ""; }
+        } else if (buf.length() < 96) buf += c;
+    }
+}
+
 void setup() {
     Serial.begin(115200);
     delay(200);
@@ -273,6 +435,19 @@ void setup() {
 
     WebHandler::init();
 
+    // ---- WPS (BLUE inventario + RED laboratorio) ----
+    WpsBlue::init();
+    WpsBlue::setAlertCallback([](const char* m, uint32_t c){ PwnUI::showAlert(m, c); });
+    WpsRed::init();
+    WpsRed::setStatusCallback([](const char* m, uint32_t c){ PwnUI::showToast(m); });
+    WpsRed::loadAllowlist();
+    BleBlue::init();   // inventario BLE BLUE
+    BleIds::init();
+    BleBlue::setObserver(BleIds::onEvent);
+    BleIds::setAlertCallback(bleAlertBuffer);
+    BleGatt::init();   // GATT audit (allowlist)
+    EspNowScan::init();   // inventario ESP-NOW (BLUE)
+
     // Sincroniza hora via NTP se estiver conectado (modo STA/AP_STA).
     if (WiFi.status() == WL_CONNECTED)
         PwnRTC::syncNTP(cfg->getString("sys_ntp_server").c_str(), cfg->get<int>("sys_timezone"));
@@ -302,6 +477,13 @@ void loop() {
 
     // Captura Wi-Fi (drena o buffer do sniffer para o SD)
     WiFiTools::flush();
+    WpsBlue::poll();      // parse dos IEs WPS coletados
+    EspNowScan::poll();   // parse dos frames ESP-NOW coletados
+    // foxhunt BLE: beep com cadencia proporcional ao RSSI do alvo
+    static uint32_t last_fox_beep = 0;
+    if (BleIds::foxhuntActive()) { int iv = BleIds::foxhuntBeepIntervalMs();
+        if (iv > 0 && now - last_fox_beep > (uint32_t)iv) { last_fox_beep = now; AudioHandler::beep(2200, 35); } }
+    wpsSerialPoll();      // console WPS via serial
     // DNS do portal cativo da WebUI
     WebHandler::loop();
     // Portal cativo do ataque (se ativo)
@@ -319,6 +501,9 @@ void loop() {
         Gamification::tick();
         PwnPower::monitor();
         PwnAttack::tick();
+        WpsRed::tick();          // maquina de estados RED WPS (timeouts/stops)
+        BleIds::tick();          // IDS BLE: decai janelas de spam / movimento
+        if (g_ble_alert) { g_ble_alert = false; PwnUI::showAlert(g_ble_alert_msg, g_ble_alert_color); }
         PwnSleep::tick();           // economia de energia
         FaceHandler::setEnabled(!PwnSleep::isScreenOff());  // pausa a animação c/ tela off
         if (!PwnSleep::isScreenOff()) PwnUI::update();  // não desenha com tela off

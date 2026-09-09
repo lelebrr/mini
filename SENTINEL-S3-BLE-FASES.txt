@@ -1,0 +1,202 @@
+# SENTINEL-S3 BLE - Blocos de Comando (CONTEXT LOCK + Fases A-E)
+
+Regra: um bloco por turno. Se a IA nao viu o BLE master, manda o CONTEXT LOCK
+uma vez. NimBLE only. A plataforma (PMU/tela/SD/PIN/ARM/allowlist/thermal/HID
+mutex) TEM de existir antes. Build tem de passar. Escreve BLE_PHASE_x_STATUS.md
+e PARA. Se quebrar, manda FIX, nao a fase seguinte.
+
+---
+
+### 0) CONTEXT LOCK BLE (1x, so se a IA nao tiver o master)
+
+```
+CONTEXT LOCK - SENTINEL-S3 BLE
+You are adding the BLE subsystem to SENTINEL-S3 on Waveshare ESP32-S3-Touch-AMOLED-1.8.
+Stack LOCKED: NimBLE (CONFIG_BT_NIMBLE_ENABLED), NOT Bluedroid.
+ESP-IDF 5.5, C11, FreeRTOS, LVGL v9. Platform (PMU/display/touch/SD/LVGL/PIN/
+ARM/allowlist/thermal/audio/HID-mutex) ALREADY EXISTS - consume the HALs, do not rebuild them.
+ESP32-S3 has NO Bluetooth Classic. BLE 5.0 only: 1M/2M/Coded PHY, extended+multi
+advertising, scan+adv concurrent, dual role, Privacy 1.2 (RPA), periodic adv, Mesh, BluFi.
+Boots BLUE. Offensive BLE TX (HID/spam/clone/flood) only in RED: ARM(GPIO HIGH)+PIN+allowlist, else refuse.
+Allowlist /sd/allowlist/ble.txt (empty => RED refuses). No wildcard targets.
+LAB spam templates only in MODE_LAB, LAB label, auto-off <= 5s.
+HID mutex: only ONE HID LIVE anywhere (BLE HOGP and USB HID share it). Banner "HID LIVE".
+Wi-Fi+BLE share one 2.4GHz radio: enable SW coexistence, tune scan window/interval, respect thermal throttle.
+GATT central connects/enumerates/writes ONLY allowlisted targets. Audit every RED and GATT op to /logs (JSONL).
+Forbidden: Classic, nRF-style sniffer, LE SC crack, single-radio MITM, LE Audio, AoA, Channel Sounding, car key, medical, infinite spam, 802.15.4 abuse.
+Work ONE phase, build must pass, write BLE_PHASE_x_STATUS.md, do not start the next phase.
+```
+
+---
+
+### BLE-PHASE A  (scan + parser + vendor chips + UI)
+
+```
+Execute BLE-PHASE A now. NimBLE only. Legacy+extended scan, AD parser, vendor chips, UI list+detail. No HID, no spam TX. Write BLE_PHASE_A_STATUS.md.
+
+GOAL
+Bring BLE up on NimBLE and produce a live, deduplicated device inventory with vendor
+classification. RX only. Nothing transmits except the controller's mandatory scan reqs.
+
+STACK / KCONFIG
+- NimBLE host, controller enabled, EXT_ADV=y, observer+central+peripheral roles.
+- CONFIG_ESP_COEX_SW_COEXIST_ENABLE=y (Wi-Fi may be up).
+- Host task on its own FreeRTOS task; never block LVGL.
+
+IMPLEMENT
+  ble/ble_stack.c/.h      # nimble init, host task, sync cb, coex on, thermal-aware
+  ble/ble_scan.c/.h       # legacy + extended scan; report primary/secondary PHY
+  ble/ble_ad_parser.c/.h  # truncation-proof AD walker (never read past AD length)
+  ble/ble_vendor.c/.h     # classify: Apple Continuity(type table)/AirPods/FindMy,
+                          # Swift Pair(0x0006), Fast Pair(0xFE2C), Eddystone(0xFEAA),
+                          # iBeacon, Samsung(0x0075), Tile(0xFEED/0x0157), Xiaomi(0xFE95),
+                          # Espressif BluFi(0xFFFF), Improv(0x4677), Flipper(name+sig),
+                          # Mesh(0x1827/0x1828), HID(0x1812), NUS(128-bit)
+  ble/ble_inventory.c/.h  # ble_device_t table, dedup by addr (flag RPA/random-static)
+  ui: BLE list (name/addr/rssi/vendor/PHY) + detail (AD raw, svc UUIDs, cont_type, flags)
+
+RULES
+- Truncation-proof: every AD field bounded by its length byte.
+- Mark address kind: public / random-static / RPA (Privacy 1.2).
+- No connect, no advertise, no HID in this phase.
+
+DONE
+Inventory populates from real air; vendors classified; UI list+detail work.
+Write BLE_PHASE_A_STATUS.md (OK/FAIL per item, build log).
+```
+
+---
+
+### BLE-PHASE B  (BLUE IDS + export + foxhunt + parser tests)
+
+```
+Execute BLE-PHASE B now. BLUE IDS: Continuity/Swift/FastPair/Samsung spam counters, HID UUID alert, FindMy/Tile stalker heuristic, Flipper signature, baseline, jsonl/md export, foxhunt RSSI+beep. Parser unit tests. Write BLE_PHASE_B_STATUS.md.
+
+GOAL
+Turn the inventory into detection. Still RX only.
+
+IMPLEMENT
+  ble/ble_ids.c/.h
+    - spam counters per type (Apple Continuity Nearby Action/Info flood,
+      Swift Pair burst, Fast Pair burst, Samsung) with rate windows + UI alert
+    - HID alert: any adv exposing 0x1812 (HOGP) flagged
+    - stalker heuristic: a Find My / Tile / random-static tag whose RSSI stays
+      stable while IMU says you are moving => "following you" (uses hal_imu)
+    - Flipper Zero signature (name prefix + adv pattern)
+  ble/ble_baseline.c/.h   # known devices; alert on new/anomalous
+  ble/ble_export.c/.h     # JSONL + CSV + md to /reports and /logs
+  foxhunt mode: pick a target addr, RSSI meter + audio beep faster as it gets closer
+  tests: host/unit tests for ble_ad_parser (truncated/malformed/vendor samples)
+
+RULES
+- Detectors are receive-only. No TX. No connect.
+- Stalker heuristic must not false-positive on your own paired devices (baseline).
+
+DONE
+Alerts fire on real spam/HID/stalker; foxhunt beeps; export files valid; parser
+tests pass. Write BLE_PHASE_B_STATUS.md.
+```
+
+---
+
+### BLE-PHASE C  (GATT central, allowlist only)
+
+```
+Execute BLE-PHASE C now. GATT central allowlisted only: connect, enumerate, open-write warn, pairing method log, gatt-ADDR.md. Clean disconnect. Write BLE_PHASE_C_STATUS.md.
+
+GOAL
+Authorized GATT audit. Connect ONLY to allowlisted addresses.
+
+IMPLEMENT
+  ble/ble_gatt_audit.c/.h
+    - refuse if addr not in /sd/allowlist/ble.txt (audit REFUSED)
+    - connect (central), discover services/characteristics/descriptors
+    - flag characteristics with WRITE/WRITE-NO-RSP but no auth => "open write" WARN
+    - log pairing/security method observed (JustWorks/Passkey/OOB/LESC) - LOG only,
+      never attempt to crack or downgrade
+    - write gatt-<ADDR>.md report; export table (gatt_char_t)
+    - always clean disconnect; never leave a dangling connection
+
+RULES
+- Allowlist is mandatory; empty or miss => refuse + audit.
+- Read/enumerate is fine on allowlisted target; do NOT auto-write anything here.
+- GATT ops off the UI task; timeouts on every op; never hang.
+
+DONE
+Enumerates an allowlisted target, flags open writes, logs pairing, writes
+gatt-ADDR.md, disconnects clean. Write BLE_PHASE_C_STATUS.md.
+```
+
+---
+
+### BLE-PHASE D  (RED gated: peripheral, HOGP BadBLE, spam LAB)
+
+```
+Execute BLE-PHASE D now. RED gated: SENTINEL-LAB peripheral, HOGP BadBLE Ducky shared scripts, ARM+allowlist, LAB spam templates 5s auto-off, iBeacon/Eddystone LAB, HID LIVE banner. Unarmed = no HID. Write BLE_PHASE_D_STATUS.md.
+
+GOAL
+Offensive BLE, fully gated. Every action: ARM(GPIO HIGH)+PIN+allowlist or REFUSE + audit.
+
+IMPLEMENT
+  ble/ble_red_peripheral.c/.h
+    - "SENTINEL-LAB" peripheral (advertise + GATT server)
+    - BadBLE HOGP: HID-over-GATT keyboard using the SAME Ducky scripts as USB HID
+      (US + ABNT2 layouts). Acquire the global HID mutex; if USB HID is LIVE, refuse.
+      Show "HID LIVE" banner while active.
+    - clone advertising of an allowlisted device (adv copy only, LAB)
+    - operator-chosen hex write to a chosen handle on an allowlisted target
+    - connect-flood: 5 s cap, allowlisted addr only, auto-stop
+    - LAB spam templates (Continuity/Swift/Fast Pair): MODE_LAB only, "LAB" marker,
+      AUTO-OFF <= CONFIG_SENTINEL_BLE_LAB_SPAM_MAX_MS (5000). Never infinite.
+    - iBeacon / Eddystone LAB beacon; BLE5 multi-adv; RPA rotate demo
+
+RULES
+- Unarmed => absolutely no HID, no spam TX, no clone, no flood. BLUE stays.
+- HID mutex enforced (regra 6). Thermal throttle pauses TX.
+- Audit every attempt (start/stop/refuse) to /logs/ble_audit.jsonl.
+
+DONE
+Armed+allowlisted: HOGP types a Ducky script, LAB spam auto-offs at 5s, beacons
+advertise, banner shows. Unarmed: everything refuses. Write BLE_PHASE_D_STATUS.md.
+```
+
+---
+
+### BLE-PHASE E  (extras ou UNSUPPORTED; capability matrix)
+
+```
+Execute BLE-PHASE E now. Extras or UNSUPPORTED: Coded PHY scan toggle, periodic sync probe, BluFi/Improv detect, mesh detect (stack off), operator alert GATT optional, capability matrix. No Classic, no sniffer, no LE Audio. Write BLE_PHASE_E_STATUS.md.
+
+GOAL
+Long-tail features behind capability probes. Never crash if unsupported; mark UNSUPPORTED.
+
+IMPLEMENT
+  - Coded PHY (long range) scan toggle: enable S=8/S=2 scan; if controller lacks it,
+    mark UNSUPPORTED in the matrix, keep 1M/2M.
+  - periodic advertising sync probe: try to sync to a periodic train; UNSUPPORTED-safe.
+  - BluFi / Improv Wi-Fi DETECT (passive classification; activating provisioning is P3).
+  - Mesh DETECT only (0x1827/0x1828); Mesh stack stays OFF by default (heavy).
+  - optional: operator alert via a small GATT notify to a companion (opt-in).
+  - HCI dump ONLY if a real HCI path exists; otherwise JSONL. Do NOT fabricate a
+    pcap LINKTYPE 251 the hardware cannot produce.
+  - write a capability matrix (feature -> supported/UNSUPPORTED) to /reports.
+
+FORBIDDEN (reinforce)
+No Bluetooth Classic, no nRF-style connection-follow sniffer, no LE Audio, no AoA,
+no Channel Sounding, no single-radio MITM, no LE SC crack.
+
+DONE
+Matrix lists what this silicon/build actually supports; unsupported paths degrade
+gracefully. Write BLE_PHASE_E_STATUS.md.
+```
+
+---
+
+### FIX (quando quebrar)
+
+```
+FIX now. Stay on the current BLE phase. Do not advance. Paste the exact build/runtime
+error. Fix only what breaks the build or the phase's DONE criteria. NimBLE only,
+no Bluedroid. Keep the security contract (ARM+allowlist+HID mutex+thermal+audit).
+Re-run build, update BLE_PHASE_x_STATUS.md.
+```

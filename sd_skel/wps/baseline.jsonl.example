@@ -1,0 +1,6 @@
+# SENTINEL — baseline WPS (JSONL). Copie para /sd/wps/baseline.jsonl.
+# O firmware gera/atualiza este arquivo com "wps baseline".
+# Alerta BLUE dispara quando um AP conhecido (aqui) com wps_on:false passa a
+# expor WPS. APs fora deste arquivo nao geram alerta (desconhecidos).
+{"bssid":"AA:BB:CC:DD:EE:FF","wps_on":false}
+{"bssid":"11:22:33:44:55:66","wps_on":false}

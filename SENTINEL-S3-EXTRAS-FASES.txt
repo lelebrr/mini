@@ -1,0 +1,233 @@
+# SENTINEL-S3 EXTRAS - Blocos de Comando (ataques nativos do S3, pos-PHASE 5)
+
+Regra: um bloco por turno. So depois de PHASE 5 (plataforma + BLUE + RED basico +
+USB HID/Ducky + SoftAP/portal). Tudo lab/allowlist. Capability-probe tudo que pode
+faltar; nunca crashe; marque UNSUPPORTED/NOT FITTED. Build passa, escreve
+EXTRA_PHASE_x_STATUS.md, PARA. Se quebrar, FIX (nao a fase seguinte).
+
+---
+
+### 0) CONTEXT LOCK EXTRAS (1x)
+
+```
+CONTEXT LOCK - SENTINEL-S3 EXTRAS
+Add native ESP32-S3 "other attacks" to SENTINEL-S3. Platform + BLUE + basic RED +
+USB HID/Ducky + SoftAP/portal ALREADY EXIST - consume, do not rebuild.
+"Others" is NOT a second Reaver and NOT a Kali suite. It is what the silicon does
+AFTER the hook: LAN as router (192.168.4.0/24 Wi-Fi, 192.168.33.0/24 USB),
+IoT provisioning observation, capped 2.4GHz DoS (raw-TX probe), physical/sensor.
+Boots BLUE. Offensive TX or secret decode only in MODE_LAB or RED = ARM(GPIO HIGH)+PIN+allowlist, else refuse+audit.
+Allowlists on SD: bssid.txt, ssid.txt, ble.txt, responder.txt (names to spoof), espnow.txt (peers). Empty => refuse. No wildcard.
+Served pages/files are LAB only (from SD). No embedded stealer, no bank/brand clone, no credential capture disguised as a real service.
+Any secret caught on air (provisioning PSK, spoof-name hit) is a LAB finding: BLUE alert + /logs only under MODE_LAB/RED. Never auto-exfil.
+Global HID mutex: only ONE HID LIVE (USB HID, BLE HOGP, WiFi Duck share it).
+Wi-Fi+BLE share one radio: SW coex on; respect thermal throttle; net ops off the UI task.
+Capability probe: g_raw_tx_ok, g_ipv6_ra_ok; external modules only with compile flag else "NOT FITTED".
+Audit every RED action and every decode/replay to /logs/*.jsonl.
+FORBIDDEN: real SSL strip, TLS break, cert-pinned MITM, PEAP/MSCHAPv2 catcher (hostapd-wpe),
+WPS brute/pixie, on-chip WPA crack, KRACK/FragAttacks/Dragonblood, IMSI catcher, SDR, real jammer,
+USBKill, brand VID clone, rolling-code car, 5/6GHz, BT Classic, anything needing CC1101/PN532/nRF24 unless fitted.
+One phase per turn, build passes, write EXTRA_PHASE_x_STATUS.md, do not advance.
+```
+
+---
+
+### EXTRA-PHASE 1  (rogue-LAN kit: SoftAP + USB-NCM)
+
+```
+Execute EXTRA-PHASE 1 now. Rogue-LAN kit on SoftAP and USB-NCM. Lab pages only. No SSL strip, no PEAP catcher.
+
+GOAL
+Turn the hook (SoftAP/NCM) into a lab LAN toolkit. The board is the gateway.
+
+IMPLEMENT  (net/lan_poison.c, net/responder_lite.c)
+- selective DNS: sinkhole only names matching login.*/update.* (config list); others time out
+- DHCP option 252 WPAD: serve /wpad.dat (PAC) from SD, lab only
+- Responder-lite: answer LLMNR (5355), NBNS (137), mDNS (5353) ONLY for names in
+  /sd/allowlist/responder.txt, with the board IP; log the querying client MAC/IP
+- IPv6 RA fake: advertise board as IPv6 gateway  [probe g_ipv6_ra_ok; else UNSUPPORTED]
+- ARP spoof intra-AP between two SoftAP clients  [only if AP isolation is off; LAB]
+- client scan (80/443/22/5353/1883/4070), mDNS browse (_http/_printer/_googlecast/_hap), SSDP/UPnP
+- serve a LAB file/page (.mobileconfig / PAC / "update") from SD - SERVE only; user installs
+
+RULES
+- MODE_LAB or RED gate for anything that answers/poisons; audit to /logs/lan_audit.jsonl
+- No SSL strip, no TLS break, no cert-pinned MITM, no PEAP/MSCHAPv2 catcher, no C2
+
+DONE
+On a lab client joined to the AP/NCM: selective DNS works, WPAD served, responder
+answers only allowlisted names and logs queries. Write EXTRA_PHASE_1_STATUS.md.
+```
+
+---
+
+### EXTRA-PHASE 2  (SmartConfig + Airkiss sniffer; provisioning)
+
+```
+Execute EXTRA-PHASE 2 now. SmartConfig + Airkiss sniffer with BLUE alert "PSK on air". Decode to log only under MODE_LAB or RED+ARM+allowlist.
+
+GOAL
+The one trick the S3 does that Flipper/Marauder barely do: catch provisioning secrets on air.
+
+IMPLEMENT  (net/prov_sniffer.c)
+- promiscuous capture + SmartConfig/ESP-Touch length-encode decoder
+- Airkiss (WeChat/Tencent) decoder (same length trick)
+- BLUE: raise alert "PSK on air" (no plaintext shown) whenever a provisioning burst is seen
+- decode-to-plaintext + /logs/prov_audit.jsonl ONLY if MODE_LAB or RED+ARM+allowlist
+- BluFi/Improv: cross-ref BLE detect (from BLE phases); intercept only on your own lab device
+- optional: evil-twin of an open `DEVICE-XXXX` setup SSID + LAB portal "repeat home password"
+
+RULES
+- Detection is BLUE and always on; plaintext decode is gated and audited
+- Never treat decode as mass collection; one lab target at a time
+
+DONE
+Provisioning burst triggers BLUE alert; gated decode logs PSK in lab. Parser unit
+tests for the length-encode. Write EXTRA_PHASE_2_STATUS.md.
+```
+
+---
+
+### EXTRA-PHASE 3  (ESP-NOW inventory + gated replay)
+
+```
+Execute EXTRA-PHASE 3 now. ESP-NOW scan table (BLUE); RED replay to allowlisted peer MAC only.
+
+GOAL
+ESP-NOW is the other gold: home IoT (locks/relays/sensors) on 2.4GHz with no WPA.
+
+IMPLEMENT  (net/espnow_tool.c)
+- BLUE: promiscuous capture of ESP-NOW vendor action frames (Espressif OUI); table of
+  peers (MAC, RSSI, len, count) with a "ESP-NOW seen" UI screen
+- RED: replay a captured frame ONLY to a peer MAC in /sd/allowlist/espnow.txt
+  (ARM+allowlist), capped, audited to /logs/espnow_audit.jsonl
+- spoof source MAC only within lab; never brute unknown peers
+
+RULES
+- No replay to non-allowlisted peers. No crypto attack (ESP-NOW crypto stays out of scope)
+
+DONE
+BLUE lists ESP-NOW peers; RED replays one frame to an allowlisted peer. Write EXTRA_PHASE_3_STATUS.md.
+```
+
+---
+
+### EXTRA-PHASE 4  (WiFi Duck + NCM/Responder combo)
+
+```
+Execute EXTRA-PHASE 4 now. WiFi Duck: run /sd/scripts/hid/*.txt triggered from the phone UI on SENTINEL-LAB AP. NCM + responder-lite combo. HID mutex enforced.
+
+GOAL
+Strongest combo on this board: HID payload commanded from a phone over the SoftAP.
+
+IMPLEMENT  (net/wifi_duck.c)
+- web UI on SENTINEL-LAB AP lists /sd/scripts/hid/*.txt; operator taps to run over USB HID
+- reuse the existing Ducky runner (US + ABNT2); acquire global HID mutex; if any HID
+  LIVE (USB/BLE HOGP), refuse; show "HID LIVE" banner
+- NCM + Responder-lite: on the USB-NCM LAN, run the EXTRA-PHASE 1 responder (LLMNR/NBNS/mDNS)
+  - better than HID on EDR-locked-keyboard hosts
+
+RULES
+- ARM+PIN required to run HID; scripts come from SD, none embedded
+- HID mutex is global (USB HID / BLE HOGP / WiFi Duck are mutually exclusive LIVE)
+
+DONE
+Phone triggers a Ducky script over USB HID via the AP UI; NCM responder answers.
+Write EXTRA_PHASE_4_STATUS.md.
+```
+
+---
+
+### EXTRA-PHASE 5  (known-beacons / homoglyph; raw-TX gated)
+
+```
+Execute EXTRA-PHASE 5 now. Known-beacon list from /sd/allowlist/ssid.txt if g_raw_tx_ok, else single SoftAP clone. Homoglyph SSID. Capped, thermal-aware.
+
+GOAL
+MANA-style auto-associate lure and convincing twins - only where the driver allows raw TX.
+
+IMPLEMENT  (net/beacon_extra.c)
+- if g_raw_tx_ok: multi-SSID beacon (known-beacons) from /sd/allowlist/ssid.txt (time-share/raw)
+- else: single native SoftAP clone (document the limit)
+- homoglyph SSID (Cyrillic look-alike) as a string option
+- clone BSSID+SSID+channel (partial; original's 5GHz cannot be cloned)
+- CSA / auth-assoc flood / CTS-to-self / probe flood: ONLY if g_raw_tx_ok, capped, thermal-gated, LAB
+
+RULES
+- Everything gated by RED + capability probe; no wildcard; caps + auto-off
+- If raw TX absent, degrade to single clone and mark the rest UNSUPPORTED
+
+DONE
+Known-beacons advertise (or clone fallback); homoglyph works; DoS bits present only
+if raw TX. Write EXTRA_PHASE_5_STATUS.md.
+```
+
+---
+
+### EXTRA-PHASE 6  (physical/sensor drop-box)
+
+```
+Execute EXTRA-PHASE 6 now. RTC-scheduled monitor window; IMU dead-man wipe of RED state; gesture-arm. Non-RF.
+
+GOAL
+Real drop-box behavior from RTC/IMU/audio already on the board.
+
+IMPLEMENT  (sensor/dropbox_sched.c)
+- RTC schedule: enable a monitor/Evil-Twin window only in a time range (e.g. 02:00-04:00)
+- IMU dead-man: if the box is moved, WIPE RED state (keys/logs flag) + raise HoneySSID
+- gesture-arm: 3 taps arms HID (still needs ARM+PIN to fire)
+- optional ambient recording (mic+SD+RTC), labeled + audited
+
+RULES
+- Dead-man wipe never touches BLUE inventory; only RED secrets/state
+- No bank/token "approval" screens; no brand clone
+
+DONE
+Schedule gates the monitor window; moving the box wipes RED state; 3-tap arms.
+Write EXTRA_PHASE_6_STATUS.md.
+```
+
+---
+
+### EXTRA-PHASE M  (optional module - NOT FITTED by default)
+
+```
+Execute EXTRA-PHASE M now. External module support behind compile flags. If not fitted, UI shows NOT FITTED. Do not simulate.
+
+CHOOSE ONE (7 GPIOs; SD/extra-SPI conflict):
+- CC1101: replay 433/868 ASK/FSK (gate, doorbell, some alarms). NOT KeeLoq rolling-code car.
+- nRF24: Mousejack (cheap 2.4GHz keyboards).
+- PN532: MIFARE Classic crypto1 (old badge), NTAG dump, limited UID clone. NOT DESFire/iCLASS.
+- GPS: wardrive logging (not an attack). IR: TV-B-Gone/AC replay.
+
+RULES
+- Feature exists only with its compile flag; otherwise "NOT FITTED" and no code path runs
+- Same RED/allowlist/audit contract applies to any replay
+
+DONE
+Fitted module works under the contract; unfitted shows NOT FITTED. Write EXTRA_PHASE_M_STATUS.md.
+```
+
+---
+
+### REFUSE (a IA deve recusar, sempre)
+
+```
+Refuse and do not implement: WPS PIN brute / pixie, real SSL strip, TLS break,
+cert-pinned MITM, PEAP/MSCHAPv2 catcher (hostapd-wpe), on-chip WPA crack,
+KRACK/FragAttacks/Dragonblood, IMSI catcher, SDR, real jammer, USBKill/overvoltage,
+brand VID clone (YubiKey/Apple/Logitech), rolling-code car, 5/6GHz, BT Classic,
+bank/brand phishing pages, embedded credential stealers, or anything needing
+CC1101/PN532/nRF24 without its compile flag (say NOT FITTED).
+```
+
+---
+
+### FIX (quando quebrar)
+
+```
+FIX now. Stay on the current EXTRA phase. Paste the exact build/runtime error.
+Fix only what breaks the build or the phase DONE. Keep the contract (MODE_LAB/RED
++ ARM + allowlist + audit, HID mutex, thermal, capability probes). Re-run build,
+update EXTRA_PHASE_x_STATUS.md.
+```

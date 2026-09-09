@@ -1,0 +1,4 @@
+# Exemplo de script BadBLE
+# formato: handle_hex payload_hex
+0x002C 48656C6C6F2053656E74696E656C
+0x002C 48656C6C6F204C4142

@@ -1,7 +1,7 @@
 // Autogerado por scripts/fix_web_assets.py a partir de webui_preview.html.
 // NAO edite este arquivo: edite webui_preview.html e rode o script.
 
-#include "web/WebAssets.h"
+// #include "web/WebAssets.h"
 
 const char index_html[] = R"rawliteral(
 <!DOCTYPE html>

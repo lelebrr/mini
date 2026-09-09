@@ -64,7 +64,7 @@ bool        PwnAttack::scan_active = false;
 bool AudioHandler::audio_ok = false;
 
 // RTC PCF85063
-SensorPCF85063 PwnRTC::rtc;
+// SensorPCF85063 PwnRTC::rtc; // removed - no longer used
 bool           PwnRTC::ok = false;
 
 // PwnSleep

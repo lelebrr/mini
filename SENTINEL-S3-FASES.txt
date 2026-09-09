@@ -1,0 +1,568 @@
+# SENTINEL-S3 - Blocos de Comando (8 blocos)
+
+Regra: um bloco por turno. Se a IA ainda nao viu o master, manda o CONTEXT LOCK uma vez. Se quebrar, manda o FIX, nao a phase seguinte.
+
+---
+
+### 0) CONTEXT LOCK (1x, so se a IA nao tiver o master)
+
+`
+CONTEXT LOCK - SENTINEL-S3
+You are building SENTINEL-S3 firmware for Waveshare ESP32-S3-Touch-AMOLED-1.8.
+ESP-IDF 5.5 + BSP waveshare/esp32_s3_touch_amoled_1_8 + LVGL v9.
+Board has TWO display/touch revs: rev1 SH8601+FT3168, rev2 CO5300+CST820. Support both.
+MUST init AXP2101 PMU rails BEFORE display or the screen stays black.
+I2C after PMU: 0x34 AXP2101, 0x38 FT3168, 0x51 PCF85063, 0x6B QMI8658, expander 0x20/0x21 may be absent.
+SD via BSP (CLK=GPIO2 CMD=GPIO1 D0=GPIO3 typical). BOOT=GPIO0.
+USB native S3. 16MB flash, 8MB PSRAM. Wi-Fi 2.4 only + BLE5. No 5GHz, no BT Classic, no SubGHz/NFC/IR unless optional module.
+Product boots BLUE. RED is disarmed, PIN+ARM+allowlist. No malware, no bank portals, no empty-allowlist deauth, no on-device WPA crack.
+Legal splash every boot. Audit log every red action.
+i18n EN + pt-BR. Dark OLED UI 368x448.
+Work one phase. Build must pass. Write PHASE_N_STATUS.md. Do not start the next phase.
+`
+
+---
+
+### PHASE 0
+
+`
+Execute PHASE 0 now. Do not skip ahead. Do not implement Wi-Fi attacks, BLE spam, BadUSB, captive portal, IDS, or RED mode.
+
+GOAL
+Hardware bring-up that actually runs on Waveshare ESP32-S3-Touch-AMOLED-1.8. If the screen is black, you failed - PMU first.
+
+STACK
+- ESP-IDF v5.5.x, target esp32s3
+- Managed component: waveshare/esp32_s3_touch_amoled_1_8
+- Start from the official template pattern (examples/esp-idf/01_project_template and 14_lvgl_demo_v9)
+- LVGL v9 via BSP
+- C11, FreeRTOS
+- Partition table 16MB: nvs 24K, otadata 8K, ota_0 3M, ota_1 3M, littlefs ~2M, fat remainder
+- sdkconfig.defaults: PSRAM on, 16MB flash, USB CDC, Wi-Fi+BT later but radios stay OFF in this phase except unused
+
+POWER-ON ORDER (mandatory)
+1) I2C
+2) AXP2101 init - copy rail voltages/enables from official Waveshare examples (ALDO/BLDO). Do not guess.
+3) Probe TCA9554/XCA9554 at 0x20 and 0x21. If absent, continue. Never hang.
+4) Display panel + brightness
+5) Touch
+6) RTC PCF85063, IMU QMI8658, SD, ES8311 optional beep
+7) USB CDC logs
+8) Legal splash UI
+IMPLEMENT
+Create repo:
+  CMakeLists.txt, main/CMakeLists.txt, idf_component.yml, sdkconfig.defaults, partitions.csv
+  main/app_main.c
+  hal/hal_pmu.c/.h
+  hal/hal_i2c.c/.h          # bus + full I2C scan at boot
+  hal/hal_display.c/.h      # BSP panel + LVGL port, rev1/rev2 autodetect
+  hal/hal_touch.c/.h
+  hal/hal_rtc.c/.h
+  hal/hal_imu.c/.h
+  hal/hal_sd.c/.h           # mount, create /sd/SENTINEL.txt and /sd/log/
+  hal/hal_audio.c/.h        # optional short boot beep; fail-soft
+  hal/hal_thermal.c/.h      # AXP temp read
+  ui/ui_boot.c/.h           # legal splash + hold-to-continue
+  ui/ui_home.c         # after splash: screen with board name, clock, battery, PMU temp, IMU, I2C map, display/touch chip, SD OK/FAIL, brightness slider
+  Write PHASE_0_STATUS.md
+
+UI COPY
+Splash: AUTHORIZED USE ONLY / USO AUTORIZADO APENAS
+Hold 1.5s on the button or tap-hold bar to enter.
+Home screen is dark background, cyan text, 368x448.
+
+DETECT
+- I2C scan logged to CDC and shown on HW area
+- If 0x38 -> rev1 touch FT3168; if CST820 addr (often 0x15) -> rev2
+- Display driver via BSP; show SH8601 or CO5300 if BSP tells you, else AMOLED QSPI
+
+SD
+If no card: show SD FAIL, do not crash.
+If card: write SENTINEL.txt with firmware name + build time.
+
+CDC
+ESP_LOGI every subsystem OK/FAIL.
+
+DO NOT
+- Start Wi-Fi or BLE
+- Init TinyUSB HID
+- Add menus beyond splash + one home screen
+- Arduino
+- Invent GPIOs; use BSP APIs
+
+DoD PHASE 0 (all required)
+[ ] idf.py build succeeds for esp32s3
+[ ] PMU init is real code copied/adapted from Waveshare, not stubs
+[ ] LVGL renders
+[ ] Touch moves brightness slider
+[ ] I2C map visible
+[ ] RTC time visible (even if 2000-01-01 until set)
+[ ] IMU numbers change when device is described as moving (code reads the chip)
+[ ] Battery widget reads AXP2101
+[ ] SD path fail-soft
+[ ] Legal splash blocks until confirm
+[ ] PHASE_0_STATUS.md written: files created, known issues, how to flash
+
+After build, STOP. Do not start PHASE 1.
+`
+
+---
+
+### PHASE 1
+
+`
+Execute PHASE 1 now. PHASE 0 is the base. Do not start Wi-Fi scan, IDS, RED, USB HID, or captive portal.
+
+GOAL
+Turn the bring-up into the product shell: navigation, modes, PIN, logger, i18n, thermal/tamper hooks. Radios remain OFF.
+
+IMPLEMENT
+Mode manager:
+  enum { MODE_BLUE, MODE_LAB, MODE_RED }
+  Boot always MODE_BLUE, RED_ARMED=false
+  PIN default 2468 stored in NVS; force-change flag on first boot
+  RED mode visible in UI but any offensive action later must check PIN+ARM - in this phase there is simply no offensive action
+
+LVGL hubs (swipe or tab bar), 368x448, dark OLED, cyan=BLUE, amber=RED, grey=LAB:
+  Status bar always: [MODE] [BAT%] [SD] [TEMP] [ARM=OFF]
+  1 HOME
+  2 WIFI (ver PHASE 2)
+  3 BLE  (ver PHASE 2)
+  4 IDS  (ver PHASE 3)
+  5 USB  (ver PHASE 4)
+  6 CAPTURE
+  7 REPORTS
+  8 HW   (real: I2C, IMU sparkline, PMU, RTC set, brightness)
+  9 CONFIG (PIN change, language EN/pt-BR, brightness, display sleep timeout)
+  10 ARM (screen exists, says DISARMED, cannot arm until PHASE 4 - button disabled)
+Inputs:
+  Touch nav
+  BOOT GPIO0 short=back, double=home
+  PWR: if expander/PMIC button readable, short=sleep display (not power off)
+
+i18n:
+  ui/i18n.c with EN and pt-BR string tables. All visible text through i18n.
+
+Logger:
+  data/log.c JSONL
+  RAM ring 32KB
+  Flush to /sd/log/YYYYMMDD.jsonl when SD present
+  Helper audit_event(type, msg)
+  Log boot, PIN fail, sleep, thermal
+
+Thermal:
+  If AXP temp > 50C: banner HOT, no-op for any TX attempt (set g_tx_blocked)
+
+Tamper hook:
+  IMU shock threshold -> audit_event tamper, flash status bar, optional 200ms beep
+  Do not record audio yet
+
+NVS:
+  sentinel.cfg: pin hash (not plaintext), language, brightness, display_sleep_s, pin_must_change
+
+Display sleep:
+  Timeout from config; touch/BOOT wakes. UI says radios policy will be respected later.
+
+Audio:
+  Beep on boot complete, on tamper, on PIN fail. Fail-soft if codec missing.
+
+DO NOT
+- Enable Wi-Fi/BLE driver
+- TinyUSB other than existing CDC
+- Fake AP lists
+
+DoD PHASE 1
+[ ] All hubs reachable by touch
+[ ] Language switch updates UI
+[ ] PIN change persists reboot
+[ ] JSONL appears on SD if mounted
+[ ] Thermal banner code path exists
+[ ] Tamper logs an event when IMU exceeds threshold (testable by shaking; threshold configurable in CONFIG)
+[ ] Build passes
+[ ] PHASE_1_STATUS.md
+
+STOP. Do not start PHASE 2.
+`
+
+---
+
+### PHASE 2
+
+`
+Execute PHASE 2 now. BLUE inventory only. No promiscuous IDS, no deauth, no SoftAP, no HID, no BLE advertise spam.
+
+GOAL
+Operator walks the room, sees Wi-Fi APs and BLE devices, saves a baseline, exports a markdown site-survey report to SD.
+
+WIFI BLUE INVENTORY
+- Start Wi-Fi in STA mode, scan only (no auto-connect)
+- Channel scan 1-13
+- Table: SSID, BSSID, CH, RSSI, AUTH (OPEN/WEP/WPA/WPA2/WPA3/EAP), WPS yes/no, PMF yes/no/required, HIDDEN, OUI vendor
+- Hidden SSID: show <hidden> until a probe-resp/beacon reveals it; if only scan API is used, flag hidden when SSID len=0
+- Tap row -> detail page
+- Hygiene chips: OPEN, WEP, WPA1, WPS, PMF-OFF, TKIP
+- Store up to 200 APs, LRU
+- Refresh button; do not freeze LVGL (radio on core 0, UI snapshots)
+
+BLE BLUE INVENTORY
+- GAP passive/active scan
+- Table: addr, public/random, RSSI, name, mfr id, service UUIDs short
+- Parse Apple/Microsoft/Samsung/Google/Tile manufacturer IDs when present
+- Up to 200 devices LRU
+- Detail page
+- Do NOT connect GATT yet
+BASELINE
+- Button Save environment writes /sd/baseline/wifi.json and ble.json
+- HOME shows baseline age
+- (Comparison/alerts are PHASE 3)
+
+REPORT
+- Button Site survey writes /sd/reports/YYYYMMDD-HHMM.md
+- Contents: time (RTC), firmware version, AP table, hygiene summary counts, BLE table
+- EN or pt-BR matching UI language
+
+UI
+- Fill WIFI and BLE hubs with virtualized LVGL lists (lv_list or table). Never 200 separate complex widgets if it drops FPS - use a recycler pattern.
+- HOME big SCAN button starts/stops both scans
+- Status bar shows SCAN when hopping/scanning
+
+POWER
+- Stop scan if thermal g_tx_blocked or temp>50C (scan RX still ok until 55C; stop everything >60C)
+
+DO NOT
+- esp_wifi_set_promiscuous
+- esp_wifi_80211_tx
+- SoftAP
+- BLE advertise
+- Connect to networks
+- RED
+
+DoD PHASE 2
+[ ] Real APs appear with RSSI/auth
+[ ] Real BLE ads appear
+[ ] Detail pages work
+[ ] Baseline JSON valid
+[ ] Markdown report opens as text on PC
+[ ] UI stays responsive during scan
+[ ] Build passes
+[ ] PHASE_2_STATUS.md
+
+STOP. Do not start PHASE 3.
+`
+
+---
+
+### PHASE 3
+
+`
+Execute PHASE 3 now. BLUE IDS. Receive-only. No raw TX, no SoftAP portal, no HID, no RED arm.
+
+GOAL
+Detect hostile 2.4 GHz activity, log it, beep, show an alert feed, optionally write PCAP.
+
+WIFI SNIFFER
+- Promiscuous mode + channel hop 1-13, dwell ~80ms (configurable)
+- Parse mgmt frames safely (bounds-checked IE parser - truncated frames must not crash)
+- Write optional PCAP to /sd/pcap/wifi/YYYYMMDD-HHMMSS.pcap
+  - Wireshark-openable: global header + LINKTYPE 105 (802.11) or radiotap if you can do it cleanly
+  - File size cap 8MB then rotate
+  - Start/stop on CAPTURE hub
+- Do not promiscuous-dump forever at boot; user starts it or IDS start toggle
+
+DETECTORS (wifi_ids.c)
+1) Deauth/disassoc counter: threshold e.g. 10 frames / 5s -> alert CRITICAL
+   Include SA, DA, BSSID, reason, RSSI
+2) Beacon flood: unique BSSIDs or SSIDs per 5s above threshold -> alert
+3) Evil twin vs baseline: same SSID as baseline, different BSSID and/or different crypto/channel/OUI -> alert HIGH
+4) New AP vs baseline -> alert MED
+5) Probe leakage: collect directed probe SSIDs from nearby STAs; report list (privacy audit)
+6) EAPOL/EAPOL-start/PMKID observer: if seen, alert EAPOL observed and include those frames in pcap - DO NOT crack
+7) Hygiene live: OPEN/WPS still flagged in inventory (already PHASE 2)
+BLE DETECTORS (ble_ids.c)
+1) Spam: Apple Continuity / MS Swift Pair / Google-Samsung Fast Pair style ads at high rate -> alert
+2) Persistent tracker: same payload/addr-type pattern (AirTag/FindMy/Tile/SmartTag heuristics) whose RSSI stays relevant while IMU says the operator walked -> alert STALKER (heuristic, label as heuristic)
+3) HID-over-GATT advertisement flags -> alert
+4) New BLE vs baseline -> MED
+
+ALERT FEED
+- IDS hub: virtualized list, severity color, tap for detail
+- Beep pattern by severity
+- Persist /sd/log/alerts.jsonl
+- HOME shows last alert
+- Status bar dot when unread alerts
+
+UNIT TESTS (host Unity or IDF tests)
+- test/test_ie_parser.c
+- test/test_evil_twin.c
+- test/test_deauth_counter.c
+- Fixtures test/frames/  (craft truncated + valid beacons)
+
+UI CAPTURE hub becomes real: toggle sniffer, toggle pcap, show file size, drop count.
+
+DO NOT
+- Deauth TX
+- Beacon spam TX
+- Captive portal
+- BLE advertise
+- Auto-connect GATT to random devices
+
+DoD PHASE 3
+[ ] IE parser never overruns (tests)
+[ ] Alerts can be generated from fixtures even if live RF is quiet
+[ ] PCAP has valid global header (od/hexdump documented in STATUS)
+[ ] UI live feed works
+[ ] Hop does not deadlock UI
+[ ] Build + tests pass
+[ ] PHASE_3_STATUS.md including how to reproduce a deauth alert in lab with a second device (description only)
+
+STOP. Do not start PHASE 4.
+`
+
+---
+
+### PHASE 4
+
+`
+Execute PHASE 4 now. RED gates + lab captive portal + USB HID script runner.
+Offensive actions are opt-in, disarmed by default, allowlist required.
+
+GOAL
+(1) Phone can join a lab SoftAP and see a clearly marked LAB portal; POST logs locally.
+(2) Plugged into a lab PC unarmed = CDC only. Armed + script = types a harmless hello.
+
+ARMING
+- CONFIG PIN must be changed from default or ARM refuses
+- ARM page: enter PIN, long-press BOOT 3s, on-screen confirm
+- ARM expires after 10 minutes or on USB unplug or on tamper
+- Status bar ARM=ON amber
+- Every red action: audit_event with target + result
+- Empty allowlist = refuse with UI reason
+
+ALLOWLIST EDITOR
+- /sd/allowlist/ssid.txt and bssid.txt and ble.txt
+- UI: add current AP from WIFI detail, add current BLE from BLE detail, manual BSSID entry
+- Match is exact SSID or exact BSSID
+LAB SOFTAP + CAPTIVE
+- Only in MODE_LAB or MODE_RED+ARMED
+- SSID default SENTINEL-LAB (editable, must not impersonate banks/Apple/Google/Microsoft)
+- DHCP + DNS sinkhole * -> AP IP
+- HTTP portal from /sd/portals/lab_basic/index.html
+- Ship sd_skel/portals/lab_basic/ with ugly obvious text:
+  LAB PORTAL - AUTHORIZED TEST / PORTAL DE LABORATORIO
+  Fields: username, password, submit
+- Save POST to /sd/log/portal.jsonl  (local only, no exfil)
+- If SD missing, embed a minimal built-in lab HTML
+- Stop portal = radios back to BLUE scan
+
+USB PERSONA
+- TinyUSB
+- Unarmed: CDC ACM only, product string SENTINEL-S3 BLUE
+- Armed + user selects HID: composite CDC+HID keyboard (mouse optional)
+- Screen huge text HID KEYBOARD LIVE while HID is on
+- Switching may require unplug/replug - document it
+- VID/PID: Espressif or generic HID. Do NOT ship Apple/Logitech impersonation presets
+DUCKY SUBSET RUNNER
+Commands: REM, DELAY, STRING, STRINGLN, ENTER, TAB, ESC, GUI, CTRL, ALT, SHIFT, LOCALE
+Locales: US and ABNT2 (pt-BR)
+Scripts only from /sd/scripts/hid/*.txt
+Ship exactly three:
+  hello.txt        - GUI r / notepad / STRINGLN SENTINEL LAB
+  lock-workstation.txt - GUI l
+  open-notepad.txt
+NO browser password stealers, NO download-exec helpers, NO IEX powershell downloaders.
+
+USB hub UI: persona, script list, RUN/STOP, locale, ARM gate.
+
+DO NOT
+- Raw 802.11 TX / deauth (thats PHASE 5)
+- MSC/NCM (PHASE 5)
+- BLE spam / BadBLE (PHASE 5)
+- Karma wildcard
+- Clone real brands in portal
+
+DoD PHASE 4
+[ ] Unarmed USB enumerates CDC only
+[ ] Armed HID runs hello.txt (script parser unit-tested)
+[ ] SoftAP portal serves LAB page; POST appends jsonl
+[ ] ARM without PIN or allowlist fails closed
+[ ] Audit lines written
+[ ] Build passes
+[ ] sd_skel/ committed
+[ ] PHASE_4_STATUS.md
+
+STOP. Do not start PHASE 5.
+`
+
+---
+
+### PHASE 5
+
+`
+Execute PHASE 5 now. RED extras + BLUE honey. Capability-probe everything that might be missing on ESP32-S3 IDF. Never crash if unsupported.
+
+GOAL
+Each extra either WORKS or the UI shows UNSUPPORTED with the reason. Soak stability.
+
+1) RAW 802.11 TX PROBE
+- Try esp_wifi_80211_tx (or current IDF equivalent) with a harmless probe-req or beacon to a lab SSID in allowlist, once
+- Cache g_raw_tx_ok
+- HW page and WIFI actions reflect this
+- If IDF/driver rejects: disable deauth/beacon-tx permanently this boot
+
+2) ALLOWLISTED DEAUTH (only if g_raw_tx_ok)
+- WIFI detail -> action Deauth (RED+ARM)
+- Target BSSID must be in allowlist
+- If AP advertises PMF required: refuse with 802.11w PMF - deauth will not work
+- Burst limited: N frames, then stop; thermal abort
+- Audit
+
+3) LAB BEACON SET (if g_raw_tx_ok)
+- Advertise only allowlisted SSIDs, cap 5 SSIDs, cap rate, prefix optional LAB-
+- Thermal abort
+
+4) KARMA LIMITED
+- Answer probe requests ONLY if the requested SSID is in allowlist
+- No wildcard
+
+5) HONEYSSID / HONEYAP (BLUE, always disarmed-safe)
+- HoneySSID: beacon 2 decoy SSIDs never used in org (config: SENTINEL-HONEY-1/2). Any probe/assoc -> IDS alert
+- HoneyAP: SoftAP SENTINEL-HONEY logs assoc+DHCP+HTTP, no internet, no credential-looking clone of real sites - a warning page you joined a canary AP
+6) BadBLE
+- Advertise HID-over-GATT name SENTINEL-LAB only when RED+ARMED
+- Same Ducky runner as USB after pairing
+- 5s connection-flood against allowlisted BLE addr (LAB DoS of own device)
+
+7) BLE LAB SPAM GENERATOR
+- MODE_LAB only, names prefix LAB-, max 5 seconds, then auto-off
+- Purpose: test PHASE 3 spam detector
+- Not available in RED field mode
+
+8) USB MSC + COMPOSITE
+- MSC exposes ONLY /sd/public as read-only disk
+- Never expose /log /pcap /allowlist
+- Composite HID+MSC when armed
+- Create /sd/public/README.txt
+
+9) USB NCM/ECM lab network (if TinyUSB NCM available on this IDF)
+- 192.168.33.1 DHCP, captive same lab portal
+- No HID at the same time if descriptor space is tight - pick stable composite or document mutex
+- If NCM not available: UNSUPPORTED, do not break HID
+
+10) OPTIONAL WEBHOOK
+- If operator configured STA credentials in CONFIG and association succeeds, POST alerts JSON to webhook URL (mbedTLS)
+- Fail-soft
+
+11) GATT WRITE
+- RED+ARM+allowlisted BLE addr, operator picks characteristic in UI, sends bytes from a hex field
+- No brute-write-all
+THERMAL
+All TX paths check g_tx_blocked / temp.
+
+DO NOT
+- Empty allowlist TX
+- Brand impersonation VID/PID
+- Jamming loops
+- WPA crack
+- 5 GHz anything
+- SubGHz/NFC drivers unless you also add compile flags and they are stubs showing NOT FITTED
+
+DoD PHASE 5
+[ ] Capability matrix on HW page: RAW_TX, NCM, BLE_HID, MSC
+[ ] Deauth path compiled but inert if !g_raw_tx_ok
+[ ] HoneyAP/HoneySSID generate IDS alerts when a client touches them
+[ ] MSC does not leak logs
+[ ] BadBLE/HID still gated
+[ ] No crash on missing features
+[ ] Build passes
+[ ] PHASE_5_STATUS.md with honest capability results
+
+STOP. Do not start PHASE 6.
+`
+
+---
+
+### PHASE 6
+
+`
+Execute PHASE 6 now. Hardening, docs, OTA, polish. No new offensive features.
+
+GOAL
+A firmware someone can flash, operate for 30 minutes, and understand the limits of.
+
+IMPLEMENT
+1) OTA
+   - ota_0/ota_1 partitions already exist
+   - USB: update via esptool / documented idf.py flash
+   - Optional: HTTP OTA only from operator STA + URL in CONFIG, signed not required but SHA256 shown
+   - Rollback: if app crashes 3 times, stay in last good (IDF app rollback if enabled)
+
+2) Safe-mode
+   - Hold BOOT at boot -> radios RX-only, UI SAFE MODE, no RED
+   - 3 panic reboots -> same
+
+3) Coredump to flash partition if space; else disable and document
+   - On next boot, HW page previous crash + log line
+
+4) Power
+   - Display sleep works
+   - Scan duty-cycle option (slow hop) to reduce heat
+   - Battery % sane; shutdown warning <10%
+   - PWR long still hardware off via PMIC if supported
+
+5) UI polish
+   - Empty states, error banners, locale complete
+   - FPS acceptable (don't hammer LVGL from rx task)
+   - Huge HID LIVE / ARM banners remain impossible to miss
+6) sd_skel complete
+   /sd_skel/config.toml.example
+   /sd_skel/allowlist/*.txt.example
+   /sd_skel/portals/lab_basic/
+   /sd_skel/scripts/hid/{hello,lock-workstation,open-notepad}.txt
+   /sd_skel/public/README.txt
+
+7) DOCS (honest)
+   README.md - flash: IDF 5.5, set-target esp32s3, PSRAM, 16MB, idf.py build flash monitor
+   docs/LIMITATIONS.md - 2.4 only, antenna SMD, raw TX maybe missing, PMF breaks deauth, no 5GHz, no BT classic, no Flipper radios, USB re-enum needed, heat ~46C
+   docs/THREAT_MODEL.md - what BLUE detects, what RED can do in lab, what it cannot
+   docs/DEVICE_TEST.md - 15-minute checklist on real hardware
+   docs/PINOUT_AND_REV.md - rev1 vs rev2, I2C map, PMU-first
+
+8) Soak
+   - Watchdog on radio tasks
+   - 30 min scan+UI+SD logging notes in PHASE_6_STATUS (even if only reasoned, list what to watch: leaks, heap, temp)
+
+9) Optional modules (NOT FITTED if absent)
+   opt/mod_gps.h, mod_pn532.h, mod_cc1101.h - compile flags default n, HW page NOT FITTED
+   Do not implement full drivers now.
+
+DO NOT
+- Add stealers, new TX attacks, brand clones
+- Scope creep extra radios
+DoD PHASE 6
+[ ] README flash instructions accurate
+[ ] LIMITATIONS.md does not lie about 5 GHz / raw TX / PMF
+[ ] Safe-mode works (code path)
+[ ] OTA or documented flash update
+[ ] sd_skel complete
+[ ] Build passes
+[ ] PHASE_6_STATUS.md = project complete for P0/P1 + honest P2 matrix
+
+This is the last phase. After STATUS, stop.
+`
+
+---
+
+### FIX (quando quebrar)
+
+`
+Stay on the CURRENT phase. Do not add features. Do not start the next phase.
+Re-read that phase Definition of Done.
+Fix build errors, black screen (PMU order), LVGL task starvation, SD crash-on-empty, I2C hang on missing expander, USB descriptor mistakes.
+Rebuild until idf.py build is green.
+Update PHASE_N_STATUS.md with the failure, the cause, the fix.
+If hardware contract conflicts with a feature, drop the feature and mark UNSUPPORTED.
+`
+
+---
+
+Ordem: Context Lock (se precisar) -> 0 -> 1 -> 2 -> 3 -> 4 -> 5 -> 6.

@@ -1,0 +1,11 @@
+# SENTINEL — PINs de laboratorio para o enrollee WPS RED (device-PIN).
+# Uso: copie para /sd/allowlist/wps_pins.txt no cartao.
+# Regras do firmware:
+#   * No maximo 5 PINs sao tentados, depois PARA (sem brute-force).
+#   * Sao PINs de ENROLLEE (o ESP apresenta este PIN ao AP). NAO e Reaver,
+#     NAO e brute-force de registrar. So funciona se o AP-alvo (na allowlist)
+#     foi configurado para aceitar este PIN. Ver docs/WPS.md.
+#   * Um PIN por linha, 4-8 digitos. Texto apos espaco/comentario e ignorado.
+#
+00000000   # LAB — exemplo (PIN nulo de teste)
+12345670   # LAB — exemplo (checksum valido classico)

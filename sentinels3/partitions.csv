@@ -1,0 +1,8 @@
+# ESP-IDF Partition Table for 16MB flash
+# nvs, otadata, ota_0, ota_1, littlefs, fat
+nvs,      data, nvs,      , 0x6000,  0x6000,
+otadata,  data, otadata,  , 0x2000,  0x6000,
+ota_0,    app,  ota_0,    , 0x300000, 0x6000,
+ota_1,    app,  ota_1,    , 0x300000, 0x6000,
+littlefs, data, littlefs, , 0x200000, 0x7000,
+fat,      data, fat,      , ,         0x7000,
