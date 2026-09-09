@@ -5,6 +5,7 @@
 #include <BLEDevice.h>
 #include <BLEScan.h>
 #include <BLEAdvertisedDevice.h>
+#include <vector>
 
 /**
  * PwnBLE
@@ -21,6 +22,7 @@ class PwnBLE {
 private:
     static int last_count;
     static int total_seen;
+    inline static std::vector<String> last_list;
 
 public:
     // Varredura passiva de `seconds` segundos. Retorna nº de dispositivos.
@@ -33,7 +35,17 @@ public:
             s->setInterval(100);
             s->setWindow(80);
             BLEScanResults *r = s->start(seconds, false);
-            if (r) n = r->getCount();
+            last_list.clear();
+            if (r) {
+                n = r->getCount();
+                for (int i = 0; i < n; i++) {
+                    BLEAdvertisedDevice d = r->getDevice(i);
+                    String line = String(d.getAddress().toString().c_str());
+                    if (d.haveName()) line += "  " + String(d.getName().c_str());
+                    line += "  " + String(d.getRSSI()) + "dBm";
+                    last_list.push_back(line);
+                }
+            }
             s->clearResults();
         }
         BLEDevice::deinit(true);        // libera RAM/coexistência
@@ -43,6 +55,12 @@ public:
         return n;
     }
 
+    static String getDevicesText() {
+        String out;
+        for (auto &l : last_list) out += l + "\n";
+        if (last_list.empty()) out = "(toque ESCANEAR)";
+        return out;
+    }
     static int getLastCount() { return last_count; }
     static int getTotalSeen() { return total_seen; }
 };

@@ -104,6 +104,9 @@ private:
     inline static uint32_t g_tmr_end = 0; inline static bool g_tmr_run = false;
     inline static int g_tmr_set[2] = { 5, 0 };     // min, seg
     inline static int g_clk[6] = { 2026, 1, 1, 0, 0, 0 };
+    inline static lv_obj_t *g_toast = nullptr, *g_toast_lbl = nullptr;
+    inline static int g_toast_ttl = 0;
+    inline static int g_wifi_mode = 0;  // 0=sniffer, 1=lista de redes
 
     // pilha de navegação
     inline static lv_obj_t *nav_stack[12] = { nullptr };
@@ -111,6 +114,16 @@ private:
 
     static int  N_(int bytes, int one) { return bytes / one; }
     static void beep() { AudioHandler::beep(2400, 20, 45); }
+    // Feedback visual instantaneo em qualquer acao (funciona mesmo sem audio).
+    static void toast(const char *msg, lv_color_t col = UI_GREEN) {
+        if (!g_toast) return;
+        lv_label_set_text(g_toast_lbl, msg);
+        lv_obj_set_style_bg_color(g_toast, col, 0);
+        lv_obj_remove_flag(g_toast, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_move_foreground(g_toast);
+        g_toast_ttl = 2;
+        lv_refr_now(NULL);   // pinta agora, antes de qualquer trabalho bloqueante
+    }
     static void showObj(lv_obj_t *o) { if (o) lv_obj_remove_flag(o, LV_OBJ_FLAG_HIDDEN); }
     static void hideObj(lv_obj_t *o) { if (o) lv_obj_add_flag(o, LV_OBJ_FLAG_HIDDEN); }
     static bool visible(lv_obj_t *p) { return p && !lv_obj_has_flag(p, LV_OBJ_FLAG_HIDDEN); }
@@ -122,6 +135,7 @@ private:
         nav_stack[++nav_top] = p;
         lv_obj_scroll_to_y(p, 0, LV_ANIM_OFF);
         showObj(p);
+        lv_obj_move_foreground(p);
         PwnSleep::notifyActivity();
         refresh();
     }
@@ -129,12 +143,14 @@ private:
         if (nav_top <= 0) return;
         hideObj(nav_stack[nav_top--]);
         showObj(nav_stack[nav_top]);
+        lv_obj_move_foreground(nav_stack[nav_top]);
         PwnSleep::notifyActivity();
         refresh();
     }
     static void goHome() {
         while (nav_top > 0) hideObj(nav_stack[nav_top--]);
         showObj(page_home);
+        lv_obj_move_foreground(page_home);
         PwnSleep::notifyActivity();
     }
     static void cbOpen(lv_event_t *e) { beep(); pushPage((lv_obj_t *)lv_event_get_user_data(e)); }
@@ -152,38 +168,46 @@ private:
         pushPage(cat_pages[i]); }
 
     // ============================ AÇÕES REAIS =============================
-    static void aWifiScan(lv_event_t *e){ (void)e; beep(); WiFiTools::beginNewCapture(); WiFiTools::startSnifferScan(); }
-    static void aWifiPass(lv_event_t *e){ (void)e; beep(); WiFiTools::startSnifferPassive(); }
-    static void aWifiStop(lv_event_t *e){ (void)e; beep(); WiFiTools::stopSniffer(); }
-    static void aWifiCh  (lv_event_t *e){ (void)e; beep(); static uint8_t ch=1; ch=(ch%13)+1; WiFiTools::setChannel(ch); }
-    static void aBleScan (lv_event_t *e){ (void)e; beep(); int n=PwnBLE::scan(4); if(n>0) PwnPet::feed(1); }
+    static void aWifiScan(lv_event_t *e){ (void)e; beep(); toast("Sniffer iniciado", UI_GREEN); WiFiTools::beginNewCapture(); WiFiTools::startSnifferScan(); g_wifi_mode=0; }
+    static void aWifiPass(lv_event_t *e){ (void)e; beep(); toast("Modo passivo", UI_CYAN); WiFiTools::startSnifferPassive(); g_wifi_mode=0; }
+    static void aWifiStop(lv_event_t *e){ (void)e; beep(); toast("Sniffer parado", UI_RED); WiFiTools::stopSniffer(); g_wifi_mode=0; }
+    static void aWifiCh  (lv_event_t *e){ (void)e; beep(); static uint8_t ch=1; ch=(ch%13)+1; WiFiTools::setChannel(ch); toast("Canal alterado", UI_ORANGE); }
+    static void aWifiNets(lv_event_t *e){ (void)e; beep(); toast("Escaneando redes...", UI_GREEN);
+        g_wifi_mode = 1; if (lbl_wifi) lv_label_set_text(lbl_wifi, WiFiTools::scanNetworksText().c_str()); }
+    static void aBleScan (lv_event_t *e){ (void)e; beep(); toast("Escaneando BLE...", UI_CYAN); int n=PwnBLE::scan(4); if(n>0) PwnPet::feed(1); }
     static void aEvilStart(lv_event_t *e){ (void)e; beep(); ConfigManager *c=ConfigManager::getInstance();
-        EvilPortal::start(c->getString("sys_ap_ssid").c_str(), c->getString("atk_portal_template").c_str()); }
-    static void aEvilStop(lv_event_t *e){ (void)e; beep(); EvilPortal::stop(); }
-    static void aEvilTwin(lv_event_t *e){ (void)e; beep(); PwnAttack::evilTwin("Free_WiFi"); }
+        // EvilPortal::start faz "/arquivos_cartao_sd" + template, entao o template
+        // precisa comecar com "/evil_portal/" para achar o HTML no cartao.
+        String tmpl = c->getString("atk_portal_template");
+        if (tmpl.length()==0) tmpl = "01_wifi_update.html";
+        if (!tmpl.startsWith("/evil_portal/")) tmpl = String("/evil_portal/") + tmpl;
+        EvilPortal::start(c->getString("sys_ap_ssid").c_str(), tmpl.c_str()); toast("Evil Portal ON", UI_RED); }
+    static void aEvilStop(lv_event_t *e){ (void)e; beep(); toast("Evil Portal OFF", UI_ORANGE); EvilPortal::stop(); }
+    static void aEvilTwin(lv_event_t *e){ (void)e; beep(); toast("Evil Twin ativo", UI_PURPLE); PwnAttack::evilTwin("Free_WiFi"); }
     static void aDeauth(lv_event_t *e){ (void)e; AudioHandler::beepWarn();
+        toast(ConfigManager::getInstance()->get<bool>("atk_deauth_enabled")?"Deauth enviado":"Deauth OFF (ative nas Config)", UI_RED);
         if(!ConfigManager::getInstance()->get<bool>("atk_deauth_enabled")) return;
         if(!WiFiTools::nearby_devices.empty()) PwnAttack::deauthSimulated(WiFiTools::nearby_devices.front().mac); }
-    static void aFeed(lv_event_t *e){ (void)e; AudioHandler::beepOk(); PwnPet::feed(10); FaceHandler::setFace(FACE_HAPPY); }
-    static void aPlay(lv_event_t *e){ (void)e; beep(); FaceHandler::setFace(FACE_EXCITED); PwnPet::addHandshake(true); }
-    static void aFaceTap(lv_event_t *e){ (void)e; AudioHandler::beepOk(); PwnPet::feed(4); FaceHandler::setFace(FACE_HAPPY); }
+    static void aFeed(lv_event_t *e){ (void)e; AudioHandler::beepOk(); toast("Yummy! +10", UI_GREEN); PwnPet::feed(10); FaceHandler::setFace(FACE_HAPPY); }
+    static void aPlay(lv_event_t *e){ (void)e; beep(); toast("Brincando!", UI_PURPLE); FaceHandler::setFace(FACE_EXCITED); PwnPet::addHandshake(true); }
+    static void aFaceTap(lv_event_t *e){ (void)e; AudioHandler::beepOk(); toast("Carinho <3", UI_PURPLE); PwnPet::feed(4); FaceHandler::setFace(FACE_HAPPY); }
     static void aPerf(lv_event_t *e){ beep(); int lvl=(int)(intptr_t)lv_event_get_user_data(e);
-        PwnPower::setPerformanceMode(lvl); ConfigManager::getInstance()->set<int>("pwr_cpu_freq_max", lvl>=2?240:(lvl==1?160:80)); }
-    static void aDeep(lv_event_t *e){ (void)e; AudioHandler::beepWarn(); PwnSleep::enterDeep(); }
-    static void aNtp(lv_event_t *e){ (void)e; beep(); ConfigManager *c=ConfigManager::getInstance();
+        PwnPower::setPerformanceMode(lvl); toast("Modo de energia alterado", UI_CYAN); ConfigManager::getInstance()->set<int>("pwr_cpu_freq_max", lvl>=2?240:(lvl==1?160:80)); }
+    static void aDeep(lv_event_t *e){ (void)e; AudioHandler::beepWarn(); toast("Deep sleep...", UI_RED); PwnSleep::enterDeep(); }
+    static void aNtp(lv_event_t *e){ (void)e; beep(); toast("Sincronizando NTP...", UI_CYAN); ConfigManager *c=ConfigManager::getInstance();
         PwnRTC::syncNTP(c->getString("sys_ntp_server").c_str(), c->get<int>("sys_timezone")); }
-    static void aReboot(lv_event_t *e){ (void)e; AudioHandler::beepWarn(); delay(120); ESP.restart(); }
-    static void aVoiceListen(lv_event_t *e){ (void)e; beep(); PwnVoice::listen(); }
-    static void aVoiceSpeak(lv_event_t *e){ (void)e; beep(); PwnVoice::speak("mini lele online"); }
-    static void aClockSave(lv_event_t *e){ (void)e; AudioHandler::beepOk();
+    static void aReboot(lv_event_t *e){ (void)e; AudioHandler::beepWarn(); toast("Reiniciando...", UI_RED); delay(120); ESP.restart(); }
+    static void aVoiceListen(lv_event_t *e){ (void)e; beep(); toast("Ouvindo...", UI_CYAN); PwnVoice::listen(); }
+    static void aVoiceSpeak(lv_event_t *e){ (void)e; beep(); toast("Falando...", UI_PURPLE); PwnVoice::speak("mini lele online"); }
+    static void aClockSave(lv_event_t *e){ (void)e; AudioHandler::beepOk(); toast("Hora salva!", UI_GREEN);
         PwnRTC::setManual(g_clk[0],g_clk[1],g_clk[2],g_clk[3],g_clk[4],g_clk[5]); }
-    static void aSwToggle(lv_event_t *e){ (void)e; beep();
+    static void aSwToggle(lv_event_t *e){ (void)e; beep(); toast("Cronometro", UI_GREEN);
         if(g_sw_run){ g_sw_acc += millis()-g_sw_start; g_sw_run=false; }
         else { g_sw_start=millis(); g_sw_run=true; } }
-    static void aSwReset(lv_event_t *e){ (void)e; beep(); g_sw_run=false; g_sw_acc=0; if(lbl_sw) lv_label_set_text(lbl_sw,"00:00"); }
-    static void aTmrStart(lv_event_t *e){ (void)e; AudioHandler::beepOk();
+    static void aSwReset(lv_event_t *e){ (void)e; beep(); toast("Zerado", UI_ORANGE); g_sw_run=false; g_sw_acc=0; if(lbl_sw) lv_label_set_text(lbl_sw,"00:00"); }
+    static void aTmrStart(lv_event_t *e){ (void)e; AudioHandler::beepOk(); toast("Timer iniciado", UI_GREEN);
         if(!g_tmr_run){ g_tmr_end=millis()+(uint32_t)(g_tmr_set[0]*60+g_tmr_set[1])*1000UL; g_tmr_run=(g_tmr_set[0]||g_tmr_set[1]); } }
-    static void aTmrStop(lv_event_t *e){ (void)e; beep(); g_tmr_run=false; }
+    static void aTmrStop(lv_event_t *e){ (void)e; beep(); toast("Timer parado", UI_RED); g_tmr_run=false; }
 
     // ===================== EDITORES DE CONFIGURAÇÃO =======================
     static void applyKey(const char *key) {
@@ -293,6 +317,19 @@ private:
         lv_obj_set_style_shadow_width(b, 0, 0);
         lv_obj_set_style_pad_all(b, 0, 0);
     }
+    // Cria um "botao" como lv_obj + CLICKABLE (mesmo caminho dos tiles, que funcionam),
+    // com realce ao pressionar. Substitui lv_button_create em toda a UI.
+    static lv_obj_t *mkClickable(lv_obj_t *parent) {
+        lv_obj_t *b = lv_obj_create(parent);
+        lv_obj_remove_flag(b, LV_OBJ_FLAG_SCROLLABLE);
+        lv_obj_add_flag(b, LV_OBJ_FLAG_CLICKABLE);
+        lv_obj_set_style_border_width(b, 0, 0);
+        lv_obj_set_style_pad_all(b, 0, 0);
+        lv_obj_set_style_shadow_width(b, 0, 0);
+        lv_obj_set_style_bg_opa(b, LV_OPA_70, LV_STATE_PRESSED);
+        lv_obj_set_style_outline_width(b, 0, 0);
+        return b;
+    }
     static lv_obj_t *newPage() {
         lv_obj_t *p = lv_obj_create(scr_main);
         lv_obj_set_size(p, LCD_WIDTH, LCD_HEIGHT);
@@ -319,7 +356,7 @@ private:
         lv_obj_set_style_radius(hdr, 0, 0);
         lv_obj_set_style_pad_all(hdr, 0, 0);
         lv_obj_remove_flag(hdr, LV_OBJ_FLAG_SCROLLABLE);
-        lv_obj_t *bk = lv_button_create(hdr);
+        lv_obj_t *bk = mkClickable(hdr);
         lv_obj_set_size(bk, 52, 44);
         lv_obj_align(bk, LV_ALIGN_LEFT_MID, 4, 0);
         lv_obj_set_style_bg_color(bk, UI_PANEL2, 0);
@@ -357,7 +394,7 @@ private:
     }
     static lv_obj_t *mkBtn(lv_obj_t *parent, const char *txt, lv_color_t col,
                            lv_event_cb_t cb, void *ud = NULL, lv_coord_t w = LV_PCT(100)) {
-        lv_obj_t *b = lv_button_create(parent);
+        lv_obj_t *b = mkClickable(parent);
         lv_obj_set_size(b, w, 52);
         lv_obj_set_style_radius(b, 14, 0);
         lv_obj_set_style_bg_color(b, col, 0);
@@ -431,13 +468,13 @@ private:
         lv_obj_set_flex_flow(box, LV_FLEX_FLOW_ROW);
         lv_obj_set_flex_align(box, LV_FLEX_ALIGN_SPACE_BETWEEN, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
         lv_obj_remove_flag(box, LV_OBJ_FLAG_SCROLLABLE);
-        lv_obj_t *bm = lv_button_create(box); lv_obj_set_size(bm, 40, 40); stepStyle(bm, UI_ORANGE);
+        lv_obj_t *bm = mkClickable(box); lv_obj_set_size(bm, 40, 40); stepStyle(bm, UI_ORANGE);
         lv_obj_t *lm = lv_label_create(bm); lv_label_set_text(lm, LV_SYMBOL_MINUS);
         lv_obj_set_style_text_color(lm, UI_BG, 0); lv_obj_center(lm);
         lv_obj_t *v = lv_label_create(box); char b[16]; snprintf(b,sizeof(b),"%d%s",*store, unit?unit:""); lv_label_set_text(v, b);
         lv_obj_set_style_text_color(v, UI_TEXT, 0); lv_obj_set_style_text_font(v, &lv_font_montserrat_16, 0);
         lv_obj_set_width(v, 56); lv_obj_set_style_text_align(v, LV_TEXT_ALIGN_CENTER, 0);
-        lv_obj_t *bp = lv_button_create(box); lv_obj_set_size(bp, 40, 40); stepStyle(bp, UI_GREEN);
+        lv_obj_t *bp = mkClickable(box); lv_obj_set_size(bp, 40, 40); stepStyle(bp, UI_GREEN);
         lv_obj_t *lp = lv_label_create(bp); lv_label_set_text(lp, LV_SYMBOL_PLUS);
         lv_obj_set_style_text_color(lp, UI_BG, 0); lv_obj_center(lp);
         DCtx *c = new DCtx{store, mn, mx, step, v, unit};
@@ -464,7 +501,7 @@ private:
             if (ConfigManager::getInstance()->get<bool>(it->key)) lv_obj_add_state(sw, LV_STATE_CHECKED);
             lv_obj_add_event_cb(sw, cbBool, LV_EVENT_VALUE_CHANGED, (void*)it);
         } else if (it->type==T_ENUM || it->type==T_STR) {
-            lv_obj_t *btn = lv_button_create(row);
+            lv_obj_t *btn = mkClickable(row);
             lv_obj_set_size(btn, 150, 40);
             lv_obj_set_style_bg_color(btn, UI_PANEL, 0);
             lv_obj_set_style_border_color(btn, it->type==T_STR ? UI_CYAN : UI_PURPLE, 0);
@@ -486,13 +523,13 @@ private:
             lv_obj_set_flex_flow(box, LV_FLEX_FLOW_ROW);
             lv_obj_set_flex_align(box, LV_FLEX_ALIGN_SPACE_BETWEEN, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
             lv_obj_remove_flag(box, LV_OBJ_FLAG_SCROLLABLE);
-            lv_obj_t *bm = lv_button_create(box); lv_obj_set_size(bm, 40, 40); stepStyle(bm, UI_ORANGE);
+            lv_obj_t *bm = mkClickable(box); lv_obj_set_size(bm, 40, 40); stepStyle(bm, UI_ORANGE);
             lv_obj_t *lm = lv_label_create(bm); lv_label_set_text(lm, LV_SYMBOL_MINUS);
             lv_obj_set_style_text_color(lm, UI_BG, 0); lv_obj_center(lm);
             lv_obj_t *v = lv_label_create(box); lv_label_set_text(v, valStr(it).c_str());
             lv_obj_set_style_text_color(v, UI_TEXT, 0); lv_obj_set_style_text_font(v, &lv_font_montserrat_16, 0);
             lv_obj_set_width(v, 56); lv_obj_set_style_text_align(v, LV_TEXT_ALIGN_CENTER, 0);
-            lv_obj_t *bp = lv_button_create(box); lv_obj_set_size(bp, 40, 40); stepStyle(bp, UI_GREEN);
+            lv_obj_t *bp = mkClickable(box); lv_obj_set_size(bp, 40, 40); stepStyle(bp, UI_GREEN);
             lv_obj_t *lp = lv_label_create(bp); lv_label_set_text(lp, LV_SYMBOL_PLUS);
             lv_obj_set_style_text_color(lp, UI_BG, 0); lv_obj_center(lp);
             Ctx *c = new Ctx{it, v};
@@ -534,6 +571,7 @@ public:
         buildAllSettings();
         buildKeyboard();
         buildLauncher();   // por último: referencia todas as páginas
+        buildToast();
 
         nav_stack[0] = page_home;
         nav_top = 0;
@@ -561,29 +599,51 @@ public:
         lv_obj_set_style_text_font(lbl_time, &lv_font_montserrat_48, 0);
         lv_obj_set_style_text_color(lbl_time, UI_TEXT, 0);
         lv_label_set_text(lbl_time, "00:00");
-        lv_obj_align(lbl_time, LV_ALIGN_TOP_MID, 0, 60);
+        lv_obj_align(lbl_time, LV_ALIGN_TOP_MID, 0, 44);
 
         lbl_date = lv_label_create(page_home);
         lv_obj_set_style_text_font(lbl_date, &lv_font_montserrat_16, 0);
         lv_obj_set_style_text_color(lbl_date, UI_PURPLE, 0);
         lv_label_set_text(lbl_date, "-- -- ----");
-        lv_obj_align(lbl_date, LV_ALIGN_TOP_MID, 0, 120);
+        lv_obj_align(lbl_date, LV_ALIGN_TOP_MID, 0, 100);
 
+        // Avatar do pet: painel arredondado com gradiente e halo verde (bem mais bonito)
         lv_obj_t *facePanel = lv_obj_create(page_home);
-        lv_obj_set_size(facePanel, 220, 116);
-        lv_obj_align(facePanel, LV_ALIGN_CENTER, 0, 14);
-        baseCard(facePanel, UI_GREEN);
+        lv_obj_set_size(facePanel, 252, 150);
+        lv_obj_align(facePanel, LV_ALIGN_CENTER, 0, 4);
+        lv_obj_set_style_radius(facePanel, 30, 0);
+        lv_obj_set_style_bg_color(facePanel, lv_color_hex(0x0B1524), 0);
+        lv_obj_set_style_bg_grad_color(facePanel, lv_color_hex(0x17263B), 0);
+        lv_obj_set_style_bg_grad_dir(facePanel, LV_GRAD_DIR_VER, 0);
+        lv_obj_set_style_bg_opa(facePanel, LV_OPA_COVER, 0);
+        lv_obj_set_style_border_color(facePanel, UI_GREEN, 0);
+        lv_obj_set_style_border_width(facePanel, 2, 0);
+        lv_obj_set_style_border_opa(facePanel, LV_OPA_60, 0);
+        lv_obj_set_style_outline_color(facePanel, UI_GREEN, 0);
+        lv_obj_set_style_outline_width(facePanel, 8, 0);
+        lv_obj_set_style_outline_opa(facePanel, LV_OPA_20, 0);
+        lv_obj_set_style_pad_all(facePanel, 0, 0);
+        lv_obj_set_style_shadow_width(facePanel, 0, 0);
+        lv_obj_remove_flag(facePanel, LV_OBJ_FLAG_SCROLLABLE);
         lv_obj_add_flag(facePanel, LV_OBJ_FLAG_CLICKABLE);
         lv_obj_add_event_cb(facePanel, aFaceTap, LV_EVENT_CLICKED, NULL);
         FaceHandler::init(facePanel);
 
         lbl_home_pet = lv_label_create(page_home);
         lv_obj_set_style_text_font(lbl_home_pet, &lv_font_montserrat_14, 0);
-        lv_obj_set_style_text_color(lbl_home_pet, UI_DIM, 0);
+        lv_obj_set_style_text_color(lbl_home_pet, UI_TEXT, 0);
+        lv_obj_set_style_bg_color(lbl_home_pet, UI_PANEL, 0);
+        lv_obj_set_style_bg_opa(lbl_home_pet, LV_OPA_COVER, 0);
+        lv_obj_set_style_radius(lbl_home_pet, 13, 0);
+        lv_obj_set_style_pad_hor(lbl_home_pet, 14, 0);
+        lv_obj_set_style_pad_ver(lbl_home_pet, 6, 0);
+        lv_obj_set_style_border_color(lbl_home_pet, UI_PURPLE, 0);
+        lv_obj_set_style_border_width(lbl_home_pet, 1, 0);
+        lv_obj_set_style_border_opa(lbl_home_pet, LV_OPA_50, 0);
         lv_label_set_text(lbl_home_pet, "PwnBaby");
-        lv_obj_align(lbl_home_pet, LV_ALIGN_CENTER, 0, 92);
+        lv_obj_align(lbl_home_pet, LV_ALIGN_CENTER, 0, 104);
 
-        lv_obj_t *b = lv_button_create(page_home);
+        lv_obj_t *b = mkClickable(page_home);
         lv_obj_set_size(b, LCD_WIDTH - 40, 58);
         lv_obj_align(b, LV_ALIGN_BOTTOM_MID, 0, -18);
         lv_obj_set_style_radius(b, 18, 0);
@@ -635,12 +695,12 @@ public:
         lv_obj_t *c = mkSub("Wi-Fi", UI_GREEN, &page_wifi);
         lbl_wifi = mkInfo(c, UI_GREEN, "SNIFFER / CAPTURA");
         lv_obj_t *r1 = mkRow(c);
-        mkBtn(r1, "SCAN", UI_GREEN, aWifiScan, NULL, 108);
-        mkBtn(r1, "PASSIVO", UI_CYAN, aWifiPass, NULL, 108);
+        mkBtn(r1, "REDES", UI_GREEN, aWifiNets, NULL, 108);
+        mkBtn(r1, "SNIFFER", UI_CYAN, aWifiPass, NULL, 108);
         mkBtn(r1, "PARAR", UI_RED, aWifiStop, NULL, 108);
         lv_obj_t *r2 = mkRow(c);
         mkBtn(r2, LV_SYMBOL_REFRESH " CANAL", UI_ORANGE, aWifiCh, NULL, 165);
-        mkBtn(r2, LV_SYMBOL_SAVE " NOVA CAP.", UI_PURPLE, aWifiScan, NULL, 165);
+        mkBtn(r2, LV_SYMBOL_SAVE " NOVA PCAP", UI_PURPLE, aWifiScan, NULL, 165);
     }
     static void buildBle() {
         lv_obj_t *c = mkSub("Bluetooth", UI_CYAN, &page_ble);
@@ -912,12 +972,31 @@ public:
         lv_obj_add_event_cb(kb_widget, cbKb, LV_EVENT_READY, NULL);
         lv_obj_add_event_cb(kb_widget, cbKb, LV_EVENT_CANCEL, NULL);
     }
+    static void buildToast() {
+        g_toast = lv_obj_create(scr_main);
+        lv_obj_set_size(g_toast, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+        lv_obj_set_style_bg_color(g_toast, UI_GREEN, 0);
+        lv_obj_set_style_bg_opa(g_toast, LV_OPA_COVER, 0);
+        lv_obj_set_style_radius(g_toast, 20, 0);
+        lv_obj_set_style_border_width(g_toast, 0, 0);
+        lv_obj_set_style_pad_hor(g_toast, 20, 0);
+        lv_obj_set_style_pad_ver(g_toast, 11, 0);
+        lv_obj_set_style_shadow_width(g_toast, 0, 0);
+        lv_obj_remove_flag(g_toast, LV_OBJ_FLAG_SCROLLABLE);
+        lv_obj_add_flag(g_toast, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_align(g_toast, LV_ALIGN_BOTTOM_MID, 0, -86);
+        g_toast_lbl = lv_label_create(g_toast);
+        lv_obj_set_style_text_color(g_toast_lbl, UI_BG, 0);
+        lv_obj_set_style_text_font(g_toast_lbl, &lv_font_montserrat_16, 0);
+        lv_label_set_text(g_toast_lbl, "");
+    }
 
     // ============================================================= nav HW
     static void nextTile() { if (nav_top==0) { beep(); pushPage(page_apps); } else { beep(); back(); } }
 
     // ============================================================= refresh
     static void refresh() {
+        if (g_toast_ttl > 0 && --g_toast_ttl == 0) hideObj(g_toast);
         String ts = PwnRTC::getTimestamp();
         if (lbl_time) lv_label_set_text(lbl_time, PwnRTC::getClock().c_str());
         if (lbl_date) lv_label_set_text(lbl_date, dateStr(ts).c_str());
@@ -942,24 +1021,25 @@ public:
             lv_label_set_text(lbl_status, st.c_str());
         }
 
-        if (visible(page_wifi) && lbl_wifi) {
+        if (visible(page_wifi) && lbl_wifi && g_wifi_mode == 0) {
             String w = String("Sniffer: ") + (WiFiTools::isSniffing()?"ATIVO":"parado") + "\n";
-            w += "Dispositivos: " + String((int)WiFiTools::nearby_devices.size()) + "\n";
-            w += "Handshakes: " + String((unsigned)WiFiTools::getHandshakeCount()) + "\n\n";
+            w += "Frames capturados: " + String((unsigned)WiFiTools::frames_captured) + "\n";
+            w += "Handshakes (EAPOL): " + String((unsigned)WiFiTools::getHandshakeCount()) + "\n";
+            w += "Dispositivos: " + String((int)WiFiTools::nearby_devices.size()) + "\n\n";
             int shown=0;
-            for (auto &d : WiFiTools::nearby_devices) { w += d.mac + "  " + String(d.rssi) + "dBm\n"; if(++shown>=7) break; }
-            if (WiFiTools::nearby_devices.empty()) w += "(procurando...)";
+            for (auto &d : WiFiTools::nearby_devices) { w += d.mac + "  " + String(d.rssi) + "dBm\n"; if(++shown>=6) break; }
+            if (WiFiTools::nearby_devices.empty()) w += "(toque SNIFFER e aguarde trafego)";
             lv_label_set_text(lbl_wifi, w.c_str());
         }
         if (visible(page_ble) && lbl_ble) {
-            String b = "Ultimo scan: " + String(PwnBLE::getLastCount()) + " disp.\n";
-            b += "Total visto: " + String(PwnBLE::getTotalSeen()) + "\n";
-            b += "Toque em ESCANEAR p/ varredura.";
+            String b = "Encontrados: " + String(PwnBLE::getLastCount()) + "  (total " + String(PwnBLE::getTotalSeen()) + ")\n\n";
+            b += PwnBLE::getDevicesText();
             lv_label_set_text(lbl_ble, b.c_str());
         }
         if (visible(page_atk) && lbl_atk) {
             String a = String("Evil Portal: ") + (EvilPortal::isRunning()?"ATIVO":"parado") + "\n";
             a += "Capturados: " + String(EvilPortal::getCapturedCount()) + "\n";
+            a += "Clientes conectados: " + String(WiFi.softAPgetStationNum()) + "\n";
             a += String("Deauth: ") + (ConfigManager::getInstance()->get<bool>("atk_deauth_enabled")?"habilitado":"bloqueado");
             lv_label_set_text(lbl_atk, a.c_str());
         }

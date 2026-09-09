@@ -98,7 +98,7 @@ private:
         root["atk_probe_logging"]     = true;
         root["atk_beacon_spam_timer"] = 5;           // min
         root["atk_target_manufacturer"]= "Apple,Samsung";
-        root["atk_ble_scan"]          = false;       // varredura BLE periódica
+        root["atk_ble_scan"]          = true;       // varredura BLE periódica
         root["atk_ble_interval_sec"]  = 30;          // intervalo da varredura BLE
 
         // --- SYSTEM / WEB ---

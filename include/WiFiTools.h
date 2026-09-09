@@ -179,6 +179,26 @@ public:
         return String(buffer);
     }
 
+    // Scan REAL de redes Wi-Fi proximas (WiFi.scanNetworks). Preserva o AP.
+    static String scanNetworksText() {
+        wifi_mode_t prev = WiFi.getMode();
+        if (prev == WIFI_MODE_AP)   WiFi.mode(WIFI_MODE_APSTA);
+        else if (prev == WIFI_MODE_NULL) WiFi.mode(WIFI_MODE_STA);
+        int n = WiFi.scanNetworks(false, true);   // sync, mostra ocultas
+        String s = "Redes encontradas: " + String(n) + "\n\n";
+        for (int i = 0; i < n && i < 9; i++) {
+            String ssid = WiFi.SSID(i);
+            if (ssid.length() == 0) ssid = "(oculta)";
+            if (ssid.length() > 15)  ssid = ssid.substring(0, 15);
+            bool isOpen = (WiFi.encryptionType(i) == WIFI_AUTH_OPEN);
+            s += ssid + "  " + String(WiFi.RSSI(i)) + "dBm c" + String(WiFi.channel(i));
+            s += isOpen ? " ABERTA\n" : "\n";
+        }
+        if (n == 0) s += "(nada encontrado)";
+        WiFi.scanDelete();
+        return s;
+    }
+
     static String getSnifferText() {
         String s = "Dispositivos:\n";
         for (auto &dev : nearby_devices) s += dev.mac + " (" + String(dev.rssi) + ")\n";
