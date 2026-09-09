@@ -107,7 +107,7 @@ int BleGatt::audit(const uint8_t addr[6]){
     _auditLog(addr,"connect","START");
     BLEClient* c = BLEDevice::createClient();
     bool ok = c->connect(ba);
-    if(!ok){ _auditLog(addr,"connect","FAIL"); BLEDevice::deleteClient(c);
+    if(!ok){ _auditLog(addr,"connect","FAIL"); delete c;
         Serial.println("[BleGatt] falha de conexao"); return -2; }
     _auditLog(addr,"connect","OK");
 
@@ -136,7 +136,7 @@ int BleGatt::audit(const uint8_t addr[6]){
         }
     }
     c->disconnect();
-    BLEDevice::deleteClient(c);
+    delete c;
     _writeReport(addr);
     char det[32]; snprintf(det,sizeof(det),"%d chars",_n);
     _auditLog(addr,"done",det);

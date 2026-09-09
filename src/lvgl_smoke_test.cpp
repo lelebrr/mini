@@ -85,7 +85,7 @@ static void smoke_init_ioexpander() {
     // conflitava com o Wire -> abort() no boot.
     bool ok = false;
     for (int attempt = 1; attempt <= 3 && !ok; ++attempt) {
-        ok = smoke_expander.begin(Wire, ESP_IO_EXPANDER_I2C_TCA9554_ADDRESS_000);
+        ok = smoke_expander.begin(Wire, TCA9554_ADDR);
         if (!ok) { delay(10); }
     }
     if (!ok) {
@@ -116,7 +116,7 @@ static void smoke_init_display() {
         return;
     }
 
-    smoke_gfx->fillScreen(BLACK);
+    smoke_gfx->fillScreen(RGB565_BLACK);
     static_cast<Arduino_OLED *>(smoke_gfx)->setBrightness(200);
 
     Serial.printf("[SMOKE][DISPLAY] Resolution: %d x %d\n",
