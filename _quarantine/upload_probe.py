@@ -1,24 +1,25 @@
-Tentativa de upload do firmware da sonda local (302 KB, SPI boot) via esptool.
+# Tentativa de upload do firmware da sonda local (302 KB, SPI boot) via esptool.
+#
+# IDEIA: o esptool aceita --before no-reset + manual reset do RTS no momento
+# correto. Se o chip esta em DOWNLOAD (IO0=LOW) e o stubesptool na flash/OTA
+# for aceito, ele carrega o stub e pode escrever a flash. MAS se IO0==HIGH,
+# o chip nao entra no download mode e o esptool recebe 'waiting for download'
+# e falha (timeout de handshake do stub).
+#
+# Em vez de reinventar o upload, usamos o esptool "write_flash" + "hard_reset"
+# do proprio esptool na placa ESP32-S3 (COM3), apontando para o binario da sonda
+# daqui (firmware_local.bin).
+#
+# O foco eh verificar se o esptool consegue CONECTAR (detectar chip) e se o
+# chip entra em download antes do timeout do handshake do stub.
+#
+# Uso:
+#   python upload_probe.py   (tenta conectar + flash + reset)
 
-IDEIA: o esptool aceita --before no-reset + manual reset do RTS no momento
-correto. Se o chip esta em DOWNLOAD (IO0=LOW) e o stubesptool na flash/OTA
-for aceito, ele carrega o stub e pode escrever a flash. MAS se IO0==HIGH,
-o chip nao entra no download mode e o esptool recebe 'waiting for download'
-e falha (timeout de handshake do stub).
-
-Em vez de reinventar o upload, usamos o esptool "write_flash" + "hard_reset"
-do proprio esptool na placa ESP32-S3 (COM3), apontando para o binario da sonda
-daqui (firmware_local.bin).
-
-O foco eh verificar se o esptool consegue CONECTAR (detectar chip) e se o
-chip entra em download antes do timeout do handshake do stub.
-
-Uso:
-  python upload_probe.py   (tenta conectar + flash + reset)
-"""
 import sys
 import time
 
+# pylint: disable=import-error
 try:
     from esptool import main as esptool_main
 except ImportError:
