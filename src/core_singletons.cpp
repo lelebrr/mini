@@ -55,34 +55,6 @@ PetStats PwnPet::stats;
 const char *PwnPet::savePath = "/pwn_pet_save.json";
 
 // PwnUI objects
-// ---- PwnUI v3 (relogio + launcher) ----
-lv_obj_t *PwnUI::scr_main   = nullptr;
-lv_obj_t *PwnUI::page_home  = nullptr;
-lv_obj_t *PwnUI::page_apps  = nullptr;
-lv_obj_t *PwnUI::page_wifi  = nullptr;
-lv_obj_t *PwnUI::page_ble   = nullptr;
-lv_obj_t *PwnUI::page_atk   = nullptr;
-lv_obj_t *PwnUI::page_pet   = nullptr;
-lv_obj_t *PwnUI::page_power = nullptr;
-lv_obj_t *PwnUI::page_sys   = nullptr;
-lv_obj_t *PwnUI::page_tools = nullptr;
-lv_obj_t *PwnUI::page_set   = nullptr;
-lv_obj_t *PwnUI::lbl_time     = nullptr;
-lv_obj_t *PwnUI::lbl_date     = nullptr;
-lv_obj_t *PwnUI::lbl_batt     = nullptr;
-lv_obj_t *PwnUI::lbl_home_pet = nullptr;
-lv_obj_t *PwnUI::lbl_status   = nullptr;
-lv_obj_t *PwnUI::lbl_wifi   = nullptr;
-lv_obj_t *PwnUI::lbl_ble    = nullptr;
-lv_obj_t *PwnUI::lbl_power  = nullptr;
-lv_obj_t *PwnUI::lbl_sys    = nullptr;
-lv_obj_t *PwnUI::lbl_tools  = nullptr;
-lv_obj_t *PwnUI::lbl_atk    = nullptr;
-lv_obj_t *PwnUI::lbl_pet    = nullptr;
-lv_obj_t *PwnUI::bar_hunger = nullptr;
-lv_obj_t *PwnUI::bar_happy  = nullptr;
-lv_obj_t *PwnUI::nav_stack[10] = { nullptr };
-int       PwnUI::nav_top = 0;
 
 // PwnAttack stats
 AttackStats PwnAttack::stats;

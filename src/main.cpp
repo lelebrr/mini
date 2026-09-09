@@ -192,6 +192,13 @@ static void initLVGL() {
     Serial.println("[LVGL] pronto.");
 }
 
+// Acesso ao acelerômetro para a UI (Sensores/Nível). Usa a instância global.
+bool UI_getAccel(float &x, float &y, float &z) {
+    if (!imu_ok) return false;
+    if (!qmi.getDataReady()) return false;
+    return qmi.getAccelerometer(x, y, z);
+}
+
 // Detecção de "chacoalhada" pelo acelerômetro (alimenta/interage com o pet).
 static void checkShake() {
     if (!imu_ok) return;

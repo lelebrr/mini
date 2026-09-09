@@ -26,6 +26,11 @@
 #define LV_FONT_DEFAULT &lv_font_montserrat_14
 
 /* Recursos visuais usados pela UI redesenhada */
+
+/* Alocador: usa malloc/free do sistema (heap ESP + overflow PSRAM), removendo o
+ * limite de 64KB do pool interno — necessario para a arvore completa de menus. */
+#define LV_USE_STDLIB_MALLOC LV_STDLIB_CLIB
+
 #define LV_USE_FLEX 1
 #define LV_USE_GRID 1
 #define LV_USE_ANIMIMG 1
