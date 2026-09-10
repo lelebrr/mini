@@ -1,10 +1,24 @@
 #ifndef LV_CONF_H
 #define LV_CONF_H
 
-#if LV_USE_LV_CONF_SIMPLE
 #define LV_COLOR_16_SWAP 1
 #define LV_COLOR_DEPTH 16
 #define LV_USE_DRAW_SW 1
-#endif
+
+#define LV_FONT_MONTSERRAT_12 1
+#define LV_FONT_MONTSERRAT_14 1
+#define LV_FONT_MONTSERRAT_16 1
+#define LV_FONT_MONTSERRAT_18 1
+#define LV_FONT_MONTSERRAT_20 1
+#define LV_FONT_MONTSERRAT_24 1
+#define LV_FONT_MONTSERRAT_28 1
+
+#define LV_USE_ARC 1
+#define LV_USE_BAR 1
+#define LV_USE_SLIDER 1
+#define LV_USE_SWITCH 1
+#define LV_USE_LINE 1
+#define LV_USE_CANVAS 1
 
 #endif
+

@@ -422,6 +422,7 @@ void setup() {
     PwnRTC::init();
     Gamification::init();
     PwnPet::init();
+    FaceHandler::init();
     AudioHandler::init();
     PwnUI::init();
     PwnAttack::init();
@@ -473,7 +474,12 @@ void loop() {
 
     // LVGL
     uint32_t elapsed = now - last_tick_ms;
-    if (elapsed >= 5) { lv_tick_inc(elapsed); last_tick_ms = now; lv_timer_handler(); }
+    if (elapsed >= 5) { 
+        lv_tick_inc(elapsed); 
+        last_tick_ms = now; 
+        lv_timer_handler(); 
+        if (!PwnSleep::isScreenOff()) FaceHandler::tick();
+    }
 
     // Captura Wi-Fi (drena o buffer do sniffer para o SD)
     WiFiTools::flush();

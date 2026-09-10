@@ -29,12 +29,13 @@ static void wifi_promisc_cb(void* buf, wifi_promiscuous_pkt_type_t type) {
     WiFiTools::cap_queue[WiFiTools::cap_head].type = type;
     WiFiTools::cap_queue[WiFiTools::cap_head].timestamp = millis();
     WiFiTools::cap_head = next;
-    WiFiTools::frames_captured++;
+    WiFiTools::frames_captured = WiFiTools::frames_captured + 1;
 }
 
 void WiFiTools::beginNewCapture() {
     nearby_devices.clear();
-    cap_head = cap_tail = 0;
+    cap_head = 0;
+    cap_tail = 0;
     frames_captured = 0;
     eapol_count = 0;
     pcap_header_written = false;

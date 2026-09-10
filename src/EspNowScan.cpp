@@ -17,7 +17,7 @@ static portMUX_TYPE  s_mux = portMUX_INITIALIZER_UNLOCKED;
 static bool macEq(const uint8_t*a,const uint8_t*b){ return memcmp(a,b,6)==0; }
 static void macToStr(const uint8_t b[6],char*o){ snprintf(o,18,"%02X:%02X:%02X:%02X:%02X:%02X",b[0],b[1],b[2],b[3],b[4],b[5]); }
 
-void EspNowScan::init(){ memset(_peers,0,sizeof(_peers)); s_head=s_tail=0; Serial.println("[EspNow] inventário ESP-NOW (BLUE)"); }
+void EspNowScan::init(){ memset(_peers,0,sizeof(_peers)); s_head=0; s_tail=0; Serial.println("[EspNow] inventário ESP-NOW (BLUE)"); }
 
 // ===========================================================================
 // Detector puro. Layout do frame ESP-NOW:

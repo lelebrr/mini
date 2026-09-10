@@ -4,8 +4,6 @@
 #include <SD_MMC.h>
 #include <ArduinoJson.h>
 
-extern RTC_DATA_ATTR RTC_SaveData rtc_save;
-
 void PwnPet::init() {
     stats = {};
     stats.name = "Lele";

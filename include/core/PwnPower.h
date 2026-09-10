@@ -17,7 +17,7 @@ struct RTC_SaveData {
     uint32_t checksum;
 };
 
-extern RTC_DATA_ATTR RTC_SaveData rtc_save;
+extern RTC_SaveData rtc_save;
 
 class PwnPower {
 public:

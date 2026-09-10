@@ -61,7 +61,8 @@ void WpsBlue::_emit(const char* msg, uint32_t color) {
 // ===========================================================================
 void WpsBlue::init() {
     memset(_aps, 0, sizeof(_aps));
-    s_ring_head = s_ring_tail = 0;
+    s_ring_head = 0;
+    s_ring_tail = 0;
     Serial.println("[WpsBlue] Inventario WPS inicializado (BLUE)");
     loadBaseline();
 }

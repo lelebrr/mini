@@ -10,27 +10,27 @@ ConfigManager* ConfigManager::getInstance() {
 }
 
 int ConfigManager::getInt(const char* key, int def) {
-    if (!doc.containsKey(key)) return def;
+    if (!doc[key].is<int>()) return def;
     return doc[key].as<int>();
 }
 
 bool ConfigManager::getBool(const char* key, bool def) {
-    if (!doc.containsKey(key)) return def;
+    if (!doc[key].is<bool>()) return def;
     return doc[key].as<bool>();
 }
 
 float ConfigManager::getFloat(const char* key, float def) {
-    if (!doc.containsKey(key)) return def;
+    if (!doc[key].is<float>()) return def;
     return doc[key].as<float>();
 }
 
 String ConfigManager::getString(const char* key, const char* def) {
-    if (!doc.containsKey(key)) return String(def);
+    if (!doc[key].is<const char*>()) return String(def);
     return doc[key].as<String>();
 }
 
 bool ConfigManager::has(const char* key) {
-    return doc.containsKey(key);
+    return !doc[key].isNull();
 }
 
 void ConfigManager::set(const char* key, int64_t val) { doc[key] = val; }

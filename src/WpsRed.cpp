@@ -174,7 +174,10 @@ bool WpsRed::_startCommon(const uint8_t target[6], const char* mode) {
     memcpy(s_target, target, 6);
     s_mode = mode;
     s_fail_count = 0;
-    s_ev_success = s_ev_failed = s_ev_timeout = s_ev_overlap = false;
+    s_ev_success = false;
+    s_ev_failed = false;
+    s_ev_timeout = false;
+    s_ev_overlap = false;
     s_started_ms = millis();
 
     // Sai do modo promiscuo p/ operar como STA (enrollee).
@@ -263,7 +266,9 @@ void WpsRed::_beginPinAttempt() {
     esp_wps_config_t cfg = WPS_CONFIG_INIT_DEFAULT(WPS_TYPE_PIN);
     strncpy(cfg.pin, s_pins[s_pin_idx], sizeof(cfg.pin) - 1);
     cfg.pin[sizeof(cfg.pin) - 1] = 0;
-    s_ev_success = s_ev_failed = s_ev_timeout = false;
+    s_ev_success = false;
+    s_ev_failed = false;
+    s_ev_timeout = false;
     if (esp_wifi_wps_enable(&cfg) != ESP_OK || esp_wifi_wps_start(0) != ESP_OK) {
         audit(s_mode, s_target, s_pins[s_pin_idx], "enable", "FAIL");
         _finish(DONE_FAIL, "WPS_ENABLE_FAIL");
@@ -364,7 +369,8 @@ void WpsRed::tick() {
         if (failed || timeout) {
             const char* why = failed ? "FAILED" : "TIMEOUT";
             if (failed) s_fail_count++;
-            s_ev_failed = s_ev_timeout = false;
+            s_ev_failed = false;
+            s_ev_timeout = false;
             audit(s_mode, s_target, s_pins[s_pin_idx], "attempt", why);
             _stopWps();                    // encerra esta tentativa
             s_pin_idx++;
