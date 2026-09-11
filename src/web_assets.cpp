@@ -1,7 +1,7 @@
 // Autogerado por scripts/fix_web_assets.py a partir de webui_preview.html.
 // NAO edite este arquivo: edite webui_preview.html e rode o script.
 
-// #include "web/WebAssets.h"
+#include "web/WebAssets.h"
 
 const char index_html[] = R"rawliteral(
 <!DOCTYPE html>
@@ -9,90 +9,54 @@ const char index_html[] = R"rawliteral(
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Painel do Mini Lele - pet cibernetico, telemetria, config, arquivos, OTA e logs ao vivo">
+<meta name="theme-color" content="#070b12">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 38'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23b26bff'/%3E%3Cstop offset='1' stop-color='%2338ff9e'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='38' height='38' rx='12' fill='url(%23g)'/%3E%3Ccircle cx='13' cy='15' r='2.6' fill='%2307100a'/%3E%3Ccircle cx='25' cy='15' r='2.6' fill='%2307100a'/%3E%3Cpath d='M12 23q7 6 14 0' stroke='%2307100a' stroke-width='2.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <title>Mini Lele</title>
 <style>
-:root{
-  --bg:#070b12; --bg2:#0b1120; --panel:rgba(18,24,33,.72); --panel2:#121821;
-  --border:rgba(122,138,160,.18); --green:#38ff9e; --purple:#b26bff; --cyan:#4bd6ff;
-  --orange:#ffa53b; --red:#ff5a7a; --text:#e6f0ff; --dim:#8394ab;
-  --shadow:0 10px 40px rgba(0,0,0,.45);
-}
+:root{--bg:#070b12;--bg2:#0b1120;--panel:rgba(18,24,33,.72);--panel2:#121821;--border:rgba(122,138,160,.18);--green:#38ff9e;--purple:#b26bff;--cyan:#4bd6ff;--orange:#ffa53b;--red:#ff5a7a;--text:#e6f0ff;--dim:#8394ab;--shadow:0 10px 40px rgba(0,0,0,.45)}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
-body{
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Ubuntu,sans-serif;
-  color:var(--text);background:var(--bg);
-  background-image:
-    radial-gradient(900px 500px at 12% -10%,rgba(178,107,255,.18),transparent 60%),
-    radial-gradient(800px 500px at 100% 0%,rgba(56,255,158,.12),transparent 55%),
-    radial-gradient(700px 700px at 50% 120%,rgba(75,214,255,.10),transparent 60%);
-  min-height:100%;
-  -webkit-font-smoothing:antialiased;
-}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Ubuntu,sans-serif;color:var(--text);background:var(--bg);background-image:radial-gradient(900px 500px at 12% -10%,rgba(178,107,255,.18),transparent 60%),radial-gradient(800px 500px at 100% 0%,rgba(56,255,158,.12),transparent 55%),radial-gradient(700px 700px at 50% 120%,rgba(75,214,255,.10),transparent 60%);min-height:100%;-webkit-font-smoothing:antialiased}
 .mono{font-family:"SF Mono",ui-monospace,"JetBrains Mono",Menlo,Consolas,monospace}
 .wrap{max-width:1080px;margin:0 auto;padding:20px 16px 60px}
-
-/* Header */
 header{display:flex;align-items:center;gap:14px;padding:14px 4px 22px}
-.logo{
-  display:flex;align-items:center;gap:12px;font-weight:800;font-size:22px;letter-spacing:.3px;
-}
-.logo .dot{
-  width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-size:20px;
-  background:linear-gradient(135deg,var(--purple),var(--green));box-shadow:0 6px 22px rgba(178,107,255,.5)
-}
-.badge{font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;background:rgba(178,107,255,.18);
-  color:var(--purple);border:1px solid rgba(178,107,255,.4)}
+.logo{display:flex;align-items:center;gap:12px;font-weight:800;font-size:22px;letter-spacing:.3px}
+.logo .dot{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-size:20px;background:linear-gradient(135deg,var(--purple),var(--green));box-shadow:0 6px 22px rgba(178,107,255,.5)}
+.badge{font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;background:rgba(178,107,255,.18);color:var(--purple);border:1px solid rgba(178,107,255,.4)}
 header .spacer{flex:1}
 .conn{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--dim)}
 .conn .live{width:9px;height:9px;border-radius:50%;background:var(--red);box-shadow:0 0 10px var(--red)}
 .conn.ok .live{background:var(--green);box-shadow:0 0 10px var(--green);animation:pulse 1.8s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
-
-/* Tabs */
-nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;position:sticky;top:0;z-index:5;
-  padding:8px;background:rgba(7,11,18,.7);backdrop-filter:blur(12px);border:1px solid var(--border);
-  border-radius:16px}
-.tab{border:0;background:transparent;color:var(--dim);font-weight:600;font-size:14px;
-  padding:10px 16px;border-radius:11px;cursor:pointer;transition:.18s;display:flex;align-items:center;gap:8px}
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;position:sticky;top:0;z-index:5;padding:8px;background:rgba(7,11,18,.7);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:16px}
+.tab{border:0;background:transparent;color:var(--dim);font-weight:600;font-size:14px;padding:10px 16px;border-radius:11px;cursor:pointer;transition:.18s;display:flex;align-items:center;gap:8px}
 .tab:hover{color:var(--text);background:rgba(255,255,255,.04)}
 .tab.active{color:#07100a;background:linear-gradient(135deg,var(--green),#7bffc4);box-shadow:0 6px 18px rgba(56,255,158,.35)}
-.tab svg{width:16px;height:16px}
-
-.page{display:none;animation:fade .25s ease}
-.page.active{display:block}
+.tab svg{width:16px;height:16px;flex:0 0 auto}
+.page{display:none;animation:fade .25s ease;content-visibility:auto;contain-intrinsic-size:600px}
+.page.active{display:block;content-visibility:visible}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-
-/* Cards */
 .grid{display:grid;gap:16px}
 .g-hero{grid-template-columns:1.3fr 1fr}
 .g-stats{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
 .g-cfg{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
 @media(max-width:760px){.g-hero{grid-template-columns:1fr}}
-.card{background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:20px;
-  box-shadow:var(--shadow);backdrop-filter:blur(14px)}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:20px;box-shadow:var(--shadow);backdrop-filter:blur(14px)}
 .card h3{font-size:12px;text-transform:uppercase;letter-spacing:1.4px;color:var(--dim);margin-bottom:14px;font-weight:700}
-
-/* Hero pet */
-.hero{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:230px;
-  position:relative;overflow:hidden}
+.hero{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:230px;position:relative;overflow:hidden}
 .hero .ring{position:absolute;inset:0;background:radial-gradient(circle at 50% 40%,rgba(56,255,158,.14),transparent 55%)}
-.face{font-size:64px;font-weight:800;color:var(--green);text-shadow:0 0 26px rgba(56,255,158,.55);
-  font-family:ui-monospace,monospace;z-index:1}
+.face{font-size:64px;font-weight:800;color:var(--green);text-shadow:0 0 26px rgba(56,255,158,.55);font-family:ui-monospace,monospace;z-index:1}
 .pet-name{font-size:26px;font-weight:800;z-index:1}
 .pet-mood{color:var(--purple);font-weight:700;letter-spacing:2px;font-size:13px;z-index:1}
-.stage-pill{margin-top:8px;font-size:12px;color:var(--dim);border:1px solid var(--border);
-  padding:5px 12px;border-radius:999px;z-index:1}
-
-/* Gauges */
+.stage-pill{margin-top:8px;font-size:12px;color:var(--dim);border:1px solid var(--border);padding:5px 12px;border-radius:999px;z-index:1}
 .gauges{display:flex;justify-content:space-around;align-items:center;flex-wrap:wrap;gap:10px}
 .gauge{display:flex;flex-direction:column;align-items:center;gap:6px}
 .gauge svg{transform:rotate(-90deg)}
 .gauge .lbl{font-size:12px;color:var(--dim);text-transform:uppercase;letter-spacing:1px}
 .gauge .val{position:absolute;font-size:20px;font-weight:800}
 .gauge .gwrap{position:relative;display:grid;place-items:center}
-
-/* Battery */
 .batt-big{display:flex;align-items:center;gap:16px}
 .batt-shell{position:relative;width:96px;height:44px;border:3px solid var(--dim);border-radius:8px;padding:4px}
 .batt-shell:after{content:"";position:absolute;right:-9px;top:12px;width:6px;height:16px;background:var(--dim);border-radius:0 3px 3px 0}
@@ -103,32 +67,23 @@ nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;position:sticky;
 .charging .batt-fill{background:linear-gradient(90deg,var(--orange),#ffd089);animation:chg 1.6s ease-in-out infinite}
 @keyframes chg{0%,100%{filter:brightness(1)}50%{filter:brightness(1.4)}}
 .bolt{color:var(--orange);font-weight:800}
-
-/* Stat tiles */
 .tile{background:var(--panel2);border:1px solid var(--border);border-radius:16px;padding:16px}
 .tile .k{font-size:12px;color:var(--dim);text-transform:uppercase;letter-spacing:1px}
 .tile .v{font-size:26px;font-weight:800;margin-top:6px}
 .tile .v small{font-size:14px;color:var(--dim);font-weight:600}
-
-/* Config */
 .cfg-sec h3{color:var(--green)}
 .field{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid rgba(122,138,160,.10)}
 .field:last-child{border-bottom:0}
 .field label{font-size:14px;color:var(--text)}
 .field .hint{font-size:11px;color:var(--dim);display:block;margin-top:2px}
-input[type=text],input[type=number],input[type=password],select{
-  background:#0a0f18;border:1px solid var(--border);color:var(--text);border-radius:10px;
-  padding:8px 11px;font-size:14px;width:150px;text-align:right}
+input[type=text],input[type=number],input[type=password],select{background:#0a0f18;border:1px solid var(--border);color:var(--text);border-radius:10px;padding:8px 11px;font-size:14px;width:150px;text-align:right}
 input:focus,select:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(56,255,158,.15)}
-/* toggle */
 .sw{position:relative;width:46px;height:26px;flex:0 0 auto}
 .sw input{opacity:0;width:0;height:0}
 .sw .track{position:absolute;inset:0;background:#26303f;border-radius:999px;transition:.25s;cursor:pointer}
-.sw .track:before{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;
-  background:#fff;transition:.25s}
-.sw input:checked + .track{background:linear-gradient(135deg,var(--green),#7bffc4)}
-.sw input:checked + .track:before{transform:translateX(20px)}
-
+.sw .track:before{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.25s}
+.sw input:checked+.track{background:linear-gradient(135deg,var(--green),#7bffc4)}
+.sw input:checked+.track:before{transform:translateX(20px)}
 .btn{border:0;border-radius:12px;padding:12px 22px;font-weight:700;font-size:14px;cursor:pointer;transition:.18s}
 .btn-primary{background:linear-gradient(135deg,var(--green),#7bffc4);color:#07100a;box-shadow:0 8px 22px rgba(56,255,158,.32)}
 .btn-primary:hover{transform:translateY(-2px)}
@@ -136,27 +91,20 @@ input:focus,select:focus{outline:none;border-color:var(--green);box-shadow:0 0 0
 .btn-ghost:hover{border-color:var(--purple);color:var(--purple)}
 .btn-danger{background:transparent;border:1px solid rgba(255,90,122,.5);color:var(--red)}
 .btn-danger:hover{background:rgba(255,90,122,.12)}
-.savebar{position:sticky;bottom:12px;display:flex;justify-content:flex-end;gap:10px;margin-top:18px;
-  padding:12px;background:rgba(7,11,18,.72);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:16px}
-
-/* Files */
+.savebar{position:sticky;bottom:12px;display:flex;justify-content:flex-end;gap:10px;margin-top:18px;padding:12px;background:rgba(7,11,18,.72);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:16px}
 .file{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;transition:.15s}
 .file:hover{background:rgba(255,255,255,.04)}
 .file .ico{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;background:var(--panel2);font-size:16px}
 .file .nm{flex:1;font-weight:600;word-break:break-all}
 .file .sz{color:var(--dim);font-size:12px;font-family:monospace}
-
-/* Logs */
-#log{height:360px;overflow-y:auto;background:#05080e;border:1px solid var(--border);border-radius:14px;
-  padding:14px;font-family:ui-monospace,monospace;font-size:12.5px;line-height:1.6}
+#log{height:360px;overflow-y:auto;overscroll-behavior:contain;contain:content;background:#05080e;border:1px solid var(--border);border-radius:14px;padding:14px;font-family:ui-monospace,monospace;font-size:12.5px;line-height:1.6}
 #log div{border-bottom:1px solid rgba(255,255,255,.03);padding:2px 0;color:#a9ffd6}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(120px);
-  background:var(--panel2);border:1px solid var(--green);color:var(--text);padding:14px 24px;border-radius:14px;
-  box-shadow:var(--shadow);transition:.35s;z-index:50}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--panel2);border:1px solid var(--green);color:var(--text);padding:14px 24px;border-radius:14px;box-shadow:var(--shadow);transition:.35s;z-index:50}
 .toast.show{transform:translateX(-50%) translateY(0)}
 .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .muted{color:var(--dim);font-size:13px}
 a{color:var(--cyan);text-decoration:none}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
@@ -168,11 +116,11 @@ a{color:var(--cyan);text-decoration:none}
   </header>
 
   <nav class="tabs" id="tabs">
-    <button class="tab active" data-p="painel">◈ Painel</button>
-    <button class="tab" data-p="config">⚙ Configurações</button>
-    <button class="tab" data-p="arquivos">▤ Arquivos</button>
-    <button class="tab" data-p="sistema">⌘ Sistema</button>
-    <button class="tab" data-p="logs">≋ Logs</button>
+    <button class="tab active" data-p="painel" aria-label="Painel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 13h8V3H3zM13 21h8v-8h-8zM13 3h8v6h-8zM3 17h8v4H3z"/></svg> Painel</button>
+    <button class="tab" data-p="config" aria-label="Configurações"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg> Configurações</button>
+    <button class="tab" data-p="arquivos" aria-label="Arquivos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> Arquivos</button>
+    <button class="tab" data-p="sistema" aria-label="Sistema"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M9 3v4M15 3v4M9 17v4M15 17v4M3 9h4M3 15h4M17 9h4M17 15h4"/></svg> Sistema</button>
+    <button class="tab" data-p="logs" aria-label="Logs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12h4l3-9 4 18 3-9h6"/></svg> Logs</button>
   </nav>
 
   <!-- PAINEL -->
@@ -197,19 +145,16 @@ a{color:var(--cyan);text-decoration:none}
         </div>
         <div class="gauges" style="margin-top:18px">
           <div class="gauge"><div class="gwrap">
-            <svg width="96" height="96"><circle cx="48" cy="48" r="40" stroke="#1a2230" stroke-width="9" fill="none"/>
-              <circle id="gHunger" cx="48" cy="48" r="40" stroke="#ffa53b" stroke-width="9" fill="none"
-                stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="90"/></svg>
+            <svg width="96" height="96" aria-hidden="true"><circle cx="48" cy="48" r="40" stroke="#1a2230" stroke-width="9" fill="none"/>
+              <circle id="gHunger" cx="48" cy="48" r="40" stroke="#ffa53b" stroke-width="9" fill="none" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="90"/></svg>
             <div class="val" id="hungerVal">--</div></div><div class="lbl">Fome</div></div>
           <div class="gauge"><div class="gwrap">
-            <svg width="96" height="96"><circle cx="48" cy="48" r="40" stroke="#1a2230" stroke-width="9" fill="none"/>
-              <circle id="gHappy" cx="48" cy="48" r="40" stroke="#38ff9e" stroke-width="9" fill="none"
-                stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="40"/></svg>
+            <svg width="96" height="96" aria-hidden="true"><circle cx="48" cy="48" r="40" stroke="#1a2230" stroke-width="9" fill="none"/>
+              <circle id="gHappy" cx="48" cy="48" r="40" stroke="#38ff9e" stroke-width="9" fill="none" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="40"/></svg>
             <div class="val" id="happyVal">--</div></div><div class="lbl">Felicidade</div></div>
         </div>
       </div>
     </div>
-
     <div class="grid g-stats">
       <div class="tile"><div class="k">Nível</div><div class="v" id="tLevel">1</div></div>
       <div class="tile"><div class="k">XP</div><div class="v" id="tXP">0</div></div>
@@ -271,7 +216,7 @@ a{color:var(--cyan);text-decoration:none}
       <h3>Logs ao vivo (WebSocket)</h3>
       <div class="row" style="margin-bottom:12px">
         <button class="btn btn-ghost" id="pauseBtn" onclick="togglePause()">⏸ Pausar</button>
-        <button class="btn btn-ghost" onclick="document.getElementById('log').innerHTML=''">🗑 Limpar</button>
+        <button class="btn btn-ghost" id="clearBtn" onclick="clearLog()">🗑 Limpar</button>
         <span class="muted" id="logCount">0 linhas</span>
       </div>
       <div id="log"></div>
@@ -281,31 +226,24 @@ a{color:var(--cyan);text-decoration:none}
 <div class="toast" id="toast">Salvo!</div>
 
 <script>
-// ---------- Grupos e rótulos amigáveis da config ----------
-const GROUPS = {
-  pet_:  {icon:"🐣", name:"Pet / Gameplay"},
-  disp_: {icon:"🖥", name:"Display"},
-  pwr_:  {icon:"🔋", name:"Energia & Bateria"},
-  atk_:  {icon:"📡", name:"Ataques & WiFi"},
-  sys_:  {icon:"⚙", name:"Sistema"},
-  web_:  {icon:"🌐", name:"WebUI"},
-};
-const LABELS = {
-  pet_name:"Nome do Pet", pet_voice_enabled:"Voz ativada", pet_hunger_rate:"Taxa de fome",
-  disp_brightness:"Brilho (0-255)", disp_timeout_sec:"Timeout da tela (s)", disp_theme:"Tema",
-  pwr_battery_capacity_mah:"Capacidade da bateria (mAh)", pwr_charge_current_ma:"Corrente de carga (mA)",
-  pwr_charge_target_mv:"Tensão de corte (mV)", pwr_low_warn_pct:"Aviso bateria baixa (%)",
-  pwr_low_shutdown_pct:"Desligar em (%)", pwr_cpu_freq_max:"Clock máx (MHz)",
-  atk_deauth_enabled:"Deauth ativado", atk_evil_portal:"Evil Portal", atk_auto_scan:"Scan automático",
-  sys_ap_ssid:"SSID do AP", sys_ap_pass:"Senha do AP", sys_web_user:"Usuário WebUI", sys_web_pass:"Senha WebUI",
-};
-const label = k => LABELS[k] || k.replace(/^[a-z]+_/,'').replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+// ---------- Grupos e rotulos amigaveis da config ----------
+const GROUPS={pet_:{icon:"🐣",name:"Pet / Gameplay"},disp_:{icon:"🖥",name:"Display"},pwr_:{icon:"🔋",name:"Energia & Bateria"},atk_:{icon:"📡",name:"Ataques & WiFi"},sys_:{icon:"⚙",name:"Sistema"},web_:{icon:"🌐",name:"WebUI"}};
+const LABELS={pet_name:"Nome do Pet",pet_voice_enabled:"Voz ativada",pet_hunger_rate:"Taxa de fome",disp_brightness:"Brilho (0-255)",disp_timeout_sec:"Timeout da tela (s)",disp_theme:"Tema",pwr_battery_capacity_mah:"Capacidade da bateria (mAh)",pwr_charge_current_ma:"Corrente de carga (mA)",pwr_charge_target_mv:"Tensão de corte (mV)",pwr_low_warn_pct:"Aviso bateria baixa (%)",pwr_low_shutdown_pct:"Desligar em (%)",pwr_cpu_freq_max:"Clock máx (MHz)",atk_deauth_enabled:"Deauth ativado",atk_evil_portal:"Evil Portal",atk_auto_scan:"Scan automático",sys_ap_ssid:"SSID do AP",sys_ap_pass:"Senha do AP",sys_web_user:"Usuário WebUI",sys_web_pass:"Senha WebUI"};
+const label=k=>LABELS[k]||k.replace(/^[a-z]+_/,'').replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
 
-let cfgData = {};
+// ---------- Cache de DOM (evita getElementById a cada tick) ----------
+const $=id=>document.getElementById(id);
+const DOM={};
+["face","petName","petMood","petStage","conn","connTxt","battBox","battFill","battPct","battStatus","battDetail","gHunger","gHappy","hungerVal","happyVal","tLevel","tXP","tHS","tDev","tHeap","tUp","sMac","sVolt","sHours","sHeap","sUp","log","logCount","pauseBtn","fileList","cfgGrid","toast"].forEach(id=>DOM[id]=$(id));
+// setTxt: so toca o DOM se o valor mudou (menos reflow)
+const setTxt=(id,v)=>{if(DOM[id]&&DOM[id].textContent!==v)DOM[id].textContent=v;};
+
+let cfgData={};
+let docVisible=!document.hidden;
 
 // ---------- Tabs ----------
-document.getElementById('tabs').addEventListener('click', e=>{
-  const b = e.target.closest('.tab'); if(!b) return;
+document.getElementById('tabs').addEventListener('click',e=>{
+  const b=e.target.closest('.tab'); if(!b) return;
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   b.classList.add('active');
@@ -313,71 +251,61 @@ document.getElementById('tabs').addEventListener('click', e=>{
   if(b.dataset.p==='arquivos') loadFiles();
 });
 
-// ---------- Helpers de rede (com fallback p/ preview offline) ----------
-async function api(url,opt){ const r = await fetch(url,opt); if(!r.ok) throw new Error(r.status); return r; }
+// ---------- Rede (fetch com timeout + fallback p/ preview offline) ----------
+async function api(url,opt={}){
+  const c=new AbortController(); const t=setTimeout(()=>c.abort(),8000);
+  try{ const r=await fetch(url,{...opt,signal:c.signal}); if(!r.ok) throw new Error(r.status); return r; }
+  finally{ clearTimeout(t); }
+}
 
-const MOCK = {
-  status:{pet_name:"PwnBaby",pet_hunger:72,pet_happiness:88,pet_level:7,pet_xp:240,pet_stage:2,
-    pet_mood:"FELIZ",pet_handshakes:34,pwr_battery:63,pwr_current:82,pwr_voltage:3.81,
-    pwr_charging:true,pwr_vbus:true,pwr_charge_status:"Carregando (CC)",pwr_hours:1.9,
-    wifi_mac:"A0:B7:65:12:34:56",wifi_devices:12,heap_free:210000,uptime:5127},
-  config:{pet_name:"PwnBaby",pet_voice_enabled:true,pet_hunger_rate:1,disp_brightness:200,
-    disp_timeout_sec:30,disp_theme:"cyber_favela",pwr_battery_capacity_mah:250,pwr_charge_current_ma:100,
-    pwr_charge_target_mv:4200,pwr_low_warn_pct:10,pwr_low_shutdown_pct:5,pwr_cpu_freq_max:240,
-    atk_auto_scan:true,atk_deauth_enabled:false,atk_evil_portal:false,atk_channels:"1,6,11",
-    sys_ap_ssid:"Mini-Lele",sys_ap_pass:"********",sys_web_user:"admin",sys_web_pass:"********",
-    web_live_logs:true,web_theme:"cyber_favela"},
-  files:[{name:"config.json",size:4210,isDir:false},{name:"capturas",size:0,isDir:true},
-    {name:"macs_detectados.txt",size:88123,isDir:false},{name:"pwn_pet_save.json",size:512,isDir:false}]
+const MOCK={
+  status:{pet_name:"PwnBaby",pet_hunger:72,pet_happiness:88,pet_level:7,pet_xp:240,pet_stage:2,pet_mood:"FELIZ",pet_handshakes:34,pwr_battery:63,pwr_current:82,pwr_voltage:3.81,pwr_charging:true,pwr_vbus:true,pwr_charge_status:"Carregando (CC)",pwr_hours:1.9,wifi_mac:"A0:B7:65:12:34:56",wifi_devices:12,heap_free:210000,uptime:5127},
+  config:{pet_name:"PwnBaby",pet_voice_enabled:true,pet_hunger_rate:1,disp_brightness:200,disp_timeout_sec:30,disp_theme:"cyber_favela",pwr_battery_capacity_mah:250,pwr_charge_current_ma:100,pwr_charge_target_mv:4200,pwr_low_warn_pct:10,pwr_low_shutdown_pct:5,pwr_cpu_freq_max:240,atk_auto_scan:true,atk_deauth_enabled:false,atk_evil_portal:false,atk_channels:"1,6,11",sys_ap_ssid:"Mini-Lele",sys_ap_pass:"********",sys_web_user:"admin",sys_web_pass:"********",web_live_logs:true,web_theme:"cyber_favela"},
+  files:[{name:"config.json",size:4210,isDir:false},{name:"capturas",size:0,isDir:true},{name:"macs_detectados.txt",size:88123,isDir:false},{name:"pwn_pet_save.json",size:512,isDir:false}]
 };
-const setRing=(id,pct)=>{const c=document.getElementById(id);const len=251;c.style.strokeDashoffset=len-(len*pct/100);};
+const RING_LEN=251;
+const setRing=(el,pct)=>{el.style.strokeDashoffset=RING_LEN-(RING_LEN*pct/100);};
 const fmtUp=s=>{const h=(s/3600|0),m=((s%3600)/60|0);return h>0?h+"h "+m+"m":m+"m "+(s%60)+"s";};
+const setConn=ok=>{
+  DOM.conn.classList.toggle('ok',ok);
+  setTxt('connTxt',ok?"online":"offline (preview)");
+};
 
 // ---------- Painel ----------
 async function loadStatus(){
+  if(!docVisible) return; // aba oculta: economiza radio/heap do ESP32
   let s;
-  try{ s = await (await api('/api/status')).json(); setConn(true);}
-  catch(e){ s = MOCK.status; setConn(false); }
-  const face = s.pet_charging||s.pwr_charging ? "(^u^)" : s.pet_hunger<20?"(T_T)":s.pet_happiness>80?"(^_^)":"(o_o)";
-  document.getElementById('face').textContent = face;
-  document.getElementById('petName').textContent = s.pet_name||"PwnBaby";
-  document.getElementById('petMood').textContent = s.pet_mood||"—";
+  try{ s=await (await api('/api/status')).json(); setConn(true);}
+  catch(e){ s=MOCK.status; setConn(false); }
+  setTxt('face',s.pet_charging||s.pwr_charging?"(^u^)":s.pet_hunger<20?"(T_T)":s.pet_happiness>80?"(^_^)":"(o_o)");
+  setTxt('petName',s.pet_name||"PwnBaby");
+  setTxt('petMood',s.pet_mood||"—");
   const stages=["EGG","BABY","KID","TEEN","ADULT","PWNLORD","PWNGOD"];
-  document.getElementById('petStage').textContent = "Estágio: "+(stages[s.pet_stage]||"—");
-
-  setRing('gHunger',s.pet_hunger); document.getElementById('hungerVal').textContent=s.pet_hunger;
-  setRing('gHappy',s.pet_happiness); document.getElementById('happyVal').textContent=s.pet_happiness;
-
-  document.getElementById('battPct').textContent = s.pwr_battery+"%";
-  document.getElementById('battFill').style.width = s.pwr_battery+"%";
-  document.getElementById('battStatus').innerHTML = (s.pwr_charging?'<span class="bolt">⚡ </span>':'')+(s.pwr_charge_status||"");
-  document.getElementById('battDetail').textContent = (s.pwr_voltage?.toFixed?s.pwr_voltage.toFixed(2):s.pwr_voltage)+" V • "+
-     (s.pwr_vbus?"USB-C":"bateria")+(s.pwr_hours&&!s.pwr_vbus?(" • ~"+s.pwr_hours.toFixed(1)+"h"):"");
-  document.getElementById('battBox').classList.toggle('charging', !!s.pwr_charging);
-
-  document.getElementById('tLevel').textContent=s.pet_level;
-  document.getElementById('tXP').textContent=s.pet_xp;
-  document.getElementById('tHS').textContent=s.pet_handshakes;
-  document.getElementById('tDev').textContent=s.wifi_devices;
-  document.getElementById('tHeap').innerHTML=(s.heap_free/1024|0)+'<small> KB</small>';
-  document.getElementById('tUp').textContent=fmtUp(s.uptime);
+  setTxt('petStage',"Estágio: "+(stages[s.pet_stage]||"—"));
+  setRing(DOM.gHunger,s.pet_hunger); setTxt('hungerVal',s.pet_hunger);
+  setRing(DOM.gHappy,s.pet_happiness); setTxt('happyVal',s.pet_happiness);
+  setTxt('battPct',s.pwr_battery+"%");
+  DOM.battFill.style.width=s.pwr_battery+"%";
+  DOM.battStatus.innerHTML=(s.pwr_charging?'<span class="bolt">⚡ </span>':'')+(s.pwr_charge_status||"");
+  setTxt('battDetail',(s.pwr_voltage?.toFixed?s.pwr_voltage.toFixed(2):s.pwr_voltage)+" V • "+(s.pwr_vbus?"USB-C":"bateria")+(s.pwr_hours&&!s.pwr_vbus?(" • ~"+s.pwr_hours.toFixed(1)+"h"):""));
+  DOM.battBox.classList.toggle('charging',!!s.pwr_charging);
+  setTxt('tLevel',s.pet_level); setTxt('tXP',s.pet_xp); setTxt('tHS',s.pet_handshakes);
+  setTxt('tDev',s.wifi_devices);
+  DOM.tHeap.innerHTML=(s.heap_free/1024|0)+'<small> KB</small>';
+  setTxt('tUp',fmtUp(s.uptime));
   // Sistema
-  document.getElementById('sMac').textContent=s.wifi_mac;
-  document.getElementById('sVolt').textContent=(s.pwr_voltage?.toFixed?s.pwr_voltage.toFixed(2):s.pwr_voltage)+" V";
-  document.getElementById('sHours').textContent=s.pwr_hours?("~"+s.pwr_hours.toFixed(1)+" h"):"—";
-  document.getElementById('sHeap').textContent=(s.heap_free/1024|0)+" KB";
-  document.getElementById('sUp').textContent=fmtUp(s.uptime);
-}
-function setConn(ok){
-  const c=document.getElementById('conn'); c.classList.toggle('ok',ok);
-  document.getElementById('connTxt').textContent = ok?"online":"offline (preview)";
+  setTxt('sMac',s.wifi_mac);
+  setTxt('sVolt',(s.pwr_voltage?.toFixed?s.pwr_voltage.toFixed(2):s.pwr_voltage)+" V");
+  setTxt('sHours',s.pwr_hours?("~"+s.pwr_hours.toFixed(1)+" h"):"—");
+  setTxt('sHeap',(s.heap_free/1024|0)+" KB");
+  setTxt('sUp',fmtUp(s.uptime));
 }
 
 // ---------- Config ----------
 async function loadConfig(){
-  try{ cfgData = await (await api('/api/config')).json(); setConn(true);}
-  catch(e){ cfgData = MOCK.config; setConn(false); }
-  const grid=document.getElementById('cfgGrid'); grid.innerHTML='';
+  try{ cfgData=await (await api('/api/config')).json(); setConn(true);}
+  catch(e){ cfgData=MOCK.config; setConn(false); }
+  const grid=DOM.cfgGrid; grid.innerHTML='';
   const secs={};
   for(const k in cfgData){
     const pfx=Object.keys(GROUPS).find(p=>k.startsWith(p))||'sys_';
@@ -408,7 +336,7 @@ async function loadConfig(){
 async function saveConfig(){
   const out={};
   document.querySelectorAll('#cfgGrid [data-k]').forEach(el=>{
-    out[el.dataset.k] = el.type==='checkbox'?el.checked : el.type==='number'?Number(el.value):el.value;
+    out[el.dataset.k]=el.type==='checkbox'?el.checked:el.type==='number'?Number(el.value):el.value;
   });
   try{ await api('/api/config',{method:'POST',body:JSON.stringify(out)}); toast('Configuração salva e aplicada ✓'); }
   catch(e){ toast('Preview: salvamento simulado ✓'); }
@@ -417,11 +345,11 @@ async function saveConfig(){
 // ---------- Arquivos ----------
 async function loadFiles(){
   let files;
-  try{ files = await (await api('/api/files')).json(); setConn(true);}
-  catch(e){ files = MOCK.files; setConn(false); }
-  const el=document.getElementById('fileList');
+  try{ files=await (await api('/api/files')).json(); setConn(true);}
+  catch(e){ files=MOCK.files; setConn(false); }
+  const el=DOM.fileList;
   if(!files.length){ el.innerHTML='<p class="muted">Vazio.</p>'; return; }
-  el.innerHTML = files.map(f=>{
+  el.innerHTML=files.map(f=>{
     const kb=f.isDir?'—':(f.size/1024).toFixed(1)+' KB';
     const ico=f.isDir?'📁':/\.pcap|\.hccapx/.test(f.name)?'🎯':/\.json|\.txt/.test(f.name)?'📄':'📦';
     const dl=f.isDir?'':`<a href="/api/download?file=/${encodeURIComponent(f.name)}">⬇ baixar</a>`;
@@ -438,40 +366,64 @@ document.getElementById('otaForm').addEventListener('submit',e=>{
   const xhr=new XMLHttpRequest(); xhr.open('POST','/update');
   const prog=document.getElementById('otaProg');
   xhr.upload.onprogress=ev=>{ if(ev.lengthComputable) prog.textContent='Enviando… '+(ev.loaded/ev.total*100|0)+'%'; };
-  xhr.onload=()=>{ prog.textContent = xhr.responseText.includes('OK')?'✓ Concluído. Reiniciando…':'✗ Falhou'; };
+  xhr.onload=()=>{ prog.textContent=xhr.responseText.includes('OK')?'✓ Concluído. Reiniciando…':'✗ Falhou'; };
   xhr.onerror=()=>prog.textContent='✗ Erro de conexão';
   xhr.send(fd);
 });
 function reboot(){ if(confirm('Reiniciar o Mini Lele?')) fetch('/api/reboot',{method:'POST'}).catch(()=>{}); }
 
-// ---------- Logs (WebSocket) ----------
+// ---------- Logs (WebSocket, buffer em lote p/ evitar reflow por mensagem) ----------
 let paused=false, lines=0;
-function togglePause(){ paused=!paused; document.getElementById('pauseBtn').textContent=paused?'▶ Retomar':'⏸ Pausar'; }
+let logBuf=[], logFlushScheduled=false;
+function clearLog(){ DOM.log.innerHTML=''; lines=0; logBuf=[]; setTxt('logCount','0 linhas'); }
+function flushLog(){
+  logFlushScheduled=false;
+  if(!logBuf.length) return;
+  const frag=document.createDocumentFragment();
+  for(const txt of logBuf){
+    const d=document.createElement('div'); d.textContent=txt; frag.appendChild(d);
+  }
+  logBuf.length=0;
+  const log=DOM.log;
+  log.appendChild(frag); lines+=frag.childElementCount;
+  while(lines>500){ log.removeChild(log.firstChild); lines--; }
+  setTxt('logCount',lines+' linhas');
+  log.scrollTop=log.scrollHeight;
+}
+function pushLog(txt){
+  if(paused||!docVisible) return;
+  logBuf.push('› '+txt);
+  if(!logFlushScheduled){ logFlushScheduled=true; requestAnimationFrame(flushLog); }
+}
+function togglePause(){
+  paused=!paused;
+  DOM.pauseBtn.textContent=paused?'▶ Retomar':'⏸ Pausar';
+  if(!paused&&logBuf.length) flushLog();
+}
+let ws=null, wsRetry=null;
 function initWS(){
-  try{
-    const ws=new WebSocket('ws://'+location.hostname+'/ws');
-    ws.onopen=()=>setConn(true);
-    ws.onclose=()=>setTimeout(initWS,3000);
-    ws.onmessage=e=>{
-      if(paused) return;
-      const log=document.getElementById('log');
-      const d=document.createElement('div');
-      d.textContent='› '+e.data;
-      log.appendChild(d); lines++;
-      document.getElementById('logCount').textContent=lines+' linhas';
-      if(lines>500) log.removeChild(log.firstChild);
-      log.scrollTop=log.scrollHeight;
-    };
-  }catch(e){}
+  // protocolo-aware (ws/wss) e mantem host:porta
+  const url=(location.protocol==='https:'?'wss://':'ws://')+location.host+'/ws';
+  try{ ws=new WebSocket(url); }catch(e){ return; }
+  ws.onopen=()=>setConn(true);
+  ws.onclose=()=>{ if(wsRetry) clearTimeout(wsRetry); wsRetry=setTimeout(initWS,3000); };
+  ws.onmessage=e=>pushLog(e.data);
 }
 
-function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2400); }
+function toast(msg){
+  DOM.toast.textContent=msg; DOM.toast.classList.add('show');
+  setTimeout(()=>DOM.toast.classList.remove('show'),2400);
+}
+
+// ---------- Economia: pausa polling/logs quando aba oculta ----------
+document.addEventListener('visibilitychange',()=>{
+  docVisible=!document.hidden;
+  if(docVisible) loadStatus();
+});
 
 // ---------- Boot ----------
 loadStatus(); loadConfig(); initWS();
-setInterval(loadStatus, 3000);
+setInterval(loadStatus,3000);
 </script>
 </body>
-</html>
-)rawliteral";
+</html>)rawliteral";
