@@ -2,6 +2,8 @@
 #include "core/ConfigManager.h"
 #include "web/WebAssets.h"
 #include "core/PwnPower.h"
+#include "core/PwnPet.h"
+#include "WiFiTools.h"
 #include "EvilPortal.h"
 #include <SD_MMC.h>
 #include <DNSServer.h>
@@ -75,6 +77,41 @@ void WebHandler::loop() {
             ESP.restart();
         });
 
+        // ---- Arquivos do SD (lista + download) ----
+        server->on("/api/files", HTTP_GET, [](AsyncWebServerRequest *request) {
+            String path = "/";
+            if (request->hasParam("path")) path = request->getParam("path")->value();
+            if (!path.startsWith("/")) path = "/" + path;
+            File dir = SD_MMC.open(path);
+            if (!dir || !dir.isDirectory()) {
+                request->send(404, "application/json", "[]");
+                return;
+            }
+            JsonDocument doc;
+            JsonArray arr = doc.to<JsonArray>();
+            for (File f = dir.openNextFile(); f; f = dir.openNextFile()) {
+                JsonObject o = arr.add<JsonObject>();
+                o["name"] = f.name();
+                o["size"] = (uint32_t)f.size();
+                o["isDir"] = (bool)f.isDirectory();
+                f.close();
+            }
+            dir.close();
+            String out;
+            serializeJson(doc, out);
+            request->send(200, "application/json", out);
+        });
+        server->on("/api/download", HTTP_GET, [](AsyncWebServerRequest *request) {
+            if (!request->hasParam("file")) { request->send(400, "text/plain", "parametro 'file' ausente"); return; }
+            String path = request->getParam("file")->value();
+            if (!path.startsWith("/")) path = "/" + path;
+            if (!SD_MMC.exists(path)) { request->send(404, "text/plain", "arquivo nao encontrado"); return; }
+            String mime = "application/octet-stream";
+            if (path.endsWith(".json")) mime = "application/json";
+            else if (path.endsWith(".txt") || path.endsWith(".md")) mime = "text/plain";
+            request->send(SD_MMC, path, mime, true);
+        });
+
         // ---- OTA ----
         server->on("/update", HTTP_POST,
             [](AsyncWebServerRequest *request) {
@@ -98,6 +135,13 @@ void WebHandler::loop() {
         // ---- WebSocket (logs ao vivo) + fallback ----
         server->addHandler(ws);
         server->onNotFound([](AsyncWebServerRequest *request) {
+            // Rota /api/* inexistente responde 404 JSON. Antes devolviamos o
+            // index_html para tudo, o que fazia a WebUI achar que estava
+            // "offline (preview)" e mostrar dados MOCK no lugar dos reais.
+            if (request->url().startsWith("/api/")) {
+                request->send(404, "application/json", "{\"error\":\"not_found\"}");
+                return;
+            }
             request->send(200, "text/html", index_html);
         });
     }
@@ -125,25 +169,45 @@ void WebHandler::restart() {
 }
 
 String WebHandler::getStatusJSON() {
-    // Telemetria real disponivel no firmware (campos usados pela WebUI).
+    // Telemetria real disponivel no firmware (todos os campos usados pela WebUI).
     uint32_t up = millis() / 1000UL;
     float vbat = PwnPower::pmu_ok ? PwnPower::getBatteryVoltage() : 0.0f;
     int pct = PwnPower::pmu_ok ? PwnPower::getBatteryPercent() : 0;
     bool charging = PwnPower::pmu_ok && PwnPower::isCharging();
-    char buf[384];
+    int wifi_devices = WiFiTools::getAPCount() + WiFiTools::getDeviceCount();
+
+    // Humor derivado da felicidade do pet
+    int hap = PwnPet::stats.happiness;
+    const char *mood = "TRISTE";
+    if (hap > 80) mood = "FELIZ";
+    else if (hap > 50) mood = "CONTENTE";
+    else if (hap > 20) mood = "ENTEDIADO";
+
+    // Autonomia estimada (dreno medio ~150 mA)
+    float hours = 0;
+    if (PwnPower::pmu_ok && !charging && PwnPower::battery_capacity_mah > 0)
+        hours = (PwnPower::battery_capacity_mah * pct / 100.0f) / 150.0f;
+
+    char buf[640];
     snprintf(buf, sizeof(buf),
         "{\"uptime\":%lu,\"heap_free\":%u,\"wifi_mac\":\"%s\","
+        "\"pet_name\":\"%s\",\"pet_mood\":\"%s\",\"pet_stage\":%d,"
+        "\"pet_stage_name\":\"%s\",\"pet_charging\":%s,"
         "\"pet_level\":%lu,\"pet_xp\":%lu,\"pet_hunger\":%lu,"
         "\"pet_happiness\":%lu,\"pet_handshakes\":%lu,"
+        "\"wifi_devices\":%d,"
         "\"pwr_battery\":%d,\"pwr_voltage\":%.2f,\"pwr_charging\":%s,"
-        "\"pwr_vbus\":%s,\"pwr_charge_status\":\"%s\"}",
+        "\"pwr_vbus\":%s,\"pwr_hours\":%.1f,\"pwr_charge_status\":\"%s\"}",
         (unsigned long)up, (unsigned)ESP.getFreeHeap(), WiFi.macAddress().c_str(),
-        (unsigned long)rtc_save.pet_level, (unsigned long)rtc_save.pet_xp,
-        (unsigned long)rtc_save.pet_hunger, (unsigned long)rtc_save.pet_happiness,
-        (unsigned long)rtc_save.total_handshakes,
+        PwnPet::stats.name.c_str(), mood, (int)PwnPet::stats.stage,
+        PwnPet::getStageName(), charging ? "true" : "false",
+        (unsigned long)PwnPet::stats.level, (unsigned long)PwnPet::stats.xp,
+        (unsigned long)PwnPet::stats.hunger, (unsigned long)PwnPet::stats.happiness,
+        (unsigned long)PwnPet::stats.total_handshakes,
+        wifi_devices,
         pct, vbat, charging ? "true" : "false",
         PwnPower::last_vbus ? "true" : "false",
-        charging ? "Carregando" : "Bateria");
+        hours, charging ? "Carregando" : "Bateria");
     return String(buf);
 }
 

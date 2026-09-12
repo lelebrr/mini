@@ -53,6 +53,7 @@ public:
     static void startSnifferPassive();
     static void stopSniffer();
     static void flush();
+    static void pollBeacons();   // drena beacons/probe-resp -> nearby_devices
     static void persistDevices();
     static int getAPCount();
     static int getDeviceCount();

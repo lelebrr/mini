@@ -26,6 +26,8 @@ public:
     static void setOffTimeout(int s);
     static void enterDeep();
     static void setDeepEnabled(bool en);
+    static void turnScreenOff();
 };
 
 #endif
+

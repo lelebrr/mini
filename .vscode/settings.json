@@ -1,5 +1,6 @@
 {
     "platformio.projectType": "arduino",
     "platformio.homeDir": null,
-    "platformio.iniPath": "${workspaceFolder}/platformio.ini"
+    "platformio.iniPath": "${workspaceFolder}/platformio.ini",
+    "cmake.sourceDirectory": "F:/mini/sentinels3"
 }

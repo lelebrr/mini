@@ -275,7 +275,7 @@ async function loadStatus(){
   setTxt('petName',s.pet_name||"PwnBaby");
   setTxt('petMood',s.pet_mood||"—");
   const stages=["EGG","BABY","KID","TEEN","ADULT","PWNLORD","PWNGOD"];
-  setTxt('petStage',"Estágio: "+(stages[s.pet_stage]||"—"));
+  setTxt('petStage',"Estágio: "+(s.pet_stage_name||stages[s.pet_stage]||"—"));
   setRing(DOM.gHunger,s.pet_hunger); setTxt('hungerVal',s.pet_hunger);
   setRing(DOM.gHappy,s.pet_happiness); setTxt('happyVal',s.pet_happiness);
   setTxt('battPct',s.pwr_battery+"%");

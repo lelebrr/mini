@@ -225,18 +225,29 @@ static void checkShake() {
     }
 }
 
-// Botão BOOT (GPIO0): clique curto = próxima tela/acorda; longo = deep sleep.
+// Botão BOOT (GPIO0):
+//  - tela DESLigada + toque curto -> acende a tela (wake)
+//  - tela LIGADA  + toque curto -> apaga a tela
+//  - tela LIGADA  + toque longo (>1.5s) -> menu Desligar / Reiniciar / Apagar tela
 static void checkButton() {
     static uint32_t pressed_at = 0;
     static bool was_down = false;
     bool down = (digitalRead(PIN_BOOT) == LOW);
-    if (down && !was_down) { pressed_at = millis(); was_down = true; }
-    else if (!down && was_down) {
+    if (down && !was_down) {
+        pressed_at = millis();
+        was_down = true;
+    } else if (!down && was_down) {
         uint32_t held = millis() - pressed_at;
         was_down = false;
-        PwnSleep::notifyActivity();
-        if (held > 1200) PwnSleep::enterDeep();   // longo
-        else             PwnUI::nextTile();       // curto
+        if (held > 1500) {
+            // Toque longo: so abre o menu se a tela estiver ligada
+            if (!PwnSleep::isScreenOff()) PwnUI::showPowerMenu();
+            else PwnSleep::notifyActivity();
+        } else {
+            // Toque curto: alterna tela ligada/desligada
+            if (PwnSleep::isScreenOff()) PwnSleep::notifyActivity();
+            else PwnSleep::turnScreenOff();
+        }
     }
 }
 
@@ -513,6 +524,19 @@ void loop() {
         PwnSleep::tick();           // economia de energia
         FaceHandler::setEnabled(!PwnSleep::isScreenOff());  // pausa a animação c/ tela off
         if (!PwnSleep::isScreenOff()) PwnUI::update();  // não desenha com tela off
+
+        // Telemetria ao vivo para a aba "Logs" da WebUI (WebSocket /ws).
+        // Antes o WS nunca recebia nada e a aba ficava eternamente vazia.
+        static uint32_t ws_log_tick = 0;
+        if (WebHandler::isRunning() && ++ws_log_tick % 2 == 0) {
+            char lb[128];
+            snprintf(lb, sizeof(lb),
+                "bateria %d%% | heap %u KB | APs %d | dispositivos %d | BLE %d | eapol %u",
+                PwnPower::getBatteryPercent(), (unsigned)(ESP.getFreeHeap() / 1024),
+                WiFiTools::getAPCount(), WiFiTools::getDeviceCount(),
+                BleBlue::count(), (unsigned)WiFiTools::eapol_count);
+            WebHandler::sendWebSocket(lb);
+        }
     }
 
     // Varredura BLE periódica (opcional)

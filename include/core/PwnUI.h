@@ -33,6 +33,10 @@ public:
     static void showBootSplash();
     static void showScreensaver(bool en);
     static bool isScreensaverActive();
+    static void showPowerMenu();
+    static void hidePowerMenu();
+    static bool isPowerMenuActive();
 };
 
 #endif
+

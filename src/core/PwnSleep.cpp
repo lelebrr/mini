@@ -68,3 +68,13 @@ void PwnSleep::setDeepEnabled(bool en) {
     deep_enabled = en;
     ConfigManager::getInstance()->set("pwr_deep_sleep_enabled", en);
 }
+
+void PwnSleep::turnScreenOff() {
+    // Apaga a tela imediatamente (backlight 0), sem esperar o timeout
+    if (!screen_off) {
+        screen_off = true;
+        dimmed = false;
+        if (set_brightness) set_brightness(0);
+        Serial.println("[PwnSleep] Tela desligada pelo botao");
+    }
+}
